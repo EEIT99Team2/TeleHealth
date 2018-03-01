@@ -209,8 +209,6 @@ public class MemberBean {
 	public void setRegisterTime(Timestamp registerTime) {
 		this.registerTime = registerTime;
 	}
-
 	
-
 }
 	
