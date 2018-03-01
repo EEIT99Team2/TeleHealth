@@ -5,14 +5,16 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="members")
 public class MemberBean {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GenericGenerator(name = "generator", strategy = "guid")
+	@GeneratedValue(generator = "generator")
 	private Integer memberId;
 	private String account;
 	private String memName;
