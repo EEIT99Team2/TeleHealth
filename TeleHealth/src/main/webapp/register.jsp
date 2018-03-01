@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>加入會員</title>
 <style type="text/css">
-<!--
+
 body {
 	background-attachment: fixed;
 	background-color: #EBFFEB;
@@ -99,7 +99,7 @@ br {
 	color: #FF0000;
 	font-size: 0.8em;
 }
--->
+
 </style>
 <script type="text/javascript">
 	//由<body>的onLoad事件處理函數觸發此函數
@@ -135,7 +135,7 @@ br {
 			</TR>
 			<TR>
 				<TD colspan="3">
-					<form method="POST" enctype="multipart/form-data"
+					<form method="post" enctype="multipart/form-data"
 						action="<c:url value="/register.controller" />">
 						<label class="fontSize">帳號(同E-Mail)：</label> 
 						<input type="text"
@@ -197,7 +197,7 @@ br {
 						<Input Type="file" size="40"
 							class="fieldWidth" style="width: 325px;" name="file1"><BR>
 						<font color="red" size="-1">${MsgMap.errorPhoto}</font> <br />
-						<input type="hidden" name="formToken" value="${formToken}" />  
+
 						<div id="btnArea" align="center">
 							<input type="submit" name="submit" id="submit" value="儲存" /> <input
 								type="reset" name="cancel" id="cancel" value="重填">
