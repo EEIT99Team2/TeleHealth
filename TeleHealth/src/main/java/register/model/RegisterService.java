@@ -38,19 +38,5 @@ public class RegisterService {
 		}
 		return result;
 	}
-	
-	
-	
-	
-//	public MemberBean update(MemberBean bean) {
-//		MemberBean result = null;
-//		if(bean!=null) {
-//			result = memberDAO.update(bean.getMemName(),bean.getPhone(),bean.getCellphone(),);
-//			String memName,String phone,
-//            String cellphone,String gender,java.util.Date birth,
-//            double memHeight, double memWeight, String bloodType,
-//            String address,String pwd,String medicine,Blob photo,String fileName,String medicalHistory,int cancelCount,int negCount,int point,int expendRecord,String account
-//		}
-//		return result;
-//	}
+
 }
