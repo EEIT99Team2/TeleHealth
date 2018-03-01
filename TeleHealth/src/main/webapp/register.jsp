@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>加入會員</title>
 <style type="text/css">
-<!--
+
 body {
 	background-attachment: fixed;
 	background-color: #EBFFEB;
@@ -99,7 +99,7 @@ br {
 	color: #FF0000;
 	font-size: 0.8em;
 }
--->
+
 </style>
 <script type="text/javascript">
 	//由<body>的onLoad事件處理函數觸發此函數
