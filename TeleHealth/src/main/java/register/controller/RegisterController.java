@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import register.model.MemberBean;
 import register.model.RegisterService;
-import util.FormToken;
 import util.GlobalService;
 import util.SystemUtils;
 
@@ -39,7 +38,6 @@ public class RegisterController {
 			path={"/register.controller"},
 			method={RequestMethod.GET, RequestMethod.POST}
 	)
-	@FormToken(save=true)
 	public String method(
 				String account, 
 				String memName, 
@@ -65,31 +63,102 @@ public class RegisterController {
 				if(account ==null|| account.trim().length()==0) {
 					errorMsg.put("errorAccount", "帳號欄位不能空白");
 				}
+
+				if(account !=null && account.trim().length()>0) {
+//					"^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$"
+					if(account.matches("^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$")) {
+						System.out.println("email格式正確");
+					} else {
+						errorMsg.put("errorAccount","帳號欄位格式錯誤，必須為信箱格式 ex:aaa@openhome.cc");
+					}
+				}
+								
 				if(memName==null|| memName.trim().length()==0) {
 					errorMsg.put("errormemName", "姓名欄位不能空白");
-				}	
-				if(phone ==null|| phone.trim().length()==0) {
-					errorMsg.put("errorPhone", "電話欄位不能空白");
-				}	
-				if(cellphone ==null|| cellphone.trim().length()==0) {
-					errorMsg.put("errorCellphone", "行動電話欄位不能空白");
-				} 
-				if(gender ==null|| gender.trim().length()==0) {
-					errorMsg.put("errorGender", "性別欄位不能空白");
+				}else if(memName!=null && memName.trim().length()>1&& memName.trim().length()<5) {
+					if(memName.matches("[\\u4e00-\\u9fa5]+")) {
+						System.out.println("姓名欄位格式正確");
+					}else {
+						errorMsg.put("errormemName", "姓名欄位必須為中文");
+					}
+				}else {
+					errorMsg.put("errormemName", "姓名欄位格式錯誤");
 				}
 				
-				if(birth == null || birth.trim().length() == 0){
-					errorMsg.put("errorBirth", "生日欄位必須是日期，並且符合YYYY-MM-DD的格式");
+				if(phone ==null|| phone.trim().length()==0) {
+					errorMsg.put("errorPhone", "電話欄位不能空白");
+//				}else if(phone!=null) {
+//					if(phone.matches("^[0][1-9]{2,3}-[0-9]{5,10}$")) {
+//						System.out.println("電話欄位格式正確");
+//					}else {
+//						errorMsg.put("errorPhone", "電話欄位格式錯誤");
+//					}
 				}
+															
+				if(cellphone ==null|| cellphone.trim().length()==0) {
+					errorMsg.put("errorCellphone", "行動電話欄位不能空白");
+				}else if(cellphone!=null&& cellphone.trim().length()>10) {
+					if(cellphone.matches("[0-9]{4}\\-[0-9]{3}\\-[0-9]{3}")) {
+						System.out.println("行動電話欄位格式正確");
+					}else {
+						errorMsg.put("errorCellphone", "行動電話欄位格式錯誤");
+					}
+				}
+				
+				if(gender ==null|| gender.trim().length()==0) {
+					errorMsg.put("errorGender", "性別欄位不能空白");
+				}						
+				System.out.println("gender="+gender);
+				
+				//生日欄位必須是日期，並且符合YYYY-MM-DD的格式
+				//日期轉java.util.data型態
+				java.util.Date b = null;
+				if(birth == null || birth.trim().length() == 0){
+					errorMsg.put("errorBirth", "生日欄位不能空白");
+				}else if(birth!=null && birth.trim().length()>0) {
+					try {
+						java.text.SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
+						dFormat.setLenient(false);
+						b = dFormat.parse(birth);  
+					}catch(ParseException e) {
+						errorMsg.put("errorBirth", "生日欄位必須是日期，並且符合YYYY-MM-DD的格式");
+					}
+				}  			
+						
 				if(memHeight == null|| memHeight.trim().length()==0) {
 					errorMsg.put("errorMemHeight", "身高欄位不能空白");
-				}	
+				}
+						
+				double dHeight = -1;
+				if(memHeight!=null && memHeight.trim().length()>1 && memHeight.trim().length()<4) {
+					try {
+						dHeight = Double.parseDouble(memHeight.trim());
+					}catch(NumberFormatException e) {
+						errorMsg.put("errorMemHeight", "身高欄位必須為數值");
+					}
+				}else {
+					errorMsg.put("errorMemHeight", "身高欄位格式錯誤");
+				}
+				
 				if(memWeight ==null|| memWeight.trim().length()==0) {
 					errorMsg.put("errorMemWeight", "體重欄位不能空白");
-				}	
+				}
+				double dWeight = -1;
+				if(memWeight!=null && memWeight.trim().length()>1 && memWeight.trim().length()<4) {
+					try {
+						dWeight = Double.parseDouble(memWeight.trim());
+					}catch(NumberFormatException e) {
+						errorMsg.put("errorMemWeight", "體重欄位必須為數值");
+					}
+				}else {
+					errorMsg.put("errorMemWeight", "體重欄位格式錯誤");
+				}
+				
 				if(bloodType ==null|| bloodType.trim().length()==0) {
 					errorMsg.put("errorBloodType", "血型欄位不能空白");
 				}
+				System.out.println("bloodType="+bloodType);
+				
 				if(address ==null|| address.trim().length()==0) {
 					errorMsg.put("errorAddr", "地址欄位不能空白");
 				}
@@ -100,7 +169,7 @@ public class RegisterController {
 					errorMsg.put("errorMedicine", "藥物過敏欄位不能空白");
 				}	
 				if(medicalHistory ==null|| medicalHistory.trim().length()==0) {
-					errorMsg.put("errorMedicalHistory", "藥物過敏欄位不能空白");
+					errorMsg.put("errorMedicalHistory", "過去病史欄位不能空白");
 				}	
 				
 				Blob photo = null;
@@ -124,9 +193,6 @@ public class RegisterController {
 				if (errorMsg != null && !errorMsg.isEmpty()) {
 					return "register.error";
 				}
-				//日期轉java.util.data型態
-				DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-				Date date = formatter.parse(birth);	
 				
 				if(registerService.selectByAccount(account) != null) {
 					errorMsg.put("errorAccount", "此帳號已存在，請換新帳號");			
@@ -137,7 +203,7 @@ public class RegisterController {
 					bb.setPhone(phone);
 					bb.setCellphone(cellphone);
 					bb.setGender(gender);
-					bb.setBirth(date);
+					bb.setBirth(b);
 					bb.setMemHeight(Double.parseDouble(memHeight));
 					bb.setMemWeight(Double.parseDouble(memWeight));
 					bb.setBloodType(bloodType);
@@ -158,4 +224,5 @@ public class RegisterController {
 				}												
 		return "register.error";
 	}
+	
 }
