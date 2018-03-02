@@ -16,7 +16,7 @@ import advisoryMoment.model.EmployeesBean;
 
 @Configuration
 //本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
-@ComponentScan(basePackages = { "advisoryMoment" ,"modelDao"})
+@ComponentScan(basePackages = { "advisoryMoment", "register.model"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean
