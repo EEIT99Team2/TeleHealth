@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.*;
 
 //本類別為Web Spring用，此處加入要掃描的套件名稱，多個用,隔開
 
-@ComponentScan(basePackages={"controller","register.controller","util.controller", "Healthcolumn.controller"})
+@ComponentScan(basePackages={"advisoryMoment.controller","register.controller","util.controller", "Healthcolumn.controller"})
 @EnableWebMvc
 public class SpringMVCJavaConfiguration implements WebMvcConfigurer {
 	@Autowired
