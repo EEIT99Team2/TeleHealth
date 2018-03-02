@@ -1,14 +1,15 @@
 package register.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -175,6 +176,7 @@ public class RegisterController {
 				Blob photo = null;
 				String fileName = null;
 				InputStream in = null;
+				BufferedOutputStream out = null;
 				if(file != null && !file.isEmpty()) {
 					fileName = file.getOriginalFilename();
 					String extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()).toLowerCase();
@@ -186,6 +188,15 @@ public class RegisterController {
 						fileName = GlobalService.adjustFileName(fileName, GlobalService.IMAGE_FILENAME_LENGTH);
 						in = file.getInputStream();
 						photo = SystemUtils.fileToBlob(in, file.getSize());
+						
+						out = new BufferedOutputStream(
+										new FileOutputStream(
+												new File("/TeleHealth/WEB-INF/videos/" + fileName)));
+						byte[] readByte = new byte[8192];
+						int len = 0;
+						while((len = in.read(readByte)) != -1) {
+							out.write(readByte, 0, len);
+						}
 					}
 				}
 				

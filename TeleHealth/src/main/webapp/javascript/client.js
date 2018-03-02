@@ -1,5 +1,6 @@
 var connection = new WebSocket('wss://tzeing.asuscomm.com:15449');
 var name = "";
+var username = "";
 
 var loginPage = document.querySelector("#login-page"),
 	usernameInput = document.querySelector("#username"),
@@ -51,12 +52,15 @@ connection.onmessage = function(message) {
     console.log("Got message ", message.data);
 
     var data = JSON.parse(message.data);
-
     switch (data.type) {
         case "login":
-            onLogin(data.success);
+            onLogin(data.success, data.name);
             break;
-
+        
+        case "checkreturn":
+        	onCheckReturn(data.success, data.callname);
+        	break;
+            
         case "offer":
         	alert("case offer");
             onOffer(data.offer, data.name);
@@ -73,7 +77,7 @@ connection.onmessage = function(message) {
         case "leave":
             onLeave();
             break;
-
+                	
         default:
             break;
     }
@@ -94,25 +98,26 @@ function send(message) {
     connection.send(JSON.stringify(message));
 }
 
-function onLogin(success) {
+function onLogin(success, name) {
     if (success === false) {
-        alert("Login unsuccessful, please try a different name.");
+        alert("登入的ID： " + name + " 重複，請重新輸入!");
     } else {
         loginPage.style.display = "none";
         callPage.style.display = "block";
-
         startConnection();
     }
 }
 
 callButton.addEventListener("click", function() {
 	var theirUsername = theirUsernameInput.value;
-	console.log(theirUsername);
-	
 	if(theirUsername.length > 0) {
-		startPeerConnection(theirUsername);
+		send({
+			type: "callcheck",
+			username: username,
+			callname: theirUsername
+		});
 	} else {
-		alert("No such user");
+		alert("請輸入要進行視訊的對象ID!");
 	}
 });
 
@@ -121,8 +126,16 @@ hangUpButton.addEventListener("click", function() {
 		type: "leave"
 	});
 	onLeave();
-	location.reload();
+//	location.reload();
 });
+
+function onCheckReturn(success, callname) {
+	if(success) {
+		startPeerConnection(callname);
+	} else {
+		alert("你所要進行的視訊代號：" + callname + " 不在線上，請重新確認!");
+	}
+}
 
 function onOffer(offer, name) {
 	connectedUser = name;
@@ -145,6 +158,7 @@ function onAnswer(answer) {
 
 function onCandidate(a) {
 	yourConnection.addIceCandidate(new RTCIceCandidate(a));
+	document.getElementById('hang-up').disabled = false;
 }
 
 function onLeave() {
@@ -203,10 +217,6 @@ function startConnection() {
                 alert("Sorry, your browser does not support WebRTC.1");
             }
         })
-//        .then(error => {
-//            alert("Sorry, we failed to capture your camera, please try again.");
-//        });
-		
 	} else {
 		alert("Sorry, your browser dose not support WebRTC.2");
 	}
@@ -229,20 +239,18 @@ function setupPeerConnection(stream) {
     		});
     	}
     };
-    
 }
-
 
 function startPeerConnection(user) {
 	connectedUser = user;
-	
 	//開始建立offer
 	var offer = yourConnection.createOffer(offerOptions)
 	.then(function(offer) {
 		yourConnection.setLocalDescription(offer);
 		send({
 			type: "offer",
-			offer: offer 
+			offer: offer ,
+			username: username
 		});
 	});
 }
