@@ -26,7 +26,7 @@ import model.dataanalysisBean;
 
 @Configuration
 //本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
-@ComponentScan(basePackages = { "advisoryMoment", "register.model" ,"Healthcolumn.model", "Healthcolumn.modelDao", "model"})
+@ComponentScan(basePackages = { "advisoryMoment.model","advisoryMoment.dao", "register.model" ,"Healthcolumn.model", "Healthcolumn.modelDao", "model"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean
