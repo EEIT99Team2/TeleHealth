@@ -1,4 +1,4 @@
-package controller;
+package dataAnalysis.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -14,10 +14,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import model.analysisRecordsBean;
-import model.analysisRecordsService;
-import model.dataanalysisBean;
-import model.dataanalysisService;
+
+import dataAnalysis.model.analysisRecordsBean;
+import dataAnalysis.model.analysisRecordsService;
+import dataAnalysis.model.dataanalysisBean;
+import dataAnalysis.model.dataanalysisService;
 import spring.PrimitiveNumberEditor;
 
 @Controller

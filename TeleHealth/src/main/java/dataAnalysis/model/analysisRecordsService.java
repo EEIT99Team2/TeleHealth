@@ -1,14 +1,14 @@
-package model;
+package dataAnalysis.model;
 import java.util.ArrayList;
-
 import java.util.List;
 
-import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import model.dao.analysisRecordsDAO;
+import dataAnalysis.model.dao.analysisRecordsDAO;
+
+
 
 @Service
 @Transactional

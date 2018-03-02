@@ -1,4 +1,4 @@
-package model.dao;
+package dataAnalysis.model.dao;
 
 import java.util.List;
 
@@ -8,7 +8,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import model.dataanalysisBean;
+import dataAnalysis.model.dataanalysisBean;
+
+
 @Repository
 public class dataanalysisDAO {
 	@Autowired

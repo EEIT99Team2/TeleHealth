@@ -1,4 +1,4 @@
-package model;
+package dataAnalysis.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

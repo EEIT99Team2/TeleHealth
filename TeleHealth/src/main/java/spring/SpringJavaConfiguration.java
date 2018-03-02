@@ -21,12 +21,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import advisoryMoment.model.AdvisoryMomentBean;
 import advisoryMoment.model.AdvisoryTypeBean;
 import advisoryMoment.model.EmployeesBean;
-import model.analysisRecordsBean;
-import model.dataanalysisBean;
+import dataAnalysis.model.analysisRecordsBean;
+import dataAnalysis.model.dataanalysisBean;
+
 
 @Configuration
 //本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
-@ComponentScan(basePackages = { "advisoryMoment.model","advisoryMoment.dao", "register.model" ,"Healthcolumn.model", "Healthcolumn.modelDao", "model"})
+@ComponentScan(basePackages = { "advisoryMoment.model","advisoryMoment.dao", "register.model" ,"Healthcolumn.model", "Healthcolumn.modelDao", "dataAnalysis.model"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean
