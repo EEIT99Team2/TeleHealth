@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="dataanalysis")
-public class dataanalysisBean {
+public class DataAnalysisBean {
 	@Id
 	private String groupId;
 
@@ -21,7 +21,7 @@ public class dataanalysisBean {
 	private double maxvalue;
 	
 	public String toString() {
-		return "dataanalysisBean [groupId=" + groupId + ", gender=" + gender + ", minAge=" + minAge + ", maxAge="
+		return "DataAnalysisBean [groupId=" + groupId + ", gender=" + gender + ", minAge=" + minAge + ", maxAge="
 				+ maxAge + ", minvalue=" + minvalue + ", maxvalue=" + maxvalue + "]";
 	}
 	public String getGroupId() {

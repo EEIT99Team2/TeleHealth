@@ -8,20 +8,20 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import dataAnalysis.model.dataanalysisBean;
+import dataAnalysis.model.DataAnalysisBean;
 
 
 @Repository
-public class dataanalysisDAO {
+public class DataAnalysisDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	public List<dataanalysisBean> selectDataAll() {		
+	public List<DataAnalysisBean> selectDataAll() {		
 		return this.getSession().createQuery(
-				"from dataanalysisBean", dataanalysisBean.class).list();
+				"from DataAnalysisBean", DataAnalysisBean.class).list();
 	}
 	
 }

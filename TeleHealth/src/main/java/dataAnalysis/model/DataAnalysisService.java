@@ -5,20 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import dataAnalysis.model.dao.dataanalysisDAO;
+import dataAnalysis.model.dao.DataAnalysisDAO;
 
 
 
 @Service
 @Transactional
-public class dataanalysisService {
+public class DataAnalysisService {
 	@Autowired
-	private dataanalysisDAO dataanalysisDao;
+	private DataAnalysisDAO dataanalysisDao;
 	
 	
 //	@Transactional(readOnly=true)
-	public List<dataanalysisBean> selectDataAll() {
-		List<dataanalysisBean> result = dataanalysisDao.selectDataAll();
+	public List<DataAnalysisBean> selectDataAll() {
+		List<DataAnalysisBean> result = dataanalysisDao.selectDataAll();
 		return result;
 	}
 }

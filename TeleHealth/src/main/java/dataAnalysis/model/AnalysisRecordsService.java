@@ -6,33 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import dataAnalysis.model.dao.analysisRecordsDAO;
+import dataAnalysis.model.dao.AnalysisRecordsDAO;
 
 
 
 @Service
 @Transactional
-public class analysisRecordsService {
+public class AnalysisRecordsService {
 	@Autowired
-	private analysisRecordsDAO analysisRecordsDao;
+	private AnalysisRecordsDAO analysisRecordsDao;
 	
 //讀取會員ID
 	
 	@Transactional(readOnly=true)
-	public List<analysisRecordsBean> selectMemberRecords(String memberid){
-		List<analysisRecordsBean> result =null; 
+	public List<AnalysisRecordsBean> selectMemberRecords(String memberid){
+		List<AnalysisRecordsBean> result =null; 
 		if(memberid!=null && memberid.length()!=0) {
-		List<analysisRecordsBean> temp = analysisRecordsDao.MemberRecordshistory(memberid);			
+		List<AnalysisRecordsBean> temp = analysisRecordsDao.MemberRecordshistory(memberid);			
 		if(temp!=null) {
-			result = new ArrayList<analysisRecordsBean>();
+			result = new ArrayList<AnalysisRecordsBean>();
 			result.addAll(temp);
 			}
 		}
 		return result;
 	}
 	
-	public analysisRecordsBean insert(analysisRecordsBean bean) {
-		analysisRecordsBean result =null;
+	public AnalysisRecordsBean insert(AnalysisRecordsBean bean) {
+		AnalysisRecordsBean result =null;
 		if(bean!=null){
 			result = analysisRecordsDao.insert(bean);
 		}

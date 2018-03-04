@@ -9,7 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="analysisRecords")
-public class analysisRecordsBean {
+public class AnalysisRecordsBean {
 	@Id
 	@GenericGenerator(name="generator",strategy="guid")
 	@GeneratedValue(generator="generator")
@@ -27,7 +27,7 @@ public class analysisRecordsBean {
 	private String createTime;
 	@Override
 	public String toString() {
-		return "analysisRecordsBean [id=" + id + ", memberid=" + memberid + ", gender=" + gender + ", age=" + age
+		return "AnalysisRecordsBean [id=" + id + ", memberid=" + memberid + ", gender=" + gender + ", age=" + age
 				+ ", minBloodPressure=" + minBloodPressure + ", maxBloodPressure=" + maxBloodPressure
 				+ ", minBloodSugar=" + minBloodSugar + ", maxBloodSugar=" + maxBloodSugar + ", height=" + height
 				+ ", weight=" + weight + ", heartBeat=" + heartBeat + ", createTime=" + createTime + "]";

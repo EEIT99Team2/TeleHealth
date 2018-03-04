@@ -23,8 +23,8 @@ import Healthcolumn.model.QuestionBean;
 import advisoryMoment.model.AdvisoryMomentBean;
 import advisoryMoment.model.AdvisoryTypeBean;
 import advisoryMoment.model.EmployeesBean;
-import dataAnalysis.model.analysisRecordsBean;
-import dataAnalysis.model.dataanalysisBean;
+import dataAnalysis.model.AnalysisRecordsBean;
+import dataAnalysis.model.DataAnalysisBean;
 
 
 @Configuration
@@ -51,7 +51,7 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,dataanalysisBean.class,analysisRecordsBean.class,HealthColumnBean.class,QuestionBean.class);		
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,AnalysisRecordsBean.class,HealthColumnBean.class,QuestionBean.class);		
 		
 		return builder.buildSessionFactory();
 	}

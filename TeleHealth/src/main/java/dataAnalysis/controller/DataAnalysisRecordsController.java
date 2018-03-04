@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import dataAnalysis.model.analysisRecordsBean;
-import dataAnalysis.model.analysisRecordsService;
-import dataAnalysis.model.dataanalysisBean;
-import dataAnalysis.model.dataanalysisService;
+import dataAnalysis.model.AnalysisRecordsBean;
+import dataAnalysis.model.AnalysisRecordsService;
+import dataAnalysis.model.DataAnalysisBean;
+import dataAnalysis.model.DataAnalysisService;
 import spring.PrimitiveNumberEditor;
 
 @Controller
 @RequestMapping(path={"/page/userEnter.controller"})
-public class dataanalysisRecordsController {
+public class DataAnalysisRecordsController {
 	@InitBinder
 	public void initializer(WebDataBinder webDataBinder) {
 		webDataBinder.registerCustomEditor(java.util.Date.class,
@@ -37,15 +37,15 @@ public class dataanalysisRecordsController {
 	}
 	
 	@Autowired
-	private dataanalysisService dataanalysisservice=null;
+	private DataAnalysisService dataanalysisservice=null;
 	@Autowired
-	private analysisRecordsService analysisRecordsservice=null;
+	private AnalysisRecordsService analysisRecordsservice=null;
 
 //還沒取得登入的ID
 	String memberid = "B0041CB5-09F1-4E5B-8D57-1F0406019143";
 			
 	@RequestMapping(method= {RequestMethod.GET,RequestMethod.POST})
-	public String method(String button,analysisRecordsBean recordsbean,BindingResult bindingResult,
+	public String method(String button,AnalysisRecordsBean recordsbean,BindingResult bindingResult,
 			Model model) {
 			
 		Map<String, String> errors = new HashMap<>();
@@ -109,17 +109,17 @@ public class dataanalysisRecordsController {
 //呼叫model
 //根據model執行結果呼叫view元件
 			if("Data".equals(button)) {
-				List<dataanalysisBean> result = dataanalysisservice.selectDataAll();
+				List<DataAnalysisBean> result = dataanalysisservice.selectDataAll();
 				model.addAttribute("SELECT", result);
 				return "selectdata.table";				
 			}
 			else if("memberhistory".equals(button)) {
-				List<analysisRecordsBean> result = analysisRecordsservice.selectMemberRecords(memberid);
+				List<AnalysisRecordsBean> result = analysisRecordsservice.selectMemberRecords(memberid);
 				model.addAttribute("SelectRecords", result);
 				return "selectRecords.table";
 			}
 			else if("Insert".equals(button)) {
-				analysisRecordsBean result = analysisRecordsservice.insert(recordsbean);
+				AnalysisRecordsBean result = analysisRecordsservice.insert(recordsbean);
 				if(result==null)
 				model.addAttribute("insert",result);
 				return "null";
