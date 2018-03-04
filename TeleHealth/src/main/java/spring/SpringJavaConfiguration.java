@@ -18,6 +18,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import Healthcolumn.model.HealthColumnBean;
+import Healthcolumn.model.QuestionBean;
 import advisoryMoment.model.AdvisoryMomentBean;
 import advisoryMoment.model.AdvisoryTypeBean;
 import advisoryMoment.model.EmployeesBean;
@@ -49,7 +51,7 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,dataanalysisBean.class,analysisRecordsBean.class);		
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,dataanalysisBean.class,analysisRecordsBean.class,HealthColumnBean.class,QuestionBean.class);		
 		
 		return builder.buildSessionFactory();
 	}

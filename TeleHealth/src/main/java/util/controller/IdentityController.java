@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+//本Controller用於產生驗證的亂碼
 @Controller
 public class IdentityController {
 	// 預先建立隨機字元，去除0、O、I、1易混淆字

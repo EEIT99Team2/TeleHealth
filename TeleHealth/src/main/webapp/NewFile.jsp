@@ -8,12 +8,25 @@
 <title>Test Image</title>
 </head>
 <body>
-	<div class="container">
-		<img alt="img error" src="/TeleHealth/getImage.controller" />
-	</div>
+<!-- 	<div class="container"> -->
+<!-- 		<img alt="img error" src="/TeleHealth/getImage.controller" /> -->
+<!-- 	</div> -->
 	
 	<div class="container">
-		<img alt="img error" src="/TeleHealth/verificationcode.controller" />
+		<img id="identity" alt="img error" src="/TeleHealth/verificationcode.controller" />
+		<input type="button" id="btn" value="換張圖片" />
 	</div>
+	<script>
+		var identityImage = document.getElementById("identity");
+		var changeBtn = document.getElementById("btn")
+		function reloadImage() {
+			changeBtn.disabled = true;
+			identityImage.src = "/TeleHealth/verificationcode.controller?ts=" + new Date().getTime();
+		}
+		identityImage.addEventListener("load", function() {
+			changeBtn.disabled = false;
+		});
+		changeBtn.addEventListener("click", reloadImage);
+	</script>
 </body>
 </html>

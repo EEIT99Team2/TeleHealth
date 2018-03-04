@@ -15,17 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import register.model.MemberBean;
 import register.model.RegisterService;
 
+//本Controller用於將網頁顯示資料庫的圖片用src路徑
 @Controller
 public class GetImageController {
 	@Autowired
 	private RegisterService registerService;
-	
-//	@RequestMapping(value = "/getImage.controller", method= {RequestMethod.GET, RequestMethod.POST})
-//	public @ResponseBody byte[] getImageAsByteArray(HttpSession session) throws IOException {
-//	    InputStream in = session.getServletContext()
-//	    		.getResourceAsStream("/WEB-INF/imagesimages/Test.JPG");
-//	    return IOUtils.toByteArray(in);
-//	}
 	
 	@RequestMapping(value = "/getImage.controller", method= {RequestMethod.GET, RequestMethod.POST})
 	public ResponseEntity<byte[]> getImageAsResponseEntity() {
