@@ -30,7 +30,15 @@ import healthpassport.model.DataAnalysisBean;
 
 @Configuration
 //本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
-@ComponentScan(basePackages = { "advisorymoment.model","advisorymoment.dao", "register.model" ,"healthcolumn.model", "healthcolumn.modelDao", "advisory.model","advisory.dao","healthpassport.model"})
+@ComponentScan(basePackages = { 
+		"advisorymoment.model",
+		"advisorymoment.dao", 
+		"register.model" ,
+		"healthcolumn.model", 
+		"healthcolumn.modelDao", 
+		"advisory.model",
+		"advisory.dao",
+		"healthpassport.model"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean

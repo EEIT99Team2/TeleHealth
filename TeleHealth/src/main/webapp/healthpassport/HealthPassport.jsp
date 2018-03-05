@@ -115,8 +115,8 @@
 			         if ($('#insert_weight').val() == "") { alert('請輸入體重'); return; }
 			        	
 			         weight = $('#insert_weight').val();
-			         height = $('#insert_height').val() / 100;
-			         BMI = Math.round((weight / Math.pow(height, 2)) *100) /100;
+			         height = Math.pow($('#insert_height').val() / 100 , 2);
+			         BMI = Math.round((weight / height) *100) /100;
 			         $('#insert_bmi').val(Math.round(BMI * 100) / 100);
 			         $('#insert').prop("disabled", false);
 			     }catch(e){

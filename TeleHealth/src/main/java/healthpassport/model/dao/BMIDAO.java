@@ -1,26 +1,22 @@
-package healthpassport.dao;
-
-import java.util.List;
+package healthpassport.model.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import healthpassport.model.DataAnalysisBean;
-
-
+import healthpassport.model.BMIBean;
 @Repository
-public class DataAnalysisDAO {
+public class BMIDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	public List<DataAnalysisBean> selectDataAll() {		
-		return this.getSession().createQuery(
-				"from DataAnalysisBean", DataAnalysisBean.class).list();
-	}
 	
+	public BMIBean insert(BMIBean bean) {
+		this.getSession().save(bean);
+		return bean;
+	}
 }

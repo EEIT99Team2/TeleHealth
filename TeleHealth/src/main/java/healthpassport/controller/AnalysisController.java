@@ -1,14 +1,20 @@
 package healthpassport.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import healthpassport.model.BMIBean;
+import healthpassport.model.BMIService;
+
 @Controller
 public class AnalysisController {
-
+	@Autowired
+	private BMIService bmiService;
+	
 	@RequestMapping(
 			path= {"/healthpassport/querybmi.controller"},
 			method= {RequestMethod.GET,RequestMethod.POST},
@@ -18,14 +24,18 @@ public class AnalysisController {
 			Double heightResult = Double.parseDouble(height);
 			Double weightResult = Double.parseDouble(weight);
 			Double bmiResult = Double.parseDouble(bmi);
+			
+			BMIBean bean = new BMIBean();
+			bean.setBmi(bmiResult);
+			bean.setHeight(heightResult);
+			bean.setWeight(weightResult);
+			bmiService.insert(bean);
+			return null;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return null;
 		}
 		
-		
-		
-		return "";
 	}
 	
 }
