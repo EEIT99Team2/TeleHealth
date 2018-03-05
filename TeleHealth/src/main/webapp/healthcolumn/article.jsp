@@ -5,13 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../css/w3.css">
 <!-- Custom styles for this template -->
 <link rel="stylesheet" type="text/css" href="../css/index.css" />
 </head>
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
@@ -83,7 +83,7 @@
         <!-- Post Content Column -->
         <div class="col-lg-10">
           <!-- Title -->
-          <h1 class="mt-4">Post Title$</h1>
+          <h1 class="mt-4">Post Title</h1>
           <!-- Author -->
           <p class="lead">
             by
@@ -98,17 +98,21 @@
           <hr>
           <!-- Post Content -->
           <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+         <blockquote class="blockquote">
+            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer class="blockquote-footer">Someone famous in
+              <cite title="Source Title">Source Title</cite>
+            </footer>
+          </blockquote>
           <hr>
     <script type="text/javascript">
-    var data=response.getParameter("title");
-    console.log(data);   
-    $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller', {title:id}, function (data){
+    $.getJSON('/TeleHealth/Healthcolumn/healthcolumn.controller', {title:value}, function (data){
 		console.log(data);		
 		$('#title').empty();	  
          $.each(data, function (i, data) {         	     	          
-            var cell1= $("<h1 class='mt-4'></h1>").text(data.title);
-            var cell2=$("<p></p>").text(data.createDate);
-            var cell3 = $(" <p class='lead'></p>").html(data.content);        
+            var cell1= $("<h2 class='post-title'></h2>").text(data.title);
+            var cell2=$("<p class='post-meta'></p>").text(data.createDate);
+            var cell3 = $("<p></p>").html(data.content.substring(0,300));        
             var row = $('<div class="post-preview"></div>').append([cell1,, cell2,cell3]);
             $('#title').append(row);
          });
@@ -118,7 +122,7 @@
 		 $('#title').append(row2);
  	});
 
-	
+
 
 
     </script>
