@@ -1,4 +1,4 @@
-package Healthcolumn.modelDao;
+package healthcolumn.modelDao;
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import Healthcolumn.model.QuestionBean;
+import healthcolumn.model.QuestionBean;
 @Repository
 public class QuestionDAO {
 	@Autowired

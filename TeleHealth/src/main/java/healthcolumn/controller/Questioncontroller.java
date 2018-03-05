@@ -1,4 +1,4 @@
-package Healthcolumn.controller;
+package healthcolumn.controller;
 
 public class Questioncontroller {
 

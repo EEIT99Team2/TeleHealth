@@ -1,4 +1,4 @@
-package advisoryMoment.controller;
+package advisorymoment.controller;
 
 
 import java.text.SimpleDateFormat;
@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
-import advisoryMoment.model.AdvisoryMomentBean;
-import advisoryMoment.model.AdvisoryService;
+import advisorymoment.model.AdvisoryService;
 
 @Controller
 public class ChoiceController {

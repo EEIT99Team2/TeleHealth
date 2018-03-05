@@ -1,4 +1,4 @@
-package advisoryMoment.model;
+package advisorymoment.model;
 
 import java.io.Serializable;
 

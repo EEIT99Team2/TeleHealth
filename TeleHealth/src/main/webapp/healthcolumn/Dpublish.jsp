@@ -68,7 +68,7 @@
 // 					$('#UnitsInStock').val(value4);
 				
 // 			   })  			   
-			    //讀取產品
+			    //讀取醫生發表
 			   function loadProduct(id){
 			    $.getJSON('Products',{'categoryID':id},function(datas){
 			    		var doc=$(document.createDocumentFragment());

@@ -1,13 +1,12 @@
-package advisoryMoment.model;
+package advisorymoment.model;
 
 import java.util.List;
 
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import advisoryMoment.dao.AdvisoryDAO;
+import advisorymoment.dao.AdvisoryDAO;
 @Service
 @Transactional
 public class AdvisoryService {

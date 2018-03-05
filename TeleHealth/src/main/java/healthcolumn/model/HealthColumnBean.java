@@ -1,4 +1,4 @@
-package Healthcolumn.model;
+package healthcolumn.model;
 
 import java.util.*;
 

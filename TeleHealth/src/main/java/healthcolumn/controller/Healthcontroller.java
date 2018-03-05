@@ -1,4 +1,4 @@
-package Healthcolumn.controller;
+package healthcolumn.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
-import Healthcolumn.model.HealthColumnBean;
-import Healthcolumn.modelDao.HealthService;
+import healthcolumn.model.HealthColumnBean;
+import healthcolumn.modelDao.HealthService;
 import utils.GlobalService;
 
 @Controller
