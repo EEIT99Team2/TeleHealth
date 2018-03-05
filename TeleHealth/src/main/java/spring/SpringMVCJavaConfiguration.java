@@ -20,7 +20,6 @@ import org.springframework.web.servlet.view.XmlViewResolver;
 				"register.controller",
 				"util.controller", 
 				"healthcolumn.controller",
-				"dataanalysis.controller",
 				"advisory.controller",
 				"healthpassport.controller"})
 @EnableWebMvc

@@ -1,4 +1,4 @@
-package dataAnalysis.model;
+package healthpassport.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,15 +9,10 @@ import javax.persistence.Table;
 public class DataAnalysisBean {
 	@Id
 	private String groupId;
-
 	private String gender;
-
 	private int minAge;
-
 	private int maxAge;
-
 	private double minvalue;
-
 	private double maxvalue;
 	
 	public String toString() {
