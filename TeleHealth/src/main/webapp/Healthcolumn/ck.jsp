@@ -9,9 +9,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-<script src="../ckeditor/ckeditor.js"></script>
-<script src="../ckfinder/ckfinder.js"></script>
-<link rel="stylesheet" href="../ckeditor/contents.css">
+<script src="../forCkeditor/ckeditor/ckeditor.js"></script>
+<script src="../forCkeditor/ckfinder/ckfinder.js"></script>
+<link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 	
 
 </head>
@@ -19,12 +19,12 @@
   <script type="text/javascript">
    $(document).ready(function() {
     CKEDITOR.replace('content',{
-    		filebrowserBrowseUrl : '../ckfinder/ckfinder.html',
-    		filebrowserImageBrowseUrl : '../ckfinder/ckfinder.html?type=Images', 
-    		filebrowserFlashBrowseUrl : '../ckfinder/ckfinder.html?type=Flash',
-    		filebrowserUploadUrl : '../ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files', 
-    		filebrowserImageUploadUrl : '../ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images', 
-    		filebrowserFlashUploadUrl : '../ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
+    		filebrowserBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html',
+    		filebrowserImageBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html?type=Images', 
+    		filebrowserFlashBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html?type=Flash',
+    		filebrowserUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files', 
+    		filebrowserImageUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images', 
+    		filebrowserFlashUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
     }	 );
     console.log("ready!");
    });
