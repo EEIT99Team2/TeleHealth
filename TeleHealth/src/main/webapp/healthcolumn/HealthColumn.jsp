@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/HealthColumn.jsp">健康專欄 <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#team">醫師介紹</a>
@@ -122,19 +122,38 @@
                             </div>
                             <hr> 
  <script type="text/javascript"> 
-	$(document).ready(function() {		
+	$(document).ready(function() {	
+		$.getJSON('/TeleHealth/healthcolumn/hotcontent.controller',{ }, function(data){
+			$('#title').empty();
+			 $.each(data, function (i, data) {
+		            var article=$("<a href='article.jsp?title="+data.title+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
+		            var cell1= $("<h2 class='post-title'></h2>").text(data.title);
+		            article.append(cell1)
+		            var cell2=$("<p class='post-meta'></p>").text(data.createDate);
+		            var cell3 = $("<p></p>").html(data.content.substring(0,300));        
+		            var row = $('<div class="post-preview"></div>').append([article, cell2,cell3]);
+		            $('#title').append(row);
+		         });
+		         var pager= $('<a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom"></a>').text("<Previous");
+		         var pager2= $('<a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom"></a>').text("Next>");    
+		         var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
+				 $('#title').append(row2);
+		 	});	
+				
 			 
 	})
  $('input[type="button"]').click(function() {
 	var value=$(this).prop("id");
- 	$.getJSON('/TeleHealth/Healthcolumn/healthcolumn.controller', {advisoryCode:value}, function (data){
+ 	$.getJSON('/TeleHealth/healthcolumn/healthcolumn.controller', {advisoryCode:value}, function (data){
 		console.log(data);		
 		$('#title').empty();	  
-         $.each(data, function (i, data) {         	     	          
-            var cell1= $("<h2 class='post-title'></h2>").text(data.title);
+         $.each(data, function (i, data) {
+            var article=$("<a href='article.jsp?title="+data.title+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
+            var cell1= $("<h2 class='post-title' ></h2>").text(data.title);
+            article.append(cell1)
             var cell2=$("<p class='post-meta'></p>").text(data.createDate);
             var cell3 = $("<p></p>").html(data.content.substring(0,300));        
-            var row = $('<div class="post-preview"></div>').append([cell1,, cell2,cell3]);
+            var row = $('<div class="post-preview"></div>').append([article, cell2,cell3]);
             $('#title').append(row);
          });
          var pager= $('<a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom"></a>').text("<Previous");
@@ -142,7 +161,15 @@
          var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
 		 $('#title').append(row2);
  	});
- });	
+ });
+ function clickcount(){	
+	 var title=$(this).text();
+		$.post('/TeleHealth/healthcolumn/countarticle.controller', {title:title}, function (data){
+				console.log(title);
+				console.log(data);				
+			 })};
+		
+	 	
  </script>                   
                         </div>
                     </div>
