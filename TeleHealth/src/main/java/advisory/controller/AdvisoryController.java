@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import advisory.model.AdvisoryBean;
 import advisory.model.AdvisoryService;
-import advisoryMoment.model.AdvisoryMomentBean;
-import advisoryMoment.model.AdvisoryMomentService;
+import advisorymoment.model.AdvisoryMomentBean;
+import advisorymoment.model.AdvisoryMomentService;
 
 @Controller
 public class AdvisoryController {

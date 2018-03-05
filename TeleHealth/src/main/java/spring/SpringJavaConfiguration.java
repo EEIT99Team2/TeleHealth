@@ -18,19 +18,19 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import Healthcolumn.model.HealthColumnBean;
-import Healthcolumn.model.QuestionBean;
 import advisory.model.AdvisoryBean;
-import advisoryMoment.model.AdvisoryMomentBean;
-import advisoryMoment.model.AdvisoryTypeBean;
-import advisoryMoment.model.EmployeesBean;
+import advisorymoment.model.AdvisoryMomentBean;
+import advisorymoment.model.AdvisoryTypeBean;
+import advisorymoment.model.EmployeesBean;
 import dataAnalysis.model.AnalysisRecordsBean;
 import dataAnalysis.model.DataAnalysisBean;
+import healthcolumn.model.HealthColumnBean;
+import healthcolumn.model.QuestionBean;
 
 
 @Configuration
 //本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
-@ComponentScan(basePackages = { "advisoryMoment.model","advisoryMoment.dao", "register.model" ,"Healthcolumn.model", "Healthcolumn.modelDao", "dataAnalysis.model","advisory.model","advisory.dao"})
+@ComponentScan(basePackages = { "advisorymoment.model","advisorymoment.dao", "register.model" ,"healthcolumn.model", "healthcolumn.modelDao", "dataAnalysis.model","advisory.model","advisory.dao"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean

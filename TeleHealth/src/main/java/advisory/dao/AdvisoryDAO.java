@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import advisory.model.AdvisoryBean;
-import advisoryMoment.model.AdvisoryMomentBean;
+import advisorymoment.model.AdvisoryMomentBean;
 
 @Repository
 public class AdvisoryDAO {

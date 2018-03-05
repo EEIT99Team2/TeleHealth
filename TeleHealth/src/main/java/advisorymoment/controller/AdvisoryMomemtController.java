@@ -1,4 +1,4 @@
-package advisoryMoment.controller;
+package advisorymoment.controller;
 
 
 import java.sql.Timestamp;
@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import advisoryMoment.model.AdvisoryMomentService;
+
+import advisorymoment.model.AdvisoryMomentService;
 
 @Controller
 public class AdvisoryMomemtController {

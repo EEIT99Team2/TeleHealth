@@ -1,4 +1,4 @@
-package Healthcolumn.modelDao;
+package healthcolumn.modelDao;
 
 import java.util.Date;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import Healthcolumn.model.HealthColumnBean;
+import healthcolumn.model.HealthColumnBean;
 
 @Repository
 public class HealthColumnDAO  {	

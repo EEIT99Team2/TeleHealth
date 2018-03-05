@@ -1,4 +1,4 @@
-package advisoryMoment.dao;
+package advisorymoment.dao;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import advisoryMoment.model.AdvisoryMomentBean;
+import advisorymoment.model.AdvisoryMomentBean;
 
 @Repository
 public class AdvisoryMomentDAO {
