@@ -30,10 +30,10 @@
    });
   </script>
  
-  <form action="/TeleHealth/Healthcolumn/inshealthcolumn.controller" method="post" >
+  <form action="/TeleHealth/healthcolumn/inshealthcolumn.controller" method="post" enctype="multipart/form-data">
   <input type="text" name="name" id="title" value="d43b1906-f319-40dc-9e11-4da09a2558af"> 
   <h3>標題:<input type="text" name="title" id="title1" placeholder="title"></h3><p style="color:red">${errors.errortitleEmpty}</p>
-  <h3>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h3><p style="color:red">${errors.errorVideo}</p>
+  <h3>影片上傳:<input type="file" name="videofile" accept="video/*" /></h3><p style="color:red">${errors.errorVideo}</p>
   <h3>文章類型:<select name="type">
        <option id="BOB" value="BOD">塑身減重</option>
        <option id="FOO" value="FOO">飲食資訊</option>

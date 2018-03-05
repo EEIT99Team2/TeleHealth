@@ -18,6 +18,11 @@ public class HealthService {
 		List<HealthColumnBean> list = healthColumnDAO.selectbycode(advisoryCode);	
 		return list;	
 	}
+	//選取文章
+	public List<HealthColumnBean> Loadtitle(String title) {
+		List<HealthColumnBean> list = healthColumnDAO.selectbycode(title);	
+		return list;	
+	}
 	//選取醫生文章
 	public List<HealthColumnBean> Doctorpublish(String empId)
 	{
@@ -41,4 +46,9 @@ public class HealthService {
 		}
 		return false;
 	}
+	//點擊率
+	public void count(String title) {
+		healthColumnDAO.count(title);
+	}
+	
 }
