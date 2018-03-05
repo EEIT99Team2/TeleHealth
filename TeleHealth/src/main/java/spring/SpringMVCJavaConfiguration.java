@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.*;
 
 //本類別為Web Spring用，此處加入要掃描的套件名稱，多個用,隔開
-@ComponentScan(basePackages={"advisoryMoment.controller","register.controller","util.controller", "Healthcolumn.controller","dataAnalysis.controller"})
+@ComponentScan(basePackages={"advisoryMoment.controller","register.controller","util.controller", "Healthcolumn.controller","dataAnalysis.controller","advisory.controller",})
 @EnableWebMvc
 public class SpringMVCJavaConfiguration implements WebMvcConfigurer {
 	@Autowired

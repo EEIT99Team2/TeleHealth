@@ -19,7 +19,6 @@ public class AdvisoryMomentBean implements Serializable {
 	@GeneratedValue(generator="generator")
 	private String id;
 	private java.util.Date calendar;
-	private int timeInterval;
 	private	String reserveStatus;
 	private	String advisoryCode;
 	private	String empId;
@@ -36,12 +35,6 @@ public class AdvisoryMomentBean implements Serializable {
 	}
 	public void setCalendar(java.util.Date calendar) {
 		this.calendar = calendar;
-	}
-	public int getTimeInterval() {
-		return timeInterval;
-	}
-	public void setTimeInterval(int timeInterval) {
-		this.timeInterval = timeInterval;
 	}
 	public String getReserveStatus() {
 		return reserveStatus;
@@ -69,8 +62,7 @@ public class AdvisoryMomentBean implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "AdvisoryBean [id=" + id + ", calendar=" + calendar + ", timeInterval=" + timeInterval
-				+ ", reserveStatus=" + reserveStatus + ", advisoryCode=" + advisoryCode + ", empId=" + empId
+		return "AdvisoryBean [id=" + id + ", calendar=" + calendar + ", reserveStatus=" + reserveStatus + ", advisoryCode=" + advisoryCode + ", empId=" + empId
 				+ ", videoCode=" + videoCode + "]";
 	}
 		
