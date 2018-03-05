@@ -18,17 +18,21 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import advisory.model.AdvisoryBean;
+import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryTypeBean;
 import advisorymoment.model.EmployeesBean;
+
 import dataAnalysis.model.AnalysisRecordsBean;
 import dataAnalysis.model.DataAnalysisBean;
+
 import healthcolumn.model.HealthColumnBean;
 import healthcolumn.model.QuestionBean;
 
 
 @Configuration
 //本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
-@ComponentScan(basePackages = { "advisoryMoment.model","advisoryMoment.dao", "register.model" ,"Healthcolumn.model", "Healthcolumn.modelDao", "dataAnalysis.model"})
+@ComponentScan(basePackages = { "advisorymoment.model","advisorymoment.dao", "register.model" ,"healthcolumn.model", "healthcolumn.modelDao", "dataAnalysis.model","advisory.model","advisory.dao"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean
@@ -50,7 +54,7 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses(AdvisoryTypeBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,AnalysisRecordsBean.class,HealthColumnBean.class,QuestionBean.class);		
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,AnalysisRecordsBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class);		
 		
 		return builder.buildSessionFactory();
 	}
