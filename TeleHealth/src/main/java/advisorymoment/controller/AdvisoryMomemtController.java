@@ -22,18 +22,6 @@ public class AdvisoryMomemtController {
 	@Autowired
 	private AdvisoryMomentService advisoryService;
 
-	// @RequestMapping(path= {"/AdvisoryMomemt/UserCheck.controller"},method=
-	// {RequestMethod.POST},produces="text/html;charset=UTF-8")
-	// public @ResponseBody String UserCheck(String userId) {
-	// String result=null;
-	// if(userId !=null && userId.trim().length()!=0) {
-	//
-	// System.out.println("Good!!!");
-	// result="有了";
-	// }
-	// return result;
-	// }
-
 	@RequestMapping(path = { "/AdvisoryMomemt/MemberSelectByCode.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public @ResponseBody String MemberSelectByCode(String UserId, String advisoryCode) {
