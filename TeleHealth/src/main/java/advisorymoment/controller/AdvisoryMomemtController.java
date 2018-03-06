@@ -1,6 +1,5 @@
 package advisorymoment.controller;
 
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,114 +21,151 @@ import advisorymoment.model.AdvisoryMomentService;
 public class AdvisoryMomemtController {
 	@Autowired
 	private AdvisoryMomentService advisoryService;
-	
-//	@RequestMapping(path= {"/AdvisoryMomemt/UserCheck.controller"},method= {RequestMethod.POST},produces="text/html;charset=UTF-8")
-//	public @ResponseBody String UserCheck(String userId) {
-//		String result=null;
-//		if(userId !=null && userId.trim().length()!=0) {
-//			
-//			System.out.println("Good!!!");
-//			result="有了";			
-//		}
-//		return result;
-//	}
-	
-	
-	@RequestMapping(path= {"/AdvisoryMomemt/MemberSelectByCode.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")	
-	public @ResponseBody String MemberSelectByCode(String advisoryCode){
-		LinkedList<HashMap<String,String>> datafinal = new LinkedList<HashMap<String,String>>();
+
+	// @RequestMapping(path= {"/AdvisoryMomemt/UserCheck.controller"},method=
+	// {RequestMethod.POST},produces="text/html;charset=UTF-8")
+	// public @ResponseBody String UserCheck(String userId) {
+	// String result=null;
+	// if(userId !=null && userId.trim().length()!=0) {
+	//
+	// System.out.println("Good!!!");
+	// result="有了";
+	// }
+	// return result;
+	// }
+
+	@RequestMapping(path = { "/AdvisoryMomemt/MemberSelectByCode.controller" }, method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	public @ResponseBody String MemberSelectByCode(String UserId, String advisoryCode) {
+		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Object[]> result = advisoryService.select(advisoryCode);
-		for(int i = 0;i<result.size();i++) {
-			HashMap<String,String>  dataOne = new HashMap<String,String>();
+		// 已預約時段
+		List<Object[]> reserved = advisoryService.selectBySelf(UserId);
+		for (int i = 0; i < result.size(); i++) {
+			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
-			String calendar =sdf.format(result.get(i)[1]);
-			Date fiftymin = new Date(Timestamp.valueOf(result.get(i)[1].toString()).getTime()+900000);
-			String endtime =sdf.format(fiftymin);
-			String status = result.get(i)[2].toString();						
+			String calendar = sdf.format(result.get(i)[1]);
+			Date fiftymin = new Date(Timestamp.valueOf(result.get(i)[1].toString()).getTime() + 900000);
+			String endtime = sdf.format(fiftymin);
+			String status = result.get(i)[2].toString();
 			String adCode = result.get(i)[3].toString();
 			String empId = result.get(i)[4].toString();
 			String empName = result.get(i)[5].toString();
-			dataOne.put("title", adCode+"\r\n"+empName+"醫生");
-			dataOne.put("start", calendar);
-			dataOne.put("empId", empId);
-			dataOne.put("end", endtime);
-			dataOne.put("MomentId", MomentId);			
-			if(status.equals("E")) {
-				dataOne.put("backgroundColor", "#0080ff");
-				dataOne.put("borderColor", "black");
-			}else if(status.equals("F")) {
-				dataOne.put("backgroundColor", "#ea0000");
-				dataOne.put("borderColor", "black");
-			}
-			datafinal.add(dataOne);
-		}		
-		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON="+data);
-		return data;
-	}
-	@RequestMapping(path= {"/AdvisoryMomemt/MemberSelectAll.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")	
-	public @ResponseBody String MemberSelectAll(){
-		LinkedList<HashMap<String,String>> datafinal = new LinkedList<HashMap<String,String>>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<Object[]> result = advisoryService.selectAll();
-		for(int i = 0;i<result.size();i++) {
-			HashMap<String,String>  dataOne = new HashMap<String,String>();
-			String MomentId = result.get(i)[0].toString();
-			String calendar =sdf.format(result.get(i)[1]);
-			//增加15分鐘
-			Date fiftymin = new Date(Timestamp.valueOf(result.get(i)[1].toString()).getTime()+900000);
-			String endtime =sdf.format(fiftymin);
-			String status = result.get(i)[2].toString();						
-			String advisoryCode = result.get(i)[3].toString();
-			String empId = result.get(i)[4].toString();
-			String empName = result.get(i)[5].toString();
-			dataOne.put("title", advisoryCode+"\r\n"+empName+"醫生");
+			String reservedId;
+			dataOne.put("title", adCode + "\r\n" + empName + "醫生");
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
-			if(status.equals("E")) {
+			if (status.equals("E")) {
 				dataOne.put("backgroundColor", "#0080ff");
 				dataOne.put("borderColor", "black");
-			}else if(status.equals("F")) {
+				// 已有預約諮詢
+			} else if (status.equals("F") && reserved.size() != 0) {
+				for (int j = 0; j < reserved.size(); j++) {
+					reservedId = reserved.get(j)[0].toString();
+					if (reservedId.equals(MomentId)) {
+						dataOne.put("backgroundColor", "#00db00");
+						dataOne.put("borderColor", "black");
+						break;
+					} else {
+						dataOne.put("backgroundColor", "#ea0000");
+						dataOne.put("borderColor", "black");
+					}
+				}
+			} else if (status.equals("F") && reserved.size() == 0) {
 				dataOne.put("backgroundColor", "#ea0000");
-				dataOne.put("borderColor", "black");				
+				dataOne.put("borderColor", "black");
 			}
 			datafinal.add(dataOne);
-		}		
+		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON="+data);
+		System.out.println("JSON=" + data);
 		return data;
 	}
-	
-	@RequestMapping(path= {"/AdvisoryMomemt/ManagerEdit.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")	
-	public @ResponseBody String ManagerEdit(){
-		LinkedList<HashMap<String,String>> datafinal = new LinkedList<HashMap<String,String>>();
+
+	@RequestMapping(path = { "/AdvisoryMomemt/MemberSelectAll.controller" }, method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	public @ResponseBody String MemberSelectAll(String UserId) {
+		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Object[]> result = advisoryService.selectAll();
-		for(int i = 0;i<result.size();i++) {
-			HashMap<String,String>  dataOne = new HashMap<String,String>();
-			String calendar =sdf.format(result.get(i)[0]);
-			String status = result.get(i)[1].toString();						
+		// 已預約時段
+		List<Object[]> reserved = advisoryService.selectBySelf(UserId);
+		String reservedId;
+		for (int i = 0; i < result.size(); i++) {
+			HashMap<String, String> dataOne = new HashMap<String, String>();
+			String MomentId = result.get(i)[0].toString();
+			String calendar = sdf.format(result.get(i)[1]);
+			// 增加15分鐘
+			Date fiftymin = new Date(Timestamp.valueOf(result.get(i)[1].toString()).getTime() + 900000);
+			String endtime = sdf.format(fiftymin);
+			String status = result.get(i)[2].toString();
+			String advisoryCode = result.get(i)[3].toString();
+			String empId = result.get(i)[4].toString();
+			String empName = result.get(i)[5].toString();
+			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
+			dataOne.put("start", calendar);
+			dataOne.put("empId", empId);
+			dataOne.put("end", endtime);
+			dataOne.put("MomentId", MomentId);
+			if (status.equals("E")) {
+				dataOne.put("backgroundColor", "#0080ff");
+				dataOne.put("borderColor", "black");
+				// 已有預約諮詢
+			} else if (status.equals("F") && reserved.size() != 0) {
+				for (int j = 0; j < reserved.size(); j++) {
+					reservedId = reserved.get(j)[0].toString();
+					if (reservedId.equals(MomentId)) {
+						dataOne.put("backgroundColor", "#00db00");
+						dataOne.put("borderColor", "black");
+						dataOne.put("MyResult", "Yes");
+						break;
+					} else {						
+						dataOne.put("backgroundColor", "#ea0000");
+						dataOne.put("borderColor", "black");
+					}
+				}
+			} else if (status.equals("F") && reserved.size() == 0) {				
+				dataOne.put("backgroundColor", "#ea0000");
+				dataOne.put("borderColor", "black");
+			}
+			datafinal.add(dataOne);
+		}
+		String data = new Gson().toJson(datafinal);
+		System.out.println("JSON=" + data);
+		return data;
+	}
+
+	@RequestMapping(path = { "/AdvisoryMomemt/ManagerEdit.controller" }, method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	public @ResponseBody String ManagerEdit() {
+		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<Object[]> result = advisoryService.selectAll();
+		for (int i = 0; i < result.size(); i++) {
+			HashMap<String, String> dataOne = new HashMap<String, String>();
+			String calendar = sdf.format(result.get(i)[0]);
+			String status = result.get(i)[1].toString();
 			String advisoryCode = result.get(i)[2].toString();
 			String empId = result.get(i)[3].toString();
 			String empName = result.get(i)[4].toString();
-			dataOne.put("title", advisoryCode+"\r\n"+empName+"醫生");
+			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
-			if(status.equals("E")) {
+			if (status.equals("E")) {
 				dataOne.put("backgroundColor", "#0080ff");
 				dataOne.put("borderColor", "black");
 				dataOne.put("editable", "true");
-			}else if(status.equals("F")) {
+			} else if (status.equals("F")) {
 				dataOne.put("backgroundColor", "#ea0000");
-				dataOne.put("borderColor", "black");				
+				dataOne.put("borderColor", "black");
 			}
 			datafinal.add(dataOne);
-		}		
+		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON="+data);
+		System.out.println("JSON=" + data);
 		return data;
 	}
 }

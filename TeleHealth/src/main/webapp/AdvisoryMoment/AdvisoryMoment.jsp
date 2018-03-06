@@ -53,7 +53,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">預約告示</h5>
+        <h5 class="modal-title" id="reserveCheckTitle">預約告示</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -73,7 +73,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">預約結果</h5>
+        <h5 class="modal-title" id="reserveDoneTitle">預約結果</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -133,6 +133,8 @@ $(document).ready(function() {
 	var contentH;
 	var weekformat=["一","二","三","四","五","六","日"];
 	var today = new Date();
+	var eventsData;
+			
 	$("#chooseTime").change(function(){
 		time = $("#chooseTime :selected").prop("id");		
 		if(time=="mor"){
@@ -154,22 +156,25 @@ $(document).ready(function() {
 				}
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
-		
+	$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectAll.controller",{"UserId":UserId},function(eventsData){	
 	$("#chooseCode").change(function (){
 		var code = $("#chooseCode :selected").prop("id");
 		if(code=="all"){
 			$("#calendar").fullCalendar('removeEventSources');
-			$("#calendar").fullCalendar('addEventSource', urlPath+"/AdvisoryMomemt/MemberSelectAll.controller");
+			$("#calendar").fullCalendar('addEventSource', eventsData);
 			$("#calendar").fullCalendar('rerenderEvents');
 		}else{		
-		$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectByCode.controller",{advisoryCode:code},function(data){	
+		$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectByCode.controller",{"UserId":UserId,advisoryCode:code},function(data){	
 		$("#calendar").fullCalendar('removeEventSources');
 		$("#calendar").fullCalendar('addEventSource', data);
 		$("#calendar").fullCalendar('rerenderEvents');
 		})
 		}
 	});
+
 	
+
+		
     $('#calendar').fullCalendar({
     	 columnHeaderHtml: function(mom) {
         	 for(var i = 0;i<7;i++){
@@ -203,7 +208,9 @@ $(document).ready(function() {
       navLinks: true, // can click day/week names to navigate views
       editable: false,
 //       eventLimit: true, // allow "more" link when too many events
-	  eventSources:[urlPath+"/AdvisoryMomemt/MemberSelectAll.controller"],	   	
+	  eventSources:[	
+	  		{events:eventsData}
+		  ],	   	
 	  eventClick: function eventCheck(events) {
 		  var docFrag = $(document.createDocumentFragment());
           var reserve = $('.modal-body');
@@ -219,16 +226,22 @@ $(document).ready(function() {
 		  if(events.backgroundColor=="#0080ff"){
 			  $('#reserveDataDetail').modal('show');
 			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
-			  			+"<h3>諮詢類別:</h3><h5>"+reserveItem+"</h5>"
+			  			+"<h3>諮詢項目:</h3><h5>"+reserveItem+"</h5>"
 					  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>");
 			  	$("#reserveDataDetail .modal-body").append(docFrag);
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId};
 				console.log("events="+reserveData);
-			  }
-   
+			  }else if(events.backgroundColor=="#00db00"){
+				  $('#reserveResult').modal('show');
+				  docFrag.append("<h3>諮詢項目:"+reserveItem+"</h3>"
+						  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>"
+				  			+"<h3>視訊代碼:"+"<span>"+"</span>"+"</h3>"
+				  			+"<h3>時間:"+"<span>"+events.start+"</span>"+"</h3>");
+				  	$("#reserveResult .modal-body").append(docFrag);
+				  }  
 	  }		  
     });
-		
+	});	
 	$("#fastSearch").click(function(){
 		var chooseyear = "20"+$("#year :selected").val();
 		var choosemonth = "-"+$("#month :selected").val();
