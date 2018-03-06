@@ -38,14 +38,22 @@ public class AdvisoryMomentService {
 	};
 	
 	//會員自己已預約的時段
-	public List<Object[]> selectBySelf(String UserId) {			
+	public List<Object[]> selectByMemSelf(String UserId) {			
 			List<Object[]> data = null;
 			if(UserId!=null&&UserId.trim().length()!=0) {
-				data = advisoryMomentDAO.selectBySelf(UserId);
+				data = advisoryMomentDAO.selectByMemSelf(UserId);
 			}
 			return data;
 	};
-		
+	
+	//諮詢人員自己負責的時段
+		public List<Object[]> selectByEmpSelf(String EmpId) {			
+				List<Object[]> data = null;
+				if(EmpId!=null&&EmpId.trim().length()!=0) {
+					data = advisoryMomentDAO.selectByEmpSelf(EmpId);
+				}
+				return data;
+		};
 	public AdvisoryMomentBean insert(AdvisoryMomentBean bean) {
 		AdvisoryMomentBean result = null;
 		if(bean!=null) {

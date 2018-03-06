@@ -36,19 +36,16 @@
 /* 	.fc-bg table{ */
 		
 /* 	} */
-  .headerChoose {font-size:1.5em;}
-  .item1 {font-size:1.8em;
-		 margin-left:100px;}
-  .item2 {font-size:1.8em;
-		 margin-left:100px;}
-  .item3 {font-size:1.8em;
-		 padding-right:10px;
+  .headerChoose {}
+  .item1 {margin-left:100px;}
+  .item2 {margin-left:200px;}
+  .item3 {padding-right:10px;
 		 }
   .columnHead{font-size:1.2em;}
 </style>
 </head>
 <body>
- <!-- Navigation -->
+<!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
             <a class="navbar-brand" href="#">Carousel</a>
@@ -68,39 +65,30 @@
                     </li>
                 </ul>
                 <form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
-<input type="text" id="userId" name="userId" value="B221C929-CF1C-445F-B927-1D5E463B3006">
-<span id="item1" class="item1">快速查詢:</span>
-<select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
-<select id="month" class="headerChoose"></select><span id="item1" class="headerChoose">月</span>
-<select id="date" class="headerChoose"></select><span id="item1" class="headerChoose">日</span>
+<input type="text" id="empId" name="empId" value="8953F33F-198F-470F-935C-C4AB754D0B16">
+<span id="item1" class="item1 nav-item active">快速查詢:</span>
+<select id="year" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">年</span>
+<select id="month" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">月</span>
+<select id="date" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">日</span>
 <button type="button" id="fastSearch" class="headerChoose">查詢</button>
-<span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose">
+<span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose nav-item active">
 <option id="allday">全天</option>
 <option id="mor">上午</option>
 <option id="aft">下午</option>
 <option id="nig">晚上</option>
 </select>
-<span id="item3" class="item3">科別:</span><select id="chooseCode" class="headerChoose">
-<option id="all">所有諮詢項目</option>
-<option id="FAM">家庭醫學</option>
-<option id="EAD">生活飲食</option>
-<option id="REH">復健醫學</option>
-<option id="DIA">糖尿病諮詢</option>
-<option id="CAR">心血管慢性疾病諮詢</option>
-<option id="WEL">健康減重</option>
-</select><br>
 </form>
                 <!-- Trigger the modal with a button -->                
                 <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
             </div>
         </nav>
     </header>
-<!-- 點擊預約時段彈跳視窗 -->
-<div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- 未預約班表視窗 -->
+<div class="modal fade" id="UnReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="reserveCheckTitle">預約告示</h5>
+        <h5 class="modal-title" id="UnReserveItemTitle">您的班表</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -109,18 +97,19 @@
         <!-- 跳出視窗的內容 -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="reserveCheck">確定預約</button>
+        <button type="button" class="btn btn-primary" id="UnReTakeOff">我要請假</button>
+        <button type="button" class="btn btn-primary" id="Change">我要調班</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
       </div>
     </div>
   </div>
 </div>
-<!-- 預約結果視窗 -->
-<div class="modal fade" id="reserveResult" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- 已預約班表視窗 -->
+<div class="modal fade" id="reservedItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="reserveDoneTitle">預約結果</h5>
+        <h5 class="modal-title" id="reservedTitle">您有預約</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -129,14 +118,57 @@
         <!-- 跳出視窗的內容 -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reserveDone">我知道了</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="ReTakeOff">我要請假</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
       </div>
     </div>
   </div>
 </div>
-
+<!-- 調班視窗 -->
+<div class="modal fade" id="changeItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changeItemTitle">申請調班</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>不准調</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="checkChange">確定</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 請假視窗 -->
+<div class="modal fade" id="TakeOffItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TakeOffTitle">編寫請假</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>共體時艱</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="checkTakeOff">確定</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="calendar"></div>
-
+<!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-16">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
+    </footer>
 <!--=======================載入script檔跟程式==========================-->
 <script src="../fullCalendar/moment.min.js"></script>
 <script src="../fullCalendar/jquery-3.3.1.min.js"></script>
@@ -149,7 +181,7 @@
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
 	var urlPath = "/TeleHealth";
-	var UserId=$("#userId").val();
+	var EmpId=$("#empId").val();
 	var mom = moment();
 	var reserveData;
 	var time;
@@ -181,24 +213,23 @@ $(document).ready(function() {
 				}
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
-	$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectAll.controller",{"UserId":UserId},function(eventsData){	
+		
+	$.getJSON(urlPath+"/AdvisoryMomemt/EmployeeSelectAll.controller",{"EmpId":EmpId},function(eventsData){	
 	$("#chooseCode").change(function (){
+		
 		var code = $("#chooseCode :selected").prop("id");
 		if(code=="all"){
 			$("#calendar").fullCalendar('removeEventSources');
 			$("#calendar").fullCalendar('addEventSource', eventsData);
 			$("#calendar").fullCalendar('rerenderEvents');
 		}else{		
-		$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectByCode.controller",{"UserId":UserId,advisoryCode:code},function(data){	
+		$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectByCode.controller",{"EmpId":EmpId,advisoryCode:code},function(data){	
 		$("#calendar").fullCalendar('removeEventSources');
 		$("#calendar").fullCalendar('addEventSource', data);
 		$("#calendar").fullCalendar('rerenderEvents');
 		})
 		}
 	});
-
-	
-
 		
     $('#calendar').fullCalendar({
     	 columnHeaderHtml: function(mom) {
@@ -208,18 +239,24 @@ $(document).ready(function() {
     		    } }
     		  },    	
     	customButtons: {
-            myCustomButton: {
-                text: '回到今天',
-                click: function() {
-                	$('#calendar').fullCalendar('today');
-                }
-            }
+    		BackToToday:{
+				text:'回到今天',
+				click:function(){
+					$('#calendar').fullCalendar('today');
+					}
+        		},
+        	SelectByEmpID:{
+        		text:'我的班表',
+				click:function(){
+					alert("my");
+					}
+            	}
         },
       defaultView:'agendaWeek',
       header: {
         left: '',
         center: 'prev, title, next',
-        right: 'agendaWeek,agendaDay,myCustomButton'
+        right: 'agendaWeek,agendaDay,BackToToday,SelectByEmpID'
       },
       allDaySlot:false,
 //       dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
@@ -249,20 +286,18 @@ $(document).ready(function() {
 		  var reserveEmp=events.title.substr(emptyChar+2);
 		  var MomentId=events.MomentId;
 		  if(events.backgroundColor=="#0080ff"){
-			  $('#reserveDataDetail').modal('show');
+			  $('#UnReserveItem').modal('show');
 			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
 			  			+"<h3>諮詢項目:</h3><h5>"+reserveItem+"</h5>"
 					  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>");
-			  	$("#reserveDataDetail .modal-body").append(docFrag);
-			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId};
+			  	$("#UnReserveItem .modal-body").append(docFrag);
+			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"MomentId":MomentId};
 				console.log("events="+reserveData);
-			  }else if(events.backgroundColor=="#00db00"){
-				  $('#reserveResult').modal('show');
-				  docFrag.append("<h3>諮詢項目:"+reserveItem+"</h3>"
-						  	+"<h3>諮詢人員:"+reserveEmp+"</h3>"
-// 				  			+"<h3>視訊代碼:"+"<span>"+"</span>"+"</h3>"
+			  }else if(events.backgroundColor=="#d26900"){
+				  $('#reservedItem').modal('show');
+				  docFrag.append("<h3>視訊代碼:"+events.selfResCode+"</h3>"
 				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
-				  	$("#reserveResult .modal-body").append(docFrag);
+				  	$("#reservedItem .modal-body").append(docFrag);
 				  }  
 	  }		  
     });
@@ -275,28 +310,22 @@ $(document).ready(function() {
 		console.log(chooseyear+choosemonth+choosedate);
 		$("#calendar").fullCalendar('gotoDate',checkDate);
 		})
-	$("#reserveCheck").click(function(){
-		var docFrag = $(document.createDocumentFragment());
-			$.post(urlPath+"/Advisory/ReserveCheck.controller",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
-				"reserveEmp":reserveData.reserveEmp,"empId":reserveData.empId,"UserId":reserveData.UserId,"MomentId":reserveData.MomentId},function(result){			
-				var splitCode1=result.indexOf(",");
-				var splitCode2=result.indexOf(",,");
-				$('#reserveDataDetail').modal('hide');
-				 $('#reserveResult').modal('show');
-				  docFrag.append("<h3>"+result.substr(0,splitCode1)+"</h3>"
-				  			+"<h3>視訊代碼為:"+"<span>"+result.substr(7,splitCode2-7)+"</span>"+"</h3>"
-				  			+"<h3>時間:"+"<span>"+result.substr(splitCode2+2)+"</span>"+"</h3>");
-				  	$("#reserveResult .modal-body").append(docFrag);
-				})
-		})  
-	$("#reserveDone").click(function(){
-		window.location.reload();
+ 
+	$("#UnReTakeOff").click(function(){
+		$('#UnReserveItem').modal('hide');
+		$('#reservedItem').modal('hide');
+		$('#TakeOffItem').modal('show');
+		})
+	$("#ReTakeOff").click(function(){
+		$('#UnReserveItem').modal('hide');
+		$('#reservedItem').modal('hide');
+		$('#TakeOffItem').modal('show');
+		})
+	$("#Change").click(function(){
+		$('#UnReserveItem').modal('hide');
+		$('#changeItem').modal('show');
 		})
 });
 </script>
-<!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
 </body>
 </html>
