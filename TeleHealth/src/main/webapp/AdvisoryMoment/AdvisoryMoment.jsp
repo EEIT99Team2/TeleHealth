@@ -234,9 +234,9 @@ $(document).ready(function() {
 			  }else if(events.backgroundColor=="#00db00"){
 				  $('#reserveResult').modal('show');
 				  docFrag.append("<h3>諮詢項目:"+reserveItem+"</h3>"
-						  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>"
-				  			+"<h3>視訊代碼:"+"<span>"+"</span>"+"</h3>"
-				  			+"<h3>時間:"+"<span>"+events.start+"</span>"+"</h3>");
+						  	+"<h3>諮詢人員:"+reserveEmp+"</h3>"
+// 				  			+"<h3>視訊代碼:"+"<span>"+"</span>"+"</h3>"
+				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
 				  	$("#reserveResult .modal-body").append(docFrag);
 				  }  
 	  }		  
