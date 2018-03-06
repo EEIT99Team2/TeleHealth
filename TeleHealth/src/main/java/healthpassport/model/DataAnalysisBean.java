@@ -10,14 +10,16 @@ public class DataAnalysisBean {
 	@Id
 	private String groupId;
 	private String gender;
-	private int minAge;
-	private int maxAge;
-	private double minvalue;
-	private double maxvalue;
+	private Integer minAge;
+	private Integer maxAge;
+	private Double minvalue;
+	private Double maxvalue;
+	private String result;	
 	
+	@Override
 	public String toString() {
 		return "DataAnalysisBean [groupId=" + groupId + ", gender=" + gender + ", minAge=" + minAge + ", maxAge="
-				+ maxAge + ", minvalue=" + minvalue + ", maxvalue=" + maxvalue + "]";
+				+ maxAge + ", minvalue=" + minvalue + ", maxvalue=" + maxvalue + ", result=" + result + "]";
 	}
 	public String getGroupId() {
 		return groupId;
@@ -54,6 +56,12 @@ public class DataAnalysisBean {
 	}
 	public void setMaxvalue(double maxvalue) {
 		this.maxvalue = maxvalue;
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
 	}
 	
 		

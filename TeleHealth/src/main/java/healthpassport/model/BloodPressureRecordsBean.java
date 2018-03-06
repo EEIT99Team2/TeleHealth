@@ -18,6 +18,14 @@ public class BloodPressureRecordsBean
 	private Integer maxBloodPressure;
 	private Integer heartBeat;
 	private String result;
+	private java.util.Date createTime;
+	
+	@Override
+	public String toString() {
+		return "BloodPressureRecordsBean [id=" + id + ", memberid=" + memberid + ", minBloodPressure="
+				+ minBloodPressure + ", maxBloodPressure=" + maxBloodPressure + ", heartBeat=" + heartBeat + ", result="
+				+ result + ", createTime=" + createTime + "]";
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -53,6 +61,12 @@ public class BloodPressureRecordsBean
 	}
 	public void setResult(String result) {
 		this.result = result;
+	}
+	public java.util.Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(java.util.Date createTime) {
+		this.createTime = createTime;
 	}
 	
 }
