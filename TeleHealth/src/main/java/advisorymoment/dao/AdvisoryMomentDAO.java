@@ -55,6 +55,22 @@ public class AdvisoryMomentDAO {
 		return data;
 	};
 
+	//會員自己已預約的時段
+	public List<Object[]> selectBySelf(String UserId) {
+		String hql="select am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,a.videoCode from advisoryMoment am\r\n" + 
+				"join Advisory a\r\n" + 
+				"on am.videoCode=a.videoCode\r\n" + 
+				"join employees emp\r\n" + 
+				"on am.empId=emp.empId\r\n" + 
+				"join advisoryType adt\r\n" + 
+				"on am.advisoryCode=adt.advisoryCode\r\n" + 
+				"where memberId=?";
+		NativeQuery query= this.getSession().createNativeQuery(hql);
+		query.setParameter(1,UserId);
+		List<Object[]> data = (List<Object[]>)query.list();		
+		return data;
+	};
+	
 	public AdvisoryMomentBean insert(AdvisoryMomentBean bean) {
 		if (bean != null) {
 			AdvisoryMomentBean data = this.selectById(bean.getId());
