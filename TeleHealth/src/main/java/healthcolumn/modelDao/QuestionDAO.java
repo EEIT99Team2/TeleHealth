@@ -12,14 +12,15 @@ import org.springframework.stereotype.Repository;
 import healthcolumn.model.QuestionBean;
 @Repository
 public class QuestionDAO {
+//	select emp.empName,mem.memName, que.Content,que.createDate,que.QAtype from healthColumn hel join question que on hel.columnId=que.QAcolumnId  join employees emp on que.empId=emp.empId join members mem on que.memberId=mem.memberId where hel.title='dqwddqwd'
 	@Autowired
 	private SessionFactory sessionFactory;
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 	//選擇文章所有回應的文
-	public List<QuestionBean>  select(int Id) {
-		NativeQuery query=this.getSession().createNativeQuery("select * from healthColumn where Id="+Id);
+	public List<QuestionBean>  select(String title) {
+		NativeQuery query=this.getSession().createNativeQuery("select * from healthColumn where Id=");
 		query.addEntity(QuestionBean.class);
 		List<QuestionBean> data=(List<QuestionBean>)query.list();
 		return data;		
