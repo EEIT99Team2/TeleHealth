@@ -28,6 +28,5 @@
 		});
 		changeBtn.addEventListener("click", reloadImage);
 	</script>
-	
 </body>
 </html>
