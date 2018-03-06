@@ -36,6 +36,14 @@ public class HealthColumnDAO  {
 		List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();
 		return data;
 	}
+	//選點擊的文章	
+	public List<HealthColumnBean> selectbytitle(String title) {	
+		NativeQuery query=this.getSession().createNativeQuery("select * from healthColumn where title=?");
+		query.setParameter(1, title);
+		query.addEntity(HealthColumnBean.class);
+		List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();
+		return data;
+	}
 	//選出前5名
 	public List<HealthColumnBean> selectTop(){
 		NativeQuery query=this.getSession().createNativeQuery("select Top 15 * from healthColumn  order by clickCount desc ");
@@ -81,5 +89,9 @@ public class HealthColumnDAO  {
 		}
 		return false;
 	}
-
+	public void count(String title) {
+		NativeQuery query=this.getSession().createNativeQuery("update healthColumn set clickCount=clickCount+1 where title=? ");
+		query.setParameter(1, title);
+		int result = query.executeUpdate();	
+	}
 }
