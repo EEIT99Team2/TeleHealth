@@ -13,17 +13,17 @@ public class QuestionBean {
 	private int Id;
 	private String memberId;
 	private String empId;
+	private String QAcolumnId;
 	private String QAtype; 
 	private String advisorycode;
 	private String Content;
 	private Date createDate;
-	private int forColumn;
-	private int forQuestion;
+	private Date modifyTime;	
 	@Override
 	public String toString() {
-		return "QuestionBean [Id=" + Id + ", memberId=" + memberId + ", empId=" + empId + ", QAtype=" + QAtype
-				+ ", advisorycode=" + advisorycode + ", Content=" + Content + ", createDate=" + createDate
-				+ ", forColumn=" + forColumn + ", forQuestion=" + forQuestion + "]";
+		return "QuestionBean [Id=" + Id + ", memberId=" + memberId + ", empId=" + empId + ", QAcolumnId=" + QAcolumnId
+				+ ", QAtype=" + QAtype + ", advisorycode=" + advisorycode + ", Content=" + Content + ", createDate="
+				+ createDate + ", modifyTime=" + modifyTime + "]";
 	}
 	public int getId() {
 		return Id;
@@ -42,6 +42,12 @@ public class QuestionBean {
 	}
 	public void setEmpId(String empId) {
 		this.empId = empId;
+	}
+	public String getQAcolumnId() {
+		return QAcolumnId;
+	}
+	public void setQAcolumnId(String qAcolumnId) {
+		QAcolumnId = qAcolumnId;
 	}
 	public String getQAtype() {
 		return QAtype;
@@ -67,23 +73,11 @@ public class QuestionBean {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public int getForColumn() {
-		return forColumn;
+	public Date getModifyTime() {
+		return modifyTime;
 	}
-	public void setForColumn(int forColumn) {
-		this.forColumn = forColumn;
-	}
-	public int getForQuestion() {
-		return forQuestion;
-	}
-	public void setForQuestion(int forQuestion) {
-		this.forQuestion = forQuestion;
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 	
-	
-
-	
-	
-	
-	
-}
+}	

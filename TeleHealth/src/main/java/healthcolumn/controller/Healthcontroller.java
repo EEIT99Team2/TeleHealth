@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import healthcolumn.model.HealthColumnBean;
 import healthcolumn.modelDao.HealthService;
@@ -47,7 +48,7 @@ public class Healthcontroller {
 	@RequestMapping(path = { "/healthcolumn/titlecontent.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Loadtitle(String title) {
-		List<HealthColumnBean> loadtitle = healthService.Loadtitle(title);
+		List<Object[]> loadtitle = healthService.Loadtitle(title);
 		System.out.println(loadtitle);
 		Gson gson = new Gson();
 		String data = gson.toJson(loadtitle);
@@ -67,10 +68,12 @@ public class Healthcontroller {
 	}
 
 	// 尋找個人發布過的文章
+	@RequestMapping(path = { "/healthcolumn/publishcontent.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Doctorpublish(String empId) {
 		List<HealthColumnBean> doctorpublish = healthService.Doctorpublish(empId);
 		System.out.println(doctorpublish);
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd ").create(); ;
 		String datafordoctor = gson.toJson(doctorpublish);
 		System.out.println(datafordoctor);
 		return datafordoctor;
@@ -152,7 +155,33 @@ public class Healthcontroller {
 
 	}
 	// 修改文章
+	@RequestMapping(path = {
+	"/healthcolumn/updatehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.POST })
+	public @ResponseBody String updatecontent(String title,String content,String advisoryCode,String fileName,Model model) {
+		
+		return "a";
+	}
+	
 	// 刪除文章
+	@RequestMapping(path = {
+	"/healthcolumn/deletehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.POST })
+	public @ResponseBody String deletecontent(String columnId,Model model) {
+		boolean delete = healthService.Delete(columnId);
+		Map<String, String> contenterrors = new HashMap<>();
+		model.addAttribute("contenterrors", contenterrors);
+		Map<String, String> contentOK = new HashMap<String, String>();
+		model.addAttribute("contentOK", contentOK);
+		if(delete) {
+			contenterrors.put("contentok", "已刪除所選擇的文章!!");
+			return  "deletecontentok";
+		}else {
+			contentOK.put("contenterror", "刪除失敗!!");
+			return "deletecontenterror";
+		}		
+	}
+	
 	// 增加點擊率
 	@RequestMapping(path = {
 	"/healthcolumn/countarticle.controller" }, produces = "text/html;charset=UTF-8", method = {
