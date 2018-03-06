@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="null" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/page/userEnter.jsp"></property>
+	</bean>
+	
+	<bean id="selectdata.table" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/page/selectdataTable.jsp"></property>
+	</bean>
+	
+	<bean id="selectRecords.table" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/page/recordsTable.jsp"></property>
+	</bean>
+	
+	<bean id="form.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthcolumn/ck.jsp"></property>
+	</bean>
+	
+	<bean id="form.ok" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthcolumn/ck.jsp"></property>
+	</bean>
+
+	<bean id="register.do" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/register.controller"></property>
+	</bean>
+
+	<bean id="register.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/register.jsp"></property>
+	</bean>
+	
+	<bean id="register.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/RegisterSuccess.jsp"></property>
+	</bean>
+	
+</beans>
