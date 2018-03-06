@@ -2,6 +2,7 @@ package advisorymoment.model;
 
 import java.util.List;
 
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,12 @@ import advisorymoment.dao.AdvisoryMomentDAO;
 @Transactional
 public class AdvisoryMomentService {
 	@Autowired
-	private AdvisoryMomentDAO advisoryDAO;
+	private AdvisoryMomentDAO advisoryMomentDAO;
 	
 	public AdvisoryMomentBean selectById(String id) {
 		AdvisoryMomentBean result = null;
 		if(id!=null && id.trim().length()!=0) {
-			result = advisoryDAO.selectById(id);
+			result = advisoryMomentDAO.selectById(id);
 		}		
 		return result;
 	};
@@ -25,21 +26,30 @@ public class AdvisoryMomentService {
 	public List<Object[]> select(String advisoryCode) {
 		List<Object[]> result = null;
 		if(advisoryCode!=null) {
-			result = advisoryDAO.select(advisoryCode);
+			result = advisoryMomentDAO.select(advisoryCode);
 			System.out.println("Service="+result);
 		}		
 		return result;
 	};
 	
 	public List<Object[]> selectAll(){
-		List<Object[]> result = advisoryDAO.selectAll();
+		List<Object[]> result = advisoryMomentDAO.selectAll();
 		return result;
 	};
-
+	
+	//會員自己已預約的時段
+	public List<Object[]> selectBySelf(String UserId) {			
+			List<Object[]> data = null;
+			if(UserId!=null&&UserId.trim().length()!=0) {
+				data = advisoryMomentDAO.selectBySelf(UserId);
+			}
+			return data;
+	};
+		
 	public AdvisoryMomentBean insert(AdvisoryMomentBean bean) {
 		AdvisoryMomentBean result = null;
 		if(bean!=null) {
-			result = advisoryDAO.insert(bean);			
+			result = advisoryMomentDAO.insert(bean);			
 		}
 		return result;
 	};
@@ -47,7 +57,7 @@ public class AdvisoryMomentService {
 	public AdvisoryMomentBean updateByReserve(AdvisoryMomentBean bean) {
 		AdvisoryMomentBean result = null;
 		if(bean!=null) {
-			result = advisoryDAO.updateByReserve(bean.getId(),bean.getReserveStatus(), bean.getVideoCode());
+			result = advisoryMomentDAO.updateByReserve(bean.getId(),bean.getReserveStatus(), bean.getVideoCode());
 		}		
 		return result;
 	};
@@ -55,7 +65,7 @@ public class AdvisoryMomentService {
 	public AdvisoryMomentBean updateByEdit(AdvisoryMomentBean bean) {
 		AdvisoryMomentBean result = null;
 		if(bean!=null) {
-			result = advisoryDAO.updateByEdit(bean.getId(),bean.getCalendar(),bean.getReserveStatus(), bean.getAdvisoryCode(), bean.getEmpId(), bean.getVideoCode());
+			result = advisoryMomentDAO.updateByEdit(bean.getId(),bean.getCalendar(),bean.getReserveStatus(), bean.getAdvisoryCode(), bean.getEmpId(), bean.getVideoCode());
 		}		
 		return result;
 	};
@@ -63,7 +73,7 @@ public class AdvisoryMomentService {
 	public boolean delete(AdvisoryMomentBean bean) {
 		boolean result = false;
 		if(bean!=null) {
-			result = advisoryDAO.delete(bean.getId());
+			result = advisoryMomentDAO.delete(bean.getId());
 		}
 		return result;
 	}

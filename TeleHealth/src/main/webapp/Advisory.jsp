@@ -68,9 +68,10 @@ video {
 			<div class="col-5 float-left">
 				<video id="yours" autoplay muted playsinline></video>
 				<video id="theirs" autoplay playsinline controls="controls"></video>
-				<input type="text" id="their-username" /> <input type="button"
-					value="call" id="callHere" /> <input type="button" value="Hang Up"
-					id="hang-up" disabled="disabled" />
+				<input type="text" id="their-username" />
+				<input type="button" value="JOIN" id="join" />
+				<input type="button" value="call" id="callHere" />
+				<input type="button" value="Hang Up" id="hang-up" disabled="disabled" />
 			</div>
 			<div class="col-7 float-right">
 				<h3>XXX，您好</h3>
