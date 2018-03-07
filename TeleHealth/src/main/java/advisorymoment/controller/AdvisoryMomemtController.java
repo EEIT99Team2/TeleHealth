@@ -24,7 +24,7 @@ public class AdvisoryMomemtController {
 
 	@RequestMapping(path = { "/AdvisoryMomemt/MemberSelectByCode.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String MemberSelectByCode(String UserId, String advisoryCode) {
+	public @ResponseBody String memberSelectByCode(String UserId, String advisoryCode) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Object[]> result = advisoryMomentService.select(advisoryCode);
@@ -75,7 +75,7 @@ public class AdvisoryMomemtController {
 
 	@RequestMapping(path = { "/AdvisoryMomemt/MemberSelectAll.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String MemberSelectAll(String UserId) {
+	public @ResponseBody String memberSelectAll(String UserId) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Object[]> result = advisoryMomentService.selectAll();
@@ -127,7 +127,7 @@ public class AdvisoryMomemtController {
 	
 	@RequestMapping(path = { "/AdvisoryMomemt/EmployeeSelectAll.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String EmployeeSelectAll(String EmpId) {
+	public @ResponseBody String employeeSelectAll(String EmpId) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Object[]> result = advisoryMomentService.selectAll();
@@ -198,7 +198,7 @@ public class AdvisoryMomemtController {
 	
 //	@RequestMapping(path = { "/AdvisoryMomemt/EmployeeSelectById.controller" }, method = { RequestMethod.GET,
 //			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-//	public @ResponseBody String EmployeeSelectById(String EmpId) {
+//	public @ResponseBody String employeeSelectById(String EmpId) {
 //		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //		List<Object[]> result = advisoryMomentService.selectAll();

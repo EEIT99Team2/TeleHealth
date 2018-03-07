@@ -42,7 +42,7 @@ public class AnalysisController {
 	}
 	
 	@RequestMapping(
-			path= {"/healthpassport/querybmi.controller"},
+			path= {"/healthpassport/queryBloodPressure.controller"},
 			method= {RequestMethod.GET,RequestMethod.POST},
 			produces="application/json;charset=UTF-8")	
 	public @ResponseBody String bloodPressure(Integer Diastole,Integer Systole,Integer heartBeat) {
