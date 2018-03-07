@@ -91,7 +91,7 @@
 		    		filebrowserFlashUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
 		    }	 );
 		    console.log("ready!");	
-			loadProduct("D43B1906-F319-40DC-9E11-4DA09A2558AF")		
+			loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A")		
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
