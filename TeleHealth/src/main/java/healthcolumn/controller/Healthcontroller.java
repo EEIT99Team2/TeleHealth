@@ -25,7 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import healthcolumn.model.HealthColumnBean;
-import healthcolumn.modelDao.HealthService;
+import healthcolumn.model.Dao.HealthService;
 import utils.GlobalService;
 
 @Controller
@@ -79,7 +79,7 @@ public class Healthcontroller {
 		return datafordoctor;
 	}
 
-	// 新增文章
+	// 新增文章 
 	@RequestMapping(path = {
 			"/healthcolumn/inshealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
 					RequestMethod.POST })
