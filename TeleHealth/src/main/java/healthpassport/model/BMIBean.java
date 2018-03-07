@@ -60,5 +60,10 @@ public class BMIBean {
 	public void setCreateTime(java.util.Date createTime) {
 		this.createTime = createTime;
 	}
+	@Override
+	public String toString() {
+		return "BMIBean [id=" + id + ", memberid=" + memberid + ", height=" + height + ", weight=" + weight + ", bmi="
+				+ bmi + ", result=" + result + "]";
+	}
 	
 }

@@ -57,7 +57,7 @@
 							<label for="insert_height" class="col-2">身高</label>
 							<input type="text" id="insert_height" name="height" class="col-4">公分 <span id="heiMsg"></span>
 							<br>
-							<label for="insert_weight" class="col-2">身高</label>
+							<label for="insert_weight" class="col-2">體重</label>
 							<input type="text" id="insert_weight" name="weight" class="col-4">公斤 <span id="weiMsg"></span>
 							<br>
 							<label for="height" class="col-2">BMI</label>
@@ -145,6 +145,7 @@
 	                	JSON.parse(data);
 	                	
 	             })
+				 
 			});
 		});
 	 
