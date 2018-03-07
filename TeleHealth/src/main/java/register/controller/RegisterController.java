@@ -1,5 +1,6 @@
 package register.controller;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -215,8 +216,6 @@ public class RegisterController {
 					errorMsg.put("errorAccount", "此帳號已存在，請換新帳號");			
 				}else {
 					pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
-					
-					
 					MemberBean bb = new MemberBean();
 					bb.setAccount(account);
 					bb.setMemName(memName);

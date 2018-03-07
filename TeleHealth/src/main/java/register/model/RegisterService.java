@@ -34,6 +34,7 @@ public class RegisterService {
 	public MemberBean insert(MemberBean bean) {
 		MemberBean result = null;
 		if(bean!=null) {
+
 			List<MemberBean> list = memberDAO.selectByAccount(bean.getAccount());
 			MemberBean temp = null;
 			if(list != null && list.size() > 0) {

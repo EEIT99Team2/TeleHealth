@@ -217,7 +217,5 @@ public class MemberBean {
 		this.registerTime = registerTime;
 	}
 
-	
-
 }
 	

@@ -7,13 +7,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>新增成功</h1>
+
+	<h1>新增成功!! </h1>
+	
+ <BR> 
 	${member.mid} <hr>
 	${member.password} <hr>
 	${member.Email} <hr>
 	${member.Name} <hr>
 	${member.address} <hr>
-	${member.Tel} <hr>
+	${member.Tel} <hr>	
+	<input type="button" value="回主頁" onclick="location.href='index.jsp'">
+
 
 </body>
 </html>
