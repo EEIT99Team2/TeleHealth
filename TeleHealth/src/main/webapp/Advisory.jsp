@@ -70,7 +70,7 @@ video {
 				<video id="theirs" autoplay playsinline></video>
 				<input type="text" id="their-username" />
 				<input type="button" value="JOIN" id="join" />
-				<input type="button" value="call" id="callHere" />
+<!-- 				<input type="button" value="call" id="callHere" /> -->
 				<input type="button" value="Hang Up" id="hang-up" disabled="disabled" />
 			</div>
 			<div class="col-7 float-right">
