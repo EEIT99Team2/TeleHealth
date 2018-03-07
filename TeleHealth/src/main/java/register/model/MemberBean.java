@@ -15,7 +15,7 @@ public class MemberBean {
 	@Id
 	@GenericGenerator(name = "generator", strategy = "guid")
 	@GeneratedValue(generator = "generator")
-	private Integer memberId;
+	private String memberId;
 	private String account;
 	private String memName;
 	private String phone;
@@ -29,24 +29,37 @@ public class MemberBean {
 	private String pwd;
 	private String medicine;
 	private Integer cancelCount;
-	private Integer negCount;
 	private Blob photo;
 	private Integer point;
 	private Integer expendRecord; 
 	private String medicalHistory;
 	private String fileName;
 	private Timestamp registerTime;
-	
-	@Override
-	public String toString() {
-		return "MemberBean [memberId=" + memberId + ", account=" + account + ", memName=" + memName + "]";
+	private Timestamp modifiyTime;
+
+	public Timestamp getModifiyTime() {
+		return modifiyTime;
 	}
 
-	public Integer getMemberId() {
+	public void setModifiyTime(Timestamp modifiyTime) {
+		this.modifiyTime = modifiyTime;
+	}
+
+	@Override
+	public String toString() {
+		return "MemberBean [memberId=" + memberId + ", account=" + account + ", memName=" + memName + ", phone=" + phone
+				+ ", cellphone=" + cellphone + ", gender=" + gender + ", birth=" + birth + ", memHeight=" + memHeight
+				+ ", memWeight=" + memWeight + ", bloodType=" + bloodType + ", address=" + address + ", pwd=" + pwd
+				+ ", medicine=" + medicine + ", cancelCount=" + cancelCount + ", photo=" + photo + ", point=" + point
+				+ ", expendRecord=" + expendRecord + ", medicalHistory=" + medicalHistory + ", fileName=" + fileName
+				+ ", registerTime=" + registerTime + ", modifiyTime=" + modifiyTime + "]";
+	}
+
+	public String getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(Integer memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 
@@ -154,14 +167,6 @@ public class MemberBean {
 		this.cancelCount = cancelCount;
 	}
 
-	public Integer getNegCount() {
-		return negCount;
-	}
-
-	public void setNegCount(Integer negCount) {
-		this.negCount = negCount;
-	}
-
 	public Blob getPhoto() {
 		return photo;
 	}
@@ -209,6 +214,6 @@ public class MemberBean {
 	public void setRegisterTime(Timestamp registerTime) {
 		this.registerTime = registerTime;
 	}
-	
+
 }
 	

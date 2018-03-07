@@ -1,23 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Document</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <title>Document</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/w3.css">
+    <link rel="stylesheet" type="text/css" href="w3.css">
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="../css/index.css" />
-    
+    <link rel="stylesheet" type="text/css" href="index.css" />
     <style type="text/css">
         
     </style>
 </head>
 
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/TeleHealth/healthcolumn/HealthColumn.jsp">健康專欄 <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#team">醫師介紹</a>
@@ -36,6 +36,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#pricing">方案介紹</a>
                     </li>
+                    
                 </ul>
                 <!-- Trigger the modal with a button -->
                 <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
@@ -85,22 +86,13 @@
     <main>
         <ul class="nav nav-tabs w3-padding-large w3-card" id="myTab" role="tablist">
             <li class="nav-item">
-                <input type="button" class="nav-link active" id="BOD" data-toggle="tab" role="tab"  value="塑身健康"/>
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
             </li>
-             <li class="nav-item">
-                <input type="button" class="nav-link active" id="FOO" data-toggle="tab" role="tab"  value="飲食資訊"/>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
             </li>
-             <li class="nav-item">
-                <input type="button" class="nav-link active" id="CHR" data-toggle="tab" role="tab"  value="慢性疾病"/>
-            </li>
-             <li class="nav-item">
-                <input type="button" class="nav-link active" id="EYE" data-toggle="tab" role="tab"  value="眼睛保健"/>
-            </li>
-             <li class="nav-item">
-                <input type="button" class="nav-link active" id="OLD" data-toggle="tab" role="tab"  value="銀髮照護"/>
-            </li>
-             <li class="nav-item">
-                <input type="button" class="nav-link active" id="VID" data-toggle="tab" role="tab"  value="影音專區"/>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -108,73 +100,67 @@
                 <!-- Main Content -->
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8 col-md-10 mx-auto" id="title">
+                        <div class="col-lg-8 col-md-10 mx-auto">
+
                             <div class="post-preview">
                                 <a href="post.html">
                                     <h2 class="post-title">
                                         Man must explore, and this is exploration at its greatest
-                                    </h2>                                 
+                                    </h2>
                                 </a>
-                                <p class="post-meta">Posted by on September 24, 2018</p>
                                 <img src="team4.jpg" class="col-5 float-left">
                                 <p>Sed non nisi ut quam varius pulvinar sit amet eget enim. Suspendisse fringilla libero id vestibulum porta. Maecenas sed semper dolor. Pellentesque convallis luctus est et rutrum. Sed ac ante in nisi imperdiet facilisis. Praesent et porta lorem, ac sagittis quam. Sed tempus eleifend ex quis scelerisque. Sed pulvinar viverra velit ultrices egestas. Etiam convallis libero auctor feugiat tempor. Integer lectus nisi, convallis eget pellentesque eu, tempor quis erat. Suspendisse potenti.</p>
-                                
+                                <p class="post-meta">Posted by
+                                    <a href="#">Start Bootstrap</a> on September 24, 2018</p>
                             </div>
-                            <hr> 
- <script type="text/javascript"> 
-	$(document).ready(function() {	
-		$.getJSON('/TeleHealth/healthcolumn/hotcontent.controller',{ }, function(data){
-			$('#title').empty();
-			 $.each(data, function (i, data) {
-		            var article=$("<a href='article.jsp?title="+data.title+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
-		            var cell1= $("<h2 class='post-title'></h2>").text(data.title);
-		            article.append(cell1)
-		            var cell2=$("<p class='post-meta'></p>").text(data.createDate);
-		            var cell3 = $("<p></p>").html(data.content.substring(0,300));        
-		            var row = $('<div class="post-preview"></div>').append([article, cell2,cell3]);
-		            $('#title').append(row);
-		         });
-		         var pager= $('<a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom"></a>').text("<Previous");
-		         var pager2= $('<a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom"></a>').text("Next>");    
-		         var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
-				 $('#title').append(row2);
-		 	});	
-				
-			 
-	})
- $('input[type="button"]').click(function() {
-	var value=$(this).prop("id");
- 	$.getJSON('/TeleHealth/healthcolumn/healthcolumn.controller', {advisoryCode:value}, function (data){
-		console.log(data);		
-		$('#title').empty();	  
-         $.each(data, function (i, data) {
-            var article=$("<a href='article.jsp?title="+data.title+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
-            var cell1= $("<h2 class='post-title' ></h2>").text(data.title);
-            article.append(cell1)
-            var cell2=$("<p class='post-meta'></p>").text(data.createDate);
-            var cell3 = $("<p></p>").html(data.content.substring(0,300));        
-            var row = $('<div class="post-preview"></div>').append([article, cell2,cell3]);
-            $('#title').append(row);
-         });
-         var pager= $('<a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom"></a>').text("<Previous");
-         var pager2= $('<a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom"></a>').text("Next>");    
-         var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
-		 $('#title').append(row2);
- 	});
- });
- function clickcount(){	
-	 var title=$(this).text();
-		$.post('/TeleHealth/healthcolumn/countarticle.controller', {title:title}, function (data){
-				console.log(title);
-				console.log(data);				
-			 })};
-		
-	 	
- </script>                   
+                            <hr>
+                            <div class="post-preview">
+                                <a href="post.html">
+                                    <h2 class="post-title">
+                                        I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
+                                    </h2>
+                                </a>
+                                <img src="team4.jpg" class="col-5 float-left">
+                                <p>Sed non nisi ut quam varius pulvinar sit amet eget enim. Suspendisse fringilla libero id vestibulum porta. Maecenas sed semper dolor. Pellentesque convallis luctus est et rutrum. Sed ac ante in nisi imperdiet facilisis. Praesent et porta lorem, ac sagittis quam. Sed tempus eleifend ex quis scelerisque. Sed pulvinar viverra velit ultrices egestas. Etiam convallis libero auctor feugiat tempor. Integer lectus nisi, convallis eget pellentesque eu, tempor quis erat. Suspendisse potenti.</p>
+                                <p class="post-meta">Posted by
+                                    <a href="#">Start Bootstrap</a> on September 18, 2018</p>
+                            </div>
+                            <hr>
+                            <div class="post-preview">
+                                <a href="post.html">
+                                    <h2 class="post-title">
+                                        Science has not yet mastered prophecy
+                                    </h2>
+                                </a>
+                                <img src="team4.jpg" class="col-5 float-left">
+                                <p>Sed non nisi ut quam varius pulvinar sit amet eget enim. Suspendisse fringilla libero id vestibulum porta. Maecenas sed semper dolor. Pellentesque convallis luctus est et rutrum. Sed ac ante in nisi imperdiet facilisis. Praesent et porta lorem, ac sagittis quam. Sed tempus eleifend ex quis scelerisque. Sed pulvinar viverra velit ultrices egestas. Etiam convallis libero auctor feugiat tempor. Integer lectus nisi, convallis eget pellentesque eu, tempor quis erat. Suspendisse potenti.</p>
+                                <p class="post-meta">Posted by
+                                    <a href="#">Start Bootstrap</a> on August 24, 2018</p>
+                            </div>
+                            <hr>
+                            <div class="post-preview">
+                                <a href="post.html">
+                                    <h2 class="post-title">
+                                        Failure is not an option
+                                    </h2>
+                                </a>
+                                <img src="team4.jpg" class="col-5 float-left">
+                                <p>Sed non nisi ut quam varius pulvinar sit amet eget enim. Suspendisse fringilla libero id vestibulum porta. Maecenas sed semper dolor. Pellentesque convallis luctus est et rutrum. Sed ac ante in nisi imperdiet facilisis. Praesent et porta lorem, ac sagittis quam. Sed tempus eleifend ex quis scelerisque. Sed pulvinar viverra velit ultrices egestas. Etiam convallis libero auctor feugiat tempor. Integer lectus nisi, convallis eget pellentesque eu, tempor quis erat. Suspendisse potenti.</p>
+                                <p class="post-meta">Posted by
+                                    <a href="#">Start Bootstrap</a> on July 8, 2018</p>
+                            </div>
+                            <hr>
+                            <!-- Pager -->
+                            <div class="clearfix">
+                                <a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom">&laquo; Previous</a>
+                                <a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom">Next &raquo;</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>          
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
         </div>
     </main>
     <!-- Footer -->
@@ -184,9 +170,11 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. -->
+    <script src="scripts.js"></script>
 </body>
 
 </html>

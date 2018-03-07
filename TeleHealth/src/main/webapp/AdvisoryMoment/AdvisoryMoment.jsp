@@ -45,6 +45,7 @@
 		 padding-right:10px;
 		 }
   .columnHead{font-size:1.2em;}
+  .eveMouseOver {cursor: pointer;}
 </style>
 </head>
 <body>
@@ -67,7 +68,7 @@
                         <a class="nav-link" href="#pricing">方案介紹</a>
                     </li>
                 </ul>
-                <form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
+                <form action="<c:url value="/AdvisoryMomemt/memberSelectByCode.controller" />" method="GET">
 <input type="text" id="userId" name="userId" value="B221C929-CF1C-445F-B927-1D5E463B3006">
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
@@ -135,6 +136,25 @@
   </div>
 </div>
 
+<!-- 已預約查詢視窗 -->
+<div class="modal fade" id="checkResult" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkResultTitle">您的預約</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="checkResultDone">我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="calendar"></div>
 
 <!--=======================載入script檔跟程式==========================-->
@@ -181,7 +201,7 @@ $(document).ready(function() {
 				}
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
-	$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectAll.controller",{"UserId":UserId},function(eventsData){	
+	$.getJSON(urlPath+"/AdvisoryMomemt/memberSelectAll.controller",{"UserId":UserId},function(eventsData){	
 	$("#chooseCode").change(function (){
 		var code = $("#chooseCode :selected").prop("id");
 		if(code=="all"){
@@ -189,7 +209,7 @@ $(document).ready(function() {
 			$("#calendar").fullCalendar('addEventSource', eventsData);
 			$("#calendar").fullCalendar('rerenderEvents');
 		}else{		
-		$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectByCode.controller",{"UserId":UserId,advisoryCode:code},function(data){	
+		$.getJSON(urlPath+"/AdvisoryMomemt/memberSelectByCode.controller",{"UserId":UserId,advisoryCode:code},function(data){	
 		$("#calendar").fullCalendar('removeEventSources');
 		$("#calendar").fullCalendar('addEventSource', data);
 		$("#calendar").fullCalendar('rerenderEvents');
@@ -257,14 +277,22 @@ $(document).ready(function() {
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId};
 				console.log("events="+reserveData);
 			  }else if(events.backgroundColor=="#00db00"){
-				  $('#reserveResult').modal('show');
+				  $('#checkResult').modal('show');
 				  docFrag.append("<h3>諮詢項目:"+reserveItem+"</h3>"
 						  	+"<h3>諮詢人員:"+reserveEmp+"</h3>"
 // 				  			+"<h3>視訊代碼:"+"<span>"+"</span>"+"</h3>"
 				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
-				  	$("#reserveResult .modal-body").append(docFrag);
+				  	$("#checkResult .modal-body").append(docFrag);
 				  }  
-	  }		  
+	  },
+	  eventMouseover:function( event, jsEvent, view ) {
+			if(event.backgroundColor=="#00db00"||event.backgroundColor=="#0080ff"){
+				$('#calendar').fullCalendar(this).addClass('eveMouseOver')
+				}
+		  },
+	  eventMouseout:function( event, jsEvent, view ) {
+				$('#calendar').fullCalendar(this).removeClass('eveMouseOver') 
+		  }		  
     });
 	});	
 	$("#fastSearch").click(function(){
@@ -291,6 +319,9 @@ $(document).ready(function() {
 		})  
 	$("#reserveDone").click(function(){
 		window.location.reload();
+		})
+	$("#checkResultDone").click(function(){
+		$("#checkResult").modal('hide');
 		})
 });
 </script>

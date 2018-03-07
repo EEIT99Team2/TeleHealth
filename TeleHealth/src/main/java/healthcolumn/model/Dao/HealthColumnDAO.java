@@ -1,4 +1,4 @@
-package healthcolumn.modelDao;
+package healthcolumn.model.Dao;
 
 import java.util.Date;
 import java.util.List;

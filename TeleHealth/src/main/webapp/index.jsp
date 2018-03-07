@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <title>Document</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="w3.css">
@@ -30,6 +32,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#pricing">方案介紹</a>
                     </li>
+                     
                 </ul>
                 <!-- Trigger the modal with a button -->
                 <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
@@ -49,28 +52,33 @@
                         </button>
                     </div>
                     <div class="modal-body" style="padding:40px 50px;">
-                        <form role="form">
+                      
+                       <form method="post" enctype="multipart/form-data" 
+						action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="usrname">Username</label>
-                                <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${param.usrname}">
+                                <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
                             </div>
                             <div class="form-group">
                                 <label for="psw">
                                     </span> Password</label>
-                                <input type="text" class="form-control" id="psw" placeholder="Enter password">
+                                <input type="password" class="form-control" name="psw" id="psw" placeholder="Enter password">
                             </div>
+                            <font color="red" size="-1">${MsgMap.errorPsw}</font>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" value="" checked /> Remember me
                                 </label>
                             </div>
-                            <button type="button" class="btn btn-success btn-block" >Login</button>
-                            <button type="submit" class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success btn-block">Login</button>
+                            <button type="submit" class="btn btn-danger btn-block">Cancel</button>
                         </form>
+                     
                     </div>
                     <div class="modal-footer">
-                        <p>Not a member? <a href="#">Sign Up</a></p>
-                        <p>Forgot <a href="#">Password?</a></p>
+                        <p>Not a member? <a href="Members/register.jsp">Sign Up</a></p>
+                        <p>Forgot <a href="Members/ForgetPwd.jsp">Password?</a></p>
                     </div>
                 </div>
             </div>
@@ -85,13 +93,13 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="first-slide" src="http://static.runoob.com/images/mix/img_fjords_wide.jpg" alt="First slide">
+                    <img class="first-slide" src="https://static.runoob.com/images/mix/img_fjords_wide.jpg" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="second-slide" src="http://static.runoob.com/images/mix/img_nature_wide.jpg" alt="Second slide">
+                    <img class="second-slide" src="https://static.runoob.com/images/mix/img_nature_wide.jpg" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="third-slide" src="http://static.runoob.com/images/mix/img_mountains_wide.jpg" alt="Third slide">
+                    <img class="third-slide" src="https://static.runoob.com/images/mix/img_mountains_wide.jpg" alt="Third slide">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
@@ -242,6 +250,10 @@
     <!-- Just to make our placeholder images work. -->
     <script src="holder.min.js"></script>
     <script src="scripts.js"></script>
+    
+    
+    </script>    
+    
 </body>
 
 </html>

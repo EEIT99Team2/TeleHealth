@@ -42,6 +42,7 @@
   .item3 {padding-right:10px;
 		 }
   .columnHead{font-size:1.2em;}
+  .eveMouseOver {cursor: pointer;}
 </style>
 </head>
 <body>
@@ -98,7 +99,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="UnReTakeOff">我要請假</button>
-        <button type="button" class="btn btn-primary" id="Change">我要調班</button>
+<!--         <button type="button" class="btn btn-primary" id="Change">我要調班</button> -->
         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
       </div>
     </div>
@@ -124,26 +125,26 @@
     </div>
   </div>
 </div>
-<!-- 調班視窗 -->
-<div class="modal fade" id="changeItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="changeItemTitle">申請調班</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h2>不准調</h2>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="checkChange">確定</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- 調班視窗 暫定不需要 -->
+<!-- <div class="modal fade" id="changeItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
+<!--   <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<!--     <div class="modal-content"> -->
+<!--       <div class="modal-header"> -->
+<!--         <h5 class="modal-title" id="changeItemTitle">申請調班</h5> -->
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--           <span aria-hidden="true">&times;</span> -->
+<!--         </button> -->
+<!--       </div> -->
+<!--       <div class="modal-body"> -->
+<!--         <h2>不准調</h2> -->
+<!--       </div> -->
+<!--       <div class="modal-footer"> -->
+<!--         <button type="button" class="btn btn-primary" data-dismiss="modal" id="checkChange">確定</button> -->
+<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
 <!-- 請假視窗 -->
 <div class="modal fade" id="TakeOffItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -214,7 +215,7 @@ $(document).ready(function() {
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
 		
-	$.getJSON(urlPath+"/AdvisoryMomemt/EmployeeSelectAll.controller",{"EmpId":EmpId},function(eventsData){	
+	$.getJSON(urlPath+"/AdvisoryMomemt/employeeSelectAll.controller",{"EmpId":EmpId},function(eventsData){	
 	$("#chooseCode").change(function (){
 		
 		var code = $("#chooseCode :selected").prop("id");
@@ -223,7 +224,7 @@ $(document).ready(function() {
 			$("#calendar").fullCalendar('addEventSource', eventsData);
 			$("#calendar").fullCalendar('rerenderEvents');
 		}else{		
-		$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectByCode.controller",{"EmpId":EmpId,advisoryCode:code},function(data){	
+		$.getJSON(urlPath+"/AdvisoryMomemt/employeeSelectByCode.controller",{"EmpId":EmpId,advisoryCode:code},function(data){	
 		$("#calendar").fullCalendar('removeEventSources');
 		$("#calendar").fullCalendar('addEventSource', data);
 		$("#calendar").fullCalendar('rerenderEvents');
@@ -299,7 +300,15 @@ $(document).ready(function() {
 				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
 				  	$("#reservedItem .modal-body").append(docFrag);
 				  }  
-	  }		  
+	  },
+	  eventMouseover:function( event, jsEvent, view ) {
+			if(event.backgroundColor=="#d26900"||event.backgroundColor=="#0080ff"){
+				$('#calendar').fullCalendar(this).addClass('eveMouseOver')
+				}
+		  },
+	  eventMouseout:function( event, jsEvent, view ) {
+				$('#calendar').fullCalendar(this).removeClass('eveMouseOver') 
+		  }			  
     });
 	});	
 	$("#fastSearch").click(function(){
@@ -321,10 +330,10 @@ $(document).ready(function() {
 		$('#reservedItem').modal('hide');
 		$('#TakeOffItem').modal('show');
 		})
-	$("#Change").click(function(){
-		$('#UnReserveItem').modal('hide');
-		$('#changeItem').modal('show');
-		})
+// 	$("#Change").click(function(){
+// 		$('#UnReserveItem').modal('hide');
+// 		$('#changeItem').modal('show');
+// 		})
 });
 </script>
 </body>

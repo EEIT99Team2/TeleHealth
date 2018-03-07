@@ -49,25 +49,25 @@
 </head>
 <body>
  <!-- Navigation -->
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
-            <a class="navbar-brand" href="#">Carousel</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">醫師介紹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#pricing">方案介紹</a>
-                    </li>
-                </ul>
-                <form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
+<!--     <header> -->
+<!--         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black"> -->
+<!--             <a class="navbar-brand" href="#">Carousel</a> -->
+<!--             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> -->
+<!--                 <span class="navbar-toggler-icon"></span> -->
+<!--             </button> -->
+<!--             <div class="collapse navbar-collapse w3-center" id="navbarCollapse"> -->
+<!--                 <ul class="navbar-nav mr-auto"> -->
+<!--                     <li class="nav-item active"> -->
+<!--                         <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a> -->
+<!--                     </li> -->
+<!--                     <li class="nav-item"> -->
+<!--                         <a class="nav-link" href="#team">醫師介紹</a> -->
+<!--                     </li> -->
+<!--                     <li class="nav-item"> -->
+<!--                         <a class="nav-link" href="#pricing">方案介紹</a> -->
+<!--                     </li> -->
+<!--                 </ul> -->
+                <form action="<c:url value="/AdvisoryMomemt/memberSelectByCode.controller" />" method="GET">
 <input type="text" id="userId" name="userId" value="B221C929-CF1C-445F-B927-1D5E463B3006">
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
@@ -91,10 +91,10 @@
 </select><br>
 </form>
                 <!-- Trigger the modal with a button -->                
-                <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
-            </div>
-        </nav>
-    </header>
+<!--                 <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button> -->
+<!--             </div> -->
+<!--         </nav> -->
+<!--     </header> -->
 <!-- 點擊預約時段彈跳視窗 -->
 <div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -145,6 +145,7 @@
 <script type="text/javascript" src="../fullCalendar/calender.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../fullCalendar/jquery-ui.min.js"></script>
 <script>
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
@@ -181,7 +182,7 @@ $(document).ready(function() {
 				}
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
-	$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectAll.controller",{"UserId":UserId},function(eventsData){	
+	$.getJSON(urlPath+"/AdvisoryMomemt/memberSelectAll.controller",{"UserId":UserId},function(eventsData){	
 	$("#chooseCode").change(function (){
 		var code = $("#chooseCode :selected").prop("id");
 		if(code=="all"){
@@ -189,7 +190,7 @@ $(document).ready(function() {
 			$("#calendar").fullCalendar('addEventSource', eventsData);
 			$("#calendar").fullCalendar('rerenderEvents');
 		}else{		
-		$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectByCode.controller",{"UserId":UserId,advisoryCode:code},function(data){	
+		$.getJSON(urlPath+"/AdvisoryMomemt/memberSelectByCode.controller",{"UserId":UserId,advisoryCode:code},function(data){	
 		$("#calendar").fullCalendar('removeEventSources');
 		$("#calendar").fullCalendar('addEventSource', data);
 		$("#calendar").fullCalendar('rerenderEvents');
@@ -231,7 +232,12 @@ $(document).ready(function() {
       minTime:"08:00",
       maxTime:"21:00",
       navLinks: true, // can click day/week names to navigate views
-      editable: false,
+      editable:true,
+      droppable: true, // this allows things to be dropped onto the calendar
+      drop: function() {
+        // is the "remove after drop" checkbox checked?
+        },
+      
 //       eventLimit: true, // allow "more" link when too many events
 	  eventSources:[	
 	  		{events:eventsData}
@@ -295,8 +301,8 @@ $(document).ready(function() {
 });
 </script>
 <!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
+<!--     <footer class="w3-center w3-black w3-padding-16"> -->
+<!--         <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p> -->
+<!--     </footer> -->
 </body>
 </html>
