@@ -1,17 +1,15 @@
 package register.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.mail.internet.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,6 +40,7 @@ public class RegisterController {
 	public String method(
 				String account, 
 				String memName, 
+				String phone1,
 				String phone, 
 				String cellphone, 
 				String gender, 
@@ -53,6 +52,7 @@ public class RegisterController {
 				String pwd,
 				String medicine,
 				String medicalHistory,
+				String pwdCheck,
 				Model model,
 				@RequestParam(value="file1" ,required = false) MultipartFile file
 			) throws IOException, SQLException, ParseException {
@@ -76,7 +76,7 @@ public class RegisterController {
 								
 				if(memName==null|| memName.trim().length()==0) {
 					errorMsg.put("errormemName", "姓名欄位不能空白");
-				}else if(memName!=null && memName.trim().length()>1&& memName.trim().length()<5) {
+				}else if(memName!=null && memName.trim().length()>1&& memName.trim().length()<8) {
 					if(memName.matches("[\\u4e00-\\u9fa5]+")) {
 						System.out.println("姓名欄位格式正確");
 					}else {
@@ -86,15 +86,18 @@ public class RegisterController {
 					errorMsg.put("errormemName", "姓名欄位格式錯誤");
 				}
 				
-				if(phone ==null|| phone.trim().length()==0) {
+				if(phone ==null|| phone.trim().length()==0||phone1 ==null|| phone1.trim().length()==0) {
 					errorMsg.put("errorPhone", "電話欄位不能空白");
-//				}else if(phone!=null) {
-//					if(phone.matches("^[0][1-9]{2,3}-[0-9]{5,10}$")) {
-//						System.out.println("電話欄位格式正確");
-//					}else {
-//						errorMsg.put("errorPhone", "電話欄位格式錯誤");
-//					}
+				}else if(phone!=null && phone1!=null) {
+					phone = phone1+"-"+phone;
+					if(phone.matches("0\\d{1,2}-(\\d{6,8})")) {
+						System.out.println("電話欄位格式正確");
+					}else {
+						errorMsg.put("errorPhone", "電話欄位格式錯誤");
+					}		
 				}
+				System.out.println("phone1="+phone1);
+				System.out.println("phone="+phone);
 															
 				if(cellphone ==null|| cellphone.trim().length()==0) {
 					errorMsg.put("errorCellphone", "行動電話欄位不能空白");
@@ -121,9 +124,9 @@ public class RegisterController {
 						java.text.SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
 						dFormat.setLenient(false);
 						b = dFormat.parse(birth);  
-					}catch(ParseException e) {
+					} catch(java.text.ParseException e) {
 						errorMsg.put("errorBirth", "生日欄位必須是日期，並且符合YYYY-MM-DD的格式");
-					}
+					} 
 				}  			
 						
 				if(memHeight == null|| memHeight.trim().length()==0) {
@@ -163,9 +166,21 @@ public class RegisterController {
 				if(address ==null|| address.trim().length()==0) {
 					errorMsg.put("errorAddr", "地址欄位不能空白");
 				}
+				
 				if(pwd ==null||  pwd.trim().length()==0) {
 					errorMsg.put("errorPwd", "密碼欄位不能空白");
 				}
+				if(pwdCheck ==null||  pwdCheck.trim().length()==0) {
+					errorMsg.put("errorPwdCheck", "密碼確認欄位不能空白");
+				}else if(pwdCheck!=null && pwdCheck.trim().length()>1) {
+					if(pwdCheck.equals(pwd)) {
+						System.out.println("pwd=true");		
+					}else {
+						System.out.println("pwd=false");	
+						errorMsg.put("errorPwdCheck", "密碼確認必須跟密碼相同");
+					}																									
+				}
+							
 				if(medicine ==null|| medicine.trim().length()==0) {
 					errorMsg.put("errorMedicine", "藥物過敏欄位不能空白");
 				}	
@@ -176,7 +191,6 @@ public class RegisterController {
 				Blob photo = null;
 				String fileName = null;
 				InputStream in = null;
-				BufferedOutputStream out = null;
 				if(file != null && !file.isEmpty()) {
 					fileName = file.getOriginalFilename();
 					String extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()).toLowerCase();
@@ -188,15 +202,6 @@ public class RegisterController {
 						fileName = GlobalService.adjustFileName(fileName, GlobalService.IMAGE_FILENAME_LENGTH);
 						in = file.getInputStream();
 						photo = SystemUtils.fileToBlob(in, file.getSize());
-						
-						out = new BufferedOutputStream(
-										new FileOutputStream(
-												new File("/TeleHealth/WEB-INF/videos/" + fileName)));
-						byte[] readByte = new byte[8192];
-						int len = 0;
-						while((len = in.read(readByte)) != -1) {
-							out.write(readByte, 0, len);
-						}
 					}
 				}
 				
@@ -208,6 +213,7 @@ public class RegisterController {
 				if(registerService.selectByAccount(account) != null) {
 					errorMsg.put("errorAccount", "此帳號已存在，請換新帳號");			
 				}else {
+					pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
 					MemberBean bb = new MemberBean();
 					bb.setAccount(account);
 					bb.setMemName(memName);

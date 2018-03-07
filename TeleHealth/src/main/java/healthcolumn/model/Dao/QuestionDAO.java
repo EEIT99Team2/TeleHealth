@@ -1,4 +1,4 @@
-package healthcolumn.modelDao;
+package healthcolumn.model.Dao;
 
 import java.util.Date;
 import java.util.List;
@@ -12,21 +12,43 @@ import org.springframework.stereotype.Repository;
 import healthcolumn.model.QuestionBean;
 @Repository
 public class QuestionDAO {
-//	select emp.empName,mem.memName, que.Content,que.createDate,que.QAtype from healthColumn hel join question que on hel.columnId=que.QAcolumnId  join employees emp on que.empId=emp.empId join members mem on que.memberId=mem.memberId where hel.title='dqwddqwd'
+
 	@Autowired
 	private SessionFactory sessionFactory;
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 	//選擇文章所有回應的文
-	public List<QuestionBean>  select(String title) {
-		NativeQuery query=this.getSession().createNativeQuery("select * from healthColumn where Id=");
-		query.addEntity(QuestionBean.class);
+	public List<QuestionBean>  selectresponse(String title) {
+		NativeQuery query=this.getSession().createNativeQuery
+				("select emp.empName,mem.memName, que.Content,que.createDate,que.QAtype \r\n" + 
+						"from question que\r\n" + 
+						"   join healthColumn hel on hel.columnId=que.QAcolumnId  \r\n" + 
+						"  left outer  join employees emp on que.empId=emp.empId \r\n" + 
+						"  left outer  join members mem on que.memberId=mem.memberId\r\n" + 
+						" where hel.title=?");
+		query.setParameter(1, title);
 		List<QuestionBean> data=(List<QuestionBean>)query.list();
 		return data;		
 	}
+	//選擇護理師文章所有回應的文
+		public List<QuestionBean>  selectresponseD(String empId) {
+			NativeQuery query=this.getSession().createNativeQuery
+					("select * from question where empid=?");
+			query.setParameter(1, empId);
+			List<QuestionBean> data=(List<QuestionBean>)query.list();
+			return data;		
+		}
+	//選擇護理師文章所有回應的文
+				public List<QuestionBean>  selectresponseM(String memid) {
+					NativeQuery query=this.getSession().createNativeQuery
+							(" select * from question where memid=?");
+					query.setParameter(1, memid);
+					List<QuestionBean> data=(List<QuestionBean>)query.list();
+					return data;		
+				}
 	//增加	
-		public QuestionBean insert(QuestionBean bean) {
+		public QuestionBean insertQA(QuestionBean bean) {
 			if(bean!=null) {
 				QuestionBean temp =this.getSession().get(QuestionBean.class, bean.getId());
 				if(temp==null) {

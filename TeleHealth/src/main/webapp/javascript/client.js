@@ -7,11 +7,11 @@ var loginPage = document.querySelector("#login-page"),
 	loginButton = document.querySelector("#login"),
 	callPage = document.querySelector("#call-page"),
 	theirUsernameInput = document.querySelector("#their-username"),
-	callButton = document.getElementById("callHere"),
+//	callButton = document.getElementById("callHere"),
 	hangUpButton = document.querySelector("#hang-up"),
 	joinButton = document.getElementById("join"),
-	yourVideo = document.getElementById("yours"),
-	theirVideo = document.getElementById("theirs"),
+	yourVideo = document.querySelector("#yours"),
+	theirVideo = document.querySelector("#theirs"),
 	yourConnection,
 	connectedUser,
 	room,
@@ -23,20 +23,16 @@ var offerOptions = {
 		};
 
 var configuration = {
-		 iceServers: [
-				{
-	                urls: "stun:23.21.150.121"
-	            },
-	            {
-	                urls: "stun:stun.l.google.com:19302"
-	            }
-	            ,
-	            {
-	            	urls: 'turn:numb.viagenie.ca',
-	            	credential: 'turnserver',
-	            	username: 'm70049@outlook.com'
-	            }
-           ]
+		iceServers: [
+			{
+            	urls: 'turn:numb.viagenie.ca',
+            	credential: 'turnserver',
+            	username: 'm70049@outlook.com'
+            },
+			{
+				urls: "stun:stun.l.google.com:19302"
+			}
+		]
 };
 
 callPage.style.display="none";
@@ -110,28 +106,18 @@ function send(message) {
     connection.send(JSON.stringify(message));
 }
 
-function onLogin(success, name) {
-    if (success === false) {
-        alert("登入的ID： " + name + " 重複，請重新輸入!");
-    } else {
-        loginPage.style.display = "none";
-        callPage.style.display = "block";
-        startConnection();
-    }
-}
-
-callButton.addEventListener("click", function() {
-	var theirUsername = theirUsernameInput.value;
-	if(theirUsername.length > 0) {
-		send({
-			type: "callcheck",
+//callButton.addEventListener("click", function() {
+//	var theirUsername = theirUsernameInput.value;
+//	if(theirUsername.length > 0) {
+//		send({
+//			type: "callcheck",
 //			username: username,
-			callname: theirUsername
-		});
-	} else {
-		alert("請輸入要進行視訊的對象ID!");
-	}
-});
+//			callname: theirUsername
+//		});
+//	} else {
+//		alert("請輸入要進行視訊的對象ID!");
+//	}
+//});
 
 //進入房間
 joinButton.addEventListener("click", function() {
@@ -149,16 +135,30 @@ joinButton.addEventListener("click", function() {
 
 
 hangUpButton.addEventListener("click", function() {
+	console.log("roomname ================= " + room);
+	console.log("name ==== " + name);
 	send({
 		type: "leave",
-		name: name,
+		leavename: name,
+		calluser: connectedUser,
 		roomname : room
 	});
-//	onLeave();
+	onLeave();
 //	location.reload();
 });
 
+function onLogin(success, name) {
+    if (success === false) {
+        alert("登入的ID： " + name + " 重複，請重新輸入!");
+    } else {
+        loginPage.style.display = "none";
+        callPage.style.display = "block";
+        startConnection();
+    }
+}
+
 function onJoinReturn(roomname, success, message, users, callname) {
+	room = roomname;
 	if(success && users == 2) {
 		console.log("processing onJoinReturn");
 		startPeerConnection1(callname);
@@ -174,17 +174,18 @@ function onCheckReturn(success, callname) {
 		alert("你所要進行的視訊代號：" + callname + " 不在線上，請重新確認!");
 	}
 }
-
-function onOffer(offer, name) {
-	connectedUser = name;
-    console.log("handleOffer" + "," + offer + "," + name);
+ 
+function onOffer(offer, callname) {
+	connectedUser = callname;
+    console.log("handleOffer" + "," + offer + "," + connectedUser);
 	yourConnection.setRemoteDescription(new RTCSessionDescription(offer));
+	console.log("Create Answer!")
 	var answer = yourConnection.createAnswer().then(function(answer) {
 		yourConnection.setLocalDescription(answer);
 		send({
 			type: "answer",
 			answer: answer,
-			username : name
+			username : connectedUser
 		});
 	})
 }	
@@ -203,10 +204,11 @@ function onLeave() {
 	connectedUser = null;
 	room = null;
 	theirVideo.src = null;
-//	yourConnection.onicecandidate = null;
-//	yourConnection.ontrack = null;
+//	yourVideo.scr = null;
+	yourConnection.onicecandidate = null;
+	yourConnection.ontrack = null;
 	yourConnection.close();
-	yourConnection = null;
+//	yourConnection = null;
 	startConnection();
 //	location.reload();
 }
@@ -245,18 +247,19 @@ function startConnection() {
         .then(myStream => {
             console.log("start streaming");
             stream = myStream;
-            yourVideo.srcObject = stream;
+            if(yourVideo.srcObject != stream) {
+            	yourVideo.srcObject = stream;
+            }
             if (hasRTCPeerConnection()) {
                 setupPeerConnection(stream);
             } else {
-                alert("Sorry, your browser does not support WebRTC.1");
+                alert("Sorry, your browser does not support WebRTC.");
             }
         })
 	} else {
-		alert("Sorry, your browser dose not support WebRTC.2");
+		alert("Sorry, your browser dose not support WebRTC.");
 	}
 }
-
 function setupPeerConnection(stream) {
     yourConnection = new RTCPeerConnection(configuration);
     //設定連線
@@ -266,11 +269,10 @@ function setupPeerConnection(stream) {
     });
     
     yourConnection.ontrack = function(event) {
-    	 if (theirVideo.srcObject) {
-    		 return;
+    	 if (theirVideo.srcObject !== event.streams[0]) {
+    		 theirVideo.srcObject = event.streams[0];
+    		 console.log("設定theirVideo.srcObject!");
     	 }
-    	 console.log("設定theirVideo.srcObject!")
-    	 theirVideo.srcObject = event.streams[0];
     };
     //設定ice處理事件
     yourConnection.onicecandidate = function(event) {
@@ -288,7 +290,6 @@ function startPeerConnection1(user) {
 	//開始建立offer
 	var offer = yourConnection.createOffer(offerOptions).then(function(offer) {
 		yourConnection.setLocalDescription(offer);
-		console.log("username===============" + username);
 		send({
 			type: "offer",
 			offer: offer ,
@@ -296,12 +297,12 @@ function startPeerConnection1(user) {
 		});
 	});
 }
+
 function startPeerConnection(roomname) {
 	//開始建立offer
 	room = roomname;
 	var offer = yourConnection.createOffer(offerOptions)
 	.then(function(offer) {
-		console.log("aaaaaaaaa");
 		yourConnection.setLocalDescription(offer);
 		send({
 			type: "offerForRoom",
@@ -309,7 +310,6 @@ function startPeerConnection(roomname) {
 			roomname: roomname,
 			name: name
 		});
-		console.log("bbbbbbbbb");
 	});
 }
 
