@@ -10,8 +10,8 @@ var loginPage = document.querySelector("#login-page"),
 	callButton = document.getElementById("callHere"),
 	hangUpButton = document.querySelector("#hang-up"),
 	joinButton = document.getElementById("join"),
-	yourVideo = document.getElementById("yours"),
-	theirVideo = document.getElementById("theirs"),
+	yourVideo = document.querySelector("#yours"),
+	theirVideo = document.querySelector("#theirs"),
 	yourConnection,
 	connectedUser,
 	room,
@@ -24,18 +24,18 @@ var offerOptions = {
 
 var configuration = {
 		 iceServers: [
-				{
-	                urls: "stun:23.21.150.121"
-	            },
+//				{
+//	                urls: "stun:23.21.150.121"
+//	            },
 	            {
 	                urls: "stun:stun.l.google.com:19302"
 	            }
-	            ,
-	            {
-	            	urls: 'turn:numb.viagenie.ca',
-	            	credential: 'turnserver',
-	            	username: 'm70049@outlook.com'
-	            }
+//	            ,
+//	            {
+//	            	urls: 'turn:numb.viagenie.ca',
+//	            	credential: 'turnserver',
+//	            	username: 'm70049@outlook.com'
+//	            }
            ]
 };
 
@@ -174,7 +174,7 @@ function onCheckReturn(success, callname) {
 		alert("你所要進行的視訊代號：" + callname + " 不在線上，請重新確認!");
 	}
 }
-
+ 
 function onOffer(offer, name) {
 	connectedUser = name;
     console.log("handleOffer" + "," + offer + "," + name);
@@ -256,7 +256,6 @@ function startConnection() {
 		alert("Sorry, your browser dose not support WebRTC.2");
 	}
 }
-
 function setupPeerConnection(stream) {
     yourConnection = new RTCPeerConnection(configuration);
     //設定連線
@@ -266,11 +265,11 @@ function setupPeerConnection(stream) {
     });
     
     yourConnection.ontrack = function(event) {
-    	 if (theirVideo.srcObject) {
-    		 return;
+    	 if (theirVideo.srcObject !== event.streams[0]) {
+    		 theirVideo.srcObject = event.streams[0];
+    		 console.log("設定theirVideo.srcObject!");
+    		 
     	 }
-    	 console.log("設定theirVideo.srcObject!")
-    	 theirVideo.srcObject = event.streams[0];
     };
     //設定ice處理事件
     yourConnection.onicecandidate = function(event) {
@@ -296,6 +295,7 @@ function startPeerConnection1(user) {
 		});
 	});
 }
+
 function startPeerConnection(roomname) {
 	//開始建立offer
 	room = roomname;
