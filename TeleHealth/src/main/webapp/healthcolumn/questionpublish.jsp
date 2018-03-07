@@ -27,9 +27,8 @@
                        <thead>
                           <tr>
                           	 <th>編號</th>
-                             <th>標題</th>                             
-                             <th>日期</th>
-                             <th>點擊量</th>
+                             <th>內容</th>                             
+                             <th>日期</th>                             
                              <th>管理</th>
                           </tr>
                        </thead>
@@ -82,16 +81,11 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			 CKEDITOR.replace('contenttext',{
-		    		filebrowserBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html',
-		    		filebrowserImageBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html?type=Images', 
-		    		filebrowserFlashBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html?type=Flash',
-		    		filebrowserUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files', 
-		    		filebrowserImageUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images', 
-		    		filebrowserFlashUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
-		    }	 );
+			 CKEDITOR.replace('contenttext',{    	 	
+		    } );
 		    console.log("ready!");	
-			loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A")		
+			loadmember("D43B1906-F319-40DC-9E11-4DA09A2558AF")
+// 			loademp("D43B1906-F319-40DC-9E11-4DA09A2558AF")			
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -106,9 +100,9 @@
 					$('#date').val(value4);
 				
 			   })
-			   //讀取醫生發表
-			   function loadProduct(empId){
-			    $.getJSON('/TeleHealth/healthcolumn/publishcontent.controller',{empId:empId},function(datas){
+			   //讀取員工發表
+			   function loademp(empId){
+			    $.getJSON('/TeleHealth/healthcolumn/QAemppublish.controller',{empId:empId},function(datas){
 						console.log(datas);
 		    			var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
@@ -126,8 +120,28 @@
 			    	})
 			    	  tb.append(doc);
 			    }) 
-		      }		
-		      
+		      }	
+		      //讀取會員發表	
+			   function loadmember(memId){
+				    $.getJSON('/TeleHealth/healthcolumn/QAmempublish.controller',{memId:memId},function(datas){
+							console.log(datas);
+			    			var doc=$(document.createDocumentFragment());			    		
+				    		var tb = $('#productTable>tbody');
+		 			        tb.empty();
+				    	$.each(datas,function(i,product){			    		
+					    	var cell1=$('<td></td>')
+					    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(product.columnId);		    		
+							cell1.append(ID);
+				    		var article=$("<td><a href='article.jsp?title="+product.title+"'"+"target='_blank'></a></td>").text(product.title);          	     	          
+				    		var cell4=$('<td></td>').text(product.clickCount);
+				    		var cell3=$('<td></td>').text(product.createDate);	
+				    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
+							var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
+				    		doc.append(row);			    		
+				    	})
+				    	  tb.append(doc);
+				    }) 
+			      }		
 			    
 			     //刪除產品
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){

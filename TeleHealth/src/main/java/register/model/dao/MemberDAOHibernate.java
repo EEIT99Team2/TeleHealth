@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +22,6 @@ public class MemberDAOHibernate {
 	
 	public List<MemberBean> selectByAccount(String account) {
 		String hql = "from MemberBean m WHERE m.account = ?";
-		@SuppressWarnings("unchecked")
 		List<MemberBean> list = getSession().createQuery(hql).setParameter(0, account).getResultList();
 		return list;
 	}
@@ -49,17 +49,42 @@ public class MemberDAOHibernate {
 		}
 		return false;
 	}
+	public boolean UdPwd(String NewPwd,String changeAccount) {														
+		NativeQuery query=this.getSession().createNativeQuery("update members set pwd=? where account=? ");
+		query.setParameter(1,NewPwd);
+		query.setParameter(2,changeAccount);
+		int result = query.executeUpdate();
+			if(result==1) {
+			return true;
+			}else {
+			return false;
+					}
+		}
+	
+	
+	public boolean UpdateMemberData(String memName,String memHeight,String memWeight,String bloodType,String medicine,String medicalHistory,String phone,String cellphone,String address,
+		String changeAccount) {														
+		NativeQuery query=this.getSession().createNativeQuery("update members set memName=? phone=? cellphone=? birth=? memHeight=? memWeight=?\r\n" + 
+				"bloodType=? medicine=? medicalHistory=? where account=? ");
+		query.setParameter(1,memName);
+		query.setParameter(2,changeAccount);
+		int result = query.executeUpdate();
+			if(result==1) {
+			return true;
+			}else {
+			return false;
+					}
+		}
 			
 	public boolean update(String memName,String phone,
-            String cellphone,String gender,java.util.Date birth,
+            String cellphone,java.util.Date birth,
             double memHeight, double memWeight, String bloodType,
-            String address,String pwd,String medicine,Blob photo,String fileName,String medicalHistory,int cancelCount,int negCount,int point,int expendRecord,String account) {
+            String address,String pwd,String medicine,Blob photo,String fileName,String medicalHistory,String account) {
 		MemberBean result = this.getSession().get(MemberBean.class, account);
 		if(result!=null) {
 			result.setMemName(memName);
 			result.setPhone(phone);
 			result.setCellphone(cellphone);
-			result.setGender(gender);
 			result.setBirth(birth);
 			result.setMemHeight(memHeight);
 			result.setMemWeight(memWeight);
@@ -70,10 +95,6 @@ public class MemberDAOHibernate {
 			result.setPhoto(photo);
 			result.setFileName(fileName);
 			result.setMedicalHistory(medicalHistory);	
-			result.setCancelCount(cancelCount);
-			result.setNegCount(negCount);
-			result.setPoint(point);
-			result.setExpendRecord(expendRecord);
 			return true;
 		}
 		return false;
