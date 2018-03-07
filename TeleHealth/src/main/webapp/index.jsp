@@ -77,8 +77,8 @@
                      
                     </div>
                     <div class="modal-footer">
-                        <p>Not a member? <a href="register.jsp">Sign Up</a></p>
-                        <p>Forgot <a href="ForgetPwd.jsp">Password?</a></p>
+                        <p>Not a member? <a href="Members/register.jsp">Sign Up</a></p>
+                        <p>Forgot <a href="Members/ForgetPwd.jsp">Password?</a></p>
                     </div>
                 </div>
             </div>

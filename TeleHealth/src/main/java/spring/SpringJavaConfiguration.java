@@ -27,6 +27,7 @@ import healthcolumn.model.QuestionBean;
 import healthpassport.model.BMIBean;
 import healthpassport.model.BloodPressureRecordsBean;
 import healthpassport.model.DataAnalysisBean;
+import register.model.MemberBean;
 
 
 @Configuration
@@ -61,7 +62,7 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureRecordsBean.class,DataAnalysisBean.class);		
+		builder.addAnnotatedClasses(MemberBean.class,AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureRecordsBean.class,DataAnalysisBean.class);		
 		
 		return builder.buildSessionFactory();
 	}

@@ -1,17 +1,15 @@
 package register.controller;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.mail.internet.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -126,9 +124,9 @@ public class RegisterController {
 						java.text.SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
 						dFormat.setLenient(false);
 						b = dFormat.parse(birth);  
-					}catch(ParseException e) {
+					} catch(java.text.ParseException e) {
 						errorMsg.put("errorBirth", "生日欄位必須是日期，並且符合YYYY-MM-DD的格式");
-					}
+					} 
 				}  			
 						
 				if(memHeight == null|| memHeight.trim().length()==0) {

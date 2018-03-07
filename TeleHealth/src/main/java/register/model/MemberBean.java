@@ -44,8 +44,6 @@ public class MemberBean {
 	public void setModifiyTime(Timestamp modifiyTime) {
 		this.modifiyTime = modifiyTime;
 	}
-	
-	
 
 	@Override
 	public String toString() {
