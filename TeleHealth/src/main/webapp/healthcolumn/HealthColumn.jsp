@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/HealthColumn.jsp">健康專欄 <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/TeleHealth/healthcolumn/HealthColumn.jsp">健康專欄 <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#team">醫師介紹</a>

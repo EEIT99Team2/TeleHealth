@@ -37,7 +37,7 @@ public class Healthcontroller {
 	@RequestMapping(path = { "/healthcolumn/healthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Loadpage(String advisoryCode) {
-		List<HealthColumnBean> loadpage = healthService.Loadpage(advisoryCode);
+		List<HealthColumnBean> loadpage = healthService.loadpage(advisoryCode);
 		System.out.println(loadpage);
 		Gson gson = new Gson();
 		String data = gson.toJson(loadpage);
@@ -48,7 +48,7 @@ public class Healthcontroller {
 	@RequestMapping(path = { "/healthcolumn/titlecontent.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Loadtitle(String title) {
-		List<Object[]> loadtitle = healthService.Loadtitle(title);
+		List<Object[]> loadtitle = healthService.loadtitle(title);
 		System.out.println(loadtitle);
 		Gson gson = new Gson();
 		String data = gson.toJson(loadtitle);
@@ -59,7 +59,7 @@ public class Healthcontroller {
 	@RequestMapping(path = { "/healthcolumn/hotcontent.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Hotcontent() {
-		List<HealthColumnBean> data = healthService.Hotcontext();		
+		List<HealthColumnBean> data = healthService.hotcontext();		
 		Gson gson = new Gson();
 		String dataAll = gson.toJson(data);
 		System.out.println(dataAll);
@@ -71,7 +71,7 @@ public class Healthcontroller {
 	@RequestMapping(path = { "/healthcolumn/publishcontent.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Doctorpublish(String empId) {
-		List<HealthColumnBean> doctorpublish = healthService.Doctorpublish(empId);
+		List<HealthColumnBean> doctorpublish = healthService.doctorpublish(empId);
 		System.out.println(doctorpublish);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd ").create(); ;
 		String datafordoctor = gson.toJson(doctorpublish);
@@ -142,7 +142,7 @@ public class Healthcontroller {
 			}
 			bean.setFileName(fileName);
 			bean.setEmpId(name);
-			boolean ok = healthService.Insert(bean);
+			boolean ok = healthService.insert(bean);
 			if (ok) {
 				msgOK.put("uploadok", "上傳成功!!");
 				return "form.ok";
@@ -168,7 +168,7 @@ public class Healthcontroller {
 	"/healthcolumn/deletehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.POST })
 	public @ResponseBody String deletecontent(String columnId,Model model) {
-		boolean delete = healthService.Delete(columnId);
+		boolean delete = healthService.delete(columnId);
 		Map<String, String> contenterrors = new HashMap<>();
 		model.addAttribute("contenterrors", contenterrors);
 		Map<String, String> contentOK = new HashMap<String, String>();
