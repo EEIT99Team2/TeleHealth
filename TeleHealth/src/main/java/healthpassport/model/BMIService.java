@@ -15,29 +15,22 @@ public class BMIService {
 	@Autowired
 	private DataAnalysisDAO dataAnalysisDao;
 
-	private String gender = "M";
-	private Integer age = 23;
-
-	public BMIBean insert(BMIBean bean) {
-		bean.setMemberid("B0041CB5-09F1-4E5B-8D57-1F0406019143");
+	public BMIBean insert(BMIBean bean,String gender,Integer age) {
+		bean.getMemberid();
 		Double bmi = bean.getBmi();
 		DataAnalysisBean lowData = null;
 		DataAnalysisBean upData = null;
 		if (gender.equals("M")) {
 			if (age < 18) {
 				lowData = dataAnalysisDao.bmiLow17(gender, age);
-				System.out.println(lowData);
 			} else {
 				upData = dataAnalysisDao.bmiUp18(gender, age, bmi);
-				System.out.println(upData);
 			}
 		} else {
 			if (age < 18) {
 				lowData = dataAnalysisDao.bmiLow17(gender, age);
-				System.out.println(lowData);
 			} else {
 				upData = dataAnalysisDao.bmiUp18(gender, age, bmi);
-				System.out.println(upData);
 			}
 		}
 		String lowBmiResult = null;
