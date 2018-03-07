@@ -21,6 +21,10 @@ public class BloodPressureRecordsService {
 	Integer age = 66;
 	public BloodPressureRecordsBean insert(BloodPressureRecordsBean bean) {
 		bean.setMemberid("B0041CB5-09F1-4E5B-8D57-1F0406019143");
+		//client血壓值
+		Integer minTemp = bean.getMinBloodPressure();
+		Integer maxTemp = bean.getMaxBloodPressure();
+		
 		DataAnalysisBean Diastole =null;
 		DataAnalysisBean Systole =null;
 		if(gender.equals("M")) {
@@ -28,9 +32,19 @@ public class BloodPressureRecordsService {
 		}else {
 			Systole = dataAnalysisDao.selectGroupId(maxBloodPressure, gender, age);
 		}
-		
-		
+		//DB舒張壓值
 		Double minDiastoleValue = Diastole.getMinvalue();
+		//DB收縮壓值
+		Double maxSystoleValue = Systole.getMaxvalue();
+//		比對判斷值
+//		if()
+		
+		
+		String diastoleResult = null;
+		String systoleResult = null;
+
+		
+		
 		bean.getMinBloodPressure();
 		bean.getMaxBloodPressure();
 		bean.getHeartBeat();
