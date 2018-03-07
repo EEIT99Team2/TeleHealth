@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../css/w3.css">
 <!-- Custom styles for this template -->
@@ -80,68 +81,27 @@
     <div class="container">
       <div class="row justify-content-md-center">
         <!-- Post Content Column -->
-        <div class="col-lg-10">
-          <!-- Title -->
-          <h1 class="mt-4">Post Title</h1>
-          <!-- Author -->
-          <p class="lead">
-            by
-            <a href="#">Start Bootstrap</a>
-          </p>
-          <hr>
-          <!-- Date/Time -->
-          <p>Posted on January 1, 2018 at 12:00 PM</p>
-          <hr>
-          <!-- Preview Image -->
-          <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
-          <hr>
-          <!-- Post Content -->
-          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
-         <blockquote class="blockquote">
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-            <footer class="blockquote-footer">Someone famous in
-              <cite title="Source Title">Source Title</cite>
-            </footer>
-          </blockquote>
-          <hr>
+        <div class="col-lg-10">           
     <script type="text/javascript">
-    $.getJSON('/TeleHealth/Healthcolumn/healthcolumn.controller', {title:value}, function (data){
+    var url = location.href;
+    var ary1 = url.split('?');
+    var ary2 = ary1[1].split('=');
+    var id = ary2[1];
+    var titledecode= decodeURIComponent(id);   	  
+    $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller', {title:titledecode}, function (data){
 		console.log(data);		
-		$('#title').empty();	  
-         $.each(data, function (i, data) {         	     	          
-            var cell1= $("<h2 class='post-title'></h2>").text(data.title);
-            var cell2=$("<p class='post-meta'></p>").text(data.createDate);
-            var cell3 = $("<p></p>").html(data.content.substring(0,300));        
-            var row = $('<div class="post-preview"></div>').append([cell1,, cell2,cell3]);
-            $('#title').append(row);
-         });
-         var pager= $('<a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom"></a>').text("<Previous");
-         var pager2= $('<a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom"></a>').text("Next>");    
-         var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
-		 $('#title').append(row2);
+ 		$('.col-lg-10').empty();	  
+         $.each(data, function (i, data) {  
+        	var cell0=$("<hr>")      	     	          
+            var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
+            var cell2= $("<p class='lead'></p>").text("by  "+data[1]);
+            var cell3=$("<p></p>").text(data[3]); 
+            var cell4= $("<p class='lead'></p>").html(data[2]);                          
+            var row = $(' <div class="col-lg-10"></div>').append([cell1,cell0,cell2,cell3,cell0,cell4]);
+            $('.col-lg-10').append(row);
+         });        
  	});
-
-
-
-
-    </script>
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
+    </script>         
           <!-- Comments Form -->
           <div class="card my-4">
             <h5 class="card-header">Leave a Comment:</h5>

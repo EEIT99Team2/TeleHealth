@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import healthcolumn.model.HealthColumnBean;
 import healthcolumn.modelDao.HealthService;
@@ -31,7 +34,7 @@ public class Healthcontroller {
 	private HealthService healthService;
 
 	// 讀取頁面
-	@RequestMapping(path = { "/Healthcolumn/healthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
+	@RequestMapping(path = { "/healthcolumn/healthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Loadpage(String advisoryCode) {
 		List<HealthColumnBean> loadpage = healthService.Loadpage(advisoryCode);
@@ -41,12 +44,36 @@ public class Healthcontroller {
 		System.out.println(data);
 		return data;
 	}
+	//選取點擊的文章
+	@RequestMapping(path = { "/healthcolumn/titlecontent.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String Loadtitle(String title) {
+		List<Object[]> loadtitle = healthService.Loadtitle(title);
+		System.out.println(loadtitle);
+		Gson gson = new Gson();
+		String data = gson.toJson(loadtitle);
+		System.out.println(data);
+		return data;
+	}
+	//熱門文章
+	@RequestMapping(path = { "/healthcolumn/hotcontent.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String Hotcontent() {
+		List<HealthColumnBean> data = healthService.Hotcontext();		
+		Gson gson = new Gson();
+		String dataAll = gson.toJson(data);
+		System.out.println(dataAll);
+		return dataAll;		
+		
+	}
 
 	// 尋找個人發布過的文章
+	@RequestMapping(path = { "/healthcolumn/publishcontent.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Doctorpublish(String empId) {
 		List<HealthColumnBean> doctorpublish = healthService.Doctorpublish(empId);
 		System.out.println(doctorpublish);
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd ").create(); ;
 		String datafordoctor = gson.toJson(doctorpublish);
 		System.out.println(datafordoctor);
 		return datafordoctor;
@@ -54,11 +81,19 @@ public class Healthcontroller {
 
 	// 新增文章
 	@RequestMapping(path = {
-			"/Healthcolumn/inshealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
+			"/healthcolumn/inshealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
 					RequestMethod.POST })
-	public String insterttxt(String title, String name, String type, String content,
-			@RequestParam(value = "file1", required = false) MultipartFile file, Model model) throws IOException {
-		System.out.println(title + "  " + name + " " + type + " " + content + " " + file);
+	public String insterttxt(
+			String title, 
+			String name, 
+			String type, 
+			String content,
+			Model model,
+			HttpSession session,
+			@RequestParam(name="videofile", required = false) MultipartFile file
+			) throws IOException {
+//		System.out.println("file1=" + file.getName());
+//		System.out.println(title + "  " + name + " " + type + " " + content + " " + file.getName());
 		Map<String, String> errors = new HashMap<>();
 		model.addAttribute("errors", errors);
 		Map<String, String> msgOK = new HashMap<String, String>();
@@ -90,7 +125,14 @@ public class Healthcontroller {
 				} else {
 					fileName = GlobalService.adjustFileName(fileName, GlobalService.IMAGE_FILENAME_LENGTH);
 					in = file.getInputStream();
-					out = new BufferedOutputStream(new FileOutputStream(new File("videos/" + fileName)));
+					//上傳檔案路徑 
+					//新增檔案位置
+					File filepath = new File("c:/videos/" + fileName);
+					//將上傳檔案儲存到一個目標檔案當中 
+					if (!filepath.getParentFile().exists()) { 
+						filepath.getParentFile().mkdirs(); 
+					}
+					out = new BufferedOutputStream(new FileOutputStream(filepath));
 					byte[] readByte = new byte[8192];
 					int len = 0;
 					while ((len = in.read(readByte)) != -1) {
@@ -113,6 +155,40 @@ public class Healthcontroller {
 
 	}
 	// 修改文章
+	@RequestMapping(path = {
+	"/healthcolumn/updatehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.POST })
+	public @ResponseBody String updatecontent(String title,String content,String advisoryCode,String fileName,Model model) {
+		
+		return "a";
+	}
+	
 	// 刪除文章
-
+	@RequestMapping(path = {
+	"/healthcolumn/deletehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.POST })
+	public @ResponseBody String deletecontent(String columnId,Model model) {
+		boolean delete = healthService.Delete(columnId);
+		Map<String, String> contenterrors = new HashMap<>();
+		model.addAttribute("contenterrors", contenterrors);
+		Map<String, String> contentOK = new HashMap<String, String>();
+		model.addAttribute("contentOK", contentOK);
+		if(delete) {
+			contenterrors.put("contentok", "已刪除所選擇的文章!!");
+			return  "deletecontentok";
+		}else {
+			contentOK.put("contenterror", "刪除失敗!!");
+			return "deletecontenterror";
+		}		
+	}
+	
+	// 增加點擊率
+	@RequestMapping(path = {
+	"/healthcolumn/countarticle.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.POST })
+	public @ResponseBody String countarticle(String title) {
+		 healthService.count(title);
+		 return "success";
+	}
+	
 }

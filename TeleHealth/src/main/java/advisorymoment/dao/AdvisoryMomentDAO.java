@@ -45,7 +45,7 @@ public class AdvisoryMomentDAO {
 	
 	//搜尋全部時段(當index用)
 	public List<Object[]> selectAll() {
-		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName FROM AdvisoryMoment am \r\n"
+		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,am.videoCode FROM AdvisoryMoment am \r\n"
 				+"join Employees emp \r\n"
 				+"on am.empId=emp.empId \r\n"
 				+"join advisoryType adt \r\n"
@@ -55,6 +55,37 @@ public class AdvisoryMomentDAO {
 		return data;
 	};
 
+	//會員自己已預約的時段
+	public List<Object[]> selectByMemSelf(String UserId) {
+		String hql="select am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,a.videoCode from advisoryMoment am\r\n" + 
+				"join Advisory a\r\n" + 
+				"on am.videoCode=a.videoCode\r\n" + 
+				"join employees emp\r\n" + 
+				"on am.empId=emp.empId\r\n" + 
+				"join advisoryType adt\r\n" + 
+				"on am.advisoryCode=adt.advisoryCode\r\n" + 
+				"where memberId=?";
+		NativeQuery query= this.getSession().createNativeQuery(hql);
+		query.setParameter(1,UserId);
+		List<Object[]> data = (List<Object[]>)query.list();		
+		return data;
+	};
+	
+	//諮詢人員自己負責的時段
+		public List<Object[]> selectByEmpSelf(String EmpId) {
+			String hql="select am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,am.videoCode from advisoryMoment am\r\n" + 
+					"join employees emp\r\n" + 
+					"on am.empId=emp.empId\r\n" + 
+					"join advisoryType adt\r\n" + 
+					"on am.advisoryCode=adt.advisoryCode\r\n" + 
+					"where am.empId=?";
+			NativeQuery query= this.getSession().createNativeQuery(hql);
+			query.setParameter(1,EmpId);
+			List<Object[]> data = (List<Object[]>)query.list();		
+			return data;
+		};
+	
+	
 	public AdvisoryMomentBean insert(AdvisoryMomentBean bean) {
 		if (bean != null) {
 			AdvisoryMomentBean data = this.selectById(bean.getId());

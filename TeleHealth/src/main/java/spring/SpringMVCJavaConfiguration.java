@@ -1,17 +1,27 @@
 package spring;
 
-import javax.servlet.*;
+import javax.servlet.ServletContext;
 
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.*;
-import org.springframework.context.annotation.*;
-import org.springframework.context.support.*;
-import org.springframework.web.context.support.*;
-import org.springframework.web.servlet.config.annotation.*;
-import org.springframework.web.servlet.view.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.context.support.ServletContextResource;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.XmlViewResolver;
 
 //本類別為Web Spring用，此處加入要掃描的套件名稱，多個用,隔開
-@ComponentScan(basePackages={"advisorymoment.controller","register.controller","util.controller", "healthcolumn.controller","dataanalysis.controller","advisory.controller",})
+@ComponentScan(
+		basePackages={"advisorymoment.controller",
+				"register.controller",
+				"util.controller", 
+				"healthcolumn.controller",
+				"advisory.controller",
+				"healthpassport.controller"})
 @EnableWebMvc
 public class SpringMVCJavaConfiguration implements WebMvcConfigurer {
 	@Autowired
@@ -35,5 +45,14 @@ public class SpringMVCJavaConfiguration implements WebMvcConfigurer {
 		viewResolver.setOrder(10);
 				
 		registry.viewResolver(viewResolver);
+	}
+	
+	//檔案上傳用的設定，請勿隨意更動
+	@Bean
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setDefaultEncoding("UTF-8");
+		resolver.setMaxUploadSize(102400000);
+		return resolver;
 	}
 }

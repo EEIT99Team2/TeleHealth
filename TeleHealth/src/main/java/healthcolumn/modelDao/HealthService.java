@@ -18,6 +18,11 @@ public class HealthService {
 		List<HealthColumnBean> list = healthColumnDAO.selectbycode(advisoryCode);	
 		return list;	
 	}
+	//選取文章
+	public List<Object[]> Loadtitle(String title) {
+		List<Object[]> list = healthColumnDAO.selectbytitle(title);	
+		return list;	
+	}
 	//選取醫生文章
 	public List<HealthColumnBean> Doctorpublish(String empId)
 	{
@@ -30,7 +35,7 @@ public class HealthService {
 		return Hotcontext;		
 	};
 	//刪除文章
-	public  boolean Delete(int columnId) {
+	public  boolean Delete(String columnId) {
 		 boolean deleetecon = healthColumnDAO.delete(columnId);
 		return deleetecon;
 	}
@@ -41,4 +46,13 @@ public class HealthService {
 		}
 		return false;
 	}
+	//點擊率
+	public void count(String title) {
+		healthColumnDAO.count(title);
+	}
+	public boolean updatecontent(String title,String content,String advisoryCode,String fileName) {
+		healthColumnDAO.update(title, content, advisoryCode, fileName);
+		return true;
+	}
+	
 }

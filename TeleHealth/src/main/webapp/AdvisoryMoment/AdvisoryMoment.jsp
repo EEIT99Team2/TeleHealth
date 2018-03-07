@@ -21,8 +21,8 @@
 
   #calendar {
   
-    max-width: 1000px;
-    margin: 30px auto;
+    max-width: 1100px;
+    margin: 60px auto;
 /*     background-color: lightblue; */
   }
   .fc-widget-header{
@@ -40,7 +40,7 @@
   .item1 {font-size:1.8em;
 		 margin-left:100px;}
   .item2 {font-size:1.8em;
-		 margin-left:500px;}
+		 margin-left:100px;}
   .item3 {font-size:1.8em;
 		 padding-right:10px;
 		 }
@@ -48,46 +48,26 @@
 </style>
 </head>
 <body>
-<!-- 點擊預約時段彈跳視窗 -->
-<div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">預約告示</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- 跳出視窗的內容 -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="reserveCheck">確定預約</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- 預約結果視窗 -->
-<div class="modal fade" id="reserveResult" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">預約結果</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- 跳出視窗的內容 -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reserveDone">我知道了</button>
-      </div>
-    </div>
-  </div>
-</div>
-<form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
+ <!-- Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
+            <a class="navbar-brand" href="#">Carousel</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">醫師介紹</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">方案介紹</a>
+                    </li>
+                </ul>
+                <form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
 <input type="text" id="userId" name="userId" value="B221C929-CF1C-445F-B927-1D5E463B3006">
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
@@ -110,8 +90,53 @@
 <option id="WEL">健康減重</option>
 </select><br>
 </form>
+                <!-- Trigger the modal with a button -->                
+                <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
+            </div>
+        </nav>
+    </header>
+<!-- 點擊預約時段彈跳視窗 -->
+<div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reserveCheckTitle">預約告示</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="reserveCheck">確定預約</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 預約結果視窗 -->
+<div class="modal fade" id="reserveResult" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reserveDoneTitle">預約結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reserveDone">我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id="calendar"></div>
+
 <!--=======================載入script檔跟程式==========================-->
 <script src="../fullCalendar/moment.min.js"></script>
 <script src="../fullCalendar/jquery-3.3.1.min.js"></script>
@@ -133,6 +158,8 @@ $(document).ready(function() {
 	var contentH;
 	var weekformat=["一","二","三","四","五","六","日"];
 	var today = new Date();
+	var eventsData;
+			
 	$("#chooseTime").change(function(){
 		time = $("#chooseTime :selected").prop("id");		
 		if(time=="mor"){
@@ -154,22 +181,25 @@ $(document).ready(function() {
 				}
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
-		
+	$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectAll.controller",{"UserId":UserId},function(eventsData){	
 	$("#chooseCode").change(function (){
 		var code = $("#chooseCode :selected").prop("id");
 		if(code=="all"){
 			$("#calendar").fullCalendar('removeEventSources');
-			$("#calendar").fullCalendar('addEventSource', urlPath+"/AdvisoryMomemt/MemberSelectAll.controller");
+			$("#calendar").fullCalendar('addEventSource', eventsData);
 			$("#calendar").fullCalendar('rerenderEvents');
 		}else{		
-		$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectByCode.controller",{advisoryCode:code},function(data){	
+		$.getJSON(urlPath+"/AdvisoryMomemt/MemberSelectByCode.controller",{"UserId":UserId,advisoryCode:code},function(data){	
 		$("#calendar").fullCalendar('removeEventSources');
 		$("#calendar").fullCalendar('addEventSource', data);
 		$("#calendar").fullCalendar('rerenderEvents');
 		})
 		}
 	});
+
 	
+
+		
     $('#calendar').fullCalendar({
     	 columnHeaderHtml: function(mom) {
         	 for(var i = 0;i<7;i++){
@@ -203,7 +233,9 @@ $(document).ready(function() {
       navLinks: true, // can click day/week names to navigate views
       editable: false,
 //       eventLimit: true, // allow "more" link when too many events
-	  eventSources:[urlPath+"/AdvisoryMomemt/MemberSelectAll.controller"],	   	
+	  eventSources:[	
+	  		{events:eventsData}
+		  ],	   	
 	  eventClick: function eventCheck(events) {
 		  var docFrag = $(document.createDocumentFragment());
           var reserve = $('.modal-body');
@@ -219,16 +251,22 @@ $(document).ready(function() {
 		  if(events.backgroundColor=="#0080ff"){
 			  $('#reserveDataDetail').modal('show');
 			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
-			  			+"<h3>諮詢類別:</h3><h5>"+reserveItem+"</h5>"
+			  			+"<h3>諮詢項目:</h3><h5>"+reserveItem+"</h5>"
 					  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>");
 			  	$("#reserveDataDetail .modal-body").append(docFrag);
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId};
 				console.log("events="+reserveData);
-			  }
-   
+			  }else if(events.backgroundColor=="#00db00"){
+				  $('#reserveResult').modal('show');
+				  docFrag.append("<h3>諮詢項目:"+reserveItem+"</h3>"
+						  	+"<h3>諮詢人員:"+reserveEmp+"</h3>"
+// 				  			+"<h3>視訊代碼:"+"<span>"+"</span>"+"</h3>"
+				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
+				  	$("#reserveResult .modal-body").append(docFrag);
+				  }  
 	  }		  
     });
-		
+	});	
 	$("#fastSearch").click(function(){
 		var chooseyear = "20"+$("#year :selected").val();
 		var choosemonth = "-"+$("#month :selected").val();
@@ -256,5 +294,9 @@ $(document).ready(function() {
 		})
 });
 </script>
+<!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-16">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
+    </footer>
 </body>
 </html>
