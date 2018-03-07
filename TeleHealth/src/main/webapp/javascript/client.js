@@ -1,21 +1,19 @@
 var connection = new WebSocket('wss://tzeing.asuscomm.com:15449');
-var name = "";
-var username = "";
-
-var loginPage = document.querySelector("#login-page"),
+	name = "",
+	username = "",
+	loginPage = document.querySelector("#login-page"),
 	usernameInput = document.querySelector("#username"),
 	loginButton = document.querySelector("#login"),
 	callPage = document.querySelector("#call-page"),
 	theirUsernameInput = document.querySelector("#their-username"),
-//	callButton = document.getElementById("callHere"),
 	hangUpButton = document.querySelector("#hang-up"),
 	joinButton = document.getElementById("join"),
 	yourVideo = document.querySelector("#yours"),
 	theirVideo = document.querySelector("#theirs"),
-	yourConnection,
-	connectedUser,
-	room,
-	stream;
+	yourConnection = null,
+	connectedUser = "",
+	room = "",
+	stream = null;
 
 var offerOptions = {
 		  offerToReceiveAudio: 1,
@@ -106,19 +104,6 @@ function send(message) {
     connection.send(JSON.stringify(message));
 }
 
-//callButton.addEventListener("click", function() {
-//	var theirUsername = theirUsernameInput.value;
-//	if(theirUsername.length > 0) {
-//		send({
-//			type: "callcheck",
-//			username: username,
-//			callname: theirUsername
-//		});
-//	} else {
-//		alert("請輸入要進行視訊的對象ID!");
-//	}
-//});
-
 //進入房間
 joinButton.addEventListener("click", function() {
 	var roomName = theirUsernameInput.value;
@@ -133,10 +118,9 @@ joinButton.addEventListener("click", function() {
 	}
 });
 
-
 hangUpButton.addEventListener("click", function() {
-	console.log("roomname ================= " + room);
-	console.log("name ==== " + name);
+	console.log("roomname = " + room);
+	console.log("name = " + name);
 	send({
 		type: "leave",
 		leavename: name,
@@ -158,20 +142,14 @@ function onLogin(success, name) {
 }
 
 function onJoinReturn(roomname, success, message, users, callname) {
-	room = roomname;
-	if(success && users == 2) {
-		console.log("processing onJoinReturn");
-		startPeerConnection1(callname);
-	} else {
-		alert(message);
-	}
-}
-
-function onCheckReturn(success, callname) {
 	if(success) {
-		startPeerConnection1(callname);
-	} else {
-		alert("你所要進行的視訊代號：" + callname + " 不在線上，請重新確認!");
+		room = roomname;
+		if(success && users == 2) {
+			console.log("processing onJoinReturn");
+			startPeerConnection1(callname);
+		} else {
+			alert(message);
+		}
 	}
 }
  
@@ -196,21 +174,18 @@ function onAnswer(answer) {
 
 function onCandidate(a) {
 	yourConnection.addIceCandidate(new RTCIceCandidate(a));
-	document.getElementById('hang-up').disabled = false;
+	hangUpButton.disabled = false;
 }
 
 function onLeave() {
-	console.log("onLeave()");
+	hangUpButton.disabled = true;
+	joinButton.disabled = false;
 	connectedUser = null;
-	room = null;
 	theirVideo.src = null;
-//	yourVideo.scr = null;
 	yourConnection.onicecandidate = null;
 	yourConnection.ontrack = null;
 	yourConnection.close();
-//	yourConnection = null;
 	startConnection();
-//	location.reload();
 }
 
 function hasUserMedia() {
@@ -227,15 +202,21 @@ function hasRTCPeerConnection() {
     window.RTCPeerConnection =
         window.RTCPeerConnection ||
         window.webkitRTCPeerConnection ||
-        window.mozRTCPeerConnection;
+        window.mozRTCPeerConnection ||
+        window.pluginRTCPeerConnection ||
+        window.msRTCPeerConnection;
     window.RTCSessionDescription = 
     	window.RTCSessionDescription ||
     	window.webkitRTCSessionDescription ||
-    	window.mozRTCSessionDescription;
+    	window.mozRTCSessionDescription||
+    	window.pluginRTCSessionDescription ||
+    	window.msRTCSessionDescription;
     window.RTCIceCandidate = 
     	window.RTCIceCandidate ||
     	window.webkitRTCIceCandidate ||
-    	window.mozRTCIceCandidate;
+    	window.mozRTCIceCandidate ||
+    	window.pluginRTCIceCandidate ||
+    	window.msRTCIceCandidate;
     	
     return !!window.RTCPeerConnection;
 }
@@ -260,10 +241,10 @@ function startConnection() {
 		alert("Sorry, your browser dose not support WebRTC.");
 	}
 }
+
 function setupPeerConnection(stream) {
     yourConnection = new RTCPeerConnection(configuration);
     //設定連線
-//    yourConnection.addStream(stream);
     stream.getTracks().forEach(function(track) {
     	yourConnection.addTrack(track, stream)
     });
@@ -272,6 +253,7 @@ function setupPeerConnection(stream) {
     	 if (theirVideo.srcObject !== event.streams[0]) {
     		 theirVideo.srcObject = event.streams[0];
     		 console.log("設定theirVideo.srcObject!");
+    		 joinButton.disabled = true;
     	 }
     };
     //設定ice處理事件
@@ -294,21 +276,6 @@ function startPeerConnection1(user) {
 			type: "offer",
 			offer: offer ,
 			callname: connectedUser
-		});
-	});
-}
-
-function startPeerConnection(roomname) {
-	//開始建立offer
-	room = roomname;
-	var offer = yourConnection.createOffer(offerOptions)
-	.then(function(offer) {
-		yourConnection.setLocalDescription(offer);
-		send({
-			type: "offerForRoom",
-			offer: offer,
-			roomname: roomname,
-			name: name
 		});
 	});
 }
