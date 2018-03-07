@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import healthcolumn.model.QuestionBean;
-import healthcolumn.modelDao.QuestionService;
+import healthcolumn.model.Dao.QuestionService;
 
 @Controller
 public class Questioncontroller {

@@ -28,7 +28,7 @@ import healthpassport.model.BMIBean;
 import healthpassport.model.BloodPressureRecordsBean;
 import healthpassport.model.DataAnalysisBean;
 import register.model.MemberBean;
-
+import register.model.TestBean;
 
 @Configuration
 //本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
@@ -36,8 +36,7 @@ import register.model.MemberBean;
 		"advisorymoment.model",
 		"advisorymoment.dao", 
 		"register.model" ,
-		"healthcolumn.model", 
-		"healthcolumn.modelDao", 
+		"healthcolumn.model",  
 		"advisory.model",
 		"advisory.dao",
 		"healthpassport.model"})
@@ -62,7 +61,7 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses(MemberBean.class,AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureRecordsBean.class,DataAnalysisBean.class);		
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureRecordsBean.class,DataAnalysisBean.class,MemberBean.class,TestBean.class);		
 		
 		return builder.buildSessionFactory();
 	}

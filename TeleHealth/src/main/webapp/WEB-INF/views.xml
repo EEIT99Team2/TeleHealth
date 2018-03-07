@@ -23,13 +23,13 @@
 	
 	<bean id="forgetPwd.success" class="org.springframework.web.servlet.view.RedirectView">
 		<property name="contextRelative" value="true"></property>
-		<property name="url" value="/ForgetSuccess.jsp"></property>
+		<property name="url" value="/Members/ForgetSuccess.jsp"></property>
 	</bean>
 	
 	<bean id="forgetPwd.error" class="org.springframework.web.servlet.view.InternalResourceView">		
-		<property name="url" value="/ForgetPwd.jsp"></property>
+		<property name="url" value="/Members/ForgetPwd.jsp"></property>
 	</bean>	
-	
+
 	<bean id="selectdata.table" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/page/selectdataTable.jsp"></property>
 	</bean>
@@ -46,6 +46,10 @@
 		<property name="url" value="/healthcolumn/ck.jsp"></property>
 	</bean>
 
+	<bean id="register.do" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/register.controller"></property>
+	</bean>
+	
 	<bean id="deletecontentok" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/healthcolumn/Dpublish.jsp"></property>
 	</bean>
