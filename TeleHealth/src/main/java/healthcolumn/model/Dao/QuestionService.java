@@ -41,20 +41,34 @@ public class QuestionService {
 			}
 			return false;		
 		}
-	//刪除文章
-	public  boolean delete(int Id,String memberId) {
-			 boolean deleetecon = QuestionDAO.delete(Id, memberId);
+	//刪除員工文章
+	public  boolean deleteEmp(int Id,String empId) {
+			 boolean deleetecon = QuestionDAO.deletEmp(Id, empId);
 			return deleetecon;
 	}
-	//修改文章
-	public boolean updateQA(int Id,String memberId,String advisorycode,String Content)
-	{
-		Date createDate = new Date();
-		QuestionBean update = QuestionDAO.update(Id, memberId, createDate, advisorycode, Content);
+	//刪除會員
+	public  boolean deleteMem(int Id,String memberId) {
+		 boolean deleetecon = QuestionDAO.deleteMem(Id, memberId);
+		return deleetecon;
+}
+	//修改會員文章
+	public boolean updateQAmem(int Id,String memberId,String advisorycode,String Content)
+	{		
+		QuestionBean update = QuestionDAO.updateMem(Id, memberId, Content);
 		if(update!=null) {
 			return true;
 		}
 		return false;
 	}
+	//修改員工文章
+		public boolean updateQAemp(int Id,String empId,String advisorycode,String Content)
+		{
+			
+			QuestionBean update = QuestionDAO.updateEmp(Id, empId, Content);
+			if(update!=null) {
+				return true;
+			}
+			return false;
+		}
 		
 }

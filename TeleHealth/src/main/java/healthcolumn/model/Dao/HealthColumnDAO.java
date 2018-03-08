@@ -38,7 +38,7 @@ public class HealthColumnDAO  {
 	}
 	//選點擊的文章	
 	public List<Object[]> selectbytitle(String title) {	
-		NativeQuery query=this.getSession().createNativeQuery("select hel.title,emp.empName,hel.content,hel.createDate,hel.fileName from healthColumn hel join employees emp on hel.empId=emp.empId where title=?");
+		NativeQuery query=this.getSession().createNativeQuery("select hel.title,emp.empName,hel.content,hel.createDate,hel.fileName from healthColumn hel join employees emp on hel.empId=emp.empId where hel.title=?");
 		query.setParameter(1, title);		
 		List<Object[]> data=(List<Object[]>)query.list();
 		return  data;
