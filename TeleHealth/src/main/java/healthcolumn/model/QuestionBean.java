@@ -3,27 +3,33 @@ package healthcolumn.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="question")
 public class QuestionBean {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int Id;
 	private String memberId;
 	private String empId;
-	private String QAcolumnId;
+	private String quetitle;
 	private String QAtype; 
 	private String advisorycode;
 	private String Content;
-	private Date createDate;
-	private Date modifyTime;	
+	private Date createTime;
+	private Date modifyTime;
+	
 	@Override
 	public String toString() {
-		return "QuestionBean [Id=" + Id + ", memberId=" + memberId + ", empId=" + empId + ", QAcolumnId=" + QAcolumnId
-				+ ", QAtype=" + QAtype + ", advisorycode=" + advisorycode + ", Content=" + Content + ", createDate="
-				+ createDate + ", modifyTime=" + modifyTime + "]";
+		return "QuestionBean [Id=" + Id + ", memberId=" + memberId + ", empId=" + empId + ", quetitle=" + quetitle
+				+ ", QAtype=" + QAtype + ", advisorycode=" + advisorycode + ", Content=" + Content + ", createTime="
+				+ createTime + ", modifyTime=" + modifyTime + "]";
 	}
 	public int getId() {
 		return Id;
@@ -43,11 +49,11 @@ public class QuestionBean {
 	public void setEmpId(String empId) {
 		this.empId = empId;
 	}
-	public String getQAcolumnId() {
-		return QAcolumnId;
+	public String getQuetitle() {
+		return quetitle;
 	}
-	public void setQAcolumnId(String qAcolumnId) {
-		QAcolumnId = qAcolumnId;
+	public void setQuetitle(String quetitle) {
+		this.quetitle = quetitle;
 	}
 	public String getQAtype() {
 		return QAtype;
@@ -67,11 +73,11 @@ public class QuestionBean {
 	public void setContent(String content) {
 		Content = content;
 	}
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreateTime() {
+		return createTime;
 	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 	public Date getModifyTime() {
 		return modifyTime;
@@ -80,4 +86,4 @@ public class QuestionBean {
 		this.modifyTime = modifyTime;
 	}
 	
-}	
+}
