@@ -40,8 +40,7 @@ public class Healthcontroller {
 		List<HealthColumnBean> loadpage = healthService.loadpage(advisoryCode);
 		System.out.println(loadpage);
 		Gson gson = new Gson();
-		String data = gson.toJson(loadpage);
-		System.out.println(data);
+		String data = gson.toJson(loadpage);		
 		return data;
 	}
 	//選取點擊的文章
@@ -51,8 +50,7 @@ public class Healthcontroller {
 		List<Object[]> loadtitle = healthService.loadtitle(title);
 		System.out.println(loadtitle);
 		Gson gson = new Gson();
-		String data = gson.toJson(loadtitle);
-		System.out.println(data);
+		String data = gson.toJson(loadtitle);		
 		return data;
 	}
 	//熱門文章
@@ -61,8 +59,7 @@ public class Healthcontroller {
 	public @ResponseBody String Hotcontent() {
 		List<HealthColumnBean> data = healthService.hotcontext();		
 		Gson gson = new Gson();
-		String dataAll = gson.toJson(data);
-		System.out.println(dataAll);
+		String dataAll = gson.toJson(data);		
 		return dataAll;		
 		
 	}
@@ -74,8 +71,7 @@ public class Healthcontroller {
 		List<HealthColumnBean> doctorpublish = healthService.doctorpublish(empId);
 		System.out.println(doctorpublish);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd ").create(); ;
-		String datafordoctor = gson.toJson(doctorpublish);
-		System.out.println(datafordoctor);
+		String datafordoctor = gson.toJson(doctorpublish);		
 		return datafordoctor;
 	}
 
@@ -160,7 +156,7 @@ public class Healthcontroller {
 			RequestMethod.POST })
 	public @ResponseBody String updatecontent(String title,String content,String advisoryCode,String fileName,Model model) {
 		
-		return "a";
+		return "OK";
 	}
 	
 	// 刪除文章

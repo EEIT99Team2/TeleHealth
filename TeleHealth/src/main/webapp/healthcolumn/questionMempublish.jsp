@@ -28,7 +28,8 @@
                           <tr>
                           	 <th>編號</th>
                              <th>內容</th>                             
-                             <th>日期</th>                             
+                             <th>日期</th>
+                             <th>留言內容</th>                             
                              <th>管理</th>
                           </tr>
                        </thead>
@@ -54,22 +55,11 @@
       <div class="modal-body">
       <form action="/TeleHealth/healthcolumn/updatehealthcolumn.controller" method="post" >
 	<input type="text" name="name" id="title" value="d43b1906-f319-40dc-9e11-4da09a2558af"> 
-	<h3>標題:<input type="text" name="title" id="title1" placeholder="title"></h3><p style="color:red">${errors.errortitleEmpty}</p>
-	<h3>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h3><p style="color:red">${errors.errorVideo}</p>
-	<h3>文章類型:<select name="type">
-       <option id="BOB" value="BOD">塑身減重</option>
-       <option id="FOO" value="FOO">飲食資訊</option>
-       <option id="OLD" value="OLD">銀髮照護</option>
-       <option id="CHR" value="CHR">慢性疾病  </option>
-       <option id="EYE" value="EYE">眼睛保健</option>
-       <option id="VID" value="VID">影音專區</option>
-       </select></h3>
-       <p style="color:red">${errors.errorcontentEmpty}</p>
-       <textarea name="contenttext" id="contenttext" rows="10" cols="80"></textarea>       
-	  </form>      
-      </div>
-      <div class="modal-footer">
-      <input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
+    <textarea name="contenttext" id="contenttext" rows="10" cols="10"></textarea>       
+	</form>      
+    </div>
+    <div class="modal-footer">
+     <input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
        <input type="reset" id="clean" value="清除重選" onclick='clean()' >
        <p style="color:green">${msgOK.uploadok}${errors.uploaderror}</p>
       </div>
@@ -80,12 +70,16 @@
 	<script src="../js/jquery-3.3.1.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
+	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
+          {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
+          ];
 		$(document).ready(function() {
-			 CKEDITOR.replace('contenttext',{    	 	
-		    } );
+			 CKEDITOR.replace('contenttext',
+				  {width:200, height:100,toolbarGroups:tg}								 	
+		     );
 		    console.log("ready!");	
-			loadmember("D43B1906-F319-40DC-9E11-4DA09A2558AF")
-// 			loademp("D43B1906-F319-40DC-9E11-4DA09A2558AF")			
+// 			loadmember("D43B1906-F319-40DC-9E11-4DA09A2558AF")
+			loademp("D43B1906-F319-40DC-9E11-4DA09A2558AF")			
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -98,22 +92,24 @@
 					$('#columnTitle').val(value2);					
 					$('#count').val(value3);
 					$('#date').val(value4);
-				
+					
 			   })
 			   //讀取員工發表
 			   function loademp(empId){
-			    $.getJSON('/TeleHealth/healthcolumn/QAemppublish.controller',{empId:empId},function(datas){
+			    $.getJSON('/TeleHealth/healthcolumn/QAEmpublish.controller',{empId:empId},function(datas){
 						console.log(datas);
 		    			var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
-			    	$.each(datas,function(i,product){			    		
+			    	$.each(datas,function(i,Emp){			    		
 				    	var cell1=$('<td></td>')
-				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(product.columnId);		    		
+				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(Emp[0]);		    		
 						cell1.append(ID);
-			    		var article=$("<td><a href='article.jsp?title="+product.title+"'"+"target='_blank'></a></td>").text(product.title);          	     	          
-			    		var cell4=$('<td></td>').text(product.clickCount);
-			    		var cell3=$('<td></td>').text(product.createDate);	
+						var celldata=$("<a href='article.jsp?title="+Emp[1]+"'"+"target='_blank'></a>").text("文章內容");
+			    		var article=$("<td></td>")
+			    		article.append(celldata);			    		          	     	          
+			    		var cell4=$('<td></td>').text(Emp[2]);
+			    		var cell3=$('<td></td>').text(Emp[3]);	
 			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
 						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
 			    		doc.append(row);			    		
@@ -123,24 +119,26 @@
 		      }	
 		      //讀取會員發表	
 			   function loadmember(memId){
-				    $.getJSON('/TeleHealth/healthcolumn/QAmempublish.controller',{memId:memId},function(datas){
-							console.log(datas);
-			    			var doc=$(document.createDocumentFragment());			    		
-				    		var tb = $('#productTable>tbody');
-		 			        tb.empty();
-				    	$.each(datas,function(i,product){			    		
-					    	var cell1=$('<td></td>')
-					    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(product.columnId);		    		
-							cell1.append(ID);
-				    		var article=$("<td><a href='article.jsp?title="+product.title+"'"+"target='_blank'></a></td>").text(product.title);          	     	          
-				    		var cell4=$('<td></td>').text(product.clickCount);
-				    		var cell3=$('<td></td>').text(product.createDate);	
-				    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
-							var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
-				    		doc.append(row);			    		
-				    	})
-				    	  tb.append(doc);
-				    }) 
+				   $.getJSON('/TeleHealth/healthcolumn/QAMempublish.controller',{memId:memId},function(datas){
+						console.log(datas);
+		    			var doc=$(document.createDocumentFragment());			    		
+			    		var tb = $('#productTable>tbody');
+	 			        tb.empty();
+			    	$.each(datas,function(i,Mem){			    		
+				    	var cell1=$('<td></td>')
+				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(Mem[0]);		    		
+						cell1.append(ID);
+						var celldata=$("<a href='article.jsp?title="+Mem[1]+"'"+"target='_blank'></a>").text("文章內容");
+			    		var article=$("<td></td>")
+			    		article.append(celldata);			    		          	     	          
+			    		var cell4=$('<td></td>').text(Mem[2]);
+			    		var cell3=$('<td></td>').text(Mem[3]);	
+			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
+						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
+			    		doc.append(row);			    		
+			    	})
+			    	  tb.append(doc);
+			    }) 
 			      }		
 			    
 			     //刪除產品
@@ -150,7 +148,7 @@
 	 			   var id = $(this).parents('tr').find('td:nth-child(1)').text();
 	 			   console.log(id);
 	 			   if(check==true){
-	 				  $.post('/TeleHealth/healthcolumn/deletehealthcolumn.controller',{columnId:id},function(data){
+	 				  $.post('/TeleHealth/healthcolumn/deletehealthcolumn.controller',{columnId:id,memberId:},function(data){
 		 				   alert("您已刪除所選的文章");
 		 				   loadProduct("D43B1906-F319-40DC-9E11-4DA09A2558AF");
 		 			   })		 			   
