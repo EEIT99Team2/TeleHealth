@@ -75,9 +75,9 @@
           ];
 		$(document).ready(function() {
 			 CKEDITOR.replace('contenttext',
-				  {width:200, height:100,toolbarGroups:tg}								 	
+				  {width:400, height:200,toolbarGroups:tg}								 	
 		     );		    			
-			loademp();			
+			loademp('D43B1906-F319-40DC-9E11-4DA09A2558AF');			
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -106,8 +106,8 @@
 						var celldata=$("<a href='article.jsp?title="+Emp[1]+"'"+"target='_blank'></a>").text("文章內容");
 			    		var article=$("<td></td>")
 			    		article.append(celldata);			    		          	     	          
-			    		var cell4=$('<td></td>').text(Emp[2]);
-			    		var cell3=$('<td></td>').text(Emp[3]);	
+			    		var cell4=$('<td></td>').text(Emp[6]);
+			    		var cell3=$('<td></td>').text(Emp[7]);	
 			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
 						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
 			    		doc.append(row);			    		

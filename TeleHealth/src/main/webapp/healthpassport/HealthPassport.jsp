@@ -95,7 +95,7 @@
 				<hr />
 				<div class="row">
 					<div class="col-12 text-center">
-						<span>這是查詢的結果!!</span>
+						<span>${bmiresult}</span>
 					</div>
 				</div>
 			</div>
@@ -113,20 +113,34 @@
 			     try {
 			         if ($('#insert_height').val() == "") { alert('請輸入身高'); return; }
 			         if ($('#insert_weight').val() == "") { alert('請輸入體重'); return; }
-			        
+			        	
 			         weight = $('#insert_weight').val();
-			         height = Math.pow($('#insert_height').val() / 100 , 2);
-			         BMI = Math.round((weight / height) *100) /100;
+			         height = $('#insert_height').val() / 100;
+			         BMI = Math.round((weight / Math.pow(height, 2)) *100) /100;
 			         $('#insert_bmi').val(Math.round(BMI * 100) / 100);
-			         $('#insert').prop("disabled", false);
+			         if(BMI<10 || BMI>=100){
+			        	 document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請確認後再輸入喔!</span>";
+				     }else{
+			     	    $('#insert').prop("disabled", false);
+			       	 }
 			     }catch(e){
 			    	 $('#insert').prop("disabled", true);}
 			}
 
+				$('#insert_height').focus(function() {
+					$('#insert_bmi').val("");
+		       		$('#insert').prop("disabled", true);
+				})
+				$('#insert_weight').focus(function() {
+					$('#insert_bmi').val("");
+		       		$('#insert').prop("disabled", true);
+				})
+
 			$('#insert_height').blur(function() {
 				var height = $.trim($('#insert_height').val());
-				if(isNaN(height) || height.length == 0 || $('#insert_height').val()<120 || $('#insert_height').val()>200) {
-					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入數字或正確數值!</span>";
+				if(isNaN(height) || height.length == 0 ) {					
+					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入數字!</span>";
+					$('#insert').prop("disabled", true);
 				} else {
 					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 				}
@@ -135,18 +149,23 @@
 				var weight = $.trim($('#insert_weight').val());
 				if(isNaN(weight) || weight.length == 0) {
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入數字!</span>";
-				} else {
+					$('#insert').prop("disabled", true);
+					} else {
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 				}
 			});
 			$('#insert').click(function(){
-// 				if
-					$.get("<c:url value='/healthpassport/querybmi.controller' />",{'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
-				       	//data就是Server回傳的結果
-				        JSON.parse(data);
-			    	   	
-	        })
-	});
+				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
+	                	//data就是Server回傳的結果
+// 	                	JSON.parse(data);
+
+	                	//清除紀錄
+	                	//....
+	                	$('#showHeight').prepend("<h3>"+(height*100)+"</h3>");
+	                	$('#showWeight').prepend("<h3>"+weight+"</h3>");
+	                	$('#showBMI').append("<h3>"+BMI+"</h3>");
+	             })
+			});
 		});
 	 
 	</script>	
@@ -183,7 +202,7 @@
 							<br>
 						</div>
 						<div class="modal-footer">
-							<button type="button" id="insertBP1" class="btn btn-default" disabled="disabled"
+							<button type="button" id="insertBP" class="btn btn-default" disabled="disabled"
 								data-dismiss="modal">新增</button>
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">關閉</button>
@@ -222,53 +241,40 @@
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var systole;
-			var diastole;
-			var heartBeat;
-			
 			$('#insert_systole').blur(function() {
 				var systole = $.trim($('#insert_systole').val());
 				if(isNaN(systole) || systole.length == 0) {
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
-					$('#insertBP1').prop("disabled", true);
 				} else {
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
-// 					a++;
 				}
-				console.log(a);
 				if(!isNaN(systole) && systole.length != 0 ){
-					$('#insertBP1').prop("disabled", false);
+					$('#insertBP').prop("disabled", false);
 				}
 			});
 			$('#insert_diastole').blur(function() {
 				var diastole = $.trim($('#insert_diastole').val());
 				if(isNaN(diastole) || diastole.length == 0) {
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
-					$('#insertBP1').prop("disabled", true);
 				} else {
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
-// 					a++;
 				}
-				console.log(a);
 				if(!isNaN(diastole) && diastole.length != 0 ){
-					$('#insertBP1').prop("disabled", false);
+					$('#insertBP').prop("disabled", false);
 				}
 			});
 			$('#insert_heartBeat').blur(function() {
 				var heartBeat = $.trim($('#insert_heartBeat').val());
 				if(isNaN(heartBeat) || heartBeat.length == 0) {
 					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
-					$('#insertBP1').prop("disabled", true);
 				} else {
 					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
-// 					a++;
 				}
-				console.log(a);
 				if(!isNaN(heartBeat) && heartBeat.length != 0 ){
-					$('#insertBP1').prop("disabled", false);
+					$('#insertBP').prop("disabled", false);
 				}
 			});
-			$('#insertBP1').click(function(){
+			$('#insertBP').click(function(){
 				var bps='BloodPressureSystole';
 				var bpd='BloodPressureDiastole';
 				var hb = 'HeartBeat';
@@ -277,10 +283,8 @@
 	                	JSON.parse(data);
 	                	
 	             })
-				 
 			});
 		});
-	 
 	</script>
 	
 	<!-- 血糖 -->
@@ -346,11 +350,9 @@
 	</div>
 	
 	<script type="text/javascript">
-		$(document).ready(function() {
-			var BloodSugar;
-			
-			$('#insert_BloodSugar').blur(function() {
+		$(document).ready(function() {		
 				var BloodSugar = $.trim($('#insert_BloodSugar').val());
+			$('#insert_BloodSugar').blur(function() {
 				if(isNaN(BloodSugar) || BloodSugar.length == 0) {
 					document.getElementById("BloodSugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
 				} else {
@@ -360,15 +362,13 @@
 			$('#insert').click(function(){
 				 $.get("<c:url value='/healthpassport/queryBloodSugar.controller' />",{'BloodSugar':BloodSugar}, function(data){
 	                	//data就是Server回傳的結果
-	                	JSON.parse(data);
+// 	                	JSON.parse(data);
 	                	
 	             })
 			});
 		});
 	 
 	</script>
-	
-	
 	
 </body>
 </html>

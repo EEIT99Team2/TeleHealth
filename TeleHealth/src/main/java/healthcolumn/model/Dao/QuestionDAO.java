@@ -21,7 +21,7 @@ public class QuestionDAO {
 	//選擇文章所有回應的文
 	public List<QuestionBean>  selectresponse(String title) {
 		NativeQuery query=this.getSession().createNativeQuery
-				("select emp.empName,mem.memName, que.Content,que.createDate,que.modifyTime,que.QAtype \r\n" + 
+				("select emp.empName,mem.memName, que.Content,que.createTime,que.modifyTime,que.QAtype \r\n" + 
 						"from question que\r\n" + 
 						"   join healthColumn hel on hel.title=que.quetitle  \r\n" + 
 						"  left outer  join employees emp on que.empId=emp.empId \r\n" + 
