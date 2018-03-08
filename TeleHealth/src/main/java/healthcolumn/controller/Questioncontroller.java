@@ -81,7 +81,7 @@ public class Questioncontroller {
 //		}		
 //	}
 //	
-	// 刪除會員文章
+	// 刪除會員po文章
 	@RequestMapping(path = {
 	"/healthcolumn/deleteQAMem.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.POST })
@@ -119,7 +119,7 @@ public class Questioncontroller {
 				return "deletecontenterror";
 			}		
 		}
-		//新增文章
+		//新增po文章
 		@RequestMapping(path = {"/healthcolumn/insQA.controller" }, produces = "text/html;charset=UTF-8", method = {
 				RequestMethod.POST })
 		public @ResponseBody String insertresponse(
@@ -128,12 +128,12 @@ public class Questioncontroller {
 				String advisorycode,
 				String title,
 				Model model) {	
-			System.out.println(MemId+" "+textmem+" "+advisorycode+" "+title);
+			System.out.println(MemId+"123 "+textmem+" "+advisorycode+" "+title);
 			QuestionBean bean=new QuestionBean();
 			bean.setAdvisorycode(advisorycode);
 			bean.setMemberId(MemId);
 			bean.setContent(textmem);
-			bean.setCreateDate(new Date());
+			bean.setCreateTime(new Date());
 			bean.setQAtype("Q");
 			bean.setQuetitle(title);
 			boolean delete = QuestionService.insertQA(bean);

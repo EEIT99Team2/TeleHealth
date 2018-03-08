@@ -22,13 +22,14 @@ public class QuestionBean {
 	private String QAtype; 
 	private String advisorycode;
 	private String Content;
-	private Date createDate;
-	private Date modifyTime;	
+	private Date createTime;
+	private Date modifyTime;
+	
 	@Override
 	public String toString() {
 		return "QuestionBean [Id=" + Id + ", memberId=" + memberId + ", empId=" + empId + ", quetitle=" + quetitle
-				+ ", QAtype=" + QAtype + ", advisorycode=" + advisorycode + ", Content=" + Content + ", createDate="
-				+ createDate + ", modifyTime=" + modifyTime + "]";
+				+ ", QAtype=" + QAtype + ", advisorycode=" + advisorycode + ", Content=" + Content + ", createTime="
+				+ createTime + ", modifyTime=" + modifyTime + "]";
 	}
 	public int getId() {
 		return Id;
@@ -72,19 +73,17 @@ public class QuestionBean {
 	public void setContent(String content) {
 		Content = content;
 	}
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreateTime() {
+		return createTime;
 	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 	public Date getModifyTime() {
 		return modifyTime;
 	}
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
-	}	
+	}
 	
 }
-
-	

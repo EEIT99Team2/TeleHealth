@@ -75,11 +75,10 @@
           ];
 		$(document).ready(function() {
 			 CKEDITOR.replace('contenttext',
-				  {width:200, height:100,toolbarGroups:tg}								 	
+				  {width:400, height:200,toolbarGroups:tg}								 	
 		     );
 		    console.log("ready!");	
-// 			loadmember("D43B1906-F319-40DC-9E11-4DA09A2558AF")
-			loademp("D43B1906-F319-40DC-9E11-4DA09A2558AF")			
+			loadmember("B0041CB5-09F1-4E5B-8D57-1F0406019143")					
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -93,30 +92,7 @@
 					$('#count').val(value3);
 					$('#date').val(value4);
 					
-			   })
-			   //讀取員工發表
-			   function loademp(empId){
-			    $.getJSON('/TeleHealth/healthcolumn/QAEmpublish.controller',{empId:empId},function(datas){
-						console.log(datas);
-		    			var doc=$(document.createDocumentFragment());			    		
-			    		var tb = $('#productTable>tbody');
-	 			        tb.empty();
-			    	$.each(datas,function(i,Emp){			    		
-				    	var cell1=$('<td></td>')
-				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(Emp[0]);		    		
-						cell1.append(ID);
-						var celldata=$("<a href='article.jsp?title="+Emp[1]+"'"+"target='_blank'></a>").text("文章內容");
-			    		var article=$("<td></td>")
-			    		article.append(celldata);			    		          	     	          
-			    		var cell4=$('<td></td>').text(Emp[2]);
-			    		var cell3=$('<td></td>').text(Emp[3]);	
-			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
-						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
-			    		doc.append(row);			    		
-			    	})
-			    	  tb.append(doc);
-			    }) 
-		      }	
+			   })				
 		      //讀取會員發表	
 			   function loadmember(memId){
 				   $.getJSON('/TeleHealth/healthcolumn/QAMempublish.controller',{memId:memId},function(datas){
@@ -124,36 +100,37 @@
 		    			var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
-			    	$.each(datas,function(i,Mem){			    		
+			    	$.each(datas,function(i,Mem){	
+				    	console.log(Mem)		    		
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(Mem[0]);		    		
 						cell1.append(ID);
-						var celldata=$("<a href='article.jsp?title="+Mem[1]+"'"+"target='_blank'></a>").text("文章內容");
+						var celldata=$("<a href='article.jsp?title="+Mem[8]+"&advisoryCode="+Mem[4]+"'"+"target='_blank'></a>").text("文章內容");
 			    		var article=$("<td></td>")
 			    		article.append(celldata);			    		          	     	          
-			    		var cell4=$('<td></td>').text(Mem[2]);
-			    		var cell3=$('<td></td>').text(Mem[3]);	
+			    		var cell4=$('<td></td>').html(Mem[5]);
+			    		var cell3=$('<td></td>').text(Mem[6]);	
 			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
 						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
 			    		doc.append(row);			    		
 			    	})
 			    	  tb.append(doc);
 			    }) 
-			      }		
-			    
-			     //刪除產品
+			      		
+			} 
+			     //刪除會員發表
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
 				   var check=confirm("你確定要刪除此筆資料?");
-				   console.log(check);
+				   var Memname=$('#title').val();
 	 			   var id = $(this).parents('tr').find('td:nth-child(1)').text();
 	 			   console.log(id);
 	 			   if(check==true){
-	 				  $.post('/TeleHealth/healthcolumn/deletehealthcolumn.controller',{columnId:id,memberId:},function(data){
+	 				  $.post('/TeleHealth/healthcolumn/deleteQAMem.controller',{columnId:id,memberId:Memname},function(data){
 		 				   alert("您已刪除所選的文章");
-		 				   loadProduct("D43B1906-F319-40DC-9E11-4DA09A2558AF");
+		 				  loadmember(Memname);
 		 			   })		 			   
 	 			   }else{
-	 				  loadProduct("D43B1906-F319-40DC-9E11-4DA09A2558AF")
+	 				  loadmember(Memname);
 		 		 }
 	 			 
 			  })

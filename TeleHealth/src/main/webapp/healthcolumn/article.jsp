@@ -70,8 +70,8 @@
       	<div class="form-group">
       		<form id="Msg" action="/TeleHealth/healthcolumn/insQA.controller" method="post" >
       		<input type="hidden" id="advisorycode" name="advisorycode" value=>
-      		<input type="hidden" id="title" name="title" value=>
-      		<input type="hidden" id="MemId"name="MemId" value="${LoginOK.memberId}">
+      		<input type="hidden" id="title" name="title" >
+      		<input type="hidden" id="MemId"name="MemId" value="B0041CB5-09F1-4E5B-8D57-1F0406019143">
       		<textarea class="form-control" id="textt" name="textmem" rows="3"></textarea>
       		<input type="submit" value="送出" onclick=check()>      		
       		<input type='button' id='clean' value='清除重選'>
@@ -104,13 +104,10 @@ $(document).ready(function() {
 	    var ary1 = url.split('?');	   
 	    var ary2 = ary1[1].split('=');
 	    var aryid=ary2[1].split('&');	    		       
-		var title = aryid[0];
-		console.log(title);
+		var title = aryid[0];		
 		var titleok=$('#title').val(title);    
 	    var atype=ary2[2];
-	    var adok=$('#advisorycode').val(atype);	           
-  		console.log(titleok);
-  		console.log(adok);
+	    var adok=$('#advisorycode').val(atype); 		
 		CKEDITOR.replace('textt',
 				 {width:800, height:100,toolbarGroups:tg})
   		 
