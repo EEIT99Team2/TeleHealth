@@ -25,7 +25,8 @@ import advisorymoment.model.EmployeesBean;
 import healthcolumn.model.HealthColumnBean;
 import healthcolumn.model.QuestionBean;
 import healthpassport.model.BMIBean;
-import healthpassport.model.BloodPressureRecordsBean;
+import healthpassport.model.BloodPressureBean;
+import healthpassport.model.BloodSugarBean;
 import healthpassport.model.DataAnalysisBean;
 import register.model.MemberBean;
 import register.model.TestBean;
@@ -61,7 +62,7 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureRecordsBean.class,DataAnalysisBean.class,MemberBean.class,TestBean.class);		
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,TestBean.class);		
 		
 		return builder.buildSessionFactory();
 	}

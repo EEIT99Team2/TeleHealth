@@ -56,7 +56,19 @@ public class DataAnalysisDAO {
 		query.setParameter(5,bmi);
 		query.addEntity(DataAnalysisBean.class);
 		DataAnalysisBean data = (DataAnalysisBean) query.uniqueResult();
-		System.out.println(data+"5645634646");
+		return data;
+	}
+	//18歲以上BloobSugar
+	String bs ="select * from dataanalysis where groupid ='BloodSugar' and gender = ? and  ?>= minage and ?< maxage and ?>=minvalue and ?<=maxvalue";
+	public DataAnalysisBean bloodSugarUp18(String gender,Integer age,Double value) {
+		NativeQuery query = this.getSession().createNativeQuery(up);
+		query.setParameter(1,gender);
+		query.setParameter(2,age);
+		query.setParameter(3,age);
+		query.setParameter(4,value);
+		query.setParameter(5,value);
+		query.addEntity(DataAnalysisBean.class);
+		DataAnalysisBean data = (DataAnalysisBean) query.uniqueResult();
 		return data;
 	}
 }

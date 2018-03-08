@@ -5,10 +5,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import healthpassport.model.BloodPressureRecordsBean;
+import healthpassport.model.BloodPressureBean;
 
 @Repository
-public class BloodPressureRecordsDAO {
+public class BloodPressureDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -16,7 +16,7 @@ public class BloodPressureRecordsDAO {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	public BloodPressureRecordsBean insert(BloodPressureRecordsBean bean) {
+	public BloodPressureBean insert(BloodPressureBean bean) {
 		this.getSession().save(bean);
 		return bean;
 	}
