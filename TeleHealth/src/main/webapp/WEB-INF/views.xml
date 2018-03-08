@@ -2,10 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+
 	<bean id="register.success" class="org.springframework.web.servlet.view.RedirectView">
 		<property name="contextRelative" value="true"></property>
-		<property name="url" value="/RegisterSuccess.jsp"></property>
+		<property name="url" value="/Members/RegisterSuccess.jsp"></property>
+	</bean>
+
+	<bean id="register.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/Members/register.jsp"></property>
 	</bean>
 	
 	<bean id="login.error" class="org.springframework.web.servlet.view.InternalResourceView">
@@ -19,13 +23,13 @@
 	
 	<bean id="forgetPwd.success" class="org.springframework.web.servlet.view.RedirectView">
 		<property name="contextRelative" value="true"></property>
-		<property name="url" value="/ForgetSuccess.jsp"></property>
+		<property name="url" value="/Members/ForgetSuccess.jsp"></property>
 	</bean>
 	
 	<bean id="forgetPwd.error" class="org.springframework.web.servlet.view.InternalResourceView">		
-		<property name="url" value="/ForgetPwd.jsp"></property>
+		<property name="url" value="/Members/ForgetPwd.jsp"></property>
 	</bean>	
-		
+
 	<bean id="selectdata.table" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/page/selectdataTable.jsp"></property>
 	</bean>
@@ -35,7 +39,7 @@
 	</bean>
 	
 	<bean id="form.error" class="org.springframework.web.servlet.view.InternalResourceView">
-		<property name="url" value="/healthcolumn/ck.jsp"></property>
+	<property name="url" value="/healthcolumn/ck.jsp"></property>
 	</bean>
 	
 	<bean id="form.ok" class="org.springframework.web.servlet.view.InternalResourceView">
@@ -44,10 +48,6 @@
 
 	<bean id="register.do" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/register.controller"></property>
-	</bean>
-
-	<bean id="register.error" class="org.springframework.web.servlet.view.InternalResourceView">
-		<property name="url" value="/Register.jsp"></property>
 	</bean>
 	
 	<bean id="deletecontentok" class="org.springframework.web.servlet.view.InternalResourceView">

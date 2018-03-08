@@ -56,6 +56,7 @@ public class DataAnalysisDAO {
 		query.setParameter(5,bmi);
 		query.addEntity(DataAnalysisBean.class);
 		DataAnalysisBean data = (DataAnalysisBean) query.uniqueResult();
+		System.out.println(data+"5645634646");
 		return data;
 	}
 }

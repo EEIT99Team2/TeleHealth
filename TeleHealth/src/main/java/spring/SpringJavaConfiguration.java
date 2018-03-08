@@ -30,7 +30,6 @@ import healthpassport.model.DataAnalysisBean;
 import register.model.MemberBean;
 import register.model.TestBean;
 
-
 @Configuration
 //本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
 @ComponentScan(basePackages = { 

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>加入會員</title>
 <style type="text/css">
-
+<!--
 body {
 	background-attachment: fixed;
 	background-color: #EBFFEB;
@@ -99,14 +99,9 @@ br {
 	color: #FF0000;
 	font-size: 0.8em;
 }
-
+-->
 </style>
-<script type="text/javascript">
-	//由<body>的onLoad事件處理函數觸發此函數
-	function setFocusToUserId() {
-		document.forms[0].mid.focus(); // 將游標放在mid欄位內
-	}
-</script>
+
 </head>
 <body>
 	<c:set var="funcName" value="REG" />
@@ -148,42 +143,65 @@ br {
 						<input type="text"
 							name="memName" value="${param.memName}" class="fieldWidth"
 							style="width: 320px;"> <font color="red" size="-1">${MsgMap.errormemName}</font>
+						
 						<br /> <label class="fontSize">電話：</label> 
 						<input type="text"
+							name="phone1" value="${param.phone1}" class="fieldWidth"
+							style="width: 60px;"> ─ <input type="text"
 							name="phone" value="${param.phone}" class="fieldWidth"
-							style="width: 320px;"> <font color="red" size="-1">${MsgMap.errorPhone}</font>
+							style="width: 180px;"> <font color="red" size="-1">${MsgMap.errorPhone}</font>
+							
+						
 						<br /> <label class="fontSize">行動電話：</label> 
 						<input type="text"
 							name="cellphone" value="${param.cellphone}" class="fieldWidth"
 							style="width: 320px;"> <font color="red" size="-1">${MsgMap.errorCellphone}</font>
+			
 						<br /> <label class="fontSize">性別：</label> 
-						<input type="text"
-							name="gender" value="${param.gender}" class="fieldWidth"
-							style="width: 120px;"> <font color="red" size="-1">${MsgMap.errorGender}</font>
+						<input type="radio" name="gender"  class="fieldWidth" required="required" data-msg-required="請填寫你的性別。" value="M" style="width:20px;" />男性
+          				<input type="radio" name="gender" class="gender" required="required" data-msg-required="請填寫你的性別。" value="F" />女性
+									
 						<br /> <label class="fontSize">生日：</label> 
-						<input type="text"
+						<input type="date" step="2" min="1950-10-01" max="2018-03-23"
 							name="birth" value="${param.birth}" class="fieldWidth"
-							style="width: 120px;"> <font color="red" size="-1">${MsgMap.errorBirth}</font>
+							style="width: 150px;"> <font color="red" size="-1">${MsgMap.errorBirth}</font>						
+						
 						<br /> <label class="fontSize">身高：</label> 
 						<input type="text"
 							name="memHeight" value="${param.memHeight}" class="fieldWidth"
 							style="width: 120px;"> <font color="red" size="-1">${MsgMap.errorMemHeight}</font>
+						
 						<br /> <label class="fontSize">體重：</label> 
 						<input type="text"
 							name="memWeight" value="${param.memWeight}" class="fieldWidth"
 							style="width: 120px;"> <font color="red" size="-1">${MsgMap.errorMemWeight}</font>
+						
 						<br /> <label class="fontSize">血型：</label> 
-						<input type="text"
-							name="bloodType" value="${param.bloodType}" class="fieldWidth"
-							style="width: 120px;"> <font color="red" size="-1">${MsgMap.errorBloodType}</font>
+							<select name="bloodType" style="width:120px;height:20px;">
+							<option value="" selected="true">請選擇血型</option>
+							　<option value="A">A型</option>
+							　<option value="B">B型</option>
+							　<option value="AB">AB型</option>
+							　<option value="O">O型</option>
+							</select><font color="red" size="-1">${MsgMap.errorBloodType}</font>
+
+							
+						
 						<br /> <label class="fontSize">地址：</label> 
 						<input type="text"
 							name="address" value="${param.address}" class="fieldWidth"
 							style="width: 320px;"> <font color="red" size="-1">${MsgMap.errorAddr}</font>
+						
 						<br /> <label class="fontSize">密碼：</label> 
 						<input type="password"
 							name="pwd" value="${param.pwd}" class="fieldWidth"
-							style="width: 320px;"> <font color="red" size="-1">${MsgMap.errorPwd}</font>
+							style="width: 320px;"> <font color="red" size="-1">${MsgMap.errorPwd}</font>					
+						
+						<br /> <label class="fontSize">密碼確認：</label>			
+							<input name="pwdCheck" type="password" input_style" value="" tabindex="5" class="fieldWidth"
+							style="width: 320px;"/><font color="red" size="-1">${MsgMap.errorPwdCheck}</font>
+					
+												
 						<br /> <label class="fontSize">藥物過敏：</label> 
 						<input type="text"
 							name="medicine" value="${param.medicine}" class="fieldWidth"
@@ -193,10 +211,21 @@ br {
 							name="medicalHistory" value="${param.medicalHistory}"
 							class="fieldWidth" style="width: 320px;"> <font
 							color="red" size="-1">${MsgMap.errorMedicalHistory}</font> <br />
+							
+<!-- 						<label class="fontSize">照片：</label>  -->
+<!-- 						<Input Type="file" size="40" -->
+<!-- 							class="fieldWidth" style="width: 325px;" name="file1"><BR> -->
+<%-- 						<font color="red" size="-1">${MsgMap.errorPhoto}</font> <br /> --%>
+						
 						<label class="fontSize">照片：</label> 
-						<Input Type="file" size="40"
+						   <Input Type="file" size="40"
 							class="fieldWidth" style="width: 325px;" name="file1"><BR>
-						<font color="red" size="-1">${MsgMap.errorPhoto}</font> <br />
+						    <div>
+						        <img class="preview" style="max-width: 150px; max-height: 150px;">
+						        <div class="size"></div>
+						    </div>
+					
+
 
 						<div id="btnArea" align="center">
 							<input type="submit" name="submit" id="submit" value="儲存" /> <input

@@ -75,9 +75,6 @@ public class MemberDAOHibernate {
 			return false;
 					}
 		}
-	
-	
-	
 			
 	public boolean update(String memName,String phone,
             String cellphone,java.util.Date birth,
@@ -98,7 +95,7 @@ public class MemberDAOHibernate {
 			result.setPhoto(photo);
 			result.setFileName(fileName);
 			result.setMedicalHistory(medicalHistory);	
-		return true;
+			return true;
 		}
 		return false;
 	}

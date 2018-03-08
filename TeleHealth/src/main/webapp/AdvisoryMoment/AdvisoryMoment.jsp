@@ -151,10 +151,55 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal" id="checkResultDone">我知道了</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="cancelReserve">取消預約</button>
       </div>
     </div>
   </div>
 </div>
+<div id="calendar"></div>
+
+<!-- 取消預約查詢視窗 -->
+<div class="modal fade" id="cancelReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkResultTitle">警告</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="cancelReserveCheck">確定</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="NocancelReserve">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 確定取消預約視窗 -->
+<div class="modal fade" id="cancelCheckItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkResultTitle">取消預約結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="cancelCheck">我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div id="calendar"></div>
 
 <!--=======================載入script檔跟程式==========================-->
@@ -320,8 +365,25 @@ $(document).ready(function() {
 	$("#reserveDone").click(function(){
 		window.location.reload();
 		})
+	$("#cancelCheck").click(function(){
+		window.location.reload();
+		})
 	$("#checkResultDone").click(function(){
 		$("#checkResult").modal('hide');
+		})
+	$("#cancelReserve").click(function(){
+		var docFrag = $(document.createDocumentFragment());
+		$("#checkResult").modal('hide');
+		 $('#cancelReserveItem').modal('show');
+		  docFrag.append("<h3>確定要取消預約?</h3>");
+		  	$("#cancelReserveItem .modal-body").append(docFrag);
+		})
+	$("#cancelReserveCheck").click(function(){
+		var docFrag = $(document.createDocumentFragment());
+		$("#cancelReserveItem").modal('hide');
+		$("#cancelCheckItem").modal('show');
+		docFrag.append("<h3>已成功取消預約</h3>");
+	  	$("#cancelCheckItem .modal-body").append(docFrag);
 		})
 });
 </script>

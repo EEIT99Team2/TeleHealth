@@ -113,7 +113,7 @@
 			     try {
 			         if ($('#insert_height').val() == "") { alert('請輸入身高'); return; }
 			         if ($('#insert_weight').val() == "") { alert('請輸入體重'); return; }
-			        	
+			        
 			         weight = $('#insert_weight').val();
 			         height = Math.pow($('#insert_height').val() / 100 , 2);
 			         BMI = Math.round((weight / height) *100) /100;
@@ -125,8 +125,8 @@
 
 			$('#insert_height').blur(function() {
 				var height = $.trim($('#insert_height').val());
-				if(isNaN(height) || height.length == 0) {
-					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入數字!</span>";
+				if(isNaN(height) || height.length == 0 || $('#insert_height').val()<120 || $('#insert_height').val()>200) {
+					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入數字或正確數值!</span>";
 				} else {
 					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 				}
@@ -140,7 +140,139 @@
 				}
 			});
 			$('#insert').click(function(){
-				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
+// 				if
+					$.get("<c:url value='/healthpassport/querybmi.controller' />",{'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
+				       	//data就是Server回傳的結果
+				        JSON.parse(data);
+			    	   	
+	        })
+	});
+		});
+	 
+	</script>	
+	<!--血壓-->
+	<div class="container">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-6">
+				<h3>血壓</h3>
+			</div>
+			<div class="col-4 text-right">
+				<button id="insertBloodPressureRecords" data-toggle="modal" data-target="#myModalBloodPressure">
+					<img class="insertBtn" src="<c:url value='/images/heart.JPG' />">
+				</button>
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModalBloodPressure" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">血壓</h4>
+						</div>
+						<div class="modal-body">
+							<label for="insert_systole" class="col-2">收縮壓</label>
+							<input type="text" id="insert_systole" name="systole" class="col-4">mmHg(輸入格式範例:110) <span id="systoleMsg"></span>
+							<br>
+							<label for="insert_diastole" class="col-2">舒張壓</label>
+							<input type="text" id="insert_diastole" name="diastole" class="col-4">mmHg(輸入格式範例:80) <span id="diastoleMsg"></span>
+							<br>
+							<label for="insert_heartBeat" class="col-2">脈搏</label>
+							<input type="text" id="insert_heartBeat" name="heartBeat" class="col-4">次/分鐘(輸入格式範例:72) <span id="heartBeatMsg"></span>
+							<br>
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="insertBP1" class="btn btn-default" disabled="disabled"
+								data-dismiss="modal">新增</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">關閉</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-3 text-center align-middle">
+				<img src="<c:url value='/images/heart.JPG' />" alt="血壓">
+			</div>
+			<div class="col-9">
+				<div class="row">
+					<div class="col-4 text-center">
+						<h2 id="showBloodPressure"><small>mmHg</small></h2>
+					</div>
+					<div class="col-4 text-center">
+						<h2 id="showHeartBeat"><small>次/分</small></h2>
+					</div>
+					<div class="col-4 text-center">
+						<h2 id="showBloodPressure"></h2>
+					</div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-12 text-center">
+						<span>這是查詢結果!!</span>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var systole;
+			var diastole;
+			var heartBeat;
+			
+			$('#insert_systole').blur(function() {
+				var systole = $.trim($('#insert_systole').val());
+				if(isNaN(systole) || systole.length == 0) {
+					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
+					$('#insertBP1').prop("disabled", true);
+				} else {
+					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+// 					a++;
+				}
+				console.log(a);
+				if(!isNaN(systole) && systole.length != 0 ){
+					$('#insertBP1').prop("disabled", false);
+				}
+			});
+			$('#insert_diastole').blur(function() {
+				var diastole = $.trim($('#insert_diastole').val());
+				if(isNaN(diastole) || diastole.length == 0) {
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
+					$('#insertBP1').prop("disabled", true);
+				} else {
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+// 					a++;
+				}
+				console.log(a);
+				if(!isNaN(diastole) && diastole.length != 0 ){
+					$('#insertBP1').prop("disabled", false);
+				}
+			});
+			$('#insert_heartBeat').blur(function() {
+				var heartBeat = $.trim($('#insert_heartBeat').val());
+				if(isNaN(heartBeat) || heartBeat.length == 0) {
+					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
+					$('#insertBP1').prop("disabled", true);
+				} else {
+					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+// 					a++;
+				}
+				console.log(a);
+				if(!isNaN(heartBeat) && heartBeat.length != 0 ){
+					$('#insertBP1').prop("disabled", false);
+				}
+			});
+			$('#insertBP1').click(function(){
+				var bps='BloodPressureSystole';
+				var bpd='BloodPressureDiastole';
+				var hb = 'HeartBeat';
+				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'systole':bps,'diastole':bpd, 'heartBeat': hb , 'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat}, function(data){
 	                	//data就是Server回傳的結果
 	                	JSON.parse(data);
 	                	
@@ -149,6 +281,94 @@
 			});
 		});
 	 
-	</script>	
+	</script>
+	
+	<!-- 血糖 -->
+	<div class="container">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-6">
+				<h3>血糖</h3>
+			</div>
+			<div class="col-4 text-right">
+				<button id="insertBloodSugarRecords" data-toggle="modal" data-target="#myModalBloodSugar">
+					<img class="insertBtn" src="<c:url value='/images/sugar.JPG' />">
+				</button>
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModalBloodSugar" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">血糖</h4>
+						</div>
+						<div class="modal-body">
+							<label for="insert_BloodSugar" class="col-2">血糖</label>
+							<input type="text" id="insert_BloodSugar" name="BloodSugar" class="col-4">mg/dL(輸入格式範例:120) <span id="BloodSugarMsg"></span>
+							<br>
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="insert" class="btn btn-default" 
+								data-dismiss="modal">新增</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">關閉</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-3 text-center align-middle">
+				<img src="<c:url value='/images/sugar.JPG' />" alt="血糖">
+			</div>
+			<div class="col-9">
+				<div class="row">
+					<div class="col-4 text-center">
+						<h2 id="showBloodSugar"><small>mg/dL</small></h2>
+					</div>
+					<div class="col-4 text-center">
+						<h2 id="showBloodSugar"></h2>
+					</div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-12 text-center">
+						<span>這是查詢結果!!</span>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var BloodSugar;
+			
+			$('#insert_BloodSugar').blur(function() {
+				var BloodSugar = $.trim($('#insert_BloodSugar').val());
+				if(isNaN(BloodSugar) || BloodSugar.length == 0) {
+					document.getElementById("BloodSugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
+				} else {
+					document.getElementById("BloodSugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+				}
+			});
+			$('#insert').click(function(){
+				 $.get("<c:url value='/healthpassport/queryBloodSugar.controller' />",{'BloodSugar':BloodSugar}, function(data){
+	                	//data就是Server回傳的結果
+	                	JSON.parse(data);
+	                	
+	             })
+			});
+		});
+	 
+	</script>
+	
+	
+	
 </body>
 </html>
