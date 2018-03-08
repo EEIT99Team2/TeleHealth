@@ -28,5 +28,8 @@
 		});
 		changeBtn.addEventListener("click", reloadImage);
 	</script>
+	
+	<iframe src="https://tzeing.asuscomm.com:8443/123/abcd.pdf" style="width:200px; height:200px;" frameborder="0"></iframe>
+	
 </body>
 </html>

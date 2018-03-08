@@ -11,7 +11,7 @@
 <style>
 body {
 	background-color: #3D6DF2;
-	margin-top: 15px;
+	margin-top: 50px;
 	font-family: sans-serif;
 	color: white
 }
@@ -39,16 +39,17 @@ video {
 </head>
 
 <body>
-	<jsp:include page="/fragment/top.jsp" />
+	<jsp:include page="/fragment/header.jsp" />
 	<div class="container">
-		<div id='login-page' class="row">
-			<div class="col-12 text-center">
+		<div id='login-page' class="row" >
+			<div class="col-12 text-center" style="height:500px">
 				<h2>Login As</h2>
 				<input type="text" id="username" /> <input type="button" id="login"
 					value="Login" />
 			</div>
 		</div>
-		<div id="call-page" class="row clearfix">
+		<div id="call-page" class="row clearfix" style="margin-top: 50px">
+			<h3>${LoginOK.memberId} ${LoginOK.empId}，您好</h3>
 			<div class="col-5 float-left">
 				<video id="yours" autoplay muted playsinline></video>
 				<video id="theirs" autoplay playsinline></video>
@@ -57,8 +58,6 @@ video {
 				<input type="button" value="Hang Up" id="hang-up" disabled="disabled" />
 			</div>
 			<div class="col-7 float-right">
-				<h3>XXX，您好</h3>
-
 				<ul class="nav nav-tabs w3-padding-large" id="myTab" role="tablist">
 					<li class="nav-item"><a class="nav-link active" id="home-tab"
 						data-toggle="tab" href="#home" role="tab" aria-controls="home"
@@ -110,6 +109,7 @@ video {
 	   });
   	</script>
 	<script src="<c:url value='javascript/client.js' />"></script>
+	<jsp:include page="/fragment/footer.jsp"/>
 </body>
 
 </html>
