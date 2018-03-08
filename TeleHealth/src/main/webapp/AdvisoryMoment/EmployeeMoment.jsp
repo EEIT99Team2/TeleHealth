@@ -66,7 +66,7 @@
                     </li>
                 </ul>
                 <form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
-<input type="text" id="empId" name="empId" value="27E92E12-57B7-4AB9-BF8C-D5A8B163918F">
+<input type="text" id="empId" name="empId" value="0A55726B-8733-451F-9939-4D387698C7B6">
 <span id="item1" class="item1 nav-item active">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">年</span>
 <select id="month" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">月</span>
@@ -150,7 +150,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="TakeOffTitle">編寫請假</h5>
+        <h5 class="modal-title" id="TakeOffTitle">編寫請假單</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -181,7 +181,6 @@
 <script>
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
-	var urlPath = "/TeleHealth";
 	var EmpId=$("#empId").val();
 	var mom = moment();
 	var reserveData;
@@ -215,22 +214,21 @@ $(document).ready(function() {
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
 		
-	$.getJSON(urlPath+"/AdvisoryMomemt/employeeSelectAll.controller",{"EmpId":EmpId},function(eventsData){	
-	$("#chooseCode").change(function (){
-		
-		var code = $("#chooseCode :selected").prop("id");
-		if(code=="all"){
-			$("#calendar").fullCalendar('removeEventSources');
-			$("#calendar").fullCalendar('addEventSource', eventsData);
-			$("#calendar").fullCalendar('rerenderEvents');
-		}else{		
-		$.getJSON(urlPath+"/AdvisoryMomemt/employeeSelectByCode.controller",{"EmpId":EmpId,advisoryCode:code},function(data){	
-		$("#calendar").fullCalendar('removeEventSources');
-		$("#calendar").fullCalendar('addEventSource', data);
-		$("#calendar").fullCalendar('rerenderEvents');
-		})
-		}
-	});
+	$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectAll.controller'/>",{"EmpId":EmpId},function(eventsData){	
+// 	$("#chooseCode").change(function (){
+// 		var code = $("#chooseCode :selected").prop("id");
+// 		if(code=="all"){
+// 			$("#calendar").fullCalendar('removeEventSources');
+// 			$("#calendar").fullCalendar('addEventSource', eventsData);
+// 			$("#calendar").fullCalendar('rerenderEvents');
+// 		}else{		
+// 		$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectByCode.controller'/>",{"EmpId":EmpId,advisoryCode:code},function(data){	
+// 		$("#calendar").fullCalendar('removeEventSources');
+// 		$("#calendar").fullCalendar('addEventSource', data);
+// 		$("#calendar").fullCalendar('rerenderEvents');
+// 		})
+// 		}
+// 	});
 		
     $('#calendar').fullCalendar({
     	 columnHeaderHtml: function(mom) {
@@ -249,15 +247,27 @@ $(document).ready(function() {
         	SelectByEmpID:{
         		text:'我的班表',
 				click:function(){
-					alert("my");
+					$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectById.controller'/>",{"EmpId":EmpId},function(Mydata){	
+						$("#calendar").fullCalendar('removeEventSources');
+						$("#calendar").fullCalendar('addEventSource', Mydata);
+						$("#calendar").fullCalendar('rerenderEvents');
+						})
 					}
-            	}
+            	},
+            AllMoment:{
+            		text:'所有班表',
+    				click:function(){	
+    						$("#calendar").fullCalendar('removeEventSources');
+    						$("#calendar").fullCalendar('addEventSource', eventsData);
+    						$("#calendar").fullCalendar('rerenderEvents');
+    					}
+            }
         },
       defaultView:'agendaWeek',
       header: {
         left: '',
         center: 'prev, title, next',
-        right: 'agendaWeek,agendaDay,BackToToday,SelectByEmpID'
+        right: 'agendaWeek,agendaDay,BackToToday,AllMoment,SelectByEmpID'
       },
       allDaySlot:false,
 //       dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
@@ -326,10 +336,34 @@ $(document).ready(function() {
 		$('#TakeOffItem').modal('show');
 		})
 	$("#ReTakeOff").click(function(){
+		var docFrag = $(document.createDocumentFragment());
 		$('#UnReserveItem').modal('hide');
 		$('#reservedItem').modal('hide');
 		$('#TakeOffItem').modal('show');
+		docFrag.append("<span style='font-size:1.3em'>請假事項:  </span>"
+				+"<select id='chooseToff'>"
+				+"<option id='all'>請選擇</option>"
+				+"<option id='FAM'>特休</option>"
+				+"<option id='FAM'>事假</option>"
+				+"<option id='EAD'>病假</option>"
+				+"<option id='REH'>公假</option>"
+				+"<option id='DIA'>喪假</option>"
+				+"<option id='CAR'>產假</option>"
+				+"<option id='WEL'>生理假</option>"
+				+"<option id='WEL'>家庭照顧假</option>"+"</select><br>"
+				+"<span style='font-size:1.3em'>請假事由:</span><textarea id='takeoffReason' rows='6' cols='50' style='font-size:1em'></textarea>");
+		$("#TakeOffItem .modal-body").append(docFrag);
 		})
+		
+		$("#checkTakeOff").click(function(){
+			var docFrag = $(document.createDocumentFragment());
+			var TakeoffItem = $("#chooseToff :selected").val();
+			var TReason = $("#takeoffReason").val();
+			console.log(""+TakeoffItem);
+// 				$.post("",{},function(){
+				
+// 					})
+			})
 // 	$("#Change").click(function(){
 // 		$('#UnReserveItem').modal('hide');
 // 		$('#changeItem').modal('show');
