@@ -1,6 +1,7 @@
 package register.model.dao;
 
 import java.sql.Blob;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -36,10 +37,35 @@ public class MemberDAOHibernate {
 			if(bean!=null) {
 				this.getSession().save(bean);
 				return bean;
-			}
-		
+			}		
 		return null;
 	}
+	
+	public MemberBean update(MemberBean bean) {
+		if(bean!=null) {
+			MemberBean updateMember = this.getSession().get(MemberBean.class, bean.getMemberId());
+			updateMember.setMemName(bean.getMemName());
+			updateMember.setMemHeight(bean.getMemHeight());
+			updateMember.setMemWeight(bean.getMemWeight());
+			updateMember.setBloodType(bean.getBloodType());
+			updateMember.setAddress(bean.getAddress());
+			updateMember.setMedicalHistory(bean.getMedicalHistory());
+			updateMember.setMedicine(bean.getMedicine());
+			updateMember.setCellphone(bean.getCellphone());
+			updateMember.setPhone(bean.getPhone());
+			if(bean.getFileName() != null) {
+				updateMember.setFileName(bean.getFileName());
+				updateMember.setPhoto(bean.getPhoto());				
+			} else {
+				updateMember.setFileName(null);
+				updateMember.setPhoto(null);
+			}
+			System.out.println("updateMember" + updateMember);
+			updateMember.setModifiyTime(new Timestamp(System.currentTimeMillis()));
+			return updateMember;
+		}		
+	return null;
+}
 	
 	public boolean delete(String account) {
 		MemberBean result = this.getSession().get(MemberBean.class, account);
