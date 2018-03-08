@@ -32,18 +32,18 @@ public class QuestionDAO {
 		return data;		
 	}
 	//選擇護理師文章所有回應的文
-		public List<QuestionBean>  selectresponseD(String empId) {
+		public List<QuestionBean>  selectresponseEmp(String empId) {
 			NativeQuery query=this.getSession().createNativeQuery
-					("select * from question where empid=?");
+					("  select QAcolumnId,QAtype,Content,createDate,modifyTime from question where empId=?");
 			query.setParameter(1, empId);
 			List<QuestionBean> data=(List<QuestionBean>)query.list();
 			return data;		
 		}
 	//選擇護理師文章所有回應的文
-				public List<QuestionBean>  selectresponseM(String memid) {
+				public List<QuestionBean>  selectresponseMem(String memId) {
 					NativeQuery query=this.getSession().createNativeQuery
-							(" select * from question where memid=?");
-					query.setParameter(1, memid);
+							("   select QAcolumnId,QAtype,Content,createDate,modifyTime from question  where memberId=?");
+					query.setParameter(1, memId);
 					List<QuestionBean> data=(List<QuestionBean>)query.list();
 					return data;		
 				}
