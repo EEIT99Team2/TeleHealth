@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
 	
 	<bean id="ModifyPwdController.error" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/Members/Members03.jsp"></property>
@@ -11,7 +12,7 @@
 	<bean id="memberdata.error" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/Members/Members02.jsp"></property>
 	</bean>
-		
+
 	<bean id="register.success" class="org.springframework.web.servlet.view.RedirectView">
 		<property name="contextRelative" value="true"></property>
 		<property name="url" value="/Members/RegisterSuccess.jsp"></property>
@@ -48,7 +49,7 @@
 	</bean>
 	
 	<bean id="form.error" class="org.springframework.web.servlet.view.InternalResourceView">
-		<property name="url" value="/healthcolumn/ck.jsp"></property>
+	<property name="url" value="/healthcolumn/ck.jsp"></property>
 	</bean>
 	
 	<bean id="form.ok" class="org.springframework.web.servlet.view.InternalResourceView">

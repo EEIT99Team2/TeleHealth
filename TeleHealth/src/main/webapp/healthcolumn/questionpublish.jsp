@@ -84,8 +84,8 @@
 			 CKEDITOR.replace('contenttext',{    	 	
 		    } );
 		    console.log("ready!");	
-			loadmember("D43B1906-F319-40DC-9E11-4DA09A2558AF")
-// 			loademp("D43B1906-F319-40DC-9E11-4DA09A2558AF")			
+// 			loadmember("D43B1906-F319-40DC-9E11-4DA09A2558AF")
+			loademp("D43B1906-F319-40DC-9E11-4DA09A2558AF")			
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -102,7 +102,7 @@
 			   })
 			   //讀取員工發表
 			   function loademp(empId){
-			    $.getJSON('/TeleHealth/healthcolumn/QAemppublish.controller',{empId:empId},function(datas){
+			    $.getJSON('/TeleHealth/healthcolumn/QAempublish.controller',{empId:empId},function(datas){
 						console.log(datas);
 		    			var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
@@ -111,7 +111,7 @@
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(product.columnId);		    		
 						cell1.append(ID);
-			    		var article=$("<td><a href='article.jsp?title="+product.title+"'"+"target='_blank'></a></td>").text(product.title);          	     	          
+			    		var article=$("<td></td>").text(product.title);          	     	          
 			    		var cell4=$('<td></td>').text(product.clickCount);
 			    		var cell3=$('<td></td>').text(product.createDate);	
 			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
@@ -132,7 +132,7 @@
 					    	var cell1=$('<td></td>')
 					    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(product.columnId);		    		
 							cell1.append(ID);
-				    		var article=$("<td><a href='article.jsp?title="+product.title+"'"+"target='_blank'></a></td>").text(product.title);          	     	          
+				    		var article=$("<td></td>").text(product.title);          	     	          
 				    		var cell4=$('<td></td>').text(product.clickCount);
 				    		var cell3=$('<td></td>').text(product.createDate);	
 				    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
