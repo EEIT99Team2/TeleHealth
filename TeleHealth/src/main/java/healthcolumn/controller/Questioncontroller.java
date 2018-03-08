@@ -29,10 +29,10 @@ public class Questioncontroller {
 		return data;
 	}
 	//員工文章
-	@RequestMapping(path = { "/healthcolumn/QAemppublish.controller" }, produces = "text/html;charset=UTF-8", method = {
+	@RequestMapping(path = { "/healthcolumn/QAempublish.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
-	public @ResponseBody String loadQAemppublish(String empId) {
-		List<QuestionBean> loadpage = QuestionService.loademp(empId);
+	public @ResponseBody String loadQAEmppublish(String empId) {
+		List<QuestionBean> loadpage = QuestionService.loadEmp(empId);
 		System.out.println(loadpage);
 		Gson gson = new Gson();
 		String data = gson.toJson(loadpage);
@@ -42,8 +42,8 @@ public class Questioncontroller {
 	//會員文章
 	@RequestMapping(path = { "/healthcolumn/QAmempublish.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
-	public @ResponseBody String loadQAmempublish(String memid) {
-		List<QuestionBean> loadpage = QuestionService.loadmem(memid);
+	public @ResponseBody String loadQAMempublish(String memId) {
+		List<QuestionBean> loadpage = QuestionService.loadMem(memId);
 		System.out.println(loadpage);
 		Gson gson = new Gson();
 		String data = gson.toJson(loadpage);
