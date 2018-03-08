@@ -156,7 +156,6 @@
         </button>
       </div>
       <div class="modal-body">
-        <h2>共體時艱</h2>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal" id="checkTakeOff">確定</button>
@@ -342,24 +341,28 @@ $(document).ready(function() {
 		$('#TakeOffItem').modal('show');
 		docFrag.append("<span style='font-size:1.3em'>請假事項:  </span>"
 				+"<select id='chooseToff'>"
-				+"<option id='all'>請選擇</option>"
-				+"<option id='FAM'>特休</option>"
-				+"<option id='FAM'>事假</option>"
-				+"<option id='EAD'>病假</option>"
-				+"<option id='REH'>公假</option>"
-				+"<option id='DIA'>喪假</option>"
-				+"<option id='CAR'>產假</option>"
-				+"<option id='WEL'>生理假</option>"
-				+"<option id='WEL'>家庭照顧假</option>"+"</select><br>"
+				+"<option>請選擇</option>"
+				+"<option>特休</option>"
+				+"<option>事假</option>"
+				+"<option>病假</option>"
+				+"<option>公假</option>"
+				+"<option>喪假</option>"
+				+"<option>產假</option>"
+				+"<option>生理假</option>"
+				+"<option>家庭照顧假</option>"+"</select><br>"
 				+"<span style='font-size:1.3em'>請假事由:</span><textarea id='takeoffReason' rows='6' cols='50' style='font-size:1em'></textarea>");
 		$("#TakeOffItem .modal-body").append(docFrag);
 		})
 		
-		$("#checkTakeOff").click(function(){
+		$("#checkTakeOff").click(function(){		
 			var docFrag = $(document.createDocumentFragment());
 			var TakeoffItem = $("#chooseToff :selected").val();
-			var TReason = $("#takeoffReason").val();
-			console.log(""+TakeoffItem);
+			var TReason = $.trim($("#takeoffReason").val());
+			if(TReason.length == 0){
+				$("#checkTakeOff").prop("data-dismiss")="no";
+			}else{
+			console.log("請假事項"+TakeoffItem+"請假事由"+TReason);
+				}
 // 				$.post("",{},function(){
 				
 // 					})

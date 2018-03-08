@@ -32,7 +32,7 @@
 				    </c:if>
                	    <c:if test="${not empty LoginOK}">
                       <li class="nav-item">
-                        <a class="nav-link" href="#pricing">預約時刻</a>
+                        <a class="nav-link" href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">預約時刻</a>
                     </li>
 				     </c:if>
 				     <c:if test="${not empty LoginOK}">

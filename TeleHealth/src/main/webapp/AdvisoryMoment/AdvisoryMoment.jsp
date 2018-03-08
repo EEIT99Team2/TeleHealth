@@ -59,7 +59,7 @@
             <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄 <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#team">醫師介紹</a>
@@ -67,9 +67,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#pricing">方案介紹</a>
                     </li>
-                </ul>
-                <form action="<c:url value="/AdvisoryMomemt/memberSelectByCode.controller" />" method="GET">
-<input type="text" id="userId" name="userId" value="B0041CB5-09F1-4E5B-8D57-1F0406019143">
+                
+                <c:if test="${not empty LoginOK}">
+                       <li class="nav-item">
+                        <a class="nav-link" href="#pricing">健康護照</a>
+                    </li>
+				    </c:if>
+               	    <c:if test="${not empty LoginOK}">
+                      <li class="nav-item">
+                        <a class="nav-link" href="<c:url value='/AdvisoryMoment/AdvisoryMoment.jsp'/>">預約時刻</a>
+                    </li>
+				     </c:if>
+				     <c:if test="${not empty LoginOK}">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#pricing">會員專區</a>
+                    </li>
+				     </c:if>
+				   </ul>
+
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
 <select id="month" class="headerChoose"></select><span id="item1" class="headerChoose">月</span>
@@ -90,9 +105,13 @@
 <option id="CAR">心血管慢性疾病諮詢</option>
 <option id="WEL">健康減重</option>
 </select><br>
-</form>
-                <!-- Trigger the modal with a button -->                
-                <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn"><c:out value="${LoginOK.memName}"/></button>
+
+                <c:if test="${empty LoginOK}">
+                       <button type="button" class="btn btn-sm btn-outline-secondary" id="login"><c:out value="Losgin"/></button>
+				</c:if>
+               	<c:if test="${not empty LoginOK}">
+                       <button type="button" name="<c:out value='${LoginOK.memberId}'/>" class="btn btn-sm btn-outline-secondary" id="loginName"><c:out value="${LoginOK.memName},你好!!"/></button>
+				</c:if>
             </div>
         </nav>
     </header>
@@ -213,7 +232,7 @@
 <script>
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
-	var UserId=$("#userId").val();
+	var UserId=$("#loginName").prop("name");
 	var mom = moment();
 	//預約用
 	var reserveData;
@@ -263,10 +282,7 @@ $(document).ready(function() {
 		})
 		}
 	});
-
 	
-
-		
     $('#calendar').fullCalendar({
     	 columnHeaderHtml: function(mom) {
         	 for(var i = 0;i<7;i++){
