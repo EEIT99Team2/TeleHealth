@@ -59,7 +59,7 @@
             <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄 <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#team">醫師介紹</a>
@@ -67,9 +67,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#pricing">方案介紹</a>
                     </li>
-                </ul>
-                <form action="<c:url value="/AdvisoryMomemt/memberSelectByCode.controller" />" method="GET">
-<input type="text" id="userId" name="userId" value="B221C929-CF1C-445F-B927-1D5E463B3006">
+                
+                <c:if test="${not empty LoginOK}">
+                       <li class="nav-item">
+                        <a class="nav-link" href="#pricing">健康護照</a>
+                    </li>
+				    </c:if>
+               	    <c:if test="${not empty LoginOK}">
+                      <li class="nav-item">
+                        <a class="nav-link" href="<c:url value='/AdvisoryMoment/AdvisoryMoment.jsp'/>">預約時刻</a>
+                    </li>
+				     </c:if>
+				     <c:if test="${not empty LoginOK}">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#pricing">會員專區</a>
+                    </li>
+				     </c:if>
+				   </ul>
+
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
 <select id="month" class="headerChoose"></select><span id="item1" class="headerChoose">月</span>
@@ -90,9 +105,13 @@
 <option id="CAR">心血管慢性疾病諮詢</option>
 <option id="WEL">健康減重</option>
 </select><br>
-</form>
-                <!-- Trigger the modal with a button -->                
-                <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
+
+                <c:if test="${empty LoginOK}">
+                       <button type="button" class="btn btn-sm btn-outline-secondary" id="login"><c:out value="Losgin"/></button>
+				</c:if>
+               	<c:if test="${not empty LoginOK}">
+                       <button type="button" name="<c:out value='${LoginOK.memberId}'/>" class="btn btn-sm btn-outline-secondary" id="loginName"><c:out value="${LoginOK.memName},你好!!"/></button>
+				</c:if>
             </div>
         </nav>
     </header>
@@ -213,10 +232,12 @@
 <script>
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
-	var urlPath = "/TeleHealth";
-	var UserId=$("#userId").val();
+	var UserId=$("#loginName").prop("name");
 	var mom = moment();
+	//預約用
 	var reserveData;
+	//取消預約用
+	var reservedData;
 	var time;
 	var minT;
 	var maxT;
@@ -224,7 +245,7 @@ $(document).ready(function() {
 	var weekformat=["一","二","三","四","五","六","日"];
 	var today = new Date();
 	var eventsData;
-			
+		
 	$("#chooseTime").change(function(){
 		time = $("#chooseTime :selected").prop("id");		
 		if(time=="mor"){
@@ -246,7 +267,7 @@ $(document).ready(function() {
 				}
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
-	$.getJSON(urlPath+"/AdvisoryMomemt/memberSelectAll.controller",{"UserId":UserId},function(eventsData){	
+	$.getJSON("<c:url value='/AdvisoryMomemt/memberSelectAll.controller'/>",{"UserId":UserId},function(eventsData){	
 	$("#chooseCode").change(function (){
 		var code = $("#chooseCode :selected").prop("id");
 		if(code=="all"){
@@ -254,17 +275,14 @@ $(document).ready(function() {
 			$("#calendar").fullCalendar('addEventSource', eventsData);
 			$("#calendar").fullCalendar('rerenderEvents');
 		}else{		
-		$.getJSON(urlPath+"/AdvisoryMomemt/memberSelectByCode.controller",{"UserId":UserId,advisoryCode:code},function(data){	
+		$.getJSON("<c:url value='/AdvisoryMomemt/memberSelectByCode.controller'/>",{"UserId":UserId,advisoryCode:code},function(data){	
 		$("#calendar").fullCalendar('removeEventSources');
 		$("#calendar").fullCalendar('addEventSource', data);
 		$("#calendar").fullCalendar('rerenderEvents');
 		})
 		}
 	});
-
 	
-
-		
     $('#calendar').fullCalendar({
     	 columnHeaderHtml: function(mom) {
         	 for(var i = 0;i<7;i++){
@@ -313,6 +331,7 @@ $(document).ready(function() {
 		  var empId=events.empId;
 		  var reserveEmp=events.title.substr(emptyChar+2);
 		  var MomentId=events.MomentId;
+		  var VideoCode=events.VideoCode;
 		  if(events.backgroundColor=="#0080ff"){
 			  $('#reserveDataDetail').modal('show');
 			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
@@ -322,6 +341,7 @@ $(document).ready(function() {
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId};
 				console.log("events="+reserveData);
 			  }else if(events.backgroundColor=="#00db00"){
+				  reservedData={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId,"VideoCode":VideoCode};
 				  $('#checkResult').modal('show');
 				  docFrag.append("<h3>諮詢項目:"+reserveItem+"</h3>"
 						  	+"<h3>諮詢人員:"+reserveEmp+"</h3>"
@@ -350,10 +370,11 @@ $(document).ready(function() {
 		})
 	$("#reserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());
-			$.post(urlPath+"/Advisory/ReserveCheck.controller",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
+		console.log("reserveData checking=="+reserveData);
+			$.post("<c:url value='/Advisory/ReserveCheck.controller'/>",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
 				"reserveEmp":reserveData.reserveEmp,"empId":reserveData.empId,"UserId":reserveData.UserId,"MomentId":reserveData.MomentId},function(result){			
 				var splitCode1=result.indexOf(",");
-				var splitCode2=result.indexOf(",,");
+				var splitCode2=result.indexOf(",,");reservedData
 				$('#reserveDataDetail').modal('hide');
 				 $('#reserveResult').modal('show');
 				  docFrag.append("<h3>"+result.substr(0,splitCode1)+"</h3>"
@@ -369,6 +390,7 @@ $(document).ready(function() {
 		window.location.reload();
 		})
 	$("#checkResultDone").click(function(){
+		console.log("reserveData beforeReload=="+reserveData);
 		$("#checkResult").modal('hide');
 		})
 	$("#cancelReserve").click(function(){
@@ -378,12 +400,16 @@ $(document).ready(function() {
 		  docFrag.append("<h3>確定要取消預約?</h3>");
 		  	$("#cancelReserveItem .modal-body").append(docFrag);
 		})
+//{"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId,"videoCode":videoCode};	
 	$("#cancelReserveCheck").click(function(){
-		var docFrag = $(document.createDocumentFragment());
-		$("#cancelReserveItem").modal('hide');
-		$("#cancelCheckItem").modal('show');
-		docFrag.append("<h3>已成功取消預約</h3>");
+		var docFrag = $(document.createDocumentFragment());		
+		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode},function(result){
+			$("#cancelReserveItem").modal('hide');
+			$("#cancelCheckItem").modal('show');
+			docFrag.append("<h3>"+result+"</h3>");
+			console.log("result="+result);
 	  	$("#cancelCheckItem .modal-body").append(docFrag);
+			})
 		})
 });
 </script>
