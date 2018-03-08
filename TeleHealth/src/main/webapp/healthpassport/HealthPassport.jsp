@@ -140,7 +140,6 @@
 				}
 			});
 			$('#insert').click(function(){
-// 				if
 					$.get("<c:url value='/healthpassport/querybmi.controller' />",{'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
 				       	//data就是Server回傳的結果
 				        JSON.parse(data);
