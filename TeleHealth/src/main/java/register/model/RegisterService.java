@@ -34,7 +34,6 @@ public class RegisterService {
 	public MemberBean insert(MemberBean bean) {
 		MemberBean result = null;
 		if(bean!=null) {
-
 			List<MemberBean> list = memberDAO.selectByAccount(bean.getAccount());
 			MemberBean temp = null;
 			if(list != null && list.size() > 0) {
@@ -46,15 +45,23 @@ public class RegisterService {
 		}
 		return result;
 	}
-
-	public boolean update(MemberBean bean) {
-		boolean result = false;
+	
+	public MemberBean Update(MemberBean bean) {
+		MemberBean result = null;
 		if(bean!=null) {
-			result = memberDAO.update(bean.getMemName(),bean.getPhone(),bean.getCellphone(),
-			bean.getBirth(),bean.getMemHeight(),bean.getMemWeight(),bean.getBloodType(),
-			bean.getAddress(),bean.getPwd(),bean.getMedicine(),bean.getPhoto(),bean.getFileName(),bean.getMedicalHistory(),bean.getAccount());
-			return true;
+			result = memberDAO.update(bean);
 		}
 		return result;
 	}
+
+//	public boolean update(MemberBean bean) {
+//		boolean result = false;
+//		if(bean!=null) {
+//			result = memberDAO.update(bean.getMemName(),bean.getPhone(),bean.getCellphone(),
+//			bean.getBirth(),bean.getMemHeight(),bean.getMemWeight(),bean.getBloodType(),
+//			bean.getAddress(),bean.getPwd(),bean.getMedicine(),bean.getPhoto(),bean.getFileName(),bean.getMedicalHistory(),bean.getAccount());
+//			return true;
+//		}
+//		return result;
+//	}
 }

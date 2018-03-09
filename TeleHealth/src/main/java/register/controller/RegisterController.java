@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +61,7 @@ public class RegisterController {
 		// 接收資料
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("MsgMap", errorMsg); 
+		
 		// 轉換資料
 				if(account ==null|| account.trim().length()==0) {
 					errorMsg.put("errorAccount", "帳號欄位不能空白");
@@ -134,9 +136,16 @@ public class RegisterController {
 				}
 						
 				double dHeight = -1;
-				if(memHeight!=null && memHeight.trim().length()>1 && memHeight.trim().length()<4) {
+				if(memHeight!=null && memHeight.trim().length()>1 && memHeight.trim().length()<=6) {
 					try {
+						
 						dHeight = Double.parseDouble(memHeight.trim());
+						DecimalFormat df = new DecimalFormat("##.00");
+						double Height = Double.parseDouble(df.format(dHeight));
+						
+						System.out.println("Height="+Height);
+												
+						
 					}catch(NumberFormatException e) {
 						errorMsg.put("errorMemHeight", "身高欄位必須為數值");
 					}
@@ -148,7 +157,7 @@ public class RegisterController {
 					errorMsg.put("errorMemWeight", "體重欄位不能空白");
 				}
 				double dWeight = -1;
-				if(memWeight!=null && memWeight.trim().length()>1 && memWeight.trim().length()<4) {
+				if(memWeight!=null && memWeight.trim().length()>1 && memWeight.trim().length()<=6) {
 					try {
 						dWeight = Double.parseDouble(memWeight.trim());
 					}catch(NumberFormatException e) {
@@ -167,20 +176,31 @@ public class RegisterController {
 					errorMsg.put("errorAddr", "地址欄位不能空白");
 				}
 				
+				
+						
 				if(pwd ==null||  pwd.trim().length()==0) {
 					errorMsg.put("errorPwd", "密碼欄位不能空白");
+				}else if(pwd!=null && pwd.trim().length()>1) {
+					if(pwd.matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$")) {
+						System.out.println("密碼格式正確");
+					}else {
+						errorMsg.put("errorPwd", "密碼欄位格式錯誤");
+					}																									
 				}
+				
+				
 				if(pwdCheck ==null||  pwdCheck.trim().length()==0) {
 					errorMsg.put("errorPwdCheck", "密碼確認欄位不能空白");
 				}else if(pwdCheck!=null && pwdCheck.trim().length()>1) {
-					if(pwdCheck.equals(pwd)) {
-						System.out.println("pwd=true");		
+						if(pwdCheck.equals(pwd)) {
+							System.out.println("pwd=true");		
+						}else {
+							System.out.println("pwd=false");	
+							errorMsg.put("errorPwdCheck", "密碼確認必須跟密碼相同");
+						}
 					}else {
-						System.out.println("pwd=false");	
-						errorMsg.put("errorPwdCheck", "密碼確認必須跟密碼相同");
+						errorMsg.put("errorPwd", "密碼欄位格式錯誤");
 					}																									
-				}
-							
 				if(medicine ==null|| medicine.trim().length()==0) {
 					errorMsg.put("errorMedicine", "藥物過敏欄位不能空白");
 				}	

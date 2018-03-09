@@ -191,14 +191,13 @@ br {
 						<input type="text"
 							name="address" value="${param.address}" class="fieldWidth"
 							style="width: 320px;"> <font color="red" size="-1">${MsgMap.errorAddr}</font>
-						
-						<br /> <label class="fontSize">密碼：</label> 
+						<br /> <label class="fontSize">密碼(8~16位英數字混合)：</label> 
 						<input type="password"
 							name="pwd" value="${param.pwd}" class="fieldWidth"
 							style="width: 320px;"> <font color="red" size="-1">${MsgMap.errorPwd}</font>					
 						
 						<br /> <label class="fontSize">密碼確認：</label>			
-							<input name="pwdCheck" type="password" input_style" value="" tabindex="5" class="fieldWidth"
+							<input name="pwdCheck" type="password" value="${param.pwdCheck}" tabindex="5" class="fieldWidth"
 							style="width: 320px;"/><font color="red" size="-1">${MsgMap.errorPwdCheck}</font>
 					
 												

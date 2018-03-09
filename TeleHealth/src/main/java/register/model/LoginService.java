@@ -17,7 +17,27 @@ import util.PwdGmail;
 public class LoginService {
 	@Autowired
 	private MemberDAOHibernate memberDAO;
-		
+	
+	@Transactional(readOnly=true)
+	public boolean UpdatePasword (String account,String pwd) {
+		List<MemberBean> Account = memberDAO.selectByAccount(account);
+		String ChangeAccount= Account.get(0).getAccount();		
+		if(ChangeAccount!=null) {
+			String NewPwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
+			
+			System.out.println("ChangePwd="+NewPwd);
+			
+			boolean ChangePw = memberDAO.UdPwd(NewPwd, ChangeAccount);		
+			if(ChangePw==true) {
+				System.out.println("新密碼修改完成");
+				return	true;
+			}else {
+				System.out.println("修改失敗");
+				return false;
+			}
+		}
+		return false;	
+	}
 	
 	@Transactional(readOnly=true)
 	public MemberBean login(String account, String MD5pwd) {

@@ -16,10 +16,6 @@
 		<img id="identity" alt="img error" src="/TeleHealth/verificationcode.controller" />
 		<input type="button" id="btn" value="換張圖片" />
 	</div>
-	<iframe src="http://www.fda.gov.tw/MLMS/ShowFile.aspx?LicId=01031980&Seq=236&Type=10" 
-	 style="width:600px; height:500px;" frameborder="0">
-	</iframe>
-	
 	<script>
 		var identityImage = document.getElementById("identity");
 		var changeBtn = document.getElementById("btn")
@@ -33,6 +29,7 @@
 		changeBtn.addEventListener("click", reloadImage);
 	</script>
 	
-	<iframe src="http://docs.google.com/gview?url=http://www.fda.gov.tw/MLMS/ShowFile.aspx?LicId=02026075&Seq=001&Type=10" style="width:600px; height:500px;" frameborder="0"></iframe>
+	<iframe src="https://tzeing.asuscomm.com:8443/123/abcd.pdf" style="width:200px; height:200px;" frameborder="0"></iframe>
+	
 </body>
 </html>

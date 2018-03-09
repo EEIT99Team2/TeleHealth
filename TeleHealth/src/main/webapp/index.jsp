@@ -5,40 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <title>Document</title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="w3.css">
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="index.css" />
-</head>
 
+ <title>Document</title>  
+</head>
 <body>
-    <!-- Navigation -->
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
-            <a class="navbar-brand" href="#">Carousel</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">醫師介紹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#pricing">方案介紹</a>
-                    </li>
-                     
-                </ul>
-                <!-- Trigger the modal with a button -->
-                <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
-            </div>
-        </nav>
-    </header>
+   <jsp:include page="/fragment/header.jsp" />
     <div class="container">
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">

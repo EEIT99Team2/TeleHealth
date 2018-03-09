@@ -3,6 +3,8 @@ package util.controller;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -18,17 +20,17 @@ import register.model.RegisterService;
 //本Controller用於將網頁顯示資料庫的圖片用src路徑
 @Controller
 public class GetImageController {
-	@Autowired
-	private RegisterService registerService;
-	
 	@RequestMapping(value = "/getImage.controller", method= {RequestMethod.GET, RequestMethod.POST})
-	public ResponseEntity<byte[]> getImageAsResponseEntity() {
-		MemberBean member = registerService.selectByAccount("abc123");
+	public ResponseEntity<byte[]> getImageAsResponseEntity(HttpSession session) {
+		MemberBean member = (MemberBean)session.getAttribute("LoginOK");
+//		MemberBean member = registerService.selectByAccount();
 		HttpHeaders headers = new HttpHeaders();
 		byte[] media = null;
 		try	{
-			Blob blob = member.getPhoto();
-			media = util.SystemUtils.BlobToByte(blob);
+			if(member.getPhoto() != null) {
+				Blob blob = member.getPhoto();
+				media = util.SystemUtils.BlobToByte(blob);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

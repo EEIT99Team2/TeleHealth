@@ -7,28 +7,6 @@
     <title>
     忘記密碼頁面
 </title>
-<!--     <link href="/css/web.css" rel="stylesheet" type="text/css" /> -->
-<!--     <link href="/css/validform.css" rel="stylesheet" type="text/css" /> -->
-<!--     <link href="/css/datagrid.css" rel="stylesheet" type="text/css" /> -->
-<!--     <link href="/css/wbox/wbox.css" rel="stylesheet" type="text/css" /> -->
-
-<!--     <script type="text/javascript" src="/js/jquery-1.8.0.min.js"></script> -->
-<!--     <script type="text/javascript" src="/js/Validform_v5.0.js"></script> -->
-<!--     <script type="text/javascript" src="/js/common.js"></script> -->
-<!--     <script type="text/javascript" src="/js/My97DatePicker2/WdatePicker.js"></script> -->
-<!--     <script type="text/javascript" src="/js/wbox.js"></script> -->
-<!-- <script> -->
-<!-- //             (function (i, s, o, g, r, a, m) { -->
-<!-- //                 i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { -->
-<!-- //                     (i[r].q = i[r].q || []).push(arguments) -->
-<!-- //                 }, i[r].l = 1 * new Date(); a = s.createElement(o), -->
-<!-- //   m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) -->
-<!-- //             })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); -->
-
-<!-- //             ga('create', 'UA-13234389-1', 'auto'); -->
-<!-- //             ga('send', 'pageview'); -->
-
-<!-- </script> -->
 </head>
 <body>
     <div>
@@ -62,16 +40,7 @@
     </style>
      <form method="post" enctype="multipart/form-data" 
 						action="<c:url value="/ForgetPwd.controller"/>">
-<!-- <div class="aspNetHidden"> -->
-<!-- <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTEzMDYyNzE2NTNkZHSkEY+2YLnJHHA49DPBlJdp/vzrYH2JKHrInN6HIfqH" /> -->
-<!-- </div> -->
-
-<!-- <div class="aspNetHidden"> -->
-
-<!-- 	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="1B8B6C4A" /> -->
-<!-- 	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAATNDm8Po4UrrrK7KALcw09BV/W0gDAOkD+neJAATSx0O/Ry0Q+gDmkr9wvBe23t60Tp/n7Z45JRmPMilCxxl2WG3dPkqZ2t7ZH3jE1X511efhDeRiCbjRcD/TccfStckH4=" /> -->
-<!-- </div> -->
-    <div style="width: 480px; border: 0px solid #d2d2d2; margin: 0 auto; background-color: White;">
+   <div style="width: 480px; border: 0px solid #d2d2d2; margin: 0 auto; background-color: White;">
         <div class="cleardiv">
         </div>
         <div style="width: 480px; margin: 0px auto; padding-top: 25px;">
@@ -110,7 +79,7 @@
                         font-size: 14px; color: #fff; text-shadow: 1px 1px 1px #666; padding: 5px 10px;
                         border-radius: 4px; box-shadow: 1px 1px 3px #aaa; font-weight: bold; text-align: center;
                         cursor: pointer;">取消</button>
-                   		 <input type="button" class="btn-primary" value="回主頁" onclick="location.href='index.jsp'">
+                   		 <input type="button" class="btn-primary" value="回主頁" onclick="location.href='../index.jsp'">
                 </div>
             </div>
             <div class="cleardiv">

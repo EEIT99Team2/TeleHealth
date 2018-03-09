@@ -4,44 +4,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Document</title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/w3.css">
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="../css/index.css" />
-    
-    <style type="text/css">
-        
-    </style>
+    <title>Document</title>     
 </head>
 
 <body>
+<jsp:include page="/fragment/header.jsp" />
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Navigation -->
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
-            <a class="navbar-brand" href="#">Carousel</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/TeleHealth/healthcolumn/HealthColumn.jsp">健康專欄 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">醫師介紹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#pricing">方案介紹</a>
-                    </li>
-                </ul>
-                <!-- Trigger the modal with a button -->
-                <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
-            </div>
-        </nav>
-    </header>
+    
     <div class="container">
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
@@ -109,24 +80,16 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-md-10 mx-auto" id="title">
-                            <div class="post-preview">
-                                <a href="post.html">
-                                    <h2 class="post-title">
-                                        Man must explore, and this is exploration at its greatest
-                                    </h2>                                 
-                                </a>
-                                <p class="post-meta">Posted by on September 24, 2018</p>
-                                <img src="team4.jpg" class="col-5 float-left">
-                                <p>Sed non nisi ut quam varius pulvinar sit amet eget enim. Suspendisse fringilla libero id vestibulum porta. Maecenas sed semper dolor. Pellentesque convallis luctus est et rutrum. Sed ac ante in nisi imperdiet facilisis. Praesent et porta lorem, ac sagittis quam. Sed tempus eleifend ex quis scelerisque. Sed pulvinar viverra velit ultrices egestas. Etiam convallis libero auctor feugiat tempor. Integer lectus nisi, convallis eget pellentesque eu, tempor quis erat. Suspendisse potenti.</p>
-                                
+                            <div class="post-preview">                               
                             </div>
                             <hr> 
  <script type="text/javascript"> 
 	$(document).ready(function() {	
 		$.getJSON('/TeleHealth/healthcolumn/hotcontent.controller',{ }, function(data){
+			console
 			$('#title').empty();
 			 $.each(data, function (i, data) {
-		            var article=$("<a href='article.jsp?title="+data.title+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
+		            var article=$("<a href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
 		            var cell1= $("<h2 class='post-title'></h2>").text(data.title);
 		            article.append(cell1)
 		            var cell2=$("<p class='post-meta'></p>").text(data.createDate);
@@ -148,7 +111,7 @@
 		console.log(data);		
 		$('#title').empty();	  
          $.each(data, function (i, data) {
-            var article=$("<a href='article.jsp?title="+data.title+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
+            var article=$("<a href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
             var cell1= $("<h2 class='post-title' ></h2>").text(data.title);
             article.append(cell1)
             var cell2=$("<p class='post-meta'></p>").text(data.createDate);
@@ -167,8 +130,7 @@
 		$.post('/TeleHealth/healthcolumn/countarticle.controller', {title:title}, function (data){
 				console.log(title);
 				console.log(data);				
-			 })};
-		
+			 })};		
 	 	
  </script>                   
                         </div>
@@ -176,17 +138,7 @@
                 </div>
             </div>          
         </div>
-    </main>
-    <!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. -->
+    </main> 
+ <jsp:include page="/fragment/footer.jsp" />  
 </body>
-
 </html>

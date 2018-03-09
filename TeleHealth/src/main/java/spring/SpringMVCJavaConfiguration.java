@@ -21,7 +21,8 @@ import org.springframework.web.servlet.view.XmlViewResolver;
 				"util.controller", 
 				"healthcolumn.controller",
 				"advisory.controller",
-				"healthpassport.controller"})
+				"healthpassport.controller",
+				"takeoffrecords.controller"})
 @EnableWebMvc
 public class SpringMVCJavaConfiguration implements WebMvcConfigurer {
 	@Autowired
