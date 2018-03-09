@@ -208,9 +208,7 @@
         </div>
     </main>
     <!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
+	<jsp:include page="/fragment/footer.jsp" />
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -218,11 +216,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. -->
-    <script src="holder.min.js"></script>
-    <script src="scripts.js"></script>
+    <script src="<c:url  value='/holder.min.js' />"></script>
+    <script src="<c:url  value='/scripts.js' />" ></script>
     
-    
-    </script>    
     
 </body>
 

@@ -42,7 +42,7 @@
 				     </c:if>
                 </ul>
                  <c:if test="${empty LoginOK}">
-                       <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn"><c:out value="Losgin"/></button>
+                       <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn"><c:out value="Login"/></button>
 				</c:if>
                	<c:if test="${not empty LoginOK}">
                        <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn"><c:out value="${LoginOK.memName},你好!!"/></button>
