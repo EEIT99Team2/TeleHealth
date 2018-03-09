@@ -38,9 +38,9 @@ public class Healthcontroller {
 	@RequestMapping(path = { "/healthcolumn/healthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Loadpage(String advisoryCode) {
-		List<HealthColumnBean> loadpage = healthService.loadpage(advisoryCode);
-		Gson gson = new Gson();
-		String data = gson.toJson(loadpage);		
+	List<HealthColumnBean> loadpage = healthService.loadpage(advisoryCode);
+	Gson gson = new Gson();
+	String data = gson.toJson(loadpage);		
 		return data;
 	}
 	//選取點擊的文章

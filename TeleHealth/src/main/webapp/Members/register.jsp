@@ -191,7 +191,6 @@ br {
 						<input type="text"
 							name="address" value="${param.address}" class="fieldWidth"
 							style="width: 320px;"> <font color="red" size="-1">${MsgMap.errorAddr}</font>
-						
 						<br /> <label class="fontSize">密碼(8~16位英數字混合)：</label> 
 						<input type="password"
 							name="pwd" value="${param.pwd}" class="fieldWidth"

@@ -1,4 +1,4 @@
-package advisorymoment.model;
+package employees.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,13 +24,8 @@ public class EmployeesBean {
 	private	Integer	 reserveCount;
 	private java.util.Date	 createTime;
 	private java.util.Date	 modifiyTime;
-	@Override
-	public String toString() {
-		return "EmployeesBean [empId=" + empId + ", account=" + account + ", pwd=" + pwd + ", empName=" + empName
-				+ ", advisoryCode=" + advisoryCode + ", email=" + email + ", empStatus=" + empStatus + ", takeOff="
-				+ takeOff + ", reserveCount=" + reserveCount + ", createTime=" + createTime + ", modifiyTime="
-				+ modifiyTime + "]";
-	}
+	private String career;
+	
 	public String getEmpId() {
 		return empId;
 	}
@@ -96,6 +91,19 @@ public class EmployeesBean {
 	}
 	public void setModifiyTime(java.util.Date modifiyTime) {
 		this.modifiyTime = modifiyTime;
+	}
+	public String getCareer() {
+		return career;
+	}
+	public void setCareer(String career) {
+		this.career = career;
+	}
+	@Override
+	public String toString() {
+		return "EmployeesBean [empId=" + empId + ", account=" + account + ", pwd=" + pwd + ", empName=" + empName
+				+ ", advisoryCode=" + advisoryCode + ", email=" + email + ", empStatus=" + empStatus + ", takeOff="
+				+ takeOff + ", reserveCount=" + reserveCount + ", createTime=" + createTime + ", modifiyTime="
+				+ modifiyTime + ", career=" + career + "]";
 	}
 	
 	

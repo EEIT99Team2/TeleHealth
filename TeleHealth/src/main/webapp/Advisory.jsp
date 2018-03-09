@@ -6,29 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>視訊健康諮詢</title>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	crossorigin="anonymous"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	crossorigin="anonymous"></script>
+
 <script src="<c:url value='forCkeditor/ckeditor/ckeditor.js' />"></script>
 <script src="<c:url value='forCkeditor/ckfinder/ckfinder.js' />"></script>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" type="text/css" href="css/index.css" />
 <style>
 body {
 	background-color: #3D6DF2;
-	margin-top: 15px;
+	margin-top: 50px;
 	font-family: sans-serif;
 	color: white
 }
@@ -56,15 +40,17 @@ video {
 </head>
 
 <body>
+	<jsp:include page="/fragment/header.jsp" />
 	<div class="container">
-		<div id='login-page' class="row">
-			<div class="col-12 text-center">
+		<div id='login-page' class="row" >
+			<div class="col-12 text-center" style="height:500px">
 				<h2>Login As</h2>
 				<input type="text" id="username" /> <input type="button" id="login"
 					value="Login" />
 			</div>
 		</div>
-		<div id="call-page" class="row clearfix">
+		<div id="call-page" class="row clearfix" style="margin-top: 50px">
+			<h3>${LoginOK.memberId} ${LoginOK.empId}，您好</h3>
 			<div class="col-5 float-left">
 				<video id="yours" autoplay muted playsinline></video>
 				<video id="theirs" autoplay playsinline></video>
@@ -73,8 +59,6 @@ video {
 				<input type="button" value="Hang Up" id="hang-up" disabled="disabled" />
 			</div>
 			<div class="col-7 float-right">
-				<h3>XXX，您好</h3>
-
 				<ul class="nav nav-tabs w3-padding-large" id="myTab" role="tablist">
 					<li class="nav-item"><a class="nav-link active" id="home-tab"
 						data-toggle="tab" href="#home" role="tab" aria-controls="home"
@@ -126,6 +110,7 @@ video {
 	   });
   	</script>
 	<script src="<c:url value='javascript/client.js' />"></script>
+	<jsp:include page="/fragment/footer.jsp"/>
 </body>
 
 </html>

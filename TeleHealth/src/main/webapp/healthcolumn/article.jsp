@@ -162,14 +162,7 @@ $(document).ready(function() {
     	 $('#data').append(doc);               
      });  
       
-   
-		
-
-		   
-    
-
-    
-</script>        
+    </script>        
 
 </body>
 
