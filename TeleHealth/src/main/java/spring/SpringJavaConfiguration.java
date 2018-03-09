@@ -63,7 +63,7 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,TestBean.class);		
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,TestBean.class,TakeoffBean.class);		
 
 		
 		return builder.buildSessionFactory();

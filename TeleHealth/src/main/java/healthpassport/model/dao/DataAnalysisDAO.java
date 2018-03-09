@@ -24,7 +24,7 @@ public class DataAnalysisDAO {
 				"from DataAnalysisBean", DataAnalysisBean.class).list();
 	}
 	
-	String a="select * from dataanalysis where groupid = ? and gender = ? and  ?>= minage and ? < maxage";
+	String a="select * from dataanalysis where groupid = ? and gender = ? and  ?>= minage and ? <= maxage";
 	public DataAnalysisBean selectGroupId(String groupid,String gender,Integer age) {
 		NativeQuery query = this.getSession().createNativeQuery(a);
 		query.setParameter(1,groupid);
@@ -61,7 +61,7 @@ public class DataAnalysisDAO {
 	//18歲以上BloobSugar
 	String bs ="select * from dataanalysis where groupid ='BloodSugar' and gender = ? and  ?>= minage and ?< maxage and ?>=minvalue and ?<=maxvalue";
 	public DataAnalysisBean bloodSugarUp18(String gender,Integer age,Double value) {
-		NativeQuery query = this.getSession().createNativeQuery(up);
+		NativeQuery query = this.getSession().createNativeQuery(bs);
 		query.setParameter(1,gender);
 		query.setParameter(2,age);
 		query.setParameter(3,age);

@@ -1,6 +1,7 @@
 package healthpassport.controller;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +63,21 @@ public class AnalysisController {
 			return null;
 		}
 	}
+	
+	@RequestMapping(
+			path= {"/healthpassport/querybmi.controller"},
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8")
+	public String qBMIMemberId(String memberid) {
+		 List<BMIBean> allResult = bmiService.selectMemberid(memberid);
+		 LinkedList<HashMap<String, String>> allData = new LinkedList<HashMap<String, String>>();
+			HashMap<String, String> dataOne = new HashMap<String, String>();
+		 
+		 return null;
+	}
+	
+	
+	
 	//血壓
 	@RequestMapping(
 			path= {"/healthpassport/queryBloodPressure.controller"},
@@ -98,13 +114,13 @@ public class AnalysisController {
 
 	@RequestMapping(
 			path= {"/healthpassport/queryBloodSugar.controller"},
-			method= {RequestMethod.GET,RequestMethod.POST}
-//			produces="application/json;charset=UTF-8"
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8"
 			)
-	public @ResponseBody String bloodSugar(String BloodSugar,Model model) {
+	public @ResponseBody String bloodSugar(String bloodsugar,Model model) {
 		//clinet端值
 		try {
-			Integer bSugar = Integer.parseInt(BloodSugar);
+			Integer bSugar = Integer.parseInt(bloodsugar);
 			
 			BloodSugarBean bean= new BloodSugarBean();
 			bean.setMemberId(memid);
