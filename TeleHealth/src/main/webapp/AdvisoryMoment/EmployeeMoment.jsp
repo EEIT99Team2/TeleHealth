@@ -11,8 +11,8 @@
 <link href="../fullCalendar/fullcalendar.print.min.css" rel="stylesheet"  media='print' />
 
 <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
 <style>
 
   body {
@@ -43,9 +43,12 @@
 		 }
   .columnHead{font-size:1.2em;}
   .eveMouseOver {cursor: pointer;}
+  .txtWaring{color:red}
+  #loading{background-color:white}
 </style>
 </head>
 <body>
+<div id='loading'>
 <!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
@@ -105,6 +108,7 @@
     </div>
   </div>
 </div>
+
 <!-- 已預約班表視窗 -->
 <div class="modal fade" id="reservedItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -164,6 +168,47 @@
     </div>
   </div>
 </div>
+
+<!-- 申請假單最終結果 -->
+<div class="modal fade" id="takeoffResItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="takeoffResTitle">申請結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="takeoffRes">我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 已申請過假單 -->
+<div class="modal fade" id="takeoffedItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="takeoffedTitle">申請結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="takeoffed">我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 <div id="calendar"></div>
 <!-- Footer -->
     <footer class="w3-center w3-black w3-padding-16">
@@ -177,8 +222,20 @@
 <script type="text/javascript" src="../fullCalendar/calender.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/src/loadingoverlay.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/extras/loadingoverlay_progress/loadingoverlay_progress.min.js"></script>
 <script>
+       
 $(document).ready(function() {
+
+	$.LoadingOverlaySetup({
+	    color : "rgba(255,255,255, 1)",
+	});
+	$.LoadingOverlay("show");
+	setTimeout(function(){
+	    $.LoadingOverlay("hide");
+	}, 3800);
+
 	var initialLocaleCode = 'zh';
 	var EmpId=$("#empId").val();
 	var mom = moment();
@@ -295,7 +352,9 @@ $(document).ready(function() {
 		  var empId=events.empId;
 		  var reserveEmp=events.title.substr(emptyChar+2);
 		  var MomentId=events.MomentId;
-		  if(events.backgroundColor=="#0080ff"){
+		  var takeoff=events.takeoff;
+		  console.log(takeoff);
+		  if(events.backgroundColor=="#0080ff" && takeoff == "noexist"){
 			  $('#UnReserveItem').modal('show');
 			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
 			  			+"<h3>諮詢項目:</h3><h5>"+reserveItem+"</h5>"
@@ -303,12 +362,17 @@ $(document).ready(function() {
 			  	$("#UnReserveItem .modal-body").append(docFrag);
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"MomentId":MomentId};
 				console.log("events="+reserveData);
-			  }else if(events.backgroundColor=="#d26900"){
+			  }else if(events.backgroundColor=="#d26900" && takeoff == "noexist"){
+				reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"MomentId":MomentId};
 				  $('#reservedItem').modal('show');
 				  docFrag.append("<h3>視訊代碼:"+events.selfResCode+"</h3>"
 				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
 				  	$("#reservedItem .modal-body").append(docFrag);
-				  }  
+				}else if(events.backgroundColor=="#0080ff" && takeoff == "exist"|| events.backgroundColor=="#d26900" && takeoff == "exist"){
+						docFrag.append("<h3>"+"請假申請審核中"+"</h3>");
+						$("#takeoffedItem .modal-body").append(docFrag);
+						$('#takeoffedItem').modal('show');
+					}  
 	  },
 	  eventMouseover:function( event, jsEvent, view ) {
 			if(event.backgroundColor=="#d26900"||event.backgroundColor=="#0080ff"){
@@ -328,50 +392,81 @@ $(document).ready(function() {
 		console.log(chooseyear+choosemonth+choosedate);
 		$("#calendar").fullCalendar('gotoDate',checkDate);
 		})
- 
-	$("#UnReTakeOff").click(function(){
-		$('#UnReserveItem').modal('hide');
-		$('#reservedItem').modal('hide');
-		$('#TakeOffItem').modal('show');
-		})
-	$("#ReTakeOff").click(function(){
-		var docFrag = $(document.createDocumentFragment());
-		$('#UnReserveItem').modal('hide');
-		$('#reservedItem').modal('hide');
-		$('#TakeOffItem').modal('show');
-		docFrag.append("<span style='font-size:1.3em'>請假事項:  </span>"
-				+"<select id='chooseToff'>"
-				+"<option>請選擇</option>"
-				+"<option>特休</option>"
-				+"<option>事假</option>"
-				+"<option>病假</option>"
-				+"<option>公假</option>"
-				+"<option>喪假</option>"
-				+"<option>產假</option>"
-				+"<option>生理假</option>"
-				+"<option>家庭照顧假</option>"+"</select><br>"
-				+"<span style='font-size:1.3em'>請假事由:</span><textarea id='takeoffReason' rows='6' cols='50' style='font-size:1em'></textarea>");
-		$("#TakeOffItem .modal-body").append(docFrag);
-		})
 		
+ 	//我要請假
+$("#UnReTakeOff").click(function takeoff(){
+	var docFrag = $(document.createDocumentFragment());
+	$('#UnReserveItem').modal('hide');
+	$('#reservedItem').modal('hide');
+	$('#TakeOffItem').modal('show');
+	docFrag.append("<span style='font-size:1.3em'>請假事項:  </span>"
+			+"<select id='chooseToff'>"
+			+"<option>請選擇</option>"
+			+"<option>特休</option>"
+			+"<option>事假</option>"
+			+"<option>病假</option>"
+			+"<option>公假</option>"
+			+"<option>喪假</option>"
+			+"<option>產假</option>"
+			+"<option>生理假</option>"
+			+"<option>家庭照顧假</option>"+"</select><br>"
+			+"<span style='font-size:1.3em'>請假事由:</span><textarea id='takeoffReason' rows='6' cols='50' style='font-size:1em'></textarea>");
+	$("#TakeOffItem .modal-body").append(docFrag);
+	})	
+$("#ReTakeOff").click(function takeoff(){
+	var docFrag = $(document.createDocumentFragment());
+	$('#UnReserveItem').modal('hide');
+	$('#reservedItem').modal('hide');
+	$('#TakeOffItem').modal('show');
+	docFrag.append("<span style='font-size:1.3em'>請假事項:  </span>"
+			+"<select id='chooseToff'>"
+			+"<option>請選擇</option>"
+			+"<option>特休</option>"
+			+"<option>事假</option>"
+			+"<option>病假</option>"
+			+"<option>公假</option>"
+			+"<option>喪假</option>"
+			+"<option>產假</option>"
+			+"<option>生理假</option>"
+			+"<option>家庭照顧假</option>"+"</select><br>"
+			+"<span style='font-size:1.3em'>請假事由:</span><textarea id='takeoffReason' rows='6' cols='50' style='font-size:1em'></textarea>");
+	$("#TakeOffItem .modal-body").append(docFrag);
+	})
+		
+		//送出請假申請
 		$("#checkTakeOff").click(function(){		
 			var docFrag = $(document.createDocumentFragment());
 			var TakeoffItem = $("#chooseToff :selected").val();
 			var TReason = $.trim($("#takeoffReason").val());
-			if(TReason.length == 0){
-				$("#checkTakeOff").prop("data-dismiss")="no";
-			}else{
-			console.log("請假事項"+TakeoffItem+"請假事由"+TReason);
+			if(TakeoffItem == "請選擇" ||TReason.length == 0){
+				$(".txtWaring").remove();
+				$("#checkTakeOff").removeAttr("data-dismiss");
+				$("#TakeOffItem .modal-body").append("<h4 class='txtWaring'>請輸入請假事項及事由!!!</h4>");
+			} else{
+				$(".txtWaring").remove();
+				$("#checkTakeOff").attr("data-dismiss","modal");
+				var docFrag = $(document.createDocumentFragment());
+				console.log(reserveData.MomentId+";;;;;;;;"+reserveData.empId);
+				$.post("<c:url value='/AdvisoryMoment/takeoff.controller'/>",{"MomentId":reserveData.MomentId,"EmpId":reserveData.empId,"TakeoffItem":TakeoffItem,"TakeoffReason":TReason},function(result){
+					docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");
+					$("#takeoffResItem .modal-body").append(docFrag);
+					})
+					$('#takeoffResItem').modal('show');
 				}
-// 				$.post("",{},function(){
-				
-// 					})
 			})
+		$("#takeoffRes").click(function(){
+			window.location.reload();
+			})
+		
+						
 // 	$("#Change").click(function(){
 // 		$('#UnReserveItem').modal('hide');
 // 		$('#changeItem').modal('show');
 // 		})
+
+
 });
+
 </script>
 </body>
 </html>

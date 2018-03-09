@@ -16,6 +16,7 @@
 	${member.Name} <hr>
 	${member.address} <hr>
 	${member.Tel} <hr>
+
 	<input type="button" value="回主頁" onclick="location.href='../index.jsp'">
 
 </body>

@@ -17,8 +17,6 @@ import util.PwdGmail;
 public class LoginService {
 	@Autowired
 	private MemberDAOHibernate memberDAO;
-		
-	
 	
 	@Transactional(readOnly=true)
 	public boolean UpdatePasword (String account,String pwd) {
@@ -40,19 +38,6 @@ public class LoginService {
 		}
 		return false;	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@Transactional(readOnly=true)
 	public MemberBean login(String account, String MD5pwd) {
