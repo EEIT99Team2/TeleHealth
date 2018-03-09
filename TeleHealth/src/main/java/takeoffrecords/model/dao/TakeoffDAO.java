@@ -2,14 +2,20 @@ package takeoffrecords.model.dao;
 
 import java.util.List;
 
+
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import takeoffrecords.model.TakeoffBean;
 
 @Repository
+@Transactional
 public class TakeoffDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -19,25 +25,32 @@ public class TakeoffDAO {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	public TakeoffBean select(int id) {
-		return this.getSession().get(TakeoffBean.class, id);
+	//透過班表id搜尋申請假單紀錄
+	public TakeoffBean select(String MomentId) {
+		Query<TakeoffBean> query = this.getSession()
+				.createQuery("FROM TakeoffBean WHERE advisoryMomentId=?",TakeoffBean.class);
+		query.setParameter(0, MomentId);
+		TakeoffBean result = query.uniqueResult();
+		return result;
 	}
 	
 	public List<TakeoffBean> select() {
 		return this.getSession().createQuery(
-				"from ProductBean", TakeoffBean.class).list();
+				"from TakeoffBean", TakeoffBean.class).list();
 	}
 
-	public TakeoffBean insert(TakeoffBean bean) {
+	public boolean insert(TakeoffBean bean) {
+		boolean result =false;
 		if(bean!=null) {
 			TakeoffBean temp =
-					this.getSession().get(TakeoffBean.class, bean.getId());
+					this.getSession().get(TakeoffBean.class, bean.getAdvisoryMomentId());
 			if(temp==null) {
 				this.getSession().save(bean);
-				return bean;
+				result = true;
+				return result;
 			}
 		}
-		return null;
+		return result;
 	}
 
 	public TakeoffBean update(String name,
