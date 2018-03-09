@@ -69,12 +69,12 @@
       <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"><h5>
       	<div class="form-group">
       		<form id="Msg" action="/TeleHealth/healthcolumn/insQA.controller" method="post" >
-      		<input type="hidden" id="advisorycode" name="advisorycode" value=>
+      		<input type="hidden" id="advisorycode" name="advisorycode" >
       		<input type="hidden" id="title" name="title" >
       		<input type="hidden" id="MemId"name="MemId" value="B0041CB5-09F1-4E5B-8D57-1F0406019143">
       		<textarea class="form-control" id="textt" name="textmem" rows="3"></textarea>
       		<input type="submit" value="送出" onclick=check()>      		
-      		<input type='button' id='clean' value='清除重選'>
+      		<input type='button' id='clean' value='清除'>
       		</form>      	
       	</div>
       
@@ -110,6 +110,9 @@ $(document).ready(function() {
 	    var adok=$('#advisorycode').val(atype); 		
 		CKEDITOR.replace('textt',
 				 {width:800, height:100,toolbarGroups:tg})
+		$('#clean').on('click',function(){
+				CKEDITOR.instances.textt.setData(' ');
+				})		 
   		 
 		});
 	var url = location.href;

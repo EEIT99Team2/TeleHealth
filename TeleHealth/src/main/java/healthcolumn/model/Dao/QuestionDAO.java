@@ -42,7 +42,7 @@ public class QuestionDAO {
 	//選擇會員文章所有回應的文
 				public List<QuestionBean>  selectresponseMem(String memId) {
 					NativeQuery query=this.getSession().createNativeQuery
-							("select * from question  where memberId=?");
+						("select * from question  where memberId=?");
 					query.setParameter(1, memId);
 					List<QuestionBean> data=(List<QuestionBean>)query.list();
 					return data;		
@@ -60,31 +60,31 @@ public class QuestionDAO {
 		}
 
 		//修改會員po文		
-			public QuestionBean updateMem(int Id,String memberId,String Content) {
-			QuestionBean result = this.getSession().get(QuestionBean.class, Id);
-			if(result!=null) {
-				result.setId(Id);
-				result.setMemberId(memberId);
-				result.setModifyTime(new Date());				
-				result.setContent(Content);}
-			return result;
-		}
-		//修改員工po文		
-			public QuestionBean updateEmp(int Id,String empId,String Content) {
-			QuestionBean result = this.getSession().get(QuestionBean.class, Id);
-			if(result!=null) {
-				result.setId(Id);
-				result.setEmpId(empId);
-				result.setModifyTime(new Date());				
-				result.setContent(Content);}
-			return result;
-		}	
+			public boolean updateQA(int Id,String Content) {
+			NativeQuery query=this.getSession().createNativeQuery
+						("update question set Content=?, modifyTime=? where Id=?");
+			query.setParameter(1,Content);
+			query.setParameter(2, new Date());
+			query.setParameter(3, Id);
+			int result = query.executeUpdate();
+			if(result!=0) {
+				return true;
+			}else
+			{
+				return false;
+			}
+			}
+		
+		
 			
 		//刪除員工文章
 		public boolean deleteMem(int Id,String memberId) {
-			QuestionBean result = this.getSession().get(QuestionBean.class, memberId);
-			if(result!=null) {
-				this.getSession().delete(result);
+			NativeQuery query=this.getSession().createNativeQuery
+					("delete from question where Id=? and memberId=?");			 
+			query.setParameter(1,Id);
+			query.setParameter(2, memberId);
+			int result = query.executeUpdate();
+			if(result!=0) {				
 				return true;
 			}
 			return false;
@@ -98,4 +98,13 @@ public class QuestionDAO {
 			}
 			return false;
 		}
+		//選取修改文章
+		public List<QuestionBean> selectbyQAID(int id)	{  
+			NativeQuery query=this.getSession().createNativeQuery
+		        ("select * from question where Id=?");
+			query.setParameter(1,id);
+			List<QuestionBean> data=(List<QuestionBean>)query.list();
+			return data;			
+		}
+		
 }

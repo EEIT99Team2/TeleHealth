@@ -51,24 +51,15 @@ public class QuestionService {
 		 boolean deleetecon = QuestionDAO.deleteMem(Id, memberId);
 		return deleetecon;
 }
-	//修改會員文章
-	public boolean updateQAmem(int Id,String memberId,String advisorycode,String Content)
-	{		
-		QuestionBean update = QuestionDAO.updateMem(Id, memberId, Content);
-		if(update!=null) {
-			return true;
-		}
-		return false;
+	//選ID文章
+	 public List<QuestionBean> loadtitleId(int Id) {
+		List<QuestionBean> data = QuestionDAO.selectbyQAID(Id);
+		return data;
 	}
-	//修改員工文章
-		public boolean updateQAemp(int Id,String empId,String advisorycode,String Content)
-		{
-			
-			QuestionBean update = QuestionDAO.updateEmp(Id, empId, Content);
-			if(update!=null) {
-				return true;
-			}
-			return false;
-		}
-		
+	//修改會員文章
+	public boolean updateQA(int Id,String Content)	{		
+		boolean update = QuestionDAO.updateQA(Id, Content);
+		return update;
+	}
+	
 }

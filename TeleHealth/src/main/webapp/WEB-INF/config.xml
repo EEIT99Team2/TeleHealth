@@ -18,7 +18,7 @@
 	http://docs.cksource.com/CKFinder_2.x/Developers_Guide/Java/Configuration/baseURL_and_baseDir
 	-->
 	<baseDir></baseDir>
-	<baseURL>http://localhost:8090/TeleHealth/userfiles/</baseURL>
+	<baseURL>http://tzeing.asuscomm.com:9080/TeleHealth/userfiles/</baseURL>
 	<licenseKey></licenseKey>
 	<licenseName></licenseName>
 	<!--
