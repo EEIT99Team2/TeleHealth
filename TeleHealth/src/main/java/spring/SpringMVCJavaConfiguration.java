@@ -21,6 +21,7 @@ import org.springframework.web.servlet.view.XmlViewResolver;
 				"util.controller", 
 				"healthcolumn.controller",
 				"advisory.controller",
+				"employees.controller",
 				"healthpassport.controller",
 				"takeoffrecords.controller"})
 @EnableWebMvc

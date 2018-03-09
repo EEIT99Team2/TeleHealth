@@ -14,11 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 
 import advisorymoment.model.dao.AdvisoryMomentDAO;
+import takeoffrecords.model.TakeoffBean;
+import takeoffrecords.model.TakeoffService;
 @Service
 @Transactional
 public class AdvisoryMomentService {
 	@Autowired
 	private AdvisoryMomentDAO advisoryMomentDAO;
+	
+	@Autowired
+	private TakeoffService takeoffService;
 	
 	//會員查詢預約諮詢的index
 	public String memberSelectAll(String UserId) {
@@ -27,6 +32,7 @@ public class AdvisoryMomentService {
 		List<Object[]> result = this.selectAll();
 		// 已預約時段
 		List<Object[]> reserved = this.selectByMemSelf(UserId);
+		
 		String reservedId;
 		String VideoCode;
 		for (int i = 0; i < result.size(); i++) {
@@ -134,6 +140,8 @@ public class AdvisoryMomentService {
 		List<Object[]> result = this.selectAll();
 		// 已預約時段
 		List<Object[]> selfItem = this.selectByEmpSelf(EmpId);
+		// 是否請假
+		TakeoffBean takeoffRecord = new TakeoffBean();
 		String selfItemId;
 		String selfResCode;		
 		for (int i = 0; i < result.size(); i++) {
@@ -148,24 +156,38 @@ public class AdvisoryMomentService {
 			String empId = result.get(i)[4].toString();
 			String empName = result.get(i)[5].toString();
 			String otherResCode;
+			String takeoff;
+			//別人班表是否有預約
 			if(result.get(i)[6]==null) {
 				otherResCode="null";
 			}else {
 				otherResCode=result.get(i)[6].toString();
+			}
+			//此項班表是否為有申請假單				
+			takeoffRecord = takeoffService.select(MomentId);							
+			if(takeoffRecord!=null && takeoffRecord.getId()!=null) {
+				takeoff="exist";
+				if(takeoffRecord.getApprovedResult()!=null) {	
+					if(takeoffRecord.getApprovedResult().equals("N")) {						
+						takeoff="noexist";
+					}
+				}
+			}else {
+				takeoff="noexist";
 			}
 			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
-	
+			dataOne.put("takeoff", takeoff);
+			
 				for (int j = 0; j < selfItem.size(); j++) {
 					selfItemId = selfItem.get(j)[0].toString();
 					//當自己負責的班表id equal到此項班表id
 					if (selfItemId.equals(MomentId)) {
 						if(selfItem.get(j)[6]==null) {
 							selfResCode ="null";
-							System.out.println("無人預約");
 						}else {							
 							selfResCode = selfItem.get(j)[6].toString();
 						}

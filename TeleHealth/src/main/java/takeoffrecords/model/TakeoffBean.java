@@ -16,6 +16,7 @@ public class TakeoffBean {
 	private String id;
 	private String advisoryMomentId;
 	private String empId;
+	private String applicationType;
 	private java.util.Date applicationTime;
 	private String applicationReason;
 	private String rejectReason;
@@ -39,6 +40,12 @@ public class TakeoffBean {
 	}
 	public void setEmpId(String empId) {
 		this.empId = empId;
+	}
+	public String getApplicationType() {
+		return applicationType;
+	}
+	public void setApplicationType(String applicationType) {
+		this.applicationType = applicationType;
 	}
 	public java.util.Date getApplicationTime() {
 		return applicationTime;
