@@ -30,8 +30,8 @@
    });
   </script>
  
-  <form action="/TeleHealth/healthcolumn/inshealthcolumn.controller" method="post" >
-  <input type="text" name="name" id="title" value="d43b1906-f319-40dc-9e11-4da09a2558af"> 
+  <form action="/TeleHealth/healthcolumn/inshealthcolumn.controller" method="post" enctype="multipart/form-data"	>
+  <input type="text" name="name" id="title" value="930F2472-337E-4800-B774-EB0AAE703D2A"> 
   <h3>標題:<input type="text" name="title" id="title1" placeholder="title"></h3><p style="color:red">${errors.errortitleEmpty}</p>
   <h3>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h3><p style="color:red">${errors.errorVideo}</p>
   <h3>文章類型:<select name="type">
@@ -45,8 +45,13 @@
        <p style="color:red">${errors.errorcontentEmpty}</p>
        <textarea name="content" id="content" rows="10" cols="80"></textarea>
        <input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
-       <input type="reset" id="clean" value="清除重選" onclick='clean()' >
+       <input type="reset" id="clean" value="清除"  >
        <p style="color:green">${msgOK.uploadok}${errors.uploaderror}</p>
-  </form>        
+  </form>
+  <script>
+  		$('#clean').on('click',function(){
+		CKEDITOR.instances.contenttext.setData(' ');
+		})
+  </script>        
 </body>
 </html>

@@ -1,19 +1,14 @@
 var connection = new WebSocket('wss://tzeing.asuscomm.com:15449');
-	name = "",
-	username = "",
-	loginPage = document.querySelector("#login-page"),
+var name = "";
+var username = "";
+
+var loginPage = document.querySelector("#login-page"),
 	usernameInput = document.querySelector("#username"),
 	loginButton = document.querySelector("#login"),
 	callPage = document.querySelector("#call-page"),
 	theirUsernameInput = document.querySelector("#their-username"),
-	hangUpButton = document.querySelector("#hang-up"),
-	joinButton = document.getElementById("join"),
-	yourVideo = document.querySelector("#yours"),
-	theirVideo = document.querySelector("#theirs"),
-	yourConnection = null,
-	connectedUser = "",
-	room = "",
-	stream = null;
+	callButton = document.getElementById("callHere"),
+	hangUpButton = document.querySelector("#hang-up");
 
 var offerOptions = {
 		  offerToReceiveAudio: 1,
@@ -21,16 +16,20 @@ var offerOptions = {
 		};
 
 var configuration = {
-		iceServers: [
-			{
-            	urls: 'turn:numb.viagenie.ca',
-            	credential: 'turnserver',
-            	username: 'm70049@outlook.com'
-            },
-			{
-				urls: "stun:stun.l.google.com:19302"
-			}
-		]
+		 iceServers: [
+				{
+	                urls: "stun:23.21.150.121"
+	            },
+	            {
+	                urls: "stun:stun.l.google.com:19302"
+	            }
+	            ,
+	            {
+	            	urls: 'turn:numb.viagenie.ca',
+	            	credential: 'turnserver',
+	            	username: 'm70049@outlook.com'
+	            }
+           ]
 };
 
 callPage.style.display="none";
@@ -58,21 +57,16 @@ connection.onmessage = function(message) {
             onLogin(data.success, data.name);
             break;
         
-        case "joinreturn":
-        	onJoinReturn(data.roomname,data.success,data.message,data.users,data.callname);
-        	break;
-            
         case "checkreturn":
         	onCheckReturn(data.success, data.callname);
         	break;
             
         case "offer":
-        	console.log("case offer");
+        	alert("case offer");
             onOffer(data.offer, data.name);
             break;
 
         case "answer":
-        	console.log("getMessage = Answer")
             onAnswer(data.answer);
             break;
 
@@ -104,33 +98,6 @@ function send(message) {
     connection.send(JSON.stringify(message));
 }
 
-//進入房間
-joinButton.addEventListener("click", function() {
-	var roomName = theirUsernameInput.value;
-	if(roomName.length > 0) {
-		send({
-			type: "join",
-			roomname: roomName,
-			name: name
-		});
-	} else {
-		alert("請輸入要進行視訊的對象ID!");
-	}
-});
-
-hangUpButton.addEventListener("click", function() {
-	console.log("roomname = " + room);
-	console.log("name = " + name);
-	send({
-		type: "leave",
-		leavename: name,
-		calluser: connectedUser,
-		roomname : room
-	});
-	onLeave();
-//	location.reload();
-});
-
 function onLogin(success, name) {
     if (success === false) {
         alert("登入的ID： " + name + " 重複，請重新輸入!");
@@ -141,29 +108,46 @@ function onLogin(success, name) {
     }
 }
 
-function onJoinReturn(roomname, success, message, users, callname) {
+callButton.addEventListener("click", function() {
+	var theirUsername = theirUsernameInput.value;
+	if(theirUsername.length > 0) {
+		send({
+			type: "callcheck",
+			username: username,
+			callname: theirUsername
+		});
+	} else {
+		alert("請輸入要進行視訊的對象ID!");
+	}
+});
+
+hangUpButton.addEventListener("click", function() {
+	send({
+		type: "leave"
+	});
+	onLeave();
+//	location.reload();
+});
+
+function onCheckReturn(success, callname) {
 	if(success) {
-		room = roomname;
-		if(success && users == 2) {
-			console.log("processing onJoinReturn");
-			startPeerConnection1(callname);
-		} else {
-			alert(message);
-		}
+		startPeerConnection(callname);
+	} else {
+		alert("你所要進行的視訊代號：" + callname + " 不在線上，請重新確認!");
 	}
 }
- 
-function onOffer(offer, callname) {
-	connectedUser = callname;
-    console.log("handleOffer" + "," + offer + "," + connectedUser);
+
+function onOffer(offer, name) {
+	connectedUser = name;
+    console.log("handleOffer" + "," + offer + "," + name);
 	yourConnection.setRemoteDescription(new RTCSessionDescription(offer));
-	console.log("Create Answer!")
-	var answer = yourConnection.createAnswer().then(function(answer) {
+	
+	var answer = yourConnection.createAnswer()
+	.then(function(answer) {
 		yourConnection.setLocalDescription(answer);
 		send({
 			type: "answer",
-			answer: answer,
-			username : connectedUser
+			answer: answer
 		});
 	})
 }	
@@ -174,18 +158,17 @@ function onAnswer(answer) {
 
 function onCandidate(a) {
 	yourConnection.addIceCandidate(new RTCIceCandidate(a));
-	hangUpButton.disabled = false;
+	document.getElementById('hang-up').disabled = false;
 }
 
 function onLeave() {
-	hangUpButton.disabled = true;
-	joinButton.disabled = false;
 	connectedUser = null;
 	theirVideo.src = null;
+	yourConnection.close();
 	yourConnection.onicecandidate = null;
 	yourConnection.ontrack = null;
-	yourConnection.close();
-	startConnection();
+	setupPeerConnection(stream);
+	location.reload();
 }
 
 function hasUserMedia() {
@@ -202,24 +185,23 @@ function hasRTCPeerConnection() {
     window.RTCPeerConnection =
         window.RTCPeerConnection ||
         window.webkitRTCPeerConnection ||
-        window.mozRTCPeerConnection ||
-        window.pluginRTCPeerConnection ||
-        window.msRTCPeerConnection;
+        window.mozRTCPeerConnection;
     window.RTCSessionDescription = 
     	window.RTCSessionDescription ||
     	window.webkitRTCSessionDescription ||
-    	window.mozRTCSessionDescription||
-    	window.pluginRTCSessionDescription ||
-    	window.msRTCSessionDescription;
+    	window.mozRTCSessionDescription;
     window.RTCIceCandidate = 
     	window.RTCIceCandidate ||
     	window.webkitRTCIceCandidate ||
-    	window.mozRTCIceCandidate ||
-    	window.pluginRTCIceCandidate ||
-    	window.msRTCIceCandidate;
+    	window.mozRTCIceCandidate;
     	
     return !!window.RTCPeerConnection;
 }
+
+var yourVideo = document.querySelector("#yours"),
+	theirVideo = document.querySelector("#theirs"),
+	yourConnection,
+	connectedUser, stream;
 
 function startConnection() {
 	if(hasUserMedia()) {
@@ -228,33 +210,25 @@ function startConnection() {
         .then(myStream => {
             console.log("start streaming");
             stream = myStream;
-            if(yourVideo.srcObject != stream) {
-            	yourVideo.srcObject = stream;
-            }
+            yourVideo.srcObject = stream;
             if (hasRTCPeerConnection()) {
                 setupPeerConnection(stream);
             } else {
-                alert("Sorry, your browser does not support WebRTC.");
+                alert("Sorry, your browser does not support WebRTC.1");
             }
         })
 	} else {
-		alert("Sorry, your browser dose not support WebRTC.");
+		alert("Sorry, your browser dose not support WebRTC.2");
 	}
 }
 
 function setupPeerConnection(stream) {
     yourConnection = new RTCPeerConnection(configuration);
     //設定連線
-    stream.getTracks().forEach(function(track) {
-    	yourConnection.addTrack(track, stream)
-    });
-    
+    yourConnection.addStream(stream);
     yourConnection.ontrack = function(event) {
-    	 if (theirVideo.srcObject !== event.streams[0]) {
-    		 theirVideo.srcObject = event.streams[0];
-    		 console.log("設定theirVideo.srcObject!");
-    		 joinButton.disabled = true;
-    	 }
+    	 if (theirVideo.srcObject) return;
+    	 	theirVideo.srcObject = event.streams[0];
     };
     //設定ice處理事件
     yourConnection.onicecandidate = function(event) {
@@ -267,15 +241,16 @@ function setupPeerConnection(stream) {
     };
 }
 
-function startPeerConnection1(user) {
+function startPeerConnection(user) {
 	connectedUser = user;
 	//開始建立offer
-	var offer = yourConnection.createOffer(offerOptions).then(function(offer) {
+	var offer = yourConnection.createOffer(offerOptions)
+	.then(function(offer) {
 		yourConnection.setLocalDescription(offer);
 		send({
 			type: "offer",
 			offer: offer ,
-			callname: connectedUser
+			username: username
 		});
 	});
 }

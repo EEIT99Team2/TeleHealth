@@ -201,9 +201,6 @@ public class RegisterController {
 					}else {
 						errorMsg.put("errorPwd", "密碼欄位格式錯誤");
 					}																									
-			
-				
-				
 				if(medicine ==null|| medicine.trim().length()==0) {
 					errorMsg.put("errorMedicine", "藥物過敏欄位不能空白");
 				}	
