@@ -29,4 +29,12 @@ public class EmployeesDAO {
 		return result;
 	}
 	
+	//增加員工請假次數
+	public int addTakeoffCount(String empId){
+		String hql="UPDATE EmployeesBean SET takeOff=takeOff+1 WHERE empId=?";
+		Query<EmployeesBean> query=this.getSession().createQuery(hql);
+		query.setParameter(0, empId);
+		int result= query.executeUpdate();
+		return result;
+		}
 }

@@ -11,8 +11,8 @@
 <link href="../fullCalendar/fullcalendar.print.min.css" rel="stylesheet"  media='print' />
 
 <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
 <style>
 
   body {
@@ -44,9 +44,11 @@
   .columnHead{font-size:1.2em;}
   .eveMouseOver {cursor: pointer;}
   .txtWaring{color:red}
+  #loading{background-color:white}
 </style>
 </head>
 <body>
+<div id='loading'>
 <!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
@@ -206,6 +208,7 @@
     </div>
   </div>
 </div>
+</div>
 <div id="calendar"></div>
 <!-- Footer -->
     <footer class="w3-center w3-black w3-padding-16">
@@ -219,8 +222,20 @@
 <script type="text/javascript" src="../fullCalendar/calender.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/src/loadingoverlay.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/extras/loadingoverlay_progress/loadingoverlay_progress.min.js"></script>
 <script>
+       
 $(document).ready(function() {
+
+	$.LoadingOverlaySetup({
+	    color : "rgba(255,255,255, 1)",
+	});
+	$.LoadingOverlay("show");
+	setTimeout(function(){
+	    $.LoadingOverlay("hide");
+	}, 3800);
+
 	var initialLocaleCode = 'zh';
 	var EmpId=$("#empId").val();
 	var mom = moment();
@@ -433,7 +448,7 @@ $("#ReTakeOff").click(function takeoff(){
 				var docFrag = $(document.createDocumentFragment());
 				console.log(reserveData.MomentId+";;;;;;;;"+reserveData.empId);
 				$.post("<c:url value='/AdvisoryMoment/takeoff.controller'/>",{"MomentId":reserveData.MomentId,"EmpId":reserveData.empId,"TakeoffItem":TakeoffItem,"TakeoffReason":TReason},function(result){
-					docFrag.append("<h3>"+result+"<img src='../../resources/img/yes.png'/>"+"</h3>");
+					docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");
 					$("#takeoffResItem .modal-body").append(docFrag);
 					})
 					$('#takeoffResItem').modal('show');

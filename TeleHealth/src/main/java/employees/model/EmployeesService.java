@@ -19,4 +19,13 @@ public class EmployeesService {
 		}
 		return result;
 	}
+	
+	//增加員工請假次數
+	public int addTakeoffCount(String empId){
+		int result = 0;
+		if(empId!=null && empId.trim().length()!=0){
+			result=employeesDAO.addTakeoffCount(empId);
+		}
+		return result;
+	}
 }

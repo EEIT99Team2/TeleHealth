@@ -32,9 +32,9 @@ public class AdvisoryMomentService {
 		List<Object[]> result = this.selectAll();
 		// 已預約時段
 		List<Object[]> reserved = this.selectByMemSelf(UserId);
-		
 		String reservedId;
 		String VideoCode;
+		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
@@ -46,7 +46,11 @@ public class AdvisoryMomentService {
 			String advisoryCode = result.get(i)[3].toString();
 			String empId = result.get(i)[4].toString();
 			String empName = result.get(i)[5].toString();
-			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
+			String empCareer = result.get(i)[6].toString();			
+			if(empCareer.equals("Nutritionist")) {
+				zhCareer="營養師";
+			}
+			dataOne.put("title", advisoryCode + "\r\n" + empName + zhCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
@@ -89,6 +93,7 @@ public class AdvisoryMomentService {
 		List<Object[]> reserved = this.selectByMemSelf(UserId);
 		String reservedId;
 		String VideoCode;
+		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
@@ -99,7 +104,11 @@ public class AdvisoryMomentService {
 			String adCode = result.get(i)[3].toString();
 			String empId = result.get(i)[4].toString();
 			String empName = result.get(i)[5].toString();
-			dataOne.put("title", adCode + "\r\n" + empName + "醫生");
+			String empCareer = result.get(i)[6].toString();			
+			if(empCareer.equals("Nutritionist")) {
+				zhCareer="營養師";
+			}
+			dataOne.put("title", adCode + "\r\n" + empName + zhCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
@@ -143,7 +152,8 @@ public class AdvisoryMomentService {
 		// 是否請假
 		TakeoffBean takeoffRecord = new TakeoffBean();
 		String selfItemId;
-		String selfResCode;		
+		String selfResCode;
+		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
@@ -157,6 +167,10 @@ public class AdvisoryMomentService {
 			String empName = result.get(i)[5].toString();
 			String otherResCode;
 			String takeoff;
+			String empCareer = result.get(i)[6].toString();
+			if(empCareer.equals("Nutritionist")) {
+				zhCareer="營養師";
+			}
 			//別人班表是否有預約
 			if(result.get(i)[6]==null) {
 				otherResCode="null";
@@ -175,7 +189,7 @@ public class AdvisoryMomentService {
 			}else {
 				takeoff="noexist";
 			}
-			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
+			dataOne.put("title", advisoryCode + "\r\n" + empName + zhCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
@@ -224,7 +238,8 @@ public class AdvisoryMomentService {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// 員工負責諮詢班表
-		List<Object[]> selfItem = this.selectByEmpSelf(EmpId);	
+		List<Object[]> selfItem = this.selectByEmpSelf(EmpId);
+		String zhCareer="醫生";
 		for (int i = 0; i < selfItem.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = selfItem.get(i)[0].toString();
@@ -237,12 +252,16 @@ public class AdvisoryMomentService {
 			String empId = selfItem.get(i)[4].toString();
 			String empName = selfItem.get(i)[5].toString();
 			String VideoCode;
-			if(selfItem.get(i)[6]==null) {
+			String empCareer = selfItem.get(i)[6].toString();
+			if(empCareer.equals("Nutritionist")) {
+				zhCareer="營養師";
+			}
+			if(selfItem.get(i)[7]==null) {
 				VideoCode="null";
 			}else {
-				VideoCode=selfItem.get(i)[6].toString();
+				VideoCode=selfItem.get(i)[7].toString();
 			}
-			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
+			dataOne.put("title", advisoryCode + "\r\n" + empName + zhCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
