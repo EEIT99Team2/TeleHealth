@@ -5,7 +5,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Document</title>
+<title>藥品查詢</title>
+<style>
+	.form-group {
+		margin-top: 25px;
+	}
+	.btn {
+		width:100px;
+	}
+	
+	.form-group {
+		font-size: 18px;
+	}
+</style>
+
 </head>
 <body>
 	<jsp:include page="/fragment/header.jsp" />
@@ -17,8 +30,7 @@
 				<div class="modal-content">
 					<div class="modal-header" style="padding: 35px 50px;">
 						<h4 class="modal-title">Login</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
@@ -66,29 +78,29 @@
 		<div class="col-6">
 			<div class="w3-container marketing " style="padding: 128px 16px" id="team">
 				<h1 class="w3-center">藥品外觀暨藥性查詢</h1>
-				<form class="form-group" action="/   ">
-					<div class="form-group has-success has-feedback">
+				<form class="form-group" action="#">
+					<div class="form-group has-success has-feedback row">
 				    	<label class="col-2 control-label" for="drugChinese">藥品中文名稱:</label>
 				    	<div class="col-10">
 				    		<input type="text" class="form-control" id="drugChinese">
 				        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 				      	</div>
 	   				</div>
-	   				<div class="form-group has-success has-feedback">
+	   				<div class="form-group has-success has-feedback row">
 				    	<label class="col-2 control-label" for="drugEnglish">藥品英文名稱:</label>
 				    	<div class="col-10">
 				    		<input type="text" class="form-control" id="drugEnglish">
 				        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 				      	</div>
 	   				</div>
-	   				<div class="form-group has-success has-feedback">
+	   				<div class="form-group has-success has-feedback row">
 				    	<label class="col-2 control-label" for="manu">製造商:</label>
 				    	<div class="col-10">
 				    		<input type="text" class="form-control" id="manu">
 				        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 				      	</div>
 	   				</div>
-					<div class="form-group">
+					<div class="form-group row">
 						<label class="control-label col-2">藥品刻痕:</label>
 						<div class="col-10">
 							<label class="radio-inline">
@@ -99,10 +111,10 @@
 	   						</label>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group row">
 						<label class="control-label col-2">藥品顏色:</label>
 						<div class="col-10">
-							<label class="radio-inline">
+							<label class="radio-inline ">
 	     							<input type="radio" name="optradio" value="white">白色
 	   						</label>
 	   						<label class="radio-inline">
@@ -133,7 +145,8 @@
 	     							<input type="radio" name="optradio" value="black">黑色
 	   						</label>    	    						
 						</div>
-						
+					</div>
+					<div class="form-group row">
 						<label class="control-label col-2">藥品劑型:</label>
 						<div class="col-10">
 							<label class="radio-inline">
@@ -165,12 +178,18 @@
 	   						</label>
 	   						<label class="radio-inline">
 	     							<input type="radio" name="optradio" value="enteric">腸溶錠
-	   						</label>    	    						
+	   						</label>    	    										
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-offset-2 col-10">
-							<button type="submit" class="btn btn-default">Submit</button>
+					<div class="form-group row">
+						<div class="col-4"></div>
+						<div class="col-8 row">
+							<div class="col-3">
+								<button type="submit" class="btn btn-primary">確認查詢</button>
+							</div>
+							<div class="col-3">
+								<button type="reset" class="btn btn-danger">清除</button>
+							</div>
 						</div>
 					</div>
 				</form>
