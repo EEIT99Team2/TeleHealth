@@ -400,7 +400,7 @@ $(document).ready(function() {
 		  docFrag.append("<h3>確定要取消預約?</h3>");
 		  	$("#cancelReserveItem .modal-body").append(docFrag);
 		})
-//{"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId,"videoCode":videoCode};	
+
 	$("#cancelReserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());		
 		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode},function(result){
