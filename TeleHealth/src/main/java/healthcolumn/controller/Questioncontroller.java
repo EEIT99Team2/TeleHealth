@@ -54,23 +54,27 @@ public class Questioncontroller {
 		System.out.println(data);
 		return data;
 	}
-	// 修改會員po文
-//	@RequestMapping(path = {
-//	"/healthcolumn/updatehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
-//			RequestMethod.POST })
-//	public @ResponseBody String updatecontent(String title,String content,String advisoryCode,String fileName,Model model) {
-//		
-//		return "a";
-//	}
-//	// 修改員工po文
-//	@RequestMapping(path = {
-//	"/healthcolumn/updatehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
-//			RequestMethod.POST })
-//	public @ResponseBody String updatecontent(String title,String content,String advisoryCode,String fileName,Model model) {
-//		
-//		return "a";
-//	}
-	//新增回應
+	// 修改po文
+	@RequestMapping(path = {
+	"/healthcolumn/updatememQA.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.POST })
+	public @ResponseBody String updatecontent(String contenttext,String questionId,Model model) {
+		int columnIdemp=Integer.parseInt(questionId);
+		System.out.println(contenttext);
+		boolean update = QuestionService.updateQA(columnIdemp, contenttext);
+		Map<String, String> QAerrors = new HashMap<>();
+		model.addAttribute("QA", QAerrors);
+		Map<String, String> QAOK = new HashMap<String, String>();
+		model.addAttribute("QA", QAOK);
+		if(update) {
+			QAOK.put("updateok", "已修改選擇po文!!");
+			return "修改成功";
+		}else {
+			QAerrors.put("updaterror","修改失敗!!");
+			return"修改失敗";
+		}		
+	}
+
 	
 	//新增問題
 //	@RequestMapping(path = {"/healthcolumn/QAinsertMem.controller" }, produces = "text/html;charset=UTF-8", method = {
@@ -84,10 +88,10 @@ public class Questioncontroller {
 	// 刪除會員po文章
 	@RequestMapping(path = {
 	"/healthcolumn/deleteQAMem.controller" }, produces = "text/html;charset=UTF-8", method = {
-			RequestMethod.POST })
-	public @ResponseBody String deleteMem(String Id,String empId,Model model) {
-		int columnIdMem=Integer.parseInt(Id);
-		boolean delete = QuestionService.deleteEmp(columnIdMem, empId);
+			RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody String deleteMem(String Id,String memberId,Model model) {		
+		int columnIdMem=Integer.parseInt(Id);		
+		boolean delete = QuestionService.deleteMem(columnIdMem, memberId);
 		Map<String, String> contenterrors = new HashMap<>();
 		model.addAttribute("contenterrors", contenterrors);
 		Map<String, String> contentOK = new HashMap<String, String>();
@@ -103,7 +107,7 @@ public class Questioncontroller {
 	// 刪除員工文章
 		@RequestMapping(path = {
 		"/healthcolumn/deleteQAEmp.controller" }, produces = "text/html;charset=UTF-8", method = {
-				RequestMethod.POST })
+				RequestMethod.GET, RequestMethod.POST })
 		public @ResponseBody String deleteEmp(String Id,String MemId,Model model) {
 			int columnIdemp=Integer.parseInt(Id);
 			boolean delete = QuestionService.deleteEmp(columnIdemp, MemId);
@@ -121,7 +125,7 @@ public class Questioncontroller {
 		}
 		//新增po文章
 		@RequestMapping(path = {"/healthcolumn/insQA.controller" }, produces = "text/html;charset=UTF-8", method = {
-				RequestMethod.POST })
+				RequestMethod.GET, RequestMethod.POST })
 		public @ResponseBody String insertresponse(
 				String MemId,
 				String textmem,
@@ -149,4 +153,17 @@ public class Questioncontroller {
 				return "deletecontenterror";
 			}		
 		}
+		//選修改文章
+		@RequestMapping(path = {"/healthcolumn/QAupdateId.controller" }, produces = "text/html;charset=UTF-8", method = {
+				RequestMethod.GET, RequestMethod.POST })
+		public @ResponseBody String QAupdateId(String Id)
+		{
+			int columnIdemp=Integer.parseInt(Id);
+			List<QuestionBean> dataId = QuestionService.loadtitleId(columnIdemp);
+			Gson gson = new Gson();
+			String dataLoad = gson.toJson(dataId);
+			System.out.println(dataLoad);
+			return dataLoad;			 
+		}
+		
 }

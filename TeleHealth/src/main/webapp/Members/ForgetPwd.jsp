@@ -7,7 +7,6 @@
     <title>
     忘記密碼頁面
 </title>
-
 </head>
 <body>
     <div>

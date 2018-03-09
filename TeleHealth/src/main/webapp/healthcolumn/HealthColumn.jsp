@@ -89,11 +89,11 @@
 			console
 			$('#title').empty();
 			 $.each(data, function (i, data) {
-		            var article=$("<a href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
+				 var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");          	     	          
 		            var cell1= $("<h2 class='post-title'></h2>").text(data.title);
 		            article.append(cell1)
 		            var cell2=$("<p class='post-meta'></p>").text(data.createDate);
-		            var cell3 = $("<p></p>").html(data.content.substring(0,300));        
+		            var cell3 = $("<p></p>").html(data.content.substring(0,200));        
 		            var row = $('<div class="post-preview"></div>').append([article, cell2,cell3]);
 		            $('#title').append(row);
 		         });
@@ -107,11 +107,12 @@
 	})
  $('input[type="button"]').click(function() {
 	var value=$(this).prop("id");
- 	$.getJSON('/TeleHealth/healthcolumn/healthcolumn.controller', {advisoryCode:value}, function (data){
-		console.log(data);		
+	if(value!="VID"){		
+	$.getJSON('/TeleHealth/healthcolumn/healthcolumn.controller', {advisoryCode:value}, function (data){
+		console.log(data);				
 		$('#title').empty();	  
          $.each(data, function (i, data) {
-            var article=$("<a href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"onclick=clickcount() target='_blank'></a>");          	     	          
+            var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");          	     	          
             var cell1= $("<h2 class='post-title' ></h2>").text(data.title);
             article.append(cell1)
             var cell2=$("<p class='post-meta'></p>").text(data.createDate);
@@ -124,14 +125,33 @@
          var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
 		 $('#title').append(row2);
  	});
- });
- function clickcount(){	
-	 var title=$(this).text();
+	}else{
+		$.getJSON('/TeleHealth/healthcolumn/healthcolumn.controller', {advisoryCode:value}, function (data){
+			console.log(data);				
+			$('#title').empty();	  
+	         $.each(data, function (i, data) {
+	            var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");          	     	          
+	            var cell1= $("<h2 class='post-title' ></h2>").text(data.title);
+	            article.append(cell1)
+	            var cell2=$("<p class='post-meta'></p>").text(data.createDate);	           
+				var vid=$( '<video width="360" height="270" controls><source src="http://localhost:8090/TeleHealth/video/'+data.fileName+'" type="video/mp4"></video>')
+	            var cell3 = $("<p></p>").html(data.content.substring(0,100));        
+	            var row = $('<div class="post-preview"></div>').append([article,cell2,cell3,vid]);
+	            $('#title').append(row);
+	         });
+	         var pager= $('<a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom"></a>').text("<Previous");
+	         var pager2= $('<a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom"></a>').text("Next>");    
+	         var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
+			 $('#title').append(row2);
+	 	});
+	}
+	 });
+	$('#title').on('click','.heltitle',function(){
+		var title=($(this).attr('name'));
+		console.log(title);
 		$.post('/TeleHealth/healthcolumn/countarticle.controller', {title:title}, function (data){
-				console.log(title);
-				console.log(data);				
-			 })};		
-	 	
+		});		
+	})
  </script>                   
                         </div>
                     </div>
