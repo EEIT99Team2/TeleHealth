@@ -14,11 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 
 import advisorymoment.model.dao.AdvisoryMomentDAO;
+import takeoffrecords.model.TakeoffBean;
+import takeoffrecords.model.TakeoffService;
 @Service
 @Transactional
 public class AdvisoryMomentService {
 	@Autowired
 	private AdvisoryMomentDAO advisoryMomentDAO;
+	
+	@Autowired
+	private TakeoffService takeoffService;
 	
 	//會員查詢預約諮詢的index
 	public String memberSelectAll(String UserId) {
@@ -29,6 +34,7 @@ public class AdvisoryMomentService {
 		List<Object[]> reserved = this.selectByMemSelf(UserId);
 		String reservedId;
 		String VideoCode;
+		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
@@ -40,7 +46,11 @@ public class AdvisoryMomentService {
 			String advisoryCode = result.get(i)[3].toString();
 			String empId = result.get(i)[4].toString();
 			String empName = result.get(i)[5].toString();
-			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
+			String empCareer = result.get(i)[6].toString();			
+			if(empCareer.equals("Nutritionist")) {
+				zhCareer="營養師";
+			}
+			dataOne.put("title", advisoryCode + "\r\n" + empName + zhCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
@@ -83,6 +93,7 @@ public class AdvisoryMomentService {
 		List<Object[]> reserved = this.selectByMemSelf(UserId);
 		String reservedId;
 		String VideoCode;
+		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
@@ -93,7 +104,11 @@ public class AdvisoryMomentService {
 			String adCode = result.get(i)[3].toString();
 			String empId = result.get(i)[4].toString();
 			String empName = result.get(i)[5].toString();
-			dataOne.put("title", adCode + "\r\n" + empName + "醫生");
+			String empCareer = result.get(i)[6].toString();			
+			if(empCareer.equals("Nutritionist")) {
+				zhCareer="營養師";
+			}
+			dataOne.put("title", adCode + "\r\n" + empName + zhCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
@@ -134,8 +149,11 @@ public class AdvisoryMomentService {
 		List<Object[]> result = this.selectAll();
 		// 已預約時段
 		List<Object[]> selfItem = this.selectByEmpSelf(EmpId);
+		// 是否請假
+		TakeoffBean takeoffRecord = new TakeoffBean();
 		String selfItemId;
-		String selfResCode;		
+		String selfResCode;
+		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
@@ -148,26 +166,44 @@ public class AdvisoryMomentService {
 			String empId = result.get(i)[4].toString();
 			String empName = result.get(i)[5].toString();
 			String otherResCode;
+			String takeoff;
+			String empCareer = result.get(i)[6].toString();
+			if(empCareer.equals("Nutritionist")) {
+				zhCareer="營養師";
+			}
+			//別人班表是否有預約
 			if(result.get(i)[6]==null) {
 				otherResCode="null";
 			}else {
 				otherResCode=result.get(i)[6].toString();
 			}
-			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
+			//此項班表是否為有申請假單				
+			takeoffRecord = takeoffService.select(MomentId);							
+			if(takeoffRecord!=null && takeoffRecord.getId()!=null) {
+				takeoff="exist";
+				if(takeoffRecord.getApprovedResult()!=null) {	
+					if(takeoffRecord.getApprovedResult().equals("N")) {						
+						takeoff="noexist";
+					}
+				}
+			}else {
+				takeoff="noexist";
+			}
+			dataOne.put("title", advisoryCode + "\r\n" + empName + zhCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
-	
+			dataOne.put("takeoff", takeoff);
+			
 				for (int j = 0; j < selfItem.size(); j++) {
 					selfItemId = selfItem.get(j)[0].toString();
 					//當自己負責的班表id equal到此項班表id
 					if (selfItemId.equals(MomentId)) {
-						if(selfItem.get(j)[6]==null) {
+						if(selfItem.get(j)[7]==null) {
 							selfResCode ="null";
-							System.out.println("無人預約");
 						}else {							
-							selfResCode = selfItem.get(j)[6].toString();
+							selfResCode = selfItem.get(j)[7].toString();
 						}
 						//此項班表有預約
 						if(!selfResCode.equals("null")&&status.equals("F")) {							
@@ -202,7 +238,8 @@ public class AdvisoryMomentService {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// 員工負責諮詢班表
-		List<Object[]> selfItem = this.selectByEmpSelf(EmpId);	
+		List<Object[]> selfItem = this.selectByEmpSelf(EmpId);
+		String zhCareer="醫生";
 		for (int i = 0; i < selfItem.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = selfItem.get(i)[0].toString();
@@ -215,12 +252,16 @@ public class AdvisoryMomentService {
 			String empId = selfItem.get(i)[4].toString();
 			String empName = selfItem.get(i)[5].toString();
 			String VideoCode;
-			if(selfItem.get(i)[6]==null) {
+			String empCareer = selfItem.get(i)[6].toString();
+			if(empCareer.equals("Nutritionist")) {
+				zhCareer="營養師";
+			}
+			if(selfItem.get(i)[7]==null) {
 				VideoCode="null";
 			}else {
-				VideoCode=selfItem.get(i)[6].toString();
+				VideoCode=selfItem.get(i)[7].toString();
 			}
-			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
+			dataOne.put("title", advisoryCode + "\r\n" + empName + zhCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);

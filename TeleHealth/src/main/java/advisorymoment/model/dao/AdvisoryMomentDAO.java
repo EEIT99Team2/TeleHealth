@@ -30,7 +30,7 @@ public class AdvisoryMomentDAO {
 	};
 	//以科別代碼搜尋
 	public List<Object[]> select(String advisoryCode) {
-		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName FROM AdvisoryMoment am \r\n" + 
+		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career FROM AdvisoryMoment am \r\n" + 
 				"join Employees emp \r\n" + 
 				"on am.empId=emp.empId\r\n" + 
 				"join advisoryType adt\r\n" + 
@@ -45,7 +45,7 @@ public class AdvisoryMomentDAO {
 	
 	//搜尋全部時段(當index用)
 	public List<Object[]> selectAll() {
-		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,am.videoCode FROM AdvisoryMoment am \r\n"
+		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.videoCode FROM AdvisoryMoment am \r\n"
 				+"join Employees emp \r\n"
 				+"on am.empId=emp.empId \r\n"
 				+"join advisoryType adt \r\n"
@@ -57,7 +57,7 @@ public class AdvisoryMomentDAO {
 
 	//會員自己已預約的時段
 	public List<Object[]> selectByMemSelf(String UserId) {
-		String hql="select am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,a.videoCode from advisoryMoment am\r\n" + 
+		String hql="select am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,a.videoCode from advisoryMoment am\r\n" + 
 				"join Advisory a\r\n" + 
 				"on am.videoCode=a.videoCode\r\n" + 
 				"join employees emp\r\n" + 
@@ -84,7 +84,7 @@ public class AdvisoryMomentDAO {
 	
 	//諮詢人員自己負責的時段
 		public List<Object[]> selectByEmpSelf(String EmpId) {
-			String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,am.videoCode FROM advisoryMoment am\r\n" + 
+			String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.videoCode FROM advisoryMoment am\r\n" + 
 					"join employees emp\r\n" + 
 					"on am.empId=emp.empId\r\n" + 
 					"join advisoryType adt\r\n" + 

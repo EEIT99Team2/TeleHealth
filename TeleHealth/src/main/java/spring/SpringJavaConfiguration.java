@@ -21,15 +21,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import advisory.model.AdvisoryBean;
 import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryTypeBean;
-import advisorymoment.model.EmployeesBean;
+import employees.model.EmployeesBean;
 import healthcolumn.model.HealthColumnBean;
 import healthcolumn.model.QuestionBean;
 import healthpassport.model.BMIBean;
 import healthpassport.model.BloodPressureBean;
 import healthpassport.model.BloodSugarBean;
 import healthpassport.model.DataAnalysisBean;
+import querydrugs.model.DrugBean;
 import register.model.MemberBean;
-import register.model.TestBean;
 import takeoffrecords.model.TakeoffBean;
 
 @Configuration
@@ -39,9 +39,10 @@ import takeoffrecords.model.TakeoffBean;
 		"register.model" ,
 		"healthcolumn.model",  
 		"advisory.model",
-		"advisory.dao",
+		"employees.model",
 		"healthpassport.model",
-		"takeoffrecords.model"})
+		"takeoffrecords.model",
+		"querydrugs.model"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean
@@ -63,8 +64,7 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,TestBean.class,TakeoffBean.class);		
-
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,DrugBean.class,TakeoffBean.class);		
 		
 		return builder.buildSessionFactory();
 	}

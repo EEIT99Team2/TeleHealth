@@ -1,8 +1,6 @@
 package advisorymoment.controller;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,7 +44,7 @@ public class AdvisoryMomemtController {
 			data=advisoryMomentService.memberSelectAll(UserId);
 		}else {
 			data="請登入或註冊為會員";
-		}
+		}		
 		return data;
 	}
 	
@@ -67,7 +65,7 @@ public class AdvisoryMomemtController {
 	
 	@RequestMapping(path = { "/AdvisoryMomemt/employeeSelectAll.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String employeeSelectAll(String EmpId) {
+	public @ResponseBody String employeeSelectAll(String EmpId) throws InterruptedException {
 		String data="";
 		if(EmpId!=null&&EmpId.trim().length()!=0) {
 			data=advisoryMomentService.employeeSelectAll(EmpId);

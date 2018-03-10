@@ -31,8 +31,6 @@
 		<servlet-name>ConnectorServlet</servlet-name>
 		<url-pattern>/forCkeditor/ckfinder/core/connector/java/connector.java</url-pattern>
 	</servlet-mapping>	
-
-
 <!-- 	//HTTPS加密 -->
 	<security-constraint>
 		<web-resource-collection>
@@ -43,5 +41,4 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
-
 </web-app>

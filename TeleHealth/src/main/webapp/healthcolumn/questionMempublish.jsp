@@ -53,16 +53,17 @@
         </button>
       </div>
       <div class="modal-body">
-      <form action="/TeleHealth/healthcolumn/updatehealthcolumn.controller" method="post" >
-	<input type="text" name="name" id="title" value="d43b1906-f319-40dc-9e11-4da09a2558af"> 
-    <textarea name="contenttext" id="contenttext" rows="10" cols="10"></textarea>       
-	</form>      
-    </div>
-    <div class="modal-footer">
-     <input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
-       <input type="reset" id="clean" value="清除重選" onclick='clean()' >
-       <p style="color:green">${msgOK.uploadok}${errors.uploaderror}</p>
-      </div>
+      <form action="/TeleHealth/healthcolumn/updatememQA.controller" method="post" >	
+		<input type="hidden" name="questionId" id="questionId" >
+    	<textarea name="contenttext" id="contenttext" rows="10" cols="10"></textarea>       
+		<div class="modal-footer">
+     	<input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
+      	 <input type="reset" id="clean" value="清除重選" onclick='clean()' >
+       		<p style="color:green">${QA.updateok}${QAerrors.updaterror}</p>
+        </div>
+		</form>      
+    	</div>
+    	
     </div>
   </div>
 </div>
@@ -74,11 +75,15 @@
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
 		$(document).ready(function() {
+			$('#clean').on('click',function(){
+				CKEDITOR.instances.contenttext.setData(' ');
+				})
 			 CKEDITOR.replace('contenttext',
 				  {width:400, height:200,toolbarGroups:tg}								 	
 		     );
-		    console.log("ready!");	
-			loadmember("B0041CB5-09F1-4E5B-8D57-1F0406019143")					
+		    //讀取EL
+// 		    var memberId=$(''); 
+		    loadmember("B0041CB5-09F1-4E5B-8D57-1F0406019143")					
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -122,11 +127,11 @@
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
 				   var check=confirm("你確定要刪除此筆資料?");
 				   var Memname=$('#title').val();
-	 			   var id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			   console.log(id);
+	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();
+	 			   console.log(Id+"   "+Memname) 			  
 	 			   if(check==true){
-	 				  $.post('/TeleHealth/healthcolumn/deleteQAMem.controller',{columnId:id,memberId:Memname},function(data){
-		 				   alert("您已刪除所選的文章");
+	 				  $.get('/TeleHealth/healthcolumn/deleteQAMem.controller',{Id:Id,memberId:Memname},function(data){
+		 				   alert("您已刪除所po的文");
 		 				  loadmember(Memname);
 		 			   })		 			   
 	 			   }else{
@@ -135,17 +140,16 @@
 	 			 
 			  })
 			    
-			    //修改產品
+			    //修改文章灌入ck	    
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
 	 			  $('#UnReserveItem').modal('show');	
-	 			  var id = $(this).parents('tr').find('td:nth-child(2)').text();
-	 			  console.log(id);
-	 			 $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller',{title:id},function(datas){
+	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();
+	 			  console.log(Id);
+	 			 $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){
 						console.log(datas);
-		 				$.each(datas,function(i,product){	 				
-	 					 CKEDITOR.instances.contenttext.setData(product[2]);	 					
-	 					 $("#title1").val(product[0]);
-
+		 				$.each(datas,function(i,QA){	 				
+	 					 CKEDITOR.instances.contenttext.setData(QA[5]);
+	 					 $('#questionId').val(QA[0]);	 								 
 		 				})	 
 	 			  
 	 					

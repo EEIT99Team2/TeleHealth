@@ -52,8 +52,8 @@ public class HealthService {
 		healthColumnDAO.count(title);
 	}
 	//更新文章
-	public boolean updatecontent(String title,String content,String advisoryCode,String fileName) {
-		healthColumnDAO.update(title, content, advisoryCode, fileName);
+	public boolean updatecontent(String title,String content,String fileName) {
+		healthColumnDAO.update(title, content, fileName);
 		return true;
 	}
 	

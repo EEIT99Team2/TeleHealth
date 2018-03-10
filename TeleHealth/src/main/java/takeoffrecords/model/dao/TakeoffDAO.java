@@ -2,14 +2,20 @@ package takeoffrecords.model.dao;
 
 import java.util.List;
 
+
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import takeoffrecords.model.TakeoffBean;
 
 @Repository
+@Transactional
 public class TakeoffDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -19,25 +25,40 @@ public class TakeoffDAO {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	public TakeoffBean select(int id) {
-		return this.getSession().get(TakeoffBean.class, id);
+	//透過班表id搜尋申請假單紀錄
+	public TakeoffBean select(String MomentId) {
+		Query<TakeoffBean> query = this.getSession()
+				.createQuery("FROM TakeoffBean WHERE advisoryMomentId=?",TakeoffBean.class);
+		query.setParameter(0, MomentId);
+		TakeoffBean result = query.uniqueResult();
+		return result;
 	}
 	
-	public List<TakeoffBean> select() {
-		return this.getSession().createQuery(
-				"from ProductBean", TakeoffBean.class).list();
+	//後台管理顯示(index用)
+	public List<Object[]> selectAll() {
+		String hql="SELECT tor.id,tor.advisoryMomentId,tor.empId,emp.empName,emp.career,tor.applicationType,tor.applicationTime,tor.applicationReason,adm.reserveStatus,adm.videoCode,tor.approvedResult,tor.approvedTime,tor.rejectReason FROM takeoffRecords tor\r\n" + 
+				"JOIN employees emp\r\n" + 
+				"ON emp.empId=tor.empId\r\n" + 
+				"JOIN advisoryMoment adm\r\n" + 
+				"ON adm.id=tor.advisoryMomentId";
+		NativeQuery query = this.getSession().createNativeQuery(hql);
+		List<Object[]> data = (List<Object[]>)query.list();
+		return data;
 	}
-
-	public TakeoffBean insert(TakeoffBean bean) {
+	
+	//新增員工申請假單
+	public boolean insert(TakeoffBean bean) {
+		boolean result =false;
 		if(bean!=null) {
 			TakeoffBean temp =
-					this.getSession().get(TakeoffBean.class, bean.getId());
+					this.getSession().get(TakeoffBean.class, bean.getAdvisoryMomentId());
 			if(temp==null) {
 				this.getSession().save(bean);
-				return bean;
+				result = true;
+				return result;
 			}
 		}
-		return null;
+		return result;
 	}
 
 	public TakeoffBean update(String name,

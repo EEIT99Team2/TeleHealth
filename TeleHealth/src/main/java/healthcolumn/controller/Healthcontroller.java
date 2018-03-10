@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,10 +38,9 @@ public class Healthcontroller {
 	@RequestMapping(path = { "/healthcolumn/healthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Loadpage(String advisoryCode) {
-		List<HealthColumnBean> loadpage = healthService.loadpage(advisoryCode);
-		System.out.println(loadpage);
-		Gson gson = new Gson();
-		String data = gson.toJson(loadpage);		
+	List<HealthColumnBean> loadpage = healthService.loadpage(advisoryCode);
+	Gson gson = new Gson();
+	String data = gson.toJson(loadpage);		
 		return data;
 	}
 	//選取點擊的文章
@@ -86,10 +86,8 @@ public class Healthcontroller {
 			String content,
 			Model model,
 			HttpSession session,
-			@RequestParam(name="videofile", required = false) MultipartFile file
+			@RequestParam(name="file1", required = false) MultipartFile file
 			) throws IOException {
-//		System.out.println("file1=" + file.getName());
-//		System.out.println(title + "  " + name + " " + type + " " + content + " " + file.getName());
 		Map<String, String> errors = new HashMap<>();
 		model.addAttribute("errors", errors);
 		Map<String, String> msgOK = new HashMap<String, String>();
@@ -123,7 +121,7 @@ public class Healthcontroller {
 					in = file.getInputStream();
 					//上傳檔案路徑 
 					//新增檔案位置
-					File filepath = new File("c:/videos/" + fileName);
+					File filepath = new File("C:\\_TeleHealth\\apache-tomcat-8.5.24\\webapps\\TeleHealth\\video\\" + fileName);
 					//將上傳檔案儲存到一個目標檔案當中 
 					if (!filepath.getParentFile().exists()) { 
 						filepath.getParentFile().mkdirs(); 
@@ -134,11 +132,13 @@ public class Healthcontroller {
 					while ((len = in.read(readByte)) != -1) {
 						out.write(readByte, 0, len);
 					}
+					System.out.println("fileName= " + fileName);
 				}
 			}
-			bean.setFileName(fileName);
+			bean.setFileName(fileName);	
 			bean.setEmpId(name);
 			boolean ok = healthService.insert(bean);
+
 			if (ok) {
 				msgOK.put("uploadok", "上傳成功!!");
 				return "form.ok";
@@ -154,11 +154,58 @@ public class Healthcontroller {
 	@RequestMapping(path = {
 	"/healthcolumn/updatehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.POST })
-	public @ResponseBody String updatecontent(String title,String content,String advisoryCode,String fileName,Model model) {
-		
-		return "OK";
+	public @ResponseBody String updatecontent(			
+			String title,
+			String contenttext,			
+			@RequestParam(name="file1", required = false) MultipartFile file
+			,Model model) throws IOException {
+		Map<String, String> errors = new HashMap<>();
+		model.addAttribute("errors", errors);
+		Map<String, String> msgOK = new HashMap<String, String>();
+		model.addAttribute("msgOK", msgOK);		
+		if (contenttext == null || contenttext.trim().length() == 0) {
+			errors.put("errorcontentEmpty", "文章必須有內容");
+		}
+		if (!errors.isEmpty()) {
+			return "form.error";
+		} else {	
+			String fileName = null;
+			InputStream in = null;
+			BufferedOutputStream out = null;
+			if (file != null && !file.isEmpty()) {
+				fileName = file.getOriginalFilename();
+				String extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()).toLowerCase();
+				if (!extension.equals("mp4") && !extension.equals("ogg") && !extension.equals("webm")
+						&& !extension.equals("m3u8")) {
+					errors.put("errorVideo", "瀏覽器支援的影像格式為.mp4、.ogg、.webm、.m3u8，請重新上傳!");
+				} else {
+					fileName = GlobalService.adjustFileName(fileName, GlobalService.IMAGE_FILENAME_LENGTH);
+					in = file.getInputStream();
+					//上傳檔案路徑 
+					//新增檔案位置
+					File filepath = new File("c:/videos/" + fileName);
+					//將上傳檔案儲存到一個目標檔案當中 
+					if (!filepath.getParentFile().exists()) { 
+						filepath.getParentFile().mkdirs(); 
+					}
+					out = new BufferedOutputStream(new FileOutputStream(filepath));
+					byte[] readByte = new byte[8192];
+					int len = 0;
+					while ((len = in.read(readByte)) != -1) {
+						out.write(readByte, 0, len);
+					}
+				}
+			}						
+			boolean ok = healthService.updatecontent(title, contenttext, fileName);
+			if (ok) {
+				msgOK.put("uploadok", "更新成功!!");
+				return "form.ok";
+			} else {
+				errors.put("uploaderror", "更新失敗!!");
+				return "form.error";
+			}		
 	}
-	
+	}
 	// 刪除文章
 	@RequestMapping(path = {
 	"/healthcolumn/deletehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {

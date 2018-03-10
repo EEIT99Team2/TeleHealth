@@ -34,11 +34,12 @@ public class HealthColumnDAO  {
 		query.setParameter(1, advisoryCode);
 		query.addEntity(HealthColumnBean.class);
 		List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();
+		System.out.println(data);
 		return data;
 	}
 	//選點擊的文章	
 	public List<Object[]> selectbytitle(String title) {	
-		NativeQuery query=this.getSession().createNativeQuery("select hel.title,emp.empName,hel.content,hel.createDate,hel.fileName from healthColumn hel join employees emp on hel.empId=emp.empId where hel.title=?");
+		NativeQuery query=this.getSession().createNativeQuery("select hel.title,emp.empName,hel.content,hel.createDate,hel.fileName,hel.advisoryCode from healthColumn hel join employees emp on hel.empId=emp.empId where hel.title=?");
 		query.setParameter(1, title);		
 		List<Object[]> data=(List<Object[]>)query.list();
 		return  data;
@@ -64,23 +65,24 @@ public class HealthColumnDAO  {
 		}
 		return null;
 	}
-	//修改		
-	
-	public HealthColumnBean update(
-			String title, 
-			String content, 			
-			String advisoryCode, 			
-			String fileName) {
-		HealthColumnBean result = this.getSession().get(HealthColumnBean.class,title);
-		if(result!=null) {
-			result.setTitle(title);
-			result.setContent(content);
-			result.setCreateDate(new Date());
-			result.setAdvisoryCode(advisoryCode);			
-			result.setFileName(fileName);
-			
+	//修改
+	public boolean  update(String title, String content,String fileName) {
+		NativeQuery query=this.getSession().createNativeQuery("update healthColumn set content=?, createDate=?, fileName=? where title=? ");
+		query.setParameter(4, title);
+		query.setParameter(1, content);
+		query.setParameter(2, new Date());
+		if (fileName!=null)
+		{
+			query.setParameter(3, fileName);
+		}else {
+			query.setParameter(3,"Null");
 		}
-		return result;
+		int result = query.executeUpdate();
+		if(result!=0) {
+			return true;
+		}else {
+			return false;
+		}		
 	}
 	//刪除
 	public boolean delete(String columnId) {

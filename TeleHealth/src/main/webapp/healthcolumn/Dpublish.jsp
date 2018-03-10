@@ -54,26 +54,18 @@
       </div>
       <div class="modal-body">
       <form action="/TeleHealth/healthcolumn/updatehealthcolumn.controller" method="post" >
-	<input type="text" name="name" id="title" value="d43b1906-f319-40dc-9e11-4da09a2558af"> 
-	<h3>標題:<input type="text" name="title" id="title1" placeholder="title"></h3><p style="color:red">${errors.errortitleEmpty}</p>
-	<h3>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h3><p style="color:red">${errors.errorVideo}</p>
-	<h3>文章類型:<select name="type">
-       <option id="BOB" value="BOD">塑身減重</option>
-       <option id="FOO" value="FOO">飲食資訊</option>
-       <option id="OLD" value="OLD">銀髮照護</option>
-       <option id="CHR" value="CHR">慢性疾病  </option>
-       <option id="EYE" value="EYE">眼睛保健</option>
-       <option id="VID" value="VID">影音專區</option>
-       </select></h3>
-       <p style="color:red">${errors.errorcontentEmpty}</p>
-       <textarea name="contenttext" id="contenttext" rows="10" cols="80"></textarea>       
+	<input type="text" name="name" id="title" value="930F2472-337E-4800-B774-EB0AAE703D2A">
+	 <input type="hidden" name="heltitle" id="heltitle" >
+	 <h3>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h3><p style="color:red">${errors.errorVideo}</p>
+	  <textarea name="contenttext" id="contenttext" rows="10" cols="80"></textarea>       
+	  	<div class="modal-footer">
+     	 <input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
+      	 <input type="reset" id="clean" value="清除"  >
+      	 <p style="color:green">${msgOK.uploadok}${errors.uploaderror}</p>
+     	 </div>
 	  </form>      
-      </div>
-      <div class="modal-footer">
-      <input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
-       <input type="reset" id="clean" value="清除重選" onclick='clean()' >
-       <p style="color:green">${msgOK.uploadok}${errors.uploaderror}</p>
-      </div>
+      </div> 
+     
     </div>
   </div>
 </div>
@@ -82,10 +74,13 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
 		$(document).ready(function() {
+			$('#clean').on('click',function(){
+				CKEDITOR.instances.contenttext.setData(' ');
+				})
 			 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
 		          {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
 		          ];				
-			 CKEDITOR.replace('contenttext',{width:200, height:100,toolbarGroups:tg});
+			 CKEDITOR.replace('contenttext',{width:450, height:200,toolbarGroups:tg});
 		    console.log("ready!");	
 			loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A")		
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
@@ -144,23 +139,24 @@
 	 			 
 			  })
 			    
-			    //修改產品
+			    //修改文章
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var id = $(this).parents('tr').find('td:nth-child(2)').text();
 	 			  console.log(id);
 	 			 $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller',{title:id},function(datas){
 						console.log(datas);
-		 				$.each(datas,function(i,product){	 				
-	 					 CKEDITOR.instances.contenttext.setData(product[2]);	 					
-	 					 $("#title1").val(product[0]);
-
-		 				})	 
-	 			  
-	 					
-	 		   })
-			   		   
+		 				$.each(datas,function(i,content){	 				
+	 					 CKEDITOR.instances.contenttext.setData(content[2]);	 					 	 					
+	 					 $("#heltitle").val(content[0]);
+		 				}) 					
+	 		   })		   		   
 		})
+			$('#clean').on('click',function(){
+				CKEDITOR.instances.contenttext.setData(' ');
+				})
+				
+				
 		})
 	</script>
 <div id="iframeck"></div>		

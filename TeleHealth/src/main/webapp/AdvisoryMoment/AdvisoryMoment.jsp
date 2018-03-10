@@ -67,24 +67,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#pricing">方案介紹</a>
                     </li>
-                
-                <c:if test="${not empty LoginOK}">
-                       <li class="nav-item">
-                        <a class="nav-link" href="#pricing">健康護照</a>
-                    </li>
-				    </c:if>
-               	    <c:if test="${not empty LoginOK}">
-                      <li class="nav-item">
-                        <a class="nav-link" href="<c:url value='/AdvisoryMoment/AdvisoryMoment.jsp'/>">預約時刻</a>
-                    </li>
-				     </c:if>
-				     <c:if test="${not empty LoginOK}">
-                      <li class="nav-item">
-                        <a class="nav-link" href="#pricing">會員專區</a>
-                    </li>
-				     </c:if>
 				   </ul>
-
+<input type="text" id="userid" name="userid" value="B0041CB5-09F1-4E5B-8D57-1F0406019143">
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
 <select id="month" class="headerChoose"></select><span id="item1" class="headerChoose">月</span>
@@ -106,12 +90,6 @@
 <option id="WEL">健康減重</option>
 </select><br>
 
-                <c:if test="${empty LoginOK}">
-                       <button type="button" class="btn btn-sm btn-outline-secondary" id="login"><c:out value="Losgin"/></button>
-				</c:if>
-               	<c:if test="${not empty LoginOK}">
-                       <button type="button" name="<c:out value='${LoginOK.memberId}'/>" class="btn btn-sm btn-outline-secondary" id="loginName"><c:out value="${LoginOK.memName},你好!!"/></button>
-				</c:if>
             </div>
         </nav>
     </header>
@@ -232,7 +210,7 @@
 <script>
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
-	var UserId=$("#loginName").prop("name");
+	var UserId=$("#userid").val();
 	var mom = moment();
 	//預約用
 	var reserveData;

@@ -32,26 +32,39 @@ public class DownloadFile {
 //			System.setProperty("jdbc.drivers", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			String connUrl = "jdbc:sqlserver://localhost:1433;databaseName=TeleHealthDB";  //jdbc:sqlserver://192.168.50.130都不可以空白
 			conn = DriverManager.getConnection(connUrl, "sa", "passw0rd");
-			String sql = "select licenceNum,pic from TeleHealth where pic <> ?";
+			String sql = "select licenseNum,pic from drugs where licenseNum >= '衛部藥製字第059775號' and pic <> ?";
 			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "");
 			rs = stmt.executeQuery();
 			DownloadFile download = new DownloadFile();
 			while(rs.next()) {
 				String licenceNum = rs.getString(1);
 				String picUrl = rs.getString(2);
-				System.out.println(download.downloadUrlFile(picUrl, "E:/drupPics/" + licenceNum + ".pdf"));
-				File file = new File("E:/drugPics/" + licenceNum + ".pdf");
-				try {
-					PDDocument doc = PDDocument.load(file);
-					PDFRenderer renderer = new PDFRenderer(doc);
-				 	int pageCount = doc.getNumberOfPages();
-					for(int i=0;i<pageCount;i++){
-//						BufferedImage image = renderer.renderImageWithDPI(i, 296);
-						BufferedImage image = renderer.renderImage(i, 2.5f);
-						ImageIO.write(image, "PNG", new File("E:/drugPics/" + licenceNum + ".png"));
+				Boolean flag = download.downloadUrlFile(picUrl, "E:/drugPics/" + licenceNum + ".pdf");
+				System.out.println("flag=" + flag);
+				PDDocument doc = null;
+				if(flag && doc == null) {
+					try {
+						File file = new File("E:/drugPics/" + licenceNum + ".pdf");
+						doc = PDDocument.load(file);
+						PDFRenderer renderer = new PDFRenderer(doc);
+					 	int pageCount = doc.getNumberOfPages();
+						for(int i=0;i<pageCount;i++){
+	//						BufferedImage image = renderer.renderImageWithDPI(i, 296);
+							BufferedImage image = renderer.renderImage(i, 2.5f);
+							ImageIO.write(image, "PNG", new File("E:/drugPics/" + licenceNum + ".png"));
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						if(doc != null) {
+							try {
+								doc.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 		} catch (ClassNotFoundException e) {

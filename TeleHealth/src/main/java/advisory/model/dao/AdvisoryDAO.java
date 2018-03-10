@@ -1,4 +1,4 @@
-package advisory.dao;
+package advisory.model.dao;
 
 import java.util.List;
 
