@@ -75,11 +75,13 @@
                 <div style="margin-left: 30%; padding-top: 10px; padding-bottom:10px; ">
 
                           <button type="submit" class="btn-primary">確定</button>
-                       <button type="submit" style="background-color: #f58200; border: 1px solid #da7d00;
+                          
+                        <a href="<c:url value='/index.jsp' />"><input type="button" class="btn-primary" value="回主頁" style="background-color: #f58200; border: 1px solid #da7d00;
                         font-size: 14px; color: #fff; text-shadow: 1px 1px 1px #666; padding: 5px 10px;
                         border-radius: 4px; box-shadow: 1px 1px 3px #aaa; font-weight: bold; text-align: center;
-                        cursor: pointer;">取消</button>
-                   		 <input type="button" class="btn-primary" value="回主頁" onclick="location.href='../index.jsp'">
+                        cursor: pointer;"></button></a>
+<!--                    		 <input type="button" class="btn-primary" value="回主頁"></a> -->
+<%--                 <a href="<c:url value='/Members/Logout.jsp' />"><button class="btn btn-sm btn-outline-secondary" id="myBtn1">登出</button></a>	 --%>
                 </div>
             </div>
             <div class="cleardiv">

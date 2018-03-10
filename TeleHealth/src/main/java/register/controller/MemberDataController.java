@@ -158,7 +158,14 @@ public class MemberDataController {
 				if (errorMsg != null && !errorMsg.isEmpty()) {
 					return "memberdata.error";
 				}else {
+
 					MemberBean member = (MemberBean)session.getAttribute("LoginOK");
+					if(member==null) {
+						System.out.println("沒抓到session");
+						return "login.error";
+					}else {
+						
+					
 					member.setMemName(memName);
 					member.setMemHeight(Double.parseDouble(memHeight));
 					member.setMemWeight(Double.parseDouble(memWeight));
@@ -173,11 +180,11 @@ public class MemberDataController {
 					member.setModifiyTime(new Timestamp(System.currentTimeMillis()));
 					
 					member = registerService.Update(member);
-					
+					}
 					if(member != null) {
 						return "register.success";
 					}else {
-						return "memberdata.error";
+						return "login.error";
 					}
 				}		
 	}

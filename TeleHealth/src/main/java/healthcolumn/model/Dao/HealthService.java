@@ -34,6 +34,11 @@ public class HealthService {
 		List<HealthColumnBean> Hotcontext = healthColumnDAO.selectTop();
 		return Hotcontext;		
 	};
+	//選出輪播牆
+	public List<HealthColumnBean> hotcontextimg() {
+		List<HealthColumnBean> Hotcontextimg = healthColumnDAO.selectimg();
+		return Hotcontextimg;		
+	};
 	//刪除文章
 	public  boolean delete(String columnId) {
 		 boolean deleetecon = healthColumnDAO.delete(columnId);
