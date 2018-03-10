@@ -31,6 +31,11 @@ public class ForgetPwdController {
 			)
 	public String method(String account,Model model,HttpSession session) {
 		
+//		MemberBean member = (MemberBean)session.getAttribute("LoginOK");	
+//		if(member==null) {
+//			return "login.error";
+//		}
+		
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("MsgMap", errorMsg); 
 		System.out.println("account="+ account);

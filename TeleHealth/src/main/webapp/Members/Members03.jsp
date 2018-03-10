@@ -23,15 +23,15 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">TeleHealth</a>
+				<a class="navbar-brand" href="<c:url value="../index.jsp"/>">TeleHealth</a>
 			</div>
 			<!-- 刪除預設padding margin -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="Members03.jsp">會員專區</a></li>
-					<li><a href="Members02.jsp">修改會員資料</a></li>
-					<li><a href="Members03.jsp">修改會員密碼</a></li>
-					<li><a href="Members04.jsp">會員</a></li>
+					<li class="active"><a href="<c:url value="/Members/Members03.jsp"/>">會員專區</a></li>
+					<li><a href="<c:url value="/Members/Members02.jsp"/>">修改會員資料</a></li>
+					<li><a href="<c:url value="/Members/Members03.jsp"/>">修改會員密碼</a></li>
+					<li><a href="<c:url value="/Members/Members04.jsp"/>">會員</a></li>
 				</ul>
 						<!--上下margin左右padding  / 被float right推過去 -->
 				<form class="navbar-form navbar-left" role="search">
@@ -45,8 +45,10 @@
 				</form>
 							<!-- 被float right推過去 -->
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">會員 您好</a></li>
-					<li><a href="#">登出</a></li>
+					<li><a href="#">${LoginOK.memName}  會員 您好</a></li>
+					<c:if test="${ ! empty LoginOK }">
+					<li><a href="<c:url value='/Members/Logout.jsp' />">登出</a></li>
+					</c:if>
 					<li><a href="Members05.jsp">個人設定</a></li>
 					<!-- li裡面還有ul !!! -->
 					<!-- 按下後，增加class open -->
@@ -106,7 +108,8 @@
 			</form>
 		</div>
 	</div>
-</div>
-		
+
+
+
 </body>
 </html>

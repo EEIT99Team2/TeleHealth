@@ -30,16 +30,15 @@
 	<servlet-mapping>
 		<servlet-name>ConnectorServlet</servlet-name>
 		<url-pattern>/forCkeditor/ckfinder/core/connector/java/connector.java</url-pattern>
-	</servlet-mapping>
-
-<!-- 	<security-constraint> -->
-<!-- 		<web-resource-collection> -->
-<!-- 			<web-resource-name>TeleHealth</web-resource-name> -->
-<!-- 			<url-pattern>/*</url-pattern> -->
-<!-- 		</web-resource-collection> -->
-<!-- 		<user-data-constraint> -->
-<!-- 			<transport-guarantee>CONFIDENTIAL</transport-guarantee> -->
-<!-- 		</user-data-constraint> -->
-<!-- 	</security-constraint> -->
-
+	</servlet-mapping>	
+<!-- 	//HTTPS加密 -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>TeleHealth</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
 </web-app>

@@ -69,7 +69,7 @@
                     </li>
                 </ul>
                 <form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
-<input type="text" id="empId" name="empId" value="0A55726B-8733-451F-9939-4D387698C7B6">
+<input type="text" id="empId" name="empId" value="A56DC04E-7C45-4BB4-B4F4-B95F7A321994">
 <span id="item1" class="item1 nav-item active">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">年</span>
 <select id="month" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">月</span>
@@ -222,6 +222,7 @@
 <script type="text/javascript" src="../fullCalendar/calender.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- loading用 -->
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/src/loadingoverlay.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/extras/loadingoverlay_progress/loadingoverlay_progress.min.js"></script>
 <script>
@@ -234,7 +235,7 @@ $(document).ready(function() {
 	$.LoadingOverlay("show");
 	setTimeout(function(){
 	    $.LoadingOverlay("hide");
-	}, 3800);
+	}, 2500);
 
 	var initialLocaleCode = 'zh';
 	var EmpId=$("#empId").val();

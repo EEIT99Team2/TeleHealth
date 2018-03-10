@@ -34,11 +34,19 @@ public class TakeoffDAO {
 		return result;
 	}
 	
-	public List<TakeoffBean> select() {
-		return this.getSession().createQuery(
-				"from TakeoffBean", TakeoffBean.class).list();
+	//後台管理顯示(index用)
+	public List<Object[]> selectAll() {
+		String hql="SELECT tor.id,tor.advisoryMomentId,tor.empId,emp.empName,emp.career,tor.applicationType,tor.applicationTime,tor.applicationReason,adm.reserveStatus,adm.videoCode,tor.approvedResult,tor.approvedTime,tor.rejectReason FROM takeoffRecords tor\r\n" + 
+				"JOIN employees emp\r\n" + 
+				"ON emp.empId=tor.empId\r\n" + 
+				"JOIN advisoryMoment adm\r\n" + 
+				"ON adm.id=tor.advisoryMomentId";
+		NativeQuery query = this.getSession().createNativeQuery(hql);
+		List<Object[]> data = (List<Object[]>)query.list();
+		return data;
 	}
-
+	
+	//新增員工申請假單
 	public boolean insert(TakeoffBean bean) {
 		boolean result =false;
 		if(bean!=null) {

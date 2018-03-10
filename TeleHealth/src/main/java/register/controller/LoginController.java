@@ -1,7 +1,6 @@
 package register.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -34,7 +33,6 @@ public class LoginController {
 		//驗證資料
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("MsgMap", errorMsg); 
-		
 		if(usrname ==null || usrname.trim().length()==0) {
 			errorMsg.put("errorUsrName", "帳號欄位不能空白");
 		}

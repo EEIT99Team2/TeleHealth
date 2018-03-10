@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
  <title>Document</title>  
 </head>
 <body>
    <jsp:include page="/fragment/header.jsp" />
     <div class="container">
+    
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
@@ -37,11 +37,12 @@
                                 <input type="password" class="form-control" name="psw" id="psw" placeholder="Enter password">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPsw}</font>
-                            <div class="checkbox">
+                            <div class="checkbox" id="rememberMe">
                                 <label>
                                     <input type="checkbox" value="" checked /> Remember me
                                 </label>
                             </div>
+                          	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
                             <button type="submit" class="btn btn-success btn-block">Login</button>
                             <button type="submit" class="btn btn-danger btn-block">Cancel</button>
                         </form>
@@ -220,6 +221,10 @@
     <script src="<c:url  value='/holder.min.js' />"></script>
     <script src="<c:url  value='/scripts.js' />" ></script>
     
+<<<<<<< HEAD
+
+=======
+>>>>>>> branch 'master' of https://github.com/EEIT99Team2/TeleHealth.git
     
 </body>
 

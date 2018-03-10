@@ -136,7 +136,7 @@ public class RegisterController {
 				}
 						
 				double dHeight = -1;
-				if(memHeight!=null && memHeight.trim().length()>1 && memHeight.trim().length()<=6) {
+				if(memHeight!=null && memHeight.matches("([1-9]\\d{1,2}|\\d)([.]\\d{1,2})?")) {
 					try {
 						
 						dHeight = Double.parseDouble(memHeight.trim());
@@ -157,7 +157,7 @@ public class RegisterController {
 					errorMsg.put("errorMemWeight", "體重欄位不能空白");
 				}
 				double dWeight = -1;
-				if(memWeight!=null && memWeight.trim().length()>1 && memWeight.trim().length()<=6) {
+				if(memWeight!=null && memWeight.matches("([1-9]\\d{1,2}|\\d)([.]\\d{1,2})?")) {
 					try {
 						dWeight = Double.parseDouble(memWeight.trim());
 					}catch(NumberFormatException e) {

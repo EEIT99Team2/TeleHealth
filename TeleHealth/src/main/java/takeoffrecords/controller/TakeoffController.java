@@ -14,6 +14,7 @@ public class TakeoffController {
 	@Autowired
 	private TakeoffService takeoffService;
 	
+	//員工申請假單
 	@RequestMapping(path= {"/AdvisoryMoment/takeoff.controller"},method={RequestMethod.GET,RequestMethod.POST},produces= {"text/plain;charset=UTF-8"})
 	public @ResponseBody String takeoffCheck(String MomentId,String EmpId,String TakeoffItem,String TakeoffReason) {
 		String result = null;
@@ -29,4 +30,10 @@ public class TakeoffController {
 		return result;
 	}
 	
+	//後臺查看假單
+	@RequestMapping(path= {"/AdvisoryMoment/takeoffData.controller"},method={RequestMethod.GET,RequestMethod.POST},produces= {"application/json;charset=UTF-8"})
+	public @ResponseBody String takeoffData() {		
+			String result= takeoffService.selectAll();
+		return result;
+	}
 }
