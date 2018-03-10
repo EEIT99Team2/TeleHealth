@@ -16,15 +16,16 @@ public class PwdGmail {
 	public static String GoMail(String account, String pwd) {
 				
 			String host = "smtp.gmail.com";
-		  int port = 587;
+		  int port = 465;
 		  final String username = "eeit9904@gmail.com";
 		  final String password = "zxcv5566";//your password
-
+		  
 		  Properties props = new Properties();
 		  props.put("mail.smtp.host", host);
 		  props.put("mail.smtp.auth", "true");
 		  props.put("mail.smtp.starttls.enable", "true");
 		  props.put("mail.smtp.port", port);
+		  props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		  Session session = Session.getInstance(props, new Authenticator() {
 		   protected PasswordAuthentication getPasswordAuthentication() {
 		    return new PasswordAuthentication(username, password);

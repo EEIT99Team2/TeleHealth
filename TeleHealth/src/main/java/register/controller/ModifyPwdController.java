@@ -36,6 +36,9 @@ public class ModifyPwdController {
 		
 		
 		MemberBean member = (MemberBean)session.getAttribute("LoginOK");	
+		if(member==null) {
+			return "login.error";
+		}
 		String Email = member.getAccount();
 					
 		if(oldpwd ==null|| oldpwd.trim().length()==0) {
@@ -69,7 +72,7 @@ public class ModifyPwdController {
 							return "forgetPwd.success";
 						}else {
 							System.out.println("修改失敗");
-							return "ModifyPwdController.error";
+//							return "ModifyPwdController.error";
 						}									
 					}else {
 						errorMsg.put("errorPwdCheck", "與上面輸入值不符合");

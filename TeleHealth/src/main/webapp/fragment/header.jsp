@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
     <!-- Bootstrap core CSS -->
     <script type="text/javascript" src="<c:url value="/js/jquery-3.3.1.min.js"/>"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/w3.css"/>">
     <!-- Custom styles for this template -->
@@ -37,16 +38,28 @@
 				     </c:if>
 				     <c:if test="${not empty LoginOK}">
                       <li class="nav-item">
-                        <a class="nav-link" href="#pricing">會員專區</a>
+                        <a class="nav-link" href="<c:url value='/Members/Members02.jsp'/>">會員專區</a>
                     </li>
 				     </c:if>
                 </ul>
                  <c:if test="${empty LoginOK}">
-                       <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn"><c:out value="Losgin"/></button>
+                       <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn"><c:out value="Login"/></button>
 				</c:if>
                	<c:if test="${not empty LoginOK}">
-                       <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn"><c:out value="${LoginOK.memName},你好!!"/></button>
+                        <p><c:out value="${LoginOK.memName},你好!!"/></p>	
+                        <a href="<c:url value='/Members/Logout.jsp' />"><button class="btn btn-sm btn-outline-secondary" id="myBtn1">登出</button></a>																	
 				</c:if>
             </div>
         </nav>
+<!--         <script> -->
+<!-- 		document.getElementById('myBtn').addEventListener('click', function() { -->
+<!-- 		$('#rememberMe').append("<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>"); -->
+
+<!-- 		}); -->
+<!--     	</script>  -->
     </header>
+  
+    
+    
+    
+    

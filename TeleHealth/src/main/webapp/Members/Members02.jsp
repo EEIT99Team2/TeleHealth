@@ -47,15 +47,15 @@
 			<span class="sr-only">選單切換</span> <span class="icon-bar"></span> <span
 				class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="#">TeleHealth</a>
+		<a class="navbar-brand" href="<c:url value="../index.jsp"/>">TeleHealth</a>
 	</div>
 	<!-- 刪除預設padding margin -->
 	<div class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="Members02.jsp">會員專區</a></li>
-			<li><a href="Members02.jsp">修改會員資料</a></li>
-			<li><a href="Members03.jsp">修改會員密碼</a></li>
-			<li><a href="Members04.jsp">會員</a></li>
+			<li class="active"><a href="<c:url value="/Members/Members02.jsp"/>">會員專區</a></li>
+			<li><a href="<c:url value="/Members/Members02.jsp"/>">修改會員資料</a></li>
+					<li><a href="<c:url value="/Members/Members03.jsp"/>">修改會員密碼</a></li>
+					<li><a href="<c:url value="/Members/Members04.jsp"/>">會員</a></li>
 		</ul>
 		<!--上下margin左右padding  / 被float right推過去 -->
 		<form class="navbar-form navbar-left" role="search">
@@ -68,10 +68,15 @@
 			<button type="submit" class="btn btn-default">搜尋</button>
 		</form>
 		<!-- 被float right推過去 -->
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#">會員 您好</a></li>
-			<li><a href="#">登出</a></li>
-			<li><a href="Members05.jsp">個人設定</a></li>
+					<!-- 被float right推過去 -->
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">${LoginOK.memName}  會員 您好</a></li>
+				
+				<c:if test="${ ! empty LoginOK }">
+					<li><a href="<c:url value='/Members/Logout.jsp' />">登出</a></li>
+				</c:if>
+<%-- 				<a href="<c:url value='/_02_login/logout.jsp' />"> --%>							
+					<li><a href="Members05.jsp">個人設定</a></li>
 			<!-- li裡面還有ul !!! -->
 			<!-- 按下後，增加class open -->
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -186,7 +191,7 @@
 										style="margin-left: 30%; padding-top: 10px; padding-bottom: 10px;">
 
 										<button type="submit" class="btn-primary">確定</button>
-										<button type="submit"
+										<button type="submit" onclick="location.href='../index.jsp'"
 											style="background-color: #f58200; border: 1px solid #da7d00; font-size: 14px; color: #fff; text-shadow: 1px 1px 1px #666; padding: 5px 10px; border-radius: 4px; box-shadow: 1px 1px 3px #aaa; font-weight: bold; text-align: center; cursor: pointer;">取消</button>
 										<input type="button" class="btn-primary" value="回主頁"
 											onclick="location.href='../index.jsp'">
@@ -216,6 +221,5 @@
 			document.getElementById("bloodType").options.selectedIndex = index;
 		}
 	</script>
-
 </body>
 </html>
