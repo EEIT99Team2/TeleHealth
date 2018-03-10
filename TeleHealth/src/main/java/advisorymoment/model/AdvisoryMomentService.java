@@ -200,10 +200,10 @@ public class AdvisoryMomentService {
 					selfItemId = selfItem.get(j)[0].toString();
 					//當自己負責的班表id equal到此項班表id
 					if (selfItemId.equals(MomentId)) {
-						if(selfItem.get(j)[6]==null) {
+						if(selfItem.get(j)[7]==null) {
 							selfResCode ="null";
 						}else {							
-							selfResCode = selfItem.get(j)[6].toString();
+							selfResCode = selfItem.get(j)[7].toString();
 						}
 						//此項班表有預約
 						if(!selfResCode.equals("null")&&status.equals("F")) {							

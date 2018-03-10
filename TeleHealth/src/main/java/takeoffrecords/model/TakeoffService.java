@@ -1,58 +1,111 @@
 package takeoffrecords.model;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 import takeoffrecords.model.dao.TakeoffDAO;
 
 @Service
 public class TakeoffService {
-	
+
 	@Autowired
 	private TakeoffDAO takeoffDao;
-	
-	public boolean takeoffApplication(String MomentId,String EmpId,String TakeoffItem,String TakeoffReason) {
-		
-		java.util.Date createTime=new Date();
+
+	public boolean takeoffApplication(String MomentId, String EmpId, String TakeoffItem, String TakeoffReason) {
+		java.util.Date createTime = new Date();
 		TakeoffBean tbean = new TakeoffBean();
 		tbean.setAdvisoryMomentId(MomentId);
 		tbean.setEmpId(EmpId);
 		tbean.setApplicationType(TakeoffItem);
 		tbean.setApplicationTime(createTime);
 		tbean.setApplicationReason(TakeoffReason);
-		boolean result=this.insert(tbean);
+		boolean result = this.insert(tbean);
 		return result;
-		
 	}
-	
-	//透過班表id搜尋申請假單紀錄
+
+	// 透過班表id搜尋申請假單紀錄
 	public TakeoffBean select(String MomentId) {
 		TakeoffBean result = null;
-		if(MomentId!=null && MomentId.trim().length()!=0) {
+		if (MomentId != null && MomentId.trim().length() != 0) {
 			result = takeoffDao.select(MomentId);
 		}
 		return result;
+	}
+
+	// 後台管理顯示(index用)
+	public String selectAll() {
+		LinkedList<HashMap<String, String>> dataFinal = new LinkedList<HashMap<String, String>>();
+		List<Object[]> takeoffData = takeoffDao.selectAll();
+		String takeoffId, MomentId, empId, empName, career, apType, apTime, apReason, status, videoCode,reResult,reTime,reReason;
+		if (takeoffData.size() != 0) {
+			System.out.println("請假數"+takeoffData.size());
+			for (int i = 0; i < takeoffData.size(); i++) {
+				HashMap<String, String> dataOne = new HashMap<String, String>();
+				takeoffId = takeoffData.get(i)[0].toString();
+				MomentId = takeoffData.get(i)[1].toString();
+				empId = takeoffData.get(i)[2].toString();
+				empName = takeoffData.get(i)[3].toString();
+				career = takeoffData.get(i)[4].toString();
+				apType = takeoffData.get(i)[5].toString();
+				apTime = takeoffData.get(i)[6].toString();
+				apReason = takeoffData.get(i)[7].toString();
+				if (takeoffData.get(i)[9] == null) {
+					status = "未預約";
+					videoCode = "null";
+				} else {
+					status = "已預約";
+					videoCode = takeoffData.get(i)[9].toString();
+				}
+				//管理員是否回覆
+				if (takeoffData.get(i)[10] == null) {
+					reResult = "null";
+					reTime = "null";
+					reReason = "null";
+				} else {
+					reResult = takeoffData.get(i)[10].toString();
+					reTime = takeoffData.get(i)[11].toString();
+					reReason = takeoffData.get(i)[12].toString();
+				}
+				dataOne.put("takeoffId", takeoffId);
+				dataOne.put("MomentId", MomentId);
+				dataOne.put("empId", empId);
+				dataOne.put("empName", empName);
+				dataOne.put("career", career);
+				dataOne.put("apType", apType);
+				dataOne.put("apTime", apTime);
+				dataOne.put("apReason", apReason);
+				dataOne.put("status", status);
+				dataOne.put("videoCode", videoCode);
+				dataOne.put("reResult", reResult);
+				dataOne.put("reTime", reTime);
+				dataOne.put("reReason", reReason);
+				System.out.println(dataOne);
+				dataFinal.add(dataOne);				
+			}
 		}
-	
-	public List<TakeoffBean> select() {
-		return takeoffDao.select();
+		String data = new Gson().toJson(dataFinal);
+		System.out.println("JSON" + data);
+		return data;
 	}
 
 	public boolean insert(TakeoffBean bean) {
 		boolean result = false;
-		if(bean!=null) {
-				result=takeoffDao.insert(bean);
+		if (bean != null) {
+			result = takeoffDao.insert(bean);
 		}
 		return result;
 	}
 
 	public TakeoffBean update(String id) {
 		TakeoffBean result = null;
-		
+
 		return result;
 	}
 
