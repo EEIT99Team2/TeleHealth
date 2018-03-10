@@ -44,13 +44,20 @@ public class HealthColumnDAO  {
 		List<Object[]> data=(List<Object[]>)query.list();
 		return  data;
 	}
-	//選出前5名
+	//選出前15名
 	public List<HealthColumnBean> selectTop(){
 		NativeQuery query=this.getSession().createNativeQuery("select Top 15 * from healthColumn  order by clickCount desc ");
 		query.addEntity(HealthColumnBean.class);
 		List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();
 		return data;
 	}
+	//選出前5名
+		public List<HealthColumnBean> selectimg(){
+			NativeQuery query=this.getSession().createNativeQuery("select Top 5 *  from healthColumn  order by clickCount desc ");
+			query.addEntity(HealthColumnBean.class);
+			List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();
+			return data;
+		}
 	
 	//增加	
 	public HealthColumnBean insert(HealthColumnBean bean) {

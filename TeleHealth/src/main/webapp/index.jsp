@@ -60,7 +60,7 @@
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                 <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>               
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -71,7 +71,7 @@
                 </div>
                 <div class="carousel-item">
                     <img class="third-slide" src="https://static.runoob.com/images/mix/img_mountains_wide.jpg" alt="Third slide">
-                </div>
+                </div>                
             </div>
             <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
