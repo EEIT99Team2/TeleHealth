@@ -4,9 +4,9 @@
 
 
 	<Resource name="jdbc/TeleHealthDB" type="javax.sql.DataSource"
-		 username="sa" password="pass0rd" 
+		 username="sa" password="passw0rd" 
       driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-      url="jdbc:sqlserver://127.0.0.1:1433;DatabaseName=TeleHealthDB"    
+      url="jdbc:sqlserver://192.168.50.186;DatabaseName=TeleHealthDB"    
       maxActive="8"
       maxIdle="4"
       maxWait="5000"/>

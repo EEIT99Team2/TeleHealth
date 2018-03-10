@@ -119,15 +119,15 @@ $.getJSON("<c:url value='/AdvisoryMoment/takeoffData.controller'/>",{},function(
 })
 }
 
-$("tbody>tr").click(function(){
+$("tbody tr").click(function(){
 	alert($("this>td:eq(2)").text());
 })
 
 	var o1 = {'color':'black','background-color':'white'}
 	var o2 = {'color':'black','background-color':'cyan'}
-// $("tbody tr").on("hover",function(){
-// 	$("tr").css(o1).mouseover(over).mouseout(out);
-// })
+$("body").on("mouseover","tr",function(){
+	$("tr").css(o1).mouseover(over).mouseout(out);
+})
 $("tr").css(o1).mouseover(over).mouseout(out);
 
 function over(){
