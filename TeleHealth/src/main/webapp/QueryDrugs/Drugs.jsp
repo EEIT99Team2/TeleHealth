@@ -277,15 +277,8 @@
 				docFrag.append("<img style='width:450px' src='"+$(this).attr("src")+"'/>");
 				$("#showImgItem .modal-body").append(docFrag);
 				$("#showImgItem").modal("show");
-			})
-
-// 			$('#table1>tbody>td:eq(5)').click(function(){
-// 				var docFrag = $(document.createDocumentFragment());
-// 				docFrag.append("<img style='width:100px' src='"+$(this).attr("src")+"'/>");
-// 				$("#showImgItem .modal-body").append(docFrag);
-// 				$("#showImgItem").modal("show");
-// 			})
-		})
+			});
+		});
 	</script>
 
 </body>

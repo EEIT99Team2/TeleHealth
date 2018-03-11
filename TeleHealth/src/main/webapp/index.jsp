@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <title>Document</title>  
+<title>Document</title>  
 </head>
 <body>
    <jsp:include page="/fragment/header.jsp" />
@@ -220,11 +220,6 @@
     <!-- Just to make our placeholder images work. -->
     <script src="<c:url  value='/holder.min.js' />"></script>
     <script src="<c:url  value='/scripts.js' />" ></script>
-    
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/EEIT99Team2/TeleHealth.git
     
 </body>
 
