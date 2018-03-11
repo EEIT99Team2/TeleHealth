@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import register.model.MemberBean;
 import takeoffrecords.model.TakeoffBean;
 
 @Repository
@@ -25,6 +26,18 @@ public class TakeoffDAO {
 		return sessionFactory.getCurrentSession();
 	}
 	
+	//搜尋會員帳戶(註銷班表時用)
+	public String selectMemAcc(String videoCode) {
+		String hql="SELECT mem.account FROM Advisory ad\r\n" + 
+				"JOIN members mem\r\n" + 
+				"ON mem.memberId=ad.memberId\r\n" +
+				"WHERE ad.videoCode=?";
+		NativeQuery query = this.getSession().createNativeQuery(hql);
+		query.setParameter(1, videoCode);
+		String result = (String) query.uniqueResult();
+		return result;
+	}
+	
 	//透過班表id搜尋申請假單紀錄
 	public TakeoffBean select(String MomentId) {
 		Query<TakeoffBean> query = this.getSession()
@@ -36,7 +49,7 @@ public class TakeoffDAO {
 	
 	//後台管理顯示(index用)
 	public List<Object[]> selectAll() {
-		String hql="SELECT tor.id,tor.advisoryMomentId,tor.empId,emp.empName,emp.career,tor.applicationType,tor.applicationTime,tor.applicationReason,adm.reserveStatus,adm.videoCode,tor.approvedResult,tor.approvedTime,tor.rejectReason,adm.status FROM takeoffRecords tor\r\n" + 
+		String hql="SELECT tor.id,tor.advisoryMomentId,tor.empId,emp.empName,emp.career,tor.applicationType,tor.applicationTime,tor.applicationReason,adm.reserveStatus,adm.videoCode,tor.approvedResult,tor.approvedTime,tor.rejectReason,adm.status,adm.calendar FROM takeoffRecords tor\r\n" + 
 				"JOIN employees emp\r\n" + 
 				"ON emp.empId=tor.empId\r\n" + 
 				"JOIN advisoryMoment adm\r\n" + 
@@ -73,7 +86,16 @@ public class TakeoffDAO {
 		}
 		return upResult;
 	}
-
+	
+	//退款
+		public int updateMemPoint(String account) {
+			String hql="UPDATE MemberBean SET point=point+60 WHERE account=?";
+			Query<MemberBean> query = this.getSession().createQuery(hql);
+			query.setParameter(0, account);
+			int result= query.executeUpdate();
+			return result;
+		}
+	
 	public boolean delete(int id) {
 		TakeoffBean result = this.getSession().get(TakeoffBean.class, id);
 		if(result!=null) {

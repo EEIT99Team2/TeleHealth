@@ -68,7 +68,7 @@
                         <a class="nav-link" href="#pricing">方案介紹</a>
                     </li>
 				   </ul>
-<input type="text" id="userid" name="userid" value="B0041CB5-09F1-4E5B-8D57-1F0406019143">
+<input type="text" id="userid" name="userid" value="0A21A5D0-3AA1-4A16-9742-585B4A1EA78E">
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
 <select id="month" class="headerChoose"></select><span id="item1" class="headerChoose">月</span>
@@ -381,7 +381,7 @@ $(document).ready(function() {
 
 	$("#cancelReserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());		
-		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode},function(result){
+		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode,"UserId":reservedData.UserId},function(result){
 			$("#cancelReserveItem").modal('hide');
 			$("#cancelCheckItem").modal('show');
 			docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");

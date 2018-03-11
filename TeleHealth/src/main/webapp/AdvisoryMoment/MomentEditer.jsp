@@ -42,6 +42,7 @@
       <th scope="col">申請人</th>
       <th scope="col">請假事項</th>
       <th scope="col">申請時間</th>
+      <th scope="col">核准結果</th>
       <th scope="col">回覆時間</th>
     </tr>
   </thead>
@@ -84,7 +85,7 @@
         <!-- 結果 -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="resultCheck">OK</button>
       </div>
     </div>
   </div>
@@ -98,6 +99,10 @@
 $(document).ready(function(){
 	LoadData();
 	var DataPackage;
+
+function reFresh(){
+	window.location.reload();
+}
 	
 function LoadData(){
 	var docFrag1 =$(document.createDocumentFragment());
@@ -110,7 +115,8 @@ $.getJSON("<c:url value='/AdvisoryMoment/takeoffData.controller'/>",{},function(
 	console.log(datas);
 	$.each(datas,function(index,data){
 		var momStatus=data.momStatus;
-		if(momStatus=="Y"){			
+		var reResult=data.reResult;
+		if(momStatus=="Y" && reResult=="null"){			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.empName+" "+data.zhCareer+"</td>");
 			var col3 = $("<td>"+data.apType+"</td>");
@@ -121,17 +127,23 @@ $.getJSON("<c:url value='/AdvisoryMoment/takeoffData.controller'/>",{},function(
 			}else{
 				col5 = $("<td style='color:blue'>"+data.status+"</td>");
 			}
-			var col6 = $("<span hidden='hidden'>"+data.empId+"#"+data.videoCode+"$"+data.apReason+"%"+data.MomentId+"^"+data.takeoffId+"</span>");			
+			var col6 = $("<span hidden='hidden'>"+data.empId+"#"+data.videoCode+"$"+data.apReason+"%"+data.MomentId+"^"+data.takeoffId+"*"+data.calendar+"</span>");			
 			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6]);
 		    docFrag1.append(allcol);		
 		}else{
+			if(reResult=="Y"){
+				reResult="核准";
+				}else{
+					reResult="未核准";
+					}
 			var col21 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col22 = $("<td>"+data.empName+" "+data.zhCareer+"</td>");
 			var col23 = $("<td>"+data.apType+"</td>");
 			var col24 = $("<td>"+moment(data.apTime).format("YYYY-MM-DD HH:mm")+"</td>");
-			var col25 = $("<td>"+moment(data.reTime).format("YYYY-MM-DD HH:mm")+"</td>");			
-			var col26 = $("<span hidden='hidden'>"+data.empId+"#"+data.videoCode+"$"+data.apReason+"%"+data.MomentId+"^"+data.takeoffId+"</span>");			
-			var allcol2 = $("<tr></tr>").append([col21,col22,col23,col24,col25,col26]);
+			var col25 = $("<td>"+reResult+"</td>");			
+			var col26 = $("<td>"+moment(data.reTime).format("YYYY-MM-DD HH:mm")+"</td>");			
+			var col27 = $("<span hidden='hidden'>"+data.empId+"#"+data.videoCode+"$"+data.apReason+"%"+data.MomentId+"^"+data.takeoffId+"*"+data.calendar+"&"+data.reReason+"</span>");			
+			var allcol2 = $("<tr></tr>").append([col21,col22,col23,col24,col25,col26,col27]);
 			docFrag2.append(allcol2);
 		}
 		})
@@ -139,10 +151,11 @@ $.getJSON("<c:url value='/AdvisoryMoment/takeoffData.controller'/>",{},function(
 	$("#CheckList").append(docFrag2);
 })
 }
-
-$("body").on("click","tbody tr",function(){
+//未回覆
+$("body").on("click","#UnCheckList tr",function(){
 	$("#responseItem .modal-body").empty();
 	var docFrag =$(document.createDocumentFragment());
+	var empName = $(this).find("td:eq(0)").text();
 	var apType = $(this).find("td:eq(1)").text();
 	var apTime = $(this).find("td:eq(2)").text();
 	var allData = $(this).find("span").text();
@@ -150,28 +163,61 @@ $("body").on("click","tbody tr",function(){
 	var emptyChar2 = allData.indexOf("$");
 	var emptyChar3 = allData.indexOf("%");
 	var emptyChar4 = allData.indexOf("^");
+	var emptyChar5 = allData.indexOf("*");
 	var empId = allData.substr(0,emptyChar1);
 	var videoCode = allData.substr(emptyChar1+1,emptyChar2-emptyChar1-1);
 	var apReason = allData.substr(emptyChar2+1,emptyChar3-emptyChar2-1);
 	var MomentId = allData.substr(emptyChar3+1,emptyChar4-emptyChar3-1);
-	var takeoffId = allData.substr(emptyChar4+1);
-	var reType;
-	var note;
-	docFrag.append("<span style='font-size:1.3em'>請假事項:  </span>"+apType
-			+"<br/><span style='font-size:1.3em'>申請時間:  </span>"+apTime	
-			+"<br/><span style='font-size:1.3em'>請假事由:  </span>"+apReason	
+	var takeoffId = allData.substr(emptyChar4+1,emptyChar5-emptyChar4-1);
+	var calendar = allData.substr(emptyChar5+1);
+	docFrag.append("<span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
+			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"	
+			+"<br/><span style='font-size:1.3em'>請假事由:  "+apReason+"</span>"
 			+"<br/><span style='font-size:1.3em'>是否核准:  </span>"
-			+"<input type='radio' value='Y' name='approve' checked='true'/>是 "
+			+"<input type='radio' value='Y' name='approve'/>是 "
 			+"<input type='radio' value='N' name='approve'/>否 "
 			+"<br/><div id='noteBox'><span>備註: </span><textarea id='noteTxt' rows='6' cols='50' style='font-size:1em'></textarea><div>");		
 	$("#responseItem .modal-body").append(docFrag);
-	reType= $("input[name^='approve']:radio").val();
-	DataPackage={"takeoffId":takeoffId,"empId":empId,"MomentId":MomentId,"videoCode":videoCode,"apResult":reType};
+	DataPackage={"takeoffId":takeoffId,"empId":empId,"empName":empName,"MomentId":MomentId,"calendar":calendar,"videoCode":videoCode};
 	$("#responseItem").modal("show");
+});
+
+//已回覆
+$("body").on("click","#CheckList tr",function(){
+	$("#resultItem .modal-body").empty();
+	var docFrag =$(document.createDocumentFragment());
+	var empName = $(this).find("td:eq(0)").text();
+	var apType = $(this).find("td:eq(1)").text();
+	var apTime = $(this).find("td:eq(2)").text();
+	var reResult = $(this).find("td:eq(3)").text();
+	var allData = $(this).find("span").text();
+	var emptyChar1 = allData.indexOf("#");
+	var emptyChar2 = allData.indexOf("$");
+	var emptyChar3 = allData.indexOf("%");
+	var emptyChar4 = allData.indexOf("^");
+	var emptyChar5 = allData.indexOf("*");
+	var emptyChar6 = allData.indexOf("&");
+	var empId = allData.substr(0,emptyChar1);
+	var videoCode = allData.substr(emptyChar1+1,emptyChar2-emptyChar1-1);
+	var apReason = allData.substr(emptyChar2+1,emptyChar3-emptyChar2-1);
+	var MomentId = allData.substr(emptyChar3+1,emptyChar4-emptyChar3-1);
+	var takeoffId = allData.substr(emptyChar4+1,emptyChar5-emptyChar4-1);
+	var calendar = allData.substr(emptyChar5+1,emptyChar6-emptyChar5-1);
+	var reReason = allData.substr(emptyChar6+1);
+	docFrag.append("<span style='font-size:1.3em'>申請人:  "+empName+"</span>"
+			+"<br/><span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
+			+"<br/><span style='font-size:1.3em'>請假時段:  "+calendar+"</span>"
+			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"		
+			+"<br/><span>申請說明: </span><p>"+apReason+"</p>"		
+			+"<br/><span style='font-size:1.3em'>核准結果:  "+reResult+"</span>"
+			+"<br/><span>備註: </span><p>"+reReason+"</p>");		
+	$("#resultItem .modal-body").append(docFrag);
+	$("#resultItem").modal("show");
 });
 
 $("#responseCheck").click(function(){
 	var docFrag =$(document.createDocumentFragment());
+	var apResult= $("input[name='approve']:checked").val();
 	var note = $.trim($("#noteTxt").val());
 	if(note.length==0){
 		$(".txtWaring").remove();
@@ -180,16 +226,14 @@ $("#responseCheck").click(function(){
 	}else{
 		$(".txtWaring").remove();
 		$("#responseCheck").attr("data-dismiss","modal");
-	console.log(DataPackage.takeoffId+";"+DataPackage.empId+";"+DataPackage.MomentId+";"+DataPackage.apResult+";"+note);
-	$.post("<c:url value='/AdvisoryMoment/approveTakeoff.controller'/>",{"takeoffId":DataPackage.takeoffId,"empId":DataPackage.empId,"MomentId":DataPackage.MomentId,"videoCode":DataPackage.videoCode,"apResult":DataPackage.apResult,"reason":note},function(result){
+	console.log(DataPackage.takeoffId+";"+DataPackage.empId+";"+DataPackage.videoCode+";"+DataPackage.MomentId+";"+apResult+";"+note);
+	$.post("<c:url value='/AdvisoryMoment/approveTakeoff.controller'/>",{"takeoffId":DataPackage.takeoffId,"empId":DataPackage.empId,"empName":DataPackage.empName,"MomentId":DataPackage.MomentId,"calendar":DataPackage.calendar,"videoCode":DataPackage.videoCode,"apResult":apResult,"reason":note},function(result){
 		docFrag.append("<h4>"+result+"</h4>");
 		$("#resultItem .modal-body").append(docFrag);
 		})
 	$("#resultItem").modal("show");
 			}
 });
-
-//綁定radiobutton
 
 
 
@@ -212,7 +256,7 @@ function out(){
 
 
 })
-
+$("#resultCheck").click(reFresh());
 </script>
 </body>
 </html>

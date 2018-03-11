@@ -8,10 +8,13 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import advisorymoment.model.AdvisoryMomentBean;
+import register.model.MemberBean;
 
 @Repository
+@Transactional
 public class AdvisoryMomentDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -108,6 +111,15 @@ public class AdvisoryMomentDAO {
 		}
 		return null;
 	};
+	
+	//會員取消預約還款
+		public int updateMemPoint(String UserId) {
+			String hql="UPDATE MemberBean SET point=point+50 WHERE memberId=?";
+			Query<MemberBean> query = this.getSession().createQuery(hql);
+			query.setParameter(0, UserId);
+			int result= query.executeUpdate();
+			return result;
+		}
 	
 	//會員預約時用
 	public AdvisoryMomentBean updateByReserve(String id,String reserveStatus,String videoCode) {

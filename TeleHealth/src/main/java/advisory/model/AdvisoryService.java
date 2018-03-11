@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import advisory.model.dao.AdvisoryDAO;
+import register.model.MemberBean;
 
 @Service
 @Transactional
@@ -29,4 +30,16 @@ public class AdvisoryService {
 		}
 		return result;
 	};
+	
+	//會員預約扣款
+	public boolean updateMemPoint(String UserId) {
+		boolean result =false;
+		if(UserId!=null && UserId.trim().length()!=0) {
+			int upResult= advisoryDao.updateMemPoint(UserId);
+			if(upResult==1) {				
+				result=true;
+			}
+		}		
+		return result;
+	}
 }
