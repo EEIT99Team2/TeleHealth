@@ -72,7 +72,6 @@ public class SpringJavaConfiguration {
 	
 	@Bean
 	public HibernateTransactionManager transactionManager() {
-		System.out.println("HibernateTransactionManager");
 		return new HibernateTransactionManager(sessionFactory());
 	}
 	

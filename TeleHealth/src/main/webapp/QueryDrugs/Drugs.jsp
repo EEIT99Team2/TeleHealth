@@ -7,211 +7,248 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>藥品查詢</title>
 <style>
-	.form-group {
-		margin-top: 25px;
-	}
 	.btn {
 		width:100px;
 	}
-	
 	.form-group {
 		font-size: 18px;
 	}
+	.th1 {
+		width: 50px
+	}
+	.th2 {
+		width: 50px
+	}	
+	.th3 {
+		width: 50px
+	}	
+	.th4 {
+		width: 100px
+	}	
+	.th5 {
+		width: 50px
+	}	
 </style>
+<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fontstyle.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
 
 </head>
 <body>
 	<jsp:include page="/fragment/header.jsp" />
 	<div class="container">
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header" style="padding: 35px 50px;">
-						<h4 class="modal-title">Login</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" style="padding: 40px 50px;">
-
-						<form method="post" enctype="multipart/form-data"
-							action="<c:url value="/login.controller"/>">
-							<div class="form-group">
-								<label for="usrname">Username</label> <input type="text"
-									class="form-control" name="usrname" id="usrname"
-									placeholder="Enter email" value="${param.usrname}"> <font
-									color="red" size="-1">${MsgMap.errorUsrName}</font>
+		<div class="row">
+			<div class="col-1">
+			</div>
+			<div class="col-10">
+				<div class="w3-container marketing " style="padding: 20px 16px" id="team">
+				<h1 class="w3-center">藥品資訊查詢</h1>
+					<form class="form-group" id="drugForm" >
+						<div class="form-group has-success has-feedback row">
+					    	<label class="col-2 control-label" for="chineseName">藥品中文名稱:</label>
+					    	<div class="col-10">
+					    		<input type="text" class="form-control" id="chineseName" name="chineseName">
+					        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+					      	</div>
+		   				</div>
+		   				<div class="form-group has-success has-feedback row">
+					    	<label class="col-2 control-label" for="englishName">藥品英文名稱:</label>
+					    	<div class="col-10">
+					    		<input type="text" class="form-control" id="englishName" name="englishName">
+					        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+					      	</div>
+		   				</div>
+		   				<div class="form-group has-success has-feedback row">
+					    	<label class="col-2 control-label" for="manuName">製造商:</label>
+					    	<div class="col-10">
+					    		<input type="text" class="form-control" id="manuName" name="manuName">
+					        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+					      	</div>
+		   				</div>
+		   				<div class="form-group has-success has-feedback row">
+					    	<label class="col-2 control-label" for="symptom">適用症狀:</label>
+					    	<div class="col-10">
+					    		<input type="text" class="form-control" id="symptom" name="symptom">
+					        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+					      	</div>
+		   				</div>
+						<div class="form-group row">
+							<label class="control-label col-2">藥品刻痕:</label>
+							<div class="col-10">
+								<label class="radio-inline">
+		     							<input type="radio" name="marks" id="marks" value="Y">有
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="marks" id="marks" value="N">無
+		   						</label>
 							</div>
-							<div class="form-group">
-								<label for="psw"> </span> Password
-								</label> <input type="password" class="form-control" name="psw" id="psw"
-									placeholder="Enter password">
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-2">藥品顏色:</label>
+							<div class="col-10">
+								<label class="radio-inline ">
+		     							<input type="radio" name="color" id="color" value="白">白色
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="color" id="color" value="紅">紅色
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="color" id="color" value="橘">橘色
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="color" id="color" value="黃">黃色
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="color" id="color" value="綠">綠色
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="color" id="color" value="藍">藍色
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="color" id="color" value="紫">紫色
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="color" id="color" value="咖啡">咖啡色
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="color" id="color" value="褐">褐色
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="color" id="color" value="黑">黑色
+		   						</label>    	    						
 							</div>
-							<font color="red" size="-1">${MsgMap.errorPsw}</font>
-							<div class="checkbox">
-								<label> <input type="checkbox" value="" checked />
-									Remember me
-								</label>
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-2">藥品劑型:</label>
+							<div class="col-10">
+								<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="錠劑">錠劑
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="膜衣">膜衣錠
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="糖衣">糖衣錠
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="膠囊">膠囊
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="粉">粉劑
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="散">散
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="顆粒">顆粒
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="口溶">口溶錠
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="咀嚼">咀嚼錠
+		   						</label>
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="腸溶">腸溶錠
+		   						</label>    	
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation" value="液">液劑
+		   						</label>    	   						    										
 							</div>
-							<button type="submit" class="btn btn-success btn-block">Login</button>
-							<button type="submit" class="btn btn-danger btn-block">Cancel</button>
-						</form>
-
-					</div>
-					<div class="modal-footer">
-						<p>
-							Not a member? <a href="Members/register.jsp">Sign Up</a>
-						</p>
-						<p>
-							Forgot <a href="Members/ForgetPwd.jsp">Password?</a>
-						</p>
-					</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-4"></div>
+							<div class="col-8 row">
+								<div class="col-3">
+									<button type="button" class="btn btn-primary" id="queryBtn">確認查詢</button>
+								</div>
+								<div class="col-3">
+									<button type="reset" class="btn btn-danger">清除</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-1" >
+		</div>
+		<div class="row" style="margin-top: 0;">
+			<div class="card col-12">
+				<div class="card-header">藥品查詢結果</div>
+				<div class="card-body">
+					<!-- 每頁不同的內容從這裡開始 -->
+					<table id="table1" class="table table-bordered table-striped table-hover">
+						<thead>
+							<tr>
+								<th class="th1">核准字號</th>
+								<th class="th2">中文名稱</th>
+								<th class="th3">英文名稱</th>
+								<th class="th4">適用症狀</th>
+								<th class="th5">製造商</th>
+<!-- 								<th class="th6">圖片</th> -->
+							</tr>
+						</thead>
+						<tbody id="tableBody">
+						</tbody>
+					</table>
+					<!-- 每頁不同的內容到這裡結束 -->
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-3">
-		</div>
-		<div class="col-6">
-			<div class="w3-container marketing " style="padding: 128px 16px" id="team">
-				<h1 class="w3-center">藥品外觀暨藥性查詢</h1>
-				<form class="form-group" action="#">
-					<div class="form-group has-success has-feedback row">
-				    	<label class="col-2 control-label" for="drugChinese">藥品中文名稱:</label>
-				    	<div class="col-10">
-				    		<input type="text" class="form-control" id="drugChinese">
-				        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
-				      	</div>
-	   				</div>
-	   				<div class="form-group has-success has-feedback row">
-				    	<label class="col-2 control-label" for="drugEnglish">藥品英文名稱:</label>
-				    	<div class="col-10">
-				    		<input type="text" class="form-control" id="drugEnglish">
-				        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
-				      	</div>
-	   				</div>
-	   				<div class="form-group has-success has-feedback row">
-				    	<label class="col-2 control-label" for="manu">製造商:</label>
-				    	<div class="col-10">
-				    		<input type="text" class="form-control" id="manu">
-				        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
-				      	</div>
-	   				</div>
-					<div class="form-group row">
-						<label class="control-label col-2">藥品刻痕:</label>
-						<div class="col-10">
-							<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="Y">有
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="N">無
-	   						</label>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="control-label col-2">藥品顏色:</label>
-						<div class="col-10">
-							<label class="radio-inline ">
-	     							<input type="radio" name="optradio" value="white">白色
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="red">紅色
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="orange">橘色
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="yellow">黃色
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="green">綠色
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="blue">藍色
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="purple">紫色
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="coffee">咖啡色
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="brown">褐色
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="black">黑色
-	   						</label>    	    						
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="control-label col-2">藥品劑型:</label>
-						<div class="col-10">
-							<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="ingot">錠劑
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="film">膜衣錠
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="sugar">糖衣錠
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="capsule">膠囊
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="powder">粉劑
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="dispersion">散
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="particles">顆粒
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="mouth">口溶錠
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="Chewing">咀嚼錠
-	   						</label>
-	   						<label class="radio-inline">
-	     							<input type="radio" name="optradio" value="enteric">腸溶錠
-	   						</label>    	    										
-						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col-4"></div>
-						<div class="col-8 row">
-							<div class="col-3">
-								<button type="submit" class="btn btn-primary">確認查詢</button>
-							</div>
-							<div class="col-3">
-								<button type="reset" class="btn btn-danger">清除</button>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="col-3" >
-	</div>
 	<!-- Footer -->
 	<jsp:include page="/fragment/footer.jsp" />
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script type="text/javascript" src="<c:url value="/js/jquery-3.3.1.min.js"/>"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<!-- Just to make our placeholder images work. -->
 	<script src="<c:url  value='/holder.min.js' />"></script>
 	<script src="<c:url  value='/scripts.js' />"></script>
-
+	
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#queryBtn').click(function() {
+				$('#table1').dataTable().fnDestroy(); 
+				var chineseName = $('#chineseName').val();
+				var englishName = $('#englishName').val();
+				var manuName = $('#manuName').val();
+				var symptom = $('#symptom').val();
+				var marks = $('input[name="marks"]:checked' , '#drugForm').val();
+				var color = $('input[name="color"]:checked' , '#drugForm').val();
+				var formulation = $('input[name="formulation"]:checked' , '#drugForm').val();
+		        $('#table1').DataTable({
+			        "ajax": "/TeleHealth/querydrugs.controller?chineseName=" + chineseName 
+			        		+ "&englishName=" + englishName + "&manuName=" + manuName + "&symptom=" + symptom 
+			        		+ "&marks=" + marks + "&color=" + color + "&formulation=" + formulation,
+			        "columns": [
+			            { "data": "licenseNum" },
+			            { "data": "chineseName" },
+			            { "data": "englishName" },
+			            { "data": "symptom" },
+			            { "data": "manuName"},
+			            { "data": ""}
+			        ],
+			        "bProcessing": true,//顯示處理中的圖樣
+			        "oLanguage": {
+			            "sLengthMenu": " _MENU_ 筆/頁",
+			            "sZeroRecords": "找不到符合的資料。",
+			            "sInfo": "共 _MAX_ 筆",
+			            "sSearch": "搜尋",
+			            "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+			            "sInfoEmpty": "共 0 頁",
+			            "oPaginate": {
+			                "sPrevious": "«",
+			                "sNext": "»"
+			            }
+			        }
+		      	});
+				
+			});
+		})
+	</script>
 
 </body>
 

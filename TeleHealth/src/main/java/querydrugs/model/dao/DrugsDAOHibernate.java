@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import querydrugs.model.DrugBean;
 
 @Repository
-public class DrugsDAOHibernate {
+public class DrugsDAOHibernate implements DrugsDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -19,38 +19,46 @@ public class DrugsDAOHibernate {
 		return sessionFactory.getCurrentSession();
 	}
 	
+	@Override
 	public List<DrugBean> selectAll() {
 		return this.getSession().createQuery(
 				"from DrugBean", DrugBean.class).list();
 	}
 	
+	@Override
 	public DrugBean selectById(String licenseNum) {
 		return this.getSession().get(DrugBean.class, licenseNum);
 	}
 	
-	public List<DrugBean> selectByCondition(String chineseName, String englishName, String manu, 
+	@Override
+	public List<DrugBean> selectByCondition(String chineseName, String englishName, String manuName, String symptom,
 			String marks, String color, String shape, String formulation) {
-		String sql = "SELECT b.* FROM DrugBean b "
+		String sql = "SELECT b.* FROM druglist b "
 				+ "WHERE b.chineseName like :chineseName "
 				+ "AND b.englishName like :englishName "
-				+ "AND b.manu like :manu "
+				+ "AND b.manuName like :manuName "
+				+ "AND b.symptom like :symptom "
 				+ "AND b.marks like :marks "
 				+ "AND b.color like :color "
 				+ "AND b.shape like :shape "
 				+ "AND b.formulation like :formulation";
-                
+		System.out.println("DAO chineseName= " + chineseName + ",englishName=" +englishName + ",manuName="+manuName+",marks="
+		+marks+",color="+color+",shape="+shape+",formulation="+formulation);        
 		NativeQuery query = this.getSession().createNativeQuery(sql);
-		query.setParameter("chineseName", chineseName);
-		query.setParameter("englishName", englishName);
-		query.setParameter("manu", manu);
-		query.setParameter("marks", marks);
-		query.setParameter("color", color);
-		query.setParameter("shape", shape);
-		query.setParameter("formulation", formulation);
+		query.addEntity(DrugBean.class);
+		query.setParameter("chineseName", "%" + chineseName + "%" );
+		query.setParameter("englishName", "%" + englishName+ "%");
+		query.setParameter("manuName", "%" + manuName + "%");
+		query.setParameter("symptom", "%" + symptom + "%");
+		query.setParameter("marks", "%" + marks + "%");
+		query.setParameter("color", "%" + color + "%");
+		query.setParameter("shape", "%" + shape + "%");
+		query.setParameter("formulation", "%" + formulation + "%");
 		List<DrugBean> list = query.list();
 		return list;
 	}
 	
+	@Override
 	public DrugBean insert(DrugBean bean) {
 		if(bean!=null) {
 			DrugBean temp =
@@ -63,6 +71,7 @@ public class DrugsDAOHibernate {
 		return null;
 	}
 	
+	@Override
 	public DrugBean update(DrugBean bean) {
 		DrugBean result = this.getSession().get(DrugBean.class, bean.getLicenseNum());
 		if(result != null) {
@@ -89,6 +98,7 @@ public class DrugsDAOHibernate {
 		return result;
 	}
 	
+	@Override
 	public boolean delete(String licenseNum) {
 		DrugBean result = this.getSession().get(DrugBean.class, licenseNum);
 		if(result!= null) {
