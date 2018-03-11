@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import register.model.MemberBean;
 import register.model.RegisterService;
 import util.GlobalService;
+import util.PwdGmail;
+import util.SendActiveEmailThread;
 import util.SystemUtils;
 
 @Controller
@@ -251,12 +253,15 @@ public class RegisterController {
 					bb.setPhoto(photo);
 					bb.setFileName(fileName);
 					bb.setRegisterTime(new Timestamp(System.currentTimeMillis()));
+					String A = "N";
+					bb.setStatus(A);
 					
 					MemberBean n = registerService.insert(bb);
+					
+					// 注冊成功後,發送帳戶激活鏈接
+					SendActiveEmailThread.GoMail(n.getAccount(),n.getMemberId());								
 					if(n!=null) {			
 						return "register.success";
-					}else {
-						return "register.error";
 					}
 				}												
 		return "register.error";
