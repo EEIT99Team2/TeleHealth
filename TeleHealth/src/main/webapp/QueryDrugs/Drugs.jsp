@@ -185,7 +185,7 @@
 								<th class="th3">英文名稱</th>
 								<th class="th4">適用症狀</th>
 								<th class="th5">製造商</th>
-								<th class="th6">圖片</th>
+<!-- 								<th class="th6">圖片</th> -->
 							</tr>
 						</thead>
 						<tbody id="tableBody">

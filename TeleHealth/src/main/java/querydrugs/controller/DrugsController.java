@@ -44,8 +44,6 @@ public class DrugsController {
 		if(formulation == null || formulation.trim().equals("undefined")) {
 			formulation = "";
 		}
-		System.out.println("chineseName= " + chineseName + ",englishName=" +englishName + ",manuName="+manuName+",marks="
-		+marks+",color="+color+",shape="+shape+",formulation="+formulation);
 		
 		return drugsService.queryDrugs(chineseName, englishName, manuName, symptom, marks, color, shape, formulation);
 	}
