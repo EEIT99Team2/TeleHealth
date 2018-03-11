@@ -14,6 +14,8 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.XmlViewResolver;
 
+import util.CustomMultipartResolver;
+
 //本類別為Web Spring用，此處加入要掃描的套件名稱，多個用,隔開
 @ComponentScan(
 		basePackages={"advisorymoment.controller",
@@ -55,7 +57,14 @@ public class SpringMVCJavaConfiguration implements WebMvcConfigurer {
 	public CommonsMultipartResolver multipartResolver() {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
 		resolver.setDefaultEncoding("UTF-8");
-		resolver.setMaxUploadSize(102400000);
+		resolver.setMaxUploadSize(102400000);		
+		return resolver;
+	}
+	@Bean 
+	public CustomMultipartResolver customMultipartResolver() {
+		CustomMultipartResolver resolver=new CustomMultipartResolver();
+		resolver.setDefaultEncoding("UTF-8");
+		resolver.setMaxUploadSize(102400000);		
 		return resolver;
 	}
 }

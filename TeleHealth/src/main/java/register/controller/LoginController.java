@@ -1,5 +1,6 @@
 package register.controller;
 
+import java.lang.Thread.State;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class LoginController {
 	public String method(String usrname,
 			String psw, 
 			Model model,
+			String ststus,
 			HttpSession session){
 		//接收資料
 		//驗證資料
@@ -51,15 +53,35 @@ public class LoginController {
 		String MD5pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(psw));
 		System.out.println("MD5pwd="+MD5pwd);
 		MemberBean bean = loginService.login(usrname, MD5pwd);	
+//		String checkaccount = bean.getStatus();
 								
-			//根據model執行結果呼叫view元件
-			if(bean==null) {
-				errorMsg.put("errorPsw", "帳號或密碼不正確");
-				return "login.error"; 
-			}else {
-				session.setAttribute("LoginOK",bean);
-				return "login.success";
-			}			
-
+					if(bean==null) {
+					errorMsg.put("errorPsw", "帳號或密碼不正確");
+					return "login.error"; 
+				}else {
+					String a = bean.getStatus();
+					if(a.equals("N")) {
+						errorMsg.put("errorPsw", "此帳號未開通");
+						return "login.error"; 
+					}else if(a.equals("Y")) {
+						System.out.println("帳號已開通");
+						session.setAttribute("LoginOK",bean);
+						return "login.success";
+						}													
+				}
+				return "login.error";
+			
+			
+//			if(checkaccount.equals("N")) {
+//				errorMsg.put("errorPsw", "此帳號未開通");
+//				}else if(checkaccount.equals("Y")) {
+//					if(bean==null) {
+//						errorMsg.put("errorPsw", "帳號或密碼不正確");
+//						return "login.error"; 
+//					}else {
+//						session.setAttribute("LoginOK",bean);
+//						return "login.success";
+//					}								
+//				}				
 	}
 }

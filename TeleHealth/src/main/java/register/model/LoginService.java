@@ -1,5 +1,6 @@
 package register.model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import register.model.dao.MemberDAOHibernate;
 import util.ChangePwd;
 import util.GlobalService;
 import util.PwdGmail;
+import util.SendMail;
 
 
 @Service
@@ -106,14 +108,14 @@ public class LoginService {
 		List<MemberBean> Account = memberDAO.selectByAccount(account);
 		String ChangeAccount= Account.get(0).getAccount();		
 		if(ChangeAccount!=null) {
-			String aa = ChangePwd.GoPwd(); //新的亂數密碼	
-			String NewPwd = GlobalService.getMD5Endocing(GlobalService.encryptString(aa));
+			String pwd = ChangePwd.GoPwd(); //新的亂數密碼	
+			String NewPwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
 			
 			System.out.println("ChangePwd="+NewPwd);
 			
 			boolean ChangePw = memberDAO.UdPwd(NewPwd, ChangeAccount);
-			String sendEmail = PwdGmail.GoMail(ChangeAccount, aa);
-			
+			String sendEmail = SendMail.send(ChangeAccount,"TeleHealth遠端照護系統-忘記密碼","親愛的會員您好，\n您的新密碼為:" + pwd + "\n牽伴健康諮詢平台全體同仁關心您！"
+					+ "\n時間:" + (new Date()).toString());
 			if(ChangePw==true && sendEmail!=null ) {
 				System.out.println("新密碼已寄到信箱");
 				return true;
