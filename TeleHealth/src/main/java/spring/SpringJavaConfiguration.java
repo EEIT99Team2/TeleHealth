@@ -42,7 +42,8 @@ import takeoffrecords.model.TakeoffBean;
 		"employees.model",
 		"healthpassport.model",
 		"takeoffrecords.model",
-		"querydrugs.model"})
+		"querydrugs.model",
+		"util"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean
