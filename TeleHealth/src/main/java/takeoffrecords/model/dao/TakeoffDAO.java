@@ -1,8 +1,8 @@
 package takeoffrecords.model.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
-
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,7 +36,7 @@ public class TakeoffDAO {
 	
 	//後台管理顯示(index用)
 	public List<Object[]> selectAll() {
-		String hql="SELECT tor.id,tor.advisoryMomentId,tor.empId,emp.empName,emp.career,tor.applicationType,tor.applicationTime,tor.applicationReason,adm.reserveStatus,adm.videoCode,tor.approvedResult,tor.approvedTime,tor.rejectReason FROM takeoffRecords tor\r\n" + 
+		String hql="SELECT tor.id,tor.advisoryMomentId,tor.empId,emp.empName,emp.career,tor.applicationType,tor.applicationTime,tor.applicationReason,adm.reserveStatus,adm.videoCode,tor.approvedResult,tor.approvedTime,tor.rejectReason,adm.status FROM takeoffRecords tor\r\n" + 
 				"JOIN employees emp\r\n" + 
 				"ON emp.empId=tor.empId\r\n" + 
 				"JOIN advisoryMoment adm\r\n" + 
@@ -60,14 +60,18 @@ public class TakeoffDAO {
 		}
 		return result;
 	}
-
-	public TakeoffBean update(String name,
-			double price, java.util.Date make, int expire, int id) {
-		TakeoffBean result = this.getSession().get(TakeoffBean.class, id);
+	
+	//回覆請假申請
+	public boolean updateApproved(String takeoffId,String apResult,String reason) {
+		boolean upResult = false;
+		TakeoffBean result = this.getSession().get(TakeoffBean.class, takeoffId);
 		if(result!=null) {
-
+			result.setApprovedResult(apResult);
+			result.setApprovedTime(new Date());
+			result.setRejectReason(reason);
+			upResult = true;
 		}
-		return result;
+		return upResult;
 	}
 
 	public boolean delete(int id) {

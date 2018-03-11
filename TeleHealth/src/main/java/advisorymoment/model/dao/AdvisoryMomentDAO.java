@@ -30,7 +30,7 @@ public class AdvisoryMomentDAO {
 	};
 	//以科別代碼搜尋
 	public List<Object[]> select(String advisoryCode) {
-		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career FROM AdvisoryMoment am \r\n" + 
+		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.status FROM AdvisoryMoment am \r\n" + 
 				"join Employees emp \r\n" + 
 				"on am.empId=emp.empId\r\n" + 
 				"join advisoryType adt\r\n" + 
@@ -45,7 +45,7 @@ public class AdvisoryMomentDAO {
 	
 	//搜尋全部時段(當index用)
 	public List<Object[]> selectAll() {
-		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.videoCode FROM AdvisoryMoment am \r\n"
+		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.videoCode,am.status FROM AdvisoryMoment am \r\n"
 				+"join Employees emp \r\n"
 				+"on am.empId=emp.empId \r\n"
 				+"join advisoryType adt \r\n"
@@ -85,7 +85,7 @@ public class AdvisoryMomentDAO {
 	
 	//諮詢人員自己負責的時段
 		public List<Object[]> selectByEmpSelf(String EmpId) {
-			String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.videoCode FROM advisoryMoment am\r\n" + 
+			String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.videoCode,am.status FROM advisoryMoment am\r\n" + 
 					"join employees emp\r\n" + 
 					"on am.empId=emp.empId\r\n" + 
 					"join advisoryType adt\r\n" + 
@@ -144,6 +144,17 @@ public class AdvisoryMomentDAO {
 		return data;
 	};
 	
+	//請假成功，修改班表狀態
+	public boolean updateMoment(String MomentId) {
+		boolean result = false;
+		AdvisoryMomentBean data = this.selectById(MomentId);
+		if(data!=null) {
+			data.setStatus("N");
+			result = true;
+		}
+		return result;
+	}
+	
 	//刪除會員預約紀錄(table:Advisory)
 	public boolean deleteMemReserve(String VideoCode) {
 		if (VideoCode != null&&VideoCode.trim().length()!=0) {
@@ -151,17 +162,20 @@ public class AdvisoryMomentDAO {
 			NativeQuery query= this.getSession().createNativeQuery(hql);
 			query.setParameter(1,VideoCode);
 			query.executeUpdate();
+			System.out.println("有殺到");
 			return true;
 		}
+		System.out.println("沒殺到");
 		return false;
 	}
 	
-	public boolean delete(String id) {
-		AdvisoryMomentBean data = this.selectById(id);
-		if (data != null) {
-			this.getSession().delete(data);
-			return true;
-		}
-		return false;
-	}
+
+//	public boolean delete(String MomentId) {
+//		AdvisoryMomentBean data = this.selectById(MomentId);
+//		if (data != null) {
+//			this.getSession().delete(data);
+//			return true;
+//		}
+//		return false;
+//	}
 }

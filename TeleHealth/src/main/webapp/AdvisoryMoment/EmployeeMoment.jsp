@@ -447,7 +447,6 @@ $("#ReTakeOff").click(function takeoff(){
 				$(".txtWaring").remove();
 				$("#checkTakeOff").attr("data-dismiss","modal");
 				var docFrag = $(document.createDocumentFragment());
-				console.log(reserveData.MomentId+";;;;;;;;"+reserveData.empId);
 				$.post("<c:url value='/AdvisoryMoment/takeoff.controller'/>",{"MomentId":reserveData.MomentId,"EmpId":reserveData.empId,"TakeoffItem":TakeoffItem,"TakeoffReason":TReason},function(result){
 					docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");
 					$("#takeoffResItem .modal-body").append(docFrag);

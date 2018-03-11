@@ -43,7 +43,7 @@ public class TakeoffService {
 	public String selectAll() {
 		LinkedList<HashMap<String, String>> dataFinal = new LinkedList<HashMap<String, String>>();
 		List<Object[]> takeoffData = takeoffDao.selectAll();
-		String takeoffId, MomentId, empId, empName, career, apType, apTime, apReason, status, videoCode,reResult,reTime,reReason;
+		String takeoffId, MomentId, empId, empName, career,zhCareer ="醫生", apType, apTime, apReason, status, videoCode,reResult,reTime,reReason,momStatus;
 		if (takeoffData.size() != 0) {
 			System.out.println("請假數"+takeoffData.size());
 			for (int i = 0; i < takeoffData.size(); i++) {
@@ -53,6 +53,9 @@ public class TakeoffService {
 				empId = takeoffData.get(i)[2].toString();
 				empName = takeoffData.get(i)[3].toString();
 				career = takeoffData.get(i)[4].toString();
+				if(career.equals("Nutritionist")) {
+					zhCareer="營養師";
+				}
 				apType = takeoffData.get(i)[5].toString();
 				apTime = takeoffData.get(i)[6].toString();
 				apReason = takeoffData.get(i)[7].toString();
@@ -73,11 +76,12 @@ public class TakeoffService {
 					reTime = takeoffData.get(i)[11].toString();
 					reReason = takeoffData.get(i)[12].toString();
 				}
+				momStatus = takeoffData.get(i)[13].toString();
 				dataOne.put("takeoffId", takeoffId);
 				dataOne.put("MomentId", MomentId);
 				dataOne.put("empId", empId);
 				dataOne.put("empName", empName);
-				dataOne.put("career", career);
+				dataOne.put("zhCareer", zhCareer);
 				dataOne.put("apType", apType);
 				dataOne.put("apTime", apTime);
 				dataOne.put("apReason", apReason);
@@ -86,7 +90,7 @@ public class TakeoffService {
 				dataOne.put("reResult", reResult);
 				dataOne.put("reTime", reTime);
 				dataOne.put("reReason", reReason);
-				System.out.println(dataOne);
+				dataOne.put("momStatus", momStatus);
 				dataFinal.add(dataOne);				
 			}
 		}
@@ -102,11 +106,10 @@ public class TakeoffService {
 		}
 		return result;
 	}
-
-	public TakeoffBean update(String id) {
-		TakeoffBean result = null;
-
-		return result;
+	
+	//回覆請假申請
+	public boolean updateApproved(String takeoffId,String apResult,String reason) {
+		return takeoffDao.updateApproved(takeoffId, apResult, reason);
 	}
 
 	public boolean delete(int id) {

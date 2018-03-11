@@ -6,10 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import advisorymoment.model.AdvisoryMomentService;
+import advisorymoment.model.dao.AdvisoryMomentDAO;
+import employees.model.dao.EmployeesDAO;
 import takeoffrecords.model.TakeoffService;
 
 @Controller
 public class TakeoffController {
+	@Autowired
+	private AdvisoryMomentService advisoryMomentService;
+	
+	@Autowired
+	private EmployeesDAO employeesDAO;
 	
 	@Autowired
 	private TakeoffService takeoffService;
@@ -36,4 +44,28 @@ public class TakeoffController {
 			String result= takeoffService.selectAll();
 		return result;
 	}
+	
+	//後臺審核假單
+	@RequestMapping(path= {"/AdvisoryMoment/approveTakeoff.controller"},method={RequestMethod.GET,RequestMethod.POST},produces= {"text/plain;charset=UTF-8"})
+	public @ResponseBody String approveTakeoff(String takeoffId,String empId,String MomentId,String videoCode,String apResult,String reason) {
+		boolean upResult= false;
+		String finalResult = "回覆失敗";
+		if(takeoffId!=null &&takeoffId.trim().length()!=0 && empId!=null &&empId.trim().length()!=0 && MomentId!=null &&MomentId.trim().length()!=0 && apResult!=null &&apResult.trim().length()!=0 && reason!=null &&reason.trim().length()!=0) {			
+			//回覆請假申請
+			upResult= takeoffService.updateApproved(takeoffId, apResult, reason);
+		}
+		if(upResult) {
+			if(apResult.equals("Y")) {
+				//刪除預約記錄(無預約則回傳false)
+				advisoryMomentService.deleteMemReserve(videoCode, MomentId);
+				//修改此項班表狀態
+				advisoryMomentService.updateMoment(MomentId);
+				//新增申請人請假次數
+				employeesDAO.addTakeoffCount(empId);
+			}
+			finalResult="已回覆申請人";
+		}		
+		return finalResult;
+	}
+	
 }
