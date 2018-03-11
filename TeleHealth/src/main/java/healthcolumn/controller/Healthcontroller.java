@@ -233,5 +233,16 @@ public class Healthcontroller {
 		 healthService.count(title);
 		 return "success";
 	}
+	//選出輪播牆圖片
+	@RequestMapping(path = {
+	"/healthcolumn/hotcontentimg.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.GET})
+	public @ResponseBody String hotcontentimg() {
+		List<HealthColumnBean> data = healthService.hotcontextimg();
+		System.out.println(data);
+		Gson gson = new Gson();
+		String dataimg = gson.toJson(data);
+		 return dataimg;
+	}
 	
 }

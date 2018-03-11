@@ -352,7 +352,7 @@ $(document).ready(function() {
 			$.post("<c:url value='/Advisory/ReserveCheck.controller'/>",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
 				"reserveEmp":reserveData.reserveEmp,"empId":reserveData.empId,"UserId":reserveData.UserId,"MomentId":reserveData.MomentId},function(result){			
 				var splitCode1=result.indexOf(",");
-				var splitCode2=result.indexOf(",,");reservedData
+				var splitCode2=result.indexOf(",,");
 				$('#reserveDataDetail').modal('hide');
 				 $('#reserveResult').modal('show');
 				  docFrag.append("<h3>"+result.substr(0,splitCode1)+"</h3>"
@@ -384,7 +384,7 @@ $(document).ready(function() {
 		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode},function(result){
 			$("#cancelReserveItem").modal('hide');
 			$("#cancelCheckItem").modal('show');
-			docFrag.append("<h3>"+result+"</h3>");
+			docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");
 			console.log("result="+result);
 	  	$("#cancelCheckItem .modal-body").append(docFrag);
 			})

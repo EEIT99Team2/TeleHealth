@@ -42,7 +42,8 @@ import takeoffrecords.model.TakeoffBean;
 		"employees.model",
 		"healthpassport.model",
 		"takeoffrecords.model",
-		"querydrugs.model"})
+		"querydrugs.model",
+		"util"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean
@@ -71,7 +72,6 @@ public class SpringJavaConfiguration {
 	
 	@Bean
 	public HibernateTransactionManager transactionManager() {
-		System.out.println("HibernateTransactionManager");
 		return new HibernateTransactionManager(sessionFactory());
 	}
 	

@@ -69,7 +69,7 @@
                     </li>
                 </ul>
                 <form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
-<input type="text" id="empId" name="empId" value="A56DC04E-7C45-4BB4-B4F4-B95F7A321994">
+<input type="text" id="empId" name="empId" value="0A55726B-8733-451F-9939-4D387698C7B6">
 <span id="item1" class="item1 nav-item active">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">年</span>
 <select id="month" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">月</span>
