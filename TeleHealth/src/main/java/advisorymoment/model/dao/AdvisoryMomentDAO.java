@@ -73,6 +73,7 @@ public class AdvisoryMomentDAO {
 	
 	//以視訊代碼搜尋(會員取消預約時用)
 	public List<Object[]> selectByMemVCode(String VideoCode) {
+		System.out.println("VideoCode"+VideoCode);
 		String hql="SELECT videoCode,memberId,empId,descrip,advisoryTime,viedoRecord,satisfy,createTime,modifyTime FROM Advisory \r\n" + 
 				"WHERE videoCode=?";
 		NativeQuery query = this.getSession().createNativeQuery(hql);
@@ -149,6 +150,7 @@ public class AdvisoryMomentDAO {
 			String hql="DELETE Advisory WHERE videoCode=?";
 			NativeQuery query= this.getSession().createNativeQuery(hql);
 			query.setParameter(1,VideoCode);
+			query.executeUpdate();
 			return true;
 		}
 		return false;

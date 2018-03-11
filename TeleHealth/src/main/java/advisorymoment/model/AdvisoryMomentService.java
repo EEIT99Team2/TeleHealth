@@ -62,7 +62,7 @@ public class AdvisoryMomentService {
 			} else if (status.equals("F") && reserved.size() != 0) {
 				for (int j = 0; j < reserved.size(); j++) {
 					reservedId = reserved.get(j)[0].toString();
-					VideoCode = reserved.get(j)[6].toString();
+					VideoCode = reserved.get(j)[7].toString();
 					if (reservedId.equals(MomentId)) {
 						dataOne.put("backgroundColor", "#00db00");
 						dataOne.put("borderColor", "black");
@@ -120,7 +120,7 @@ public class AdvisoryMomentService {
 			} else if (status.equals("F") && reserved.size() != 0) {
 				for (int j = 0; j < reserved.size(); j++) {
 					reservedId = reserved.get(j)[0].toString();
-					VideoCode = reserved.get(j)[6].toString();
+					VideoCode = reserved.get(j)[7].toString();
 					if (reservedId.equals(MomentId)) {
 						dataOne.put("backgroundColor", "#00db00");
 						dataOne.put("borderColor", "black");
@@ -172,10 +172,10 @@ public class AdvisoryMomentService {
 				zhCareer="營養師";
 			}
 			//別人班表是否有預約
-			if(result.get(i)[6]==null) {
+			if(result.get(i)[7]==null) {
 				otherResCode="null";
 			}else {
-				otherResCode=result.get(i)[6].toString();
+				otherResCode=result.get(i)[7].toString();
 			}
 			//此項班表是否為有申請假單				
 			takeoffRecord = takeoffService.select(MomentId);							
