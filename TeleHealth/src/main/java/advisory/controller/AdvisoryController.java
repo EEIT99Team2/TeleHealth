@@ -71,6 +71,7 @@ public class AdvisoryController {
 			sendTime = sdfForCreate.format(createTime);
 			//增加員工預約點擊數
 			employeesDAO.addResCount(empId);
+			//會員給錢
 		}
 	
 		return result+","+videoCode+",,"+sendTime;

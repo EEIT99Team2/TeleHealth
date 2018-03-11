@@ -62,6 +62,7 @@ public class TakeoffController {
 				advisoryMomentService.updateMoment(MomentId);
 				//新增申請人請假次數
 				employeesDAO.addTakeoffCount(empId);
+				//還錢
 			}
 			finalResult="已回覆申請人";
 		}		

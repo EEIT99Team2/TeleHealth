@@ -56,6 +56,7 @@ public class AdvisoryMomemtController {
 		boolean DeleteResult=false;
 		if(MomentId!=null && MomentId.trim().length()!=0 && VideoCode!=null && VideoCode.trim().length()!=0) {
 			DeleteResult = advisoryMomentService.deleteMemReserve(VideoCode, MomentId);
+			//還錢
 		}
 		if(DeleteResult) {
 			ReturnResult="預約取消成功";
