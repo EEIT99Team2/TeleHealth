@@ -5,11 +5,12 @@ var connection = new WebSocket('wss://tzeing.asuscomm.com:15449');
 	usernameInput = document.querySelector("#username"),
 	loginButton = document.querySelector("#login"),
 	callPage = document.querySelector("#call-page"),
-	theirUsernameInput = document.querySelector("#their-username"),
+	theirUsernameInput = document.querySelector("#roomName"),
 	hangUpButton = document.querySelector("#hang-up"),
 	joinButton = document.getElementById("join"),
 	yourVideo = document.querySelector("#yours"),
 	theirVideo = document.querySelector("#theirs"),
+	fullscreenButton = document.querySelector('#fullscreen'),
 	yourConnection = null,
 	connectedUser = "",
 	room = "",
@@ -129,6 +130,10 @@ hangUpButton.addEventListener("click", function() {
 	});
 	onLeave();
 //	location.reload();
+});
+
+fullscreenButton.addEventListener("click", function() {
+	
 });
 
 function onLogin(success, name) {

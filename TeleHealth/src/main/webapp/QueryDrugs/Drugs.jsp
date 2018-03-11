@@ -27,7 +27,13 @@
 	}	
 	.th5 {
 		width: 50px
-	}	
+	}
+	.th6 {
+		width: 50px
+	}		
+	img {
+		cursor : pointer
+	}
 </style>
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fontstyle.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
@@ -37,12 +43,17 @@
 	<jsp:include page="/fragment/header.jsp" />
 	<div class="container">
 		<div class="row">
-			<div class="col-1">
-			</div>
-			<div class="col-10">
+			<div class="col-12">
 				<div class="w3-container marketing " style="padding: 20px 16px" id="team">
 				<h1 class="w3-center">藥品資訊查詢</h1>
 					<form class="form-group" id="drugForm" >
+						<div class="form-group has-success has-feedback row">
+					    	<label class="col-2 control-label" for="chineseName">食藥署核准字號:</label>
+					    	<div class="col-10">
+					    		<input type="text" class="form-control" id="licenseNum" name="licenseNum">
+					        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+					      	</div>
+		   				</div>
 						<div class="form-group has-success has-feedback row">
 					    	<label class="col-2 control-label" for="chineseName">藥品中文名稱:</label>
 					    	<div class="col-10">
@@ -170,8 +181,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-1" >
-		</div>
 		<div class="row" style="margin-top: 0;">
 			<div class="card col-12">
 				<div class="card-header">藥品查詢結果</div>
@@ -185,7 +194,7 @@
 								<th class="th3">英文名稱</th>
 								<th class="th4">適用症狀</th>
 								<th class="th5">製造商</th>
-<!-- 								<th class="th6">圖片</th> -->
+								<th class="th6">圖片</th>
 							</tr>
 						</thead>
 						<tbody id="tableBody">
@@ -196,22 +205,29 @@
 			</div>
 		</div>
 	</div>
+	<!-- 顯示圖片視窗 -->
+	<div class="modal fade" id="showImgItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <!-- 圖片內容 -->
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	<!-- Footer -->
 	<jsp:include page="/fragment/footer.jsp" />
-	<script type="text/javascript" src="<c:url value="/js/jquery-3.3.1.min.js"/>"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="<c:url  value='/holder.min.js' />"></script>
-	<script src="<c:url  value='/scripts.js' />"></script>
-	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+
 	<script>
 		$(document).ready(function() {
 			$('#queryBtn').click(function() {
 				$('#table1').dataTable().fnDestroy(); 
+				var licenseNum = $('#licenseNum').val();
 				var chineseName = $('#chineseName').val();
 				var englishName = $('#englishName').val();
 				var manuName = $('#manuName').val();
@@ -220,17 +236,24 @@
 				var color = $('input[name="color"]:checked' , '#drugForm').val();
 				var formulation = $('input[name="formulation"]:checked' , '#drugForm').val();
 		        $('#table1').DataTable({
-			        "ajax": "/TeleHealth/querydrugs.controller?chineseName=" + chineseName 
-			        		+ "&englishName=" + englishName + "&manuName=" + manuName + "&symptom=" + symptom 
-			        		+ "&marks=" + marks + "&color=" + color + "&formulation=" + formulation,
+			        "ajax": "/TeleHealth/querydrugs.controller?licenseNum=" +licenseNum + 
+			        		"&chineseName=" + chineseName + "&englishName=" + englishName + 
+			        		"&manuName=" + manuName + "&symptom=" + symptom + 
+			        		"&marks=" + marks + "&color=" + color + "&formulation=" + formulation,
 			        "columns": [
 			            { "data": "licenseNum" },
 			            { "data": "chineseName" },
 			            { "data": "englishName" },
 			            { "data": "symptom" },
 			            { "data": "manuName"},
-			            { "data": ""}
+			            { "data": "licenseNum",
+			              "orderable": false,
+			              "width": "60px",
+			              "render": function(data,type,row,meta) {
+			            	  return data =   '<img style="width:100px" src="/TeleHealth/QueryDrugs/DrugsImages/' + data +'.png">';
+					    }}
 			        ],
+		        
 			        "bProcessing": true,//顯示處理中的圖樣
 			        "oLanguage": {
 			            "sLengthMenu": " _MENU_ 筆/頁",
@@ -247,6 +270,21 @@
 		      	});
 				
 			});
+
+			$('body').on("click", "td>img", function() {
+				$("#showImgItem .modal-body").empty();
+				var docFrag = $(document.createDocumentFragment());
+				docFrag.append("<img style='width:450px' src='"+$(this).attr("src")+"'/>");
+				$("#showImgItem .modal-body").append(docFrag);
+				$("#showImgItem").modal("show");
+			})
+
+// 			$('#table1>tbody>td:eq(5)').click(function(){
+// 				var docFrag = $(document.createDocumentFragment());
+// 				docFrag.append("<img style='width:100px' src='"+$(this).attr("src")+"'/>");
+// 				$("#showImgItem .modal-body").append(docFrag);
+// 				$("#showImgItem").modal("show");
+// 			})
 		})
 	</script>
 
