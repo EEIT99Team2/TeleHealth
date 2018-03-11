@@ -16,8 +16,11 @@ public class DrugsController {
 	@RequestMapping(path="/querydrugs.controller", 
 			method= {RequestMethod.GET, RequestMethod.POST},
 			produces = "application/json;charset=UTF-8")
-	public @ResponseBody String memberSelectByCode(String chineseName, String symptom,String englishName, String manuName, 
-			String marks, String color, String shape, String formulation) {
+	public @ResponseBody String memberSelectByCode(String licenseNum, String chineseName, String symptom,
+			String englishName, String manuName, String marks, String color, String shape, String formulation) {
+		if(licenseNum == null || licenseNum.trim().length() == 0) {
+			licenseNum = "";
+		}
 		if(chineseName == null || chineseName.trim().length()==0) {
 			chineseName = "";
 		}
@@ -45,6 +48,6 @@ public class DrugsController {
 			formulation = "";
 		}
 		
-		return drugsService.queryDrugs(chineseName, englishName, manuName, symptom, marks, color, shape, formulation);
+		return drugsService.queryDrugs(licenseNum, chineseName, englishName, manuName, symptom, marks, color, shape, formulation);
 	}
 }

@@ -31,10 +31,11 @@ public class DrugsDAOHibernate implements DrugsDAO {
 	}
 	
 	@Override
-	public List<DrugBean> selectByCondition(String chineseName, String englishName, String manuName, String symptom,
-			String marks, String color, String shape, String formulation) {
+	public List<DrugBean> selectByCondition(String licenseNum, String chineseName, String englishName,
+			String manuName, String symptom,String marks, String color, String shape, String formulation) {
 		String sql = "SELECT b.* FROM druglist b "
-				+ "WHERE b.chineseName like :chineseName "
+				+ "WHERE b.licenseNum like :licenseNum "
+				+ "AND b.chineseName like :chineseName "
 				+ "AND b.englishName like :englishName "
 				+ "AND b.manuName like :manuName "
 				+ "AND b.symptom like :symptom "
@@ -42,10 +43,9 @@ public class DrugsDAOHibernate implements DrugsDAO {
 				+ "AND b.color like :color "
 				+ "AND b.shape like :shape "
 				+ "AND b.formulation like :formulation";
-		System.out.println("DAO chineseName= " + chineseName + ",englishName=" +englishName + ",manuName="+manuName+",marks="
-		+marks+",color="+color+",shape="+shape+",formulation="+formulation);        
 		NativeQuery query = this.getSession().createNativeQuery(sql);
 		query.addEntity(DrugBean.class);
+		query.setParameter("licenseNum", "%" + licenseNum + "%");
 		query.setParameter("chineseName", "%" + chineseName + "%" );
 		query.setParameter("englishName", "%" + englishName+ "%");
 		query.setParameter("manuName", "%" + manuName + "%");

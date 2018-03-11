@@ -1,15 +1,13 @@
 var connection = new WebSocket('wss://tzeing.asuscomm.com:15449');
 	name = "",
 	username = "",
-	loginPage = document.querySelector("#login-page"),
-	usernameInput = document.querySelector("#username"),
-	loginButton = document.querySelector("#login"),
-	callPage = document.querySelector("#call-page"),
-	theirUsernameInput = document.querySelector("#their-username"),
+	userAccount = document.querySelector("#user"),
+	roomNameInput = document.querySelector("#roomName"),
 	hangUpButton = document.querySelector("#hang-up"),
 	joinButton = document.getElementById("join"),
 	yourVideo = document.querySelector("#yours"),
 	theirVideo = document.querySelector("#theirs"),
+	fullscreenButton = document.querySelector('#fullscreen'),
 	yourConnection = null,
 	connectedUser = "",
 	room = "",
@@ -33,17 +31,16 @@ var configuration = {
 		]
 };
 
-callPage.style.display="none";
-
-loginButton.addEventListener("click", function(evnet) {
-    name = usernameInput.value;
-    if (name.length > 0) {
-        send({
-            type: "login",
-            name: name
-        });
-    }
-});
+//載入畫面後，自動登入WebSocket
+window.onload = function() {
+	name = userAccount.value;
+	if(name.length > 0) {
+		send({
+			type: "login",
+			 name: name
+		});
+	}
+}
 
 connection.onopen = function() {
     console.log("Connected");
@@ -106,7 +103,7 @@ function send(message) {
 
 //進入房間
 joinButton.addEventListener("click", function() {
-	var roomName = theirUsernameInput.value;
+	var roomName = roomNameInput.value;
 	if(roomName.length > 0) {
 		send({
 			type: "join",
@@ -130,13 +127,29 @@ hangUpButton.addEventListener("click", function() {
 	onLeave();
 //	location.reload();
 });
+var screenFlag = false;
+fullscreenButton.addEventListener("click", function() {
+	if(screenFlag == false) {
+		if (theirVideo.requestFullscreen) {
+			theirVideo.requestFullscreen();
+		} else if (theirVideo.msRequestFullscreen) {
+			theirVideo.msRequestFullscreen();
+		} else if (theirVideo.mozRequestFullScreen) {
+			theirVideo.mozRequestFullScreen();
+		} else if (theirVideo.webkitRequestFullscreen) {
+			theirVideo.webkitRequestFullscreen();
+		}
+	} else {
+		Document.exitFullscreen();
+	}
+});
 
 function onLogin(success, name) {
     if (success === false) {
         alert("登入的ID： " + name + " 重複，請重新輸入!");
     } else {
-        loginPage.style.display = "none";
-        callPage.style.display = "block";
+//        loginPage.style.display = "none";
+//        callPage.style.display = "block";
         startConnection();
     }
 }
@@ -279,4 +292,3 @@ function startPeerConnection1(user) {
 		});
 	});
 }
-

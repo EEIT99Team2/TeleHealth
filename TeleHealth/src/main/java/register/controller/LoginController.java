@@ -1,6 +1,5 @@
 package register.controller;
 
-import java.lang.Thread.State;
 import java.util.HashMap;
 import java.util.Map;
 

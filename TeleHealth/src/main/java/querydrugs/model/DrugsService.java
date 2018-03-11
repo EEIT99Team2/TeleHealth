@@ -19,9 +19,9 @@ public class DrugsService {
 	private DrugsDAO drugsDAO;
 	
 	@Transactional(readOnly=true)
-	public String queryDrugs(String chineseNameIn, String englishNameIn, String manuNameIn, String symptomIn,
-				String marksIn, String colorIn, String shapeIn, String formulationIn) {
-		List<DrugBean> result = drugsDAO.selectByCondition(chineseNameIn, englishNameIn, 
+	public String queryDrugs(String licenseNumIn, String chineseNameIn, String englishNameIn, String manuNameIn,
+			String symptomIn, String marksIn, String colorIn, String shapeIn, String formulationIn) {
+		List<DrugBean> result = drugsDAO.selectByCondition(licenseNumIn, chineseNameIn, englishNameIn, 
 				manuNameIn, symptomIn, marksIn, colorIn, shapeIn, formulationIn);
 		LinkedList<HashMap<String,String>> beans = new LinkedList<HashMap<String,String>>();
 		Iterator iterators = result.iterator();

@@ -6,14 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>視訊健康諮詢</title>
-
-<script src="<c:url value='forCkeditor/ckeditor/ckeditor.js' />"></script>
-<script src="<c:url value='forCkeditor/ckfinder/ckfinder.js' />"></script>
+<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fontstyle.css" />
+<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
+<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 <style>
 body {
 	background-color: #3D6DF2;
 	margin-top: 50px;
-	font-family: sans-serif;
 	color: white
 }
 
@@ -36,27 +35,33 @@ video {
 	/* 	height: 500px; */
 	z-index: 0;
 }
+
+.phoneBtn {
+	width: 40px;
+	height: 25px;
+}
 </style>
 </head>
 
 <body>
 	<jsp:include page="/fragment/header.jsp" />
 	<div class="container">
-		<div id='login-page' class="row" >
-			<div class="col-12 text-center" style="height:500px">
-				<h2>Login As</h2>
-				<input type="text" id="username" /> <input type="button" id="login"
-					value="Login" />
-			</div>
-		</div>
+<!-- 		<div id='login-page' class="row" > -->
+<!-- 			<div class="col-12 text-center" style="height:500px"> -->
+<!-- 				<h2>Login As</h2> -->
+<!-- 				<input type="text" id="username" /> -->
+<!-- 				<input type="button" id="login"	value="Login" /> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 		<div id="call-page" class="row clearfix" style="margin-top: 50px">
-			<h3>${LoginOK.memberId} ${LoginOK.empId}，您好</h3>
+			<input type="hidden" id="user" value="${LoginOK.account}" />
 			<div class="col-5 float-left">
 				<video id="yours" autoplay muted playsinline></video>
 				<video id="theirs" autoplay playsinline></video>
-				<input type="text" id="their-username" />
-				<input type="button" value="JOIN" id="join" />
-				<input type="button" value="Hang Up" id="hang-up" disabled="disabled" />
+				<input type="text" id="roomName" />
+				<button id="join" class="btn"><img class="phoneBtn" src='<c:url value="/images/joinbutton.png" />'/></button>
+				<button id="hang-up" class="btn" disabled="disabled"><img class="phoneBtn" src='<c:url value="/images/hangup.jpg" />'/></button>
+				<button id="fullscreen" class="btn"><img class="phoneBtn" src='<c:url value="/images/fullscreen.jpg" />'/></button>
 			</div>
 			<div class="col-7 float-right">
 				<ul class="nav nav-tabs w3-padding-large" id="myTab" role="tablist">
@@ -92,10 +97,10 @@ video {
 					<div class="tab-pane fade" id="contact" role="tabpanel"
 						aria-labelledby="contact-tab">...</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/fragment/footer.jsp"/>
 	<script type="text/javascript">
 	   $(document).ready(function() {
 	    CKEDITOR.replace('content',{
@@ -109,8 +114,7 @@ video {
 	    console.log("ready!");
 	   });
   	</script>
-	<script src="<c:url value='javascript/client.js' />"></script>
-	<jsp:include page="/fragment/footer.jsp"/>
+	<script src="<c:url value='/js/client.js' />"></script>
 </body>
 
 </html>
