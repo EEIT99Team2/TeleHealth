@@ -51,13 +51,16 @@ public class AdvisoryMomemtController {
 	
 	@RequestMapping(path = { "/AdvisoryMomemt/memberCancelRes.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String memberCancelRes(String MomentId,String VideoCode) {
+	public @ResponseBody String memberCancelRes(String MomentId,String VideoCode,String UserId) {
 		String ReturnResult="預約取消失敗";
 		boolean DeleteResult=false;
+		boolean Refund=false;
 		if(MomentId!=null && MomentId.trim().length()!=0 && VideoCode!=null && VideoCode.trim().length()!=0) {
 			DeleteResult = advisoryMomentService.deleteMemReserve(VideoCode, MomentId);
+			//還錢
+			Refund =advisoryMomentService.updateMemPoint(UserId);
 		}
-		if(DeleteResult) {
+		if(DeleteResult && Refund) {
 			ReturnResult="預約取消成功";
 		}
 		return ReturnResult;

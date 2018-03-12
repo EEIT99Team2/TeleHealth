@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import register.model.MemberBean;
 import register.model.RegisterService;
 import util.GlobalService;
+import util.PwdGmail;
+import util.SendActiveEmailThread;
 import util.SystemUtils;
 
 @Controller
@@ -136,7 +138,7 @@ public class RegisterController {
 				}
 						
 				double dHeight = -1;
-				if(memHeight!=null && memHeight.trim().length()>1 && memHeight.trim().length()<=6) {
+				if(memHeight!=null && memHeight.matches("([1-9]\\d{1,2}|\\d)([.]\\d{1,2})?")) {
 					try {
 						
 						dHeight = Double.parseDouble(memHeight.trim());
@@ -157,7 +159,7 @@ public class RegisterController {
 					errorMsg.put("errorMemWeight", "體重欄位不能空白");
 				}
 				double dWeight = -1;
-				if(memWeight!=null && memWeight.trim().length()>1 && memWeight.trim().length()<=6) {
+				if(memWeight!=null && memWeight.matches("([1-9]\\d{1,2}|\\d)([.]\\d{1,2})?")) {
 					try {
 						dWeight = Double.parseDouble(memWeight.trim());
 					}catch(NumberFormatException e) {
@@ -251,12 +253,15 @@ public class RegisterController {
 					bb.setPhoto(photo);
 					bb.setFileName(fileName);
 					bb.setRegisterTime(new Timestamp(System.currentTimeMillis()));
+					String A = "N";
+					bb.setStatus(A);
 					
 					MemberBean n = registerService.insert(bb);
+					
+					// 注冊成功後,發送帳戶激活鏈接
+					SendActiveEmailThread.GoMail(n.getAccount(),n.getMemberId());								
 					if(n!=null) {			
 						return "register.success";
-					}else {
-						return "register.error";
 					}
 				}												
 		return "register.error";

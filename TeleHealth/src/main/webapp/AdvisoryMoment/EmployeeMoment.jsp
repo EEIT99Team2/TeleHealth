@@ -222,6 +222,7 @@
 <script type="text/javascript" src="../fullCalendar/calender.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- loading用 -->
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/src/loadingoverlay.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/extras/loadingoverlay_progress/loadingoverlay_progress.min.js"></script>
 <script>
@@ -234,7 +235,7 @@ $(document).ready(function() {
 	$.LoadingOverlay("show");
 	setTimeout(function(){
 	    $.LoadingOverlay("hide");
-	}, 3800);
+	}, 2500);
 
 	var initialLocaleCode = 'zh';
 	var EmpId=$("#empId").val();
@@ -353,8 +354,9 @@ $(document).ready(function() {
 		  var reserveEmp=events.title.substr(emptyChar+2);
 		  var MomentId=events.MomentId;
 		  var takeoff=events.takeoff;
-		  console.log(takeoff);
-		  if(events.backgroundColor=="#0080ff" && takeoff == "noexist"){
+		  var MomentStatus=events.MomentStatus;
+		  var reResult=events.reResult;
+		  if(events.backgroundColor=="#0080ff" && takeoff == "noexist" || reResult=="N"){
 			  $('#UnReserveItem').modal('show');
 			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
 			  			+"<h3>諮詢項目:</h3><h5>"+reserveItem+"</h5>"
@@ -362,16 +364,16 @@ $(document).ready(function() {
 			  	$("#UnReserveItem .modal-body").append(docFrag);
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"MomentId":MomentId};
 				console.log("events="+reserveData);
-			  }else if(events.backgroundColor=="#d26900" && takeoff == "noexist"){
+			  }else if(events.backgroundColor=="#d26900" && takeoff == "noexist" || reResult=="N"){
 				reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"MomentId":MomentId};
 				  $('#reservedItem').modal('show');
 				  docFrag.append("<h3>視訊代碼:"+events.selfResCode+"</h3>"
 				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
 				  	$("#reservedItem .modal-body").append(docFrag);
-				}else if(events.backgroundColor=="#0080ff" && takeoff == "exist"|| events.backgroundColor=="#d26900" && takeoff == "exist"){
+				}else if(events.backgroundColor=="#0080ff" && takeoff == "exist" && reResult=="null"|| events.backgroundColor=="#d26900" && takeoff == "exist"  && reResult=="null"){					
 						docFrag.append("<h3>"+"請假申請審核中"+"</h3>");
 						$("#takeoffedItem .modal-body").append(docFrag);
-						$('#takeoffedItem').modal('show');
+						$('#takeoffedItem').modal('show');								
 					}  
 	  },
 	  eventMouseover:function( event, jsEvent, view ) {
@@ -446,7 +448,6 @@ $("#ReTakeOff").click(function takeoff(){
 				$(".txtWaring").remove();
 				$("#checkTakeOff").attr("data-dismiss","modal");
 				var docFrag = $(document.createDocumentFragment());
-				console.log(reserveData.MomentId+";;;;;;;;"+reserveData.empId);
 				$.post("<c:url value='/AdvisoryMoment/takeoff.controller'/>",{"MomentId":reserveData.MomentId,"EmpId":reserveData.empId,"TakeoffItem":TakeoffItem,"TakeoffReason":TReason},function(result){
 					docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");
 					$("#takeoffResItem .modal-body").append(docFrag);

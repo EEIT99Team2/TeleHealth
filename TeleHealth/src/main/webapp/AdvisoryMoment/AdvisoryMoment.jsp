@@ -68,7 +68,7 @@
                         <a class="nav-link" href="#pricing">方案介紹</a>
                     </li>
 				   </ul>
-<input type="text" id="userid" name="empId" value="585A1C26-E062-4EB7-95CD-8FDE1BBE7803">
+<input type="text" id="userid" name="userid" value="0A21A5D0-3AA1-4A16-9742-585B4A1EA78E">
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
 <select id="month" class="headerChoose"></select><span id="item1" class="headerChoose">月</span>
@@ -352,7 +352,7 @@ $(document).ready(function() {
 			$.post("<c:url value='/Advisory/ReserveCheck.controller'/>",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
 				"reserveEmp":reserveData.reserveEmp,"empId":reserveData.empId,"UserId":reserveData.UserId,"MomentId":reserveData.MomentId},function(result){			
 				var splitCode1=result.indexOf(",");
-				var splitCode2=result.indexOf(",,");reservedData
+				var splitCode2=result.indexOf(",,");
 				$('#reserveDataDetail').modal('hide');
 				 $('#reserveResult').modal('show');
 				  docFrag.append("<h3>"+result.substr(0,splitCode1)+"</h3>"
@@ -381,10 +381,10 @@ $(document).ready(function() {
 
 	$("#cancelReserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());		
-		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode},function(result){
+		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode,"UserId":reservedData.UserId},function(result){
 			$("#cancelReserveItem").modal('hide');
 			$("#cancelCheckItem").modal('show');
-			docFrag.append("<h3>"+result+"</h3>");
+			docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");
 			console.log("result="+result);
 	  	$("#cancelCheckItem .modal-body").append(docFrag);
 			})

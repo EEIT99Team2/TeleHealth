@@ -23,6 +23,7 @@ public class AdvisoryMomentBean implements Serializable {
 	private	String advisoryCode;
 	private	String empId;
 	private	String videoCode;
+	private String status;
 	
 	public String getId() {
 		return id;
@@ -60,10 +61,18 @@ public class AdvisoryMomentBean implements Serializable {
 	public void setVideoCode(String videoCode) {
 		this.videoCode = videoCode;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
-		return "AdvisoryBean [id=" + id + ", calendar=" + calendar + ", reserveStatus=" + reserveStatus + ", advisoryCode=" + advisoryCode + ", empId=" + empId
-				+ ", videoCode=" + videoCode + "]";
+		return "AdvisoryMomentBean [id=" + id + ", calendar=" + calendar + ", reserveStatus=" + reserveStatus
+				+ ", advisoryCode=" + advisoryCode + ", empId=" + empId + ", videoCode=" + videoCode + ", status="
+				+ status + "]";
 	}
+	
 		
 }

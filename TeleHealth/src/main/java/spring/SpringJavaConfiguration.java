@@ -21,15 +21,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import advisory.model.AdvisoryBean;
 import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryTypeBean;
+import employees.model.EmployeesBean;
 import healthcolumn.model.HealthColumnBean;
 import healthcolumn.model.QuestionBean;
 import healthpassport.model.BMIBean;
 import healthpassport.model.BloodPressureBean;
 import healthpassport.model.BloodSugarBean;
 import healthpassport.model.DataAnalysisBean;
-import employees.model.EmployeesBean;
+import querydrugs.model.DrugBean;
 import register.model.MemberBean;
-import register.model.TestBean;
 import takeoffrecords.model.TakeoffBean;
 
 @Configuration
@@ -41,7 +41,9 @@ import takeoffrecords.model.TakeoffBean;
 		"advisory.model",
 		"employees.model",
 		"healthpassport.model",
-		"takeoffrecords.model"})
+		"takeoffrecords.model",
+		"querydrugs.model",
+		"util"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean
@@ -63,15 +65,14 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,TestBean.class,TakeoffBean.class);		
 
-		
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,DrugBean.class,TakeoffBean.class);		
+
 		return builder.buildSessionFactory();
 	}
 	
 	@Bean
 	public HibernateTransactionManager transactionManager() {
-		System.out.println("HibernateTransactionManager");
 		return new HibernateTransactionManager(sessionFactory());
 	}
 	

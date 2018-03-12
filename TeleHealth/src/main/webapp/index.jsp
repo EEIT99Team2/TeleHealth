@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
- <title>Document</title>  
+<title>Document</title>  
 </head>
 <body>
    <jsp:include page="/fragment/header.jsp" />
     <div class="container">
+    
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
@@ -37,11 +37,12 @@
                                 <input type="password" class="form-control" name="psw" id="psw" placeholder="Enter password">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPsw}</font>
-                            <div class="checkbox">
+                            <div class="checkbox" id="rememberMe">
                                 <label>
                                     <input type="checkbox" value="" checked /> Remember me
                                 </label>
                             </div>
+                          	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
                             <button type="submit" class="btn btn-success btn-block">Login</button>
                             <button type="submit" class="btn btn-danger btn-block">Cancel</button>
                         </form>
@@ -60,7 +61,7 @@
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                 <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>               
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -71,7 +72,7 @@
                 </div>
                 <div class="carousel-item">
                     <img class="third-slide" src="https://static.runoob.com/images/mix/img_mountains_wide.jpg" alt="Third slide">
-                </div>
+                </div>                
             </div>
             <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -209,9 +210,7 @@
         </div>
     </main>
     <!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
+	<jsp:include page="/fragment/footer.jsp" />
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -219,11 +218,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. -->
-    <script src="holder.min.js"></script>
-    <script src="scripts.js"></script>
-    
-    
-    </script>    
+    <script src="<c:url  value='/holder.min.js' />"></script>
+    <script src="<c:url  value='/scripts.js' />" ></script>
     
 </body>
 

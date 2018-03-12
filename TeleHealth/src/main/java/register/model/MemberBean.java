@@ -36,6 +36,15 @@ public class MemberBean {
 	private String fileName;
 	private Timestamp registerTime;
 	private Timestamp modifiyTime;
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public Timestamp getModifiyTime() {
 		return modifiyTime;

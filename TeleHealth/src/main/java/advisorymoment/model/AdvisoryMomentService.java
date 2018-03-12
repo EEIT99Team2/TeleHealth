@@ -36,6 +36,11 @@ public class AdvisoryMomentService {
 		String VideoCode;
 		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
+			String MomentStatus = result.get(i)[8].toString();
+			//判斷班表狀態是否存在
+			if(MomentStatus.equals("N")) {
+				continue;
+			}
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
 			String calendar = sdf.format(result.get(i)[1]);
@@ -62,7 +67,7 @@ public class AdvisoryMomentService {
 			} else if (status.equals("F") && reserved.size() != 0) {
 				for (int j = 0; j < reserved.size(); j++) {
 					reservedId = reserved.get(j)[0].toString();
-					VideoCode = reserved.get(j)[6].toString();
+					VideoCode = reserved.get(j)[7].toString();
 					if (reservedId.equals(MomentId)) {
 						dataOne.put("backgroundColor", "#00db00");
 						dataOne.put("borderColor", "black");
@@ -95,6 +100,11 @@ public class AdvisoryMomentService {
 		String VideoCode;
 		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
+			String MomentStatus = result.get(i)[7].toString();
+			//判斷班表狀態是否存在
+			if(MomentStatus.equals("N")) {
+				continue;
+			}
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
 			String calendar = sdf.format(result.get(i)[1]);
@@ -120,7 +130,7 @@ public class AdvisoryMomentService {
 			} else if (status.equals("F") && reserved.size() != 0) {
 				for (int j = 0; j < reserved.size(); j++) {
 					reservedId = reserved.get(j)[0].toString();
-					VideoCode = reserved.get(j)[6].toString();
+					VideoCode = reserved.get(j)[7].toString();
 					if (reservedId.equals(MomentId)) {
 						dataOne.put("backgroundColor", "#00db00");
 						dataOne.put("borderColor", "black");
@@ -154,7 +164,15 @@ public class AdvisoryMomentService {
 		String selfItemId;
 		String selfResCode;
 		String zhCareer="醫生";
+		String reResult="null";
+		String reReason="null";
+		String reTime="null";
 		for (int i = 0; i < result.size(); i++) {
+			String MomentStatus = result.get(i)[8].toString();
+			//判斷班表狀態是否存在
+			if(MomentStatus.equals("N")) {
+				continue;
+			}
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = result.get(i)[0].toString();
 			String calendar = sdf.format(result.get(i)[1]);
@@ -172,16 +190,19 @@ public class AdvisoryMomentService {
 				zhCareer="營養師";
 			}
 			//別人班表是否有預約
-			if(result.get(i)[6]==null) {
+			if(result.get(i)[7]==null) {
 				otherResCode="null";
 			}else {
-				otherResCode=result.get(i)[6].toString();
+				otherResCode=result.get(i)[7].toString();
 			}
 			//此項班表是否為有申請假單				
 			takeoffRecord = takeoffService.select(MomentId);							
 			if(takeoffRecord!=null && takeoffRecord.getId()!=null) {
 				takeoff="exist";
-				if(takeoffRecord.getApprovedResult()!=null) {	
+				if(takeoffRecord.getApprovedResult()!=null) {
+					reResult =takeoffRecord.getApprovedResult().toString();
+					reReason = takeoffRecord.getRejectReason().toString();
+					reTime = sdf.format(takeoffRecord.getApprovedTime());
 					if(takeoffRecord.getApprovedResult().equals("N")) {						
 						takeoff="noexist";
 					}
@@ -195,15 +216,19 @@ public class AdvisoryMomentService {
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
 			dataOne.put("takeoff", takeoff);
+			dataOne.put("MomentStatus", MomentStatus);
+			dataOne.put("reResult", reResult);
+			dataOne.put("reReason", reReason);
+			dataOne.put("reTime", reTime);
 			
 				for (int j = 0; j < selfItem.size(); j++) {
 					selfItemId = selfItem.get(j)[0].toString();
 					//當自己負責的班表id equal到此項班表id
 					if (selfItemId.equals(MomentId)) {
-						if(selfItem.get(j)[6]==null) {
+						if(selfItem.get(j)[7]==null) {
 							selfResCode ="null";
 						}else {							
-							selfResCode = selfItem.get(j)[6].toString();
+							selfResCode = selfItem.get(j)[7].toString();
 						}
 						//此項班表有預約
 						if(!selfResCode.equals("null")&&status.equals("F")) {							
@@ -241,6 +266,11 @@ public class AdvisoryMomentService {
 		List<Object[]> selfItem = this.selectByEmpSelf(EmpId);
 		String zhCareer="醫生";
 		for (int i = 0; i < selfItem.size(); i++) {
+			String MomentStatus = selfItem.get(i)[8].toString();
+			//判斷班表狀態是否存在
+			if(MomentStatus.equals("N")) {
+				continue;
+			}
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MomentId = selfItem.get(i)[0].toString();
 			String calendar = sdf.format(selfItem.get(i)[1]);
@@ -266,6 +296,7 @@ public class AdvisoryMomentService {
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
+			dataOne.put("MomentStatus", MomentStatus);
 			if(status.equals("F")) {							
 				dataOne.put("backgroundColor", "#d26900");
 				dataOne.put("borderColor", "black");
@@ -339,6 +370,18 @@ public class AdvisoryMomentService {
 		return result;
 	};
 	
+	//會員預約扣款
+		public boolean updateMemPoint(String UserId) {
+			boolean result =false;
+			if(UserId!=null && UserId.trim().length()!=0) {
+				int upResult= advisoryMomentDAO.updateMemPoint(UserId);
+				if(upResult==1) {				
+					result=true;
+				}
+			}		
+			return result;
+		}
+	
 	//會員預約時用
 	public AdvisoryMomentBean updateByReserve(AdvisoryMomentBean bean) {
 		AdvisoryMomentBean result = null;
@@ -366,12 +409,20 @@ public class AdvisoryMomentService {
 		return result;
 	};
 	
+	//請假成功，修改班表狀態
+	public boolean updateMoment(String MomentId) {		
+		return advisoryMomentDAO.updateMoment(MomentId);
+	}
+	
+	
 	//刪除會員預約紀錄(table:Advisory)
 		public boolean deleteMemReserve(String VideoCode,String MomentId) {			
 			boolean DeleteResult =false;
 			boolean FinalResult =false;
-			if (VideoCode != null&&VideoCode.trim().length()!=0) {
+			System.out.println("VideoCode="+VideoCode);
+			if (VideoCode != null && VideoCode.trim().length()!=0) {
 				List<Object[]> selectAD = this.selectByMemVCode(VideoCode);
+				System.out.println("有搜到"+selectAD);
 				if(selectAD!=null && selectAD.size()!=0) {				
 					DeleteResult =advisoryMomentDAO.deleteMemReserve(VideoCode);
 					if(DeleteResult) {
@@ -382,11 +433,12 @@ public class AdvisoryMomentService {
 			return FinalResult;
 		}
 	
-	public boolean delete(AdvisoryMomentBean bean) {
-		boolean result = false;
-		if(bean!=null) {
-			result = advisoryMomentDAO.delete(bean.getId());
-		}
-		return result;
-	}
+
+//	public boolean delete(String MomentId) {
+//		boolean result = false;
+//		if(MomentId!=null&&MomentId.trim().length()!=0) {
+//			result = advisoryMomentDAO.delete(MomentId);
+//		}
+//		return result;
+//	}
 }
