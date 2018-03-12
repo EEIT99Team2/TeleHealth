@@ -4,7 +4,5 @@
 <footer class="w3-center w3-black w3-padding-16">
         <p>永遠牽著您的手,伴您走 <a href="<c:url value="/index.jsp"/>" title="W3.CSS" target="_blank" class="w3-hover-text-green">牽伴</a></p>
 </footer>
- 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

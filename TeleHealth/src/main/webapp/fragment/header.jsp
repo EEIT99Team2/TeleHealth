@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
     <!-- Bootstrap core CSS -->
-    <script type="text/javascript" src="<c:url value="/js/jquery-3.3.1.min.js"/>"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/w3.css"/>">

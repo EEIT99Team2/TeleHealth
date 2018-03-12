@@ -100,6 +100,7 @@ public class HealthColumnDAO  {
 		}
 		return false;
 	}
+	//修改
 	public void count(String title) {
 		NativeQuery query=this.getSession().createNativeQuery("update healthColumn set clickCount=clickCount+1 where title=? ");
 		query.setParameter(1, title);
