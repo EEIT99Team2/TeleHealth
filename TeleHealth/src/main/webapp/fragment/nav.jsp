@@ -28,12 +28,12 @@
 
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
-
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
 	<div class="container">
 		<a class="navbar-brand js-scroll-trigger" href="#page-top"><img
-			alt="Logo" src="<c:url value="/img/logo.png" />" /></a>
+			alt="Logo" src="<c:url value="/images/logo.png" />" /></a>
+			<span class="navbar-brand">牽伴健康諮詢平台</span>
 		<button class="navbar-toggler navbar-toggler-right" type="button"
 			data-toggle="collapse" data-target="#navbarResponsive"
 			aria-controls="navbarResponsive" aria-expanded="false"
@@ -44,20 +44,44 @@
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="#carouselExampleIndicators">健康專欄</a></li>
+					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="#introduction">簡介</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="#team">醫師團隊</a></li>
-				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="#temp1">Temp1</a></li>
-				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="#temp2">Temp2</a></li>
+				<c:if test="${not empty LoginOK}">
+					<li class="nav-item"><a class="nav-link" href="#pricing">健康護照</a>
+					</li>
+				</c:if>
+				<c:if test="${not empty LoginOK}">
+					<li class="nav-item"><a class="nav-link"
+						href="<c:url value='/AdvisoryMoment/AdvisoryMoment.jsp'/>">預約時刻</a>
+					</li>
+				</c:if>
+				<c:if test="${not empty LoginOK}">
+					<li class="nav-item"><a class="nav-link"
+						href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
+				</c:if>	
 			</ul>
+			
+			
+			
 		</div>
 		<div class="text-center">
-			<a href="" id="myBtn" class="btn btn-primary btn-rounded"
-				data-toggle="modal" data-target="#darkModalForm">登入</a>
+			<c:if test="${empty LoginOK}">
+				<button type="button" class="btn btn-primary btn-rounded" 
+					data-toggle="modal" id="myBtn">登入</button>
+			</c:if>
+			<c:if test="${not empty LoginOK}">
+				<p>
+					<c:out value="${LoginOK.memName},你好!!" />
+				</p>
+				<a href="<c:url value='/Members/Logout.jsp' />">
+					<button class="btn btn-sm btn-outline-secondary" 
+					id="myBtn1">登出</button>
+				</a>
+			</c:if>				
+				
 		</div>
 	</div>
 </nav>
@@ -76,25 +100,27 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body" style="padding: 40px 50px;">
-					<form role="form">
-						<div class="form-group">
-							<label for="usrname"><span class="fa fa-user"></span> 帳號</label>
-							<input type="text" class="form-control" id="usrname"
-								placeholder="Enter email">
-						</div>
-						<div class="form-group">
-							<label for="psw"><span class="fa fa-eye"></span> 密碼</label> <input
-								type="text" class="form-control" id="psw"
-								placeholder="Enter password">
-						</div>
-						<div class="checkbox">
-							<label><input type="checkbox" value="" checked>記住我</label>
-						</div>
-						<button type="submit" class="btn btn-success btn-block">
-							登入</button>
-						<button type="submit" class="btn btn-danger btn-block"
-							data-dismiss="modal">取消</button>
-					</form>
+					<form method="post" action="<c:url value="/login.controller"/>">
+                            <div class="form-group">
+                                <label for="usrname"><span class="fa fa-user"></span> 帳號</label>
+                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${param.usrname}">
+                                <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
+                            </div>
+                            <div class="form-group">
+                                <label for="psw">
+                                    <span class="fa fa-eye"></span> 密碼</label>
+                                <input type="password" class="form-control" name="psw" id="psw" placeholder="Enter password">
+                            </div>
+                            <font color="red" size="-1">${MsgMap.errorPsw}</font>
+                            <div class="checkbox" id="rememberMe">
+                                <label>
+                                    <input type="checkbox" value="" checked /> 記住我
+                                </label>
+                            </div>
+                          	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
+                            <button type="submit" class="btn btn-success btn-block">登入</button>
+                            <button type="submit" class="btn btn-danger btn-block">取消</button>
+                        </form>
 				</div>
 				<div class="modal-footer">
 					<p>

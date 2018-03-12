@@ -74,7 +74,7 @@
   <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card">
-        <img src="img/team2.jpg" alt="John" style="width:100%">
+        <img src="<c:url value="/images/team2.jpg"/>" alt="John" style="width:100%">
         <div class="w3-container bg-light">
           <h3>John Doe</h3>
           <p class="w3-opacity">CEO & Founder</p>
@@ -84,7 +84,7 @@
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card">
-        <img src="img/team1.jpg" alt="Jane" style="width:100%">
+        <img src="<c:url value="/images/team1.jpg"/>" alt="Jane" style="width:100%">
         <div class="w3-container bg-light">
           <h3>Anja Doe</h3>
           <p class="w3-opacity">Art Director</p>
@@ -94,7 +94,7 @@
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card">
-        <img src="img/team3.jpg" alt="Mike" style="width:100%">
+        <img src="<c:url value="/images/team3.jpg"/>" alt="Mike" style="width:100%">
         <div class="w3-container bg-light">
           <h3>Mike Ross</h3>
           <p class="w3-opacity">Web Designer</p>
@@ -104,7 +104,7 @@
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card">
-        <img src="img/team4.jpg" alt="Dan" style="width:100%">
+        <img src="<c:url value="/images/team4.jpg"/>" alt="Dan" style="width:100%">
         <div class="w3-container bg-light">
           <h3>Dan Star</h3>
           <p class="w3-opacity">Designer</p>

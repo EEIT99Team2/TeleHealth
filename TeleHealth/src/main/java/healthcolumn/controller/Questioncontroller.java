@@ -1,0 +1,177 @@
+package healthcolumn.controller;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+
+import healthcolumn.model.QuestionBean;
+import healthcolumn.model.Dao.QuestionService;
+
+@Controller
+public class Questioncontroller {
+	@Autowired
+	private QuestionService QuestionService;
+	//po文回應
+	@RequestMapping(path = { "/healthcolumn/QAcontent.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String loadQAcontent(String title) {
+		List<QuestionBean> loadpage = QuestionService.loadresponse(title);		
+		Gson gson = new Gson();
+		String data = gson.toJson(loadpage);
+		System.out.println(data);
+		return data;
+	}
+	//員工文章
+	@RequestMapping(path = { "/healthcolumn/QAEmpublish.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String loadQAEmppublish(String empId) {
+		List<QuestionBean> loadpage = QuestionService.loadEmp(empId);		
+		Gson gson = new Gson();
+		String data = gson.toJson(loadpage);
+		System.out.println(data);
+		return data;
+	}
+	//會員文章
+	@RequestMapping(path = { "/healthcolumn/QAMempublish.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String loadQAMempublish(String memId) {
+		List<QuestionBean> loadpage = QuestionService.loadMem(memId);
+		Gson gson = new Gson();
+		String data = gson.toJson(loadpage);
+		System.out.println(data);
+		return data;
+	}
+	// 修改po文
+	@RequestMapping(path = {
+	"/healthcolumn/updatememQA.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.POST })
+	public @ResponseBody String updatecontent(String contenttext,String questionId,Model model) {
+		int columnIdemp=Integer.parseInt(questionId);		
+		boolean update = QuestionService.updateQA(columnIdemp, contenttext);
+		Map<String, String> QAerrors = new HashMap<>();
+		model.addAttribute("QA", QAerrors);
+		Map<String, String> QAOK = new HashMap<String, String>();
+		model.addAttribute("QA", QAOK);
+		if(update) {
+			QAOK.put("updateok", "已修改選擇po文!!");
+			return "修改成功";
+		}else {
+			QAerrors.put("updaterror","修改失敗!!");
+			return"修改失敗";
+		}		
+	}	
+	// 刪除會員po文章
+	@RequestMapping(path = {
+	"/healthcolumn/deleteQAMem.controller" }, produces = "text/html;charset=UTF-8", method = {
+			RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody String deleteMem(String Id,String memberId,Model model) {		
+		int columnIdMem=Integer.parseInt(Id);		
+		boolean delete = QuestionService.deleteMem(columnIdMem, memberId);
+		Map<String, String> contenterrors = new HashMap<>();
+		model.addAttribute("contenterrors", contenterrors);
+		Map<String, String> contentOK = new HashMap<String, String>();
+		model.addAttribute("contentOK", contentOK);
+		if(delete) {
+			contenterrors.put("contentok", "已刪除所選擇的文章!!");
+			return  "deletecontentok";
+		}else {
+			contentOK.put("contenterror", "刪除失敗!!");
+			return "deletecontenterror";
+		}		
+	}
+	// 刪除員工文章
+		@RequestMapping(path = {
+		"/healthcolumn/deleteQAEmp.controller" }, produces = "text/html;charset=UTF-8", method = {
+				RequestMethod.GET, RequestMethod.POST })
+		public @ResponseBody String deleteEmp(String Id,String MemId,Model model) {
+			int columnIdemp=Integer.parseInt(Id);
+			boolean delete = QuestionService.deleteEmp(columnIdemp, MemId);
+			Map<String, String> contenterrors = new HashMap<>();
+			model.addAttribute("contenterrors", contenterrors);
+			Map<String, String> contentOK = new HashMap<String, String>();
+			model.addAttribute("contentOK", contentOK);
+			if(delete) {
+				contenterrors.put("contentok", "已刪除所選擇的文章!!");
+				return  "deletecontentok";
+			}else {
+				contentOK.put("contenterror", "刪除失敗!!");
+				return "deletecontenterror";
+			}		
+		}
+		//新增po文章
+		@RequestMapping(path = {"/healthcolumn/insQA.controller" }, produces = "text/html;charset=UTF-8", method = {
+				RequestMethod.GET, RequestMethod.POST })
+		public @ResponseBody String insertresponse(
+				String MemId,
+				String textmem,
+				String advisorycode,
+				String title,
+				Model model) {	
+			System.out.println(MemId+"123 "+textmem+" "+advisorycode+" "+title);
+			QuestionBean bean=new QuestionBean();
+			bean.setAdvisorycode(advisorycode);
+			bean.setMemberId(MemId);
+			bean.setContent(textmem);
+			bean.setCreateTime(new Date());
+			bean.setQAtype("Q");
+			bean.setQuetitle(title);
+			boolean delete = QuestionService.insertQA(bean);			
+			if(delete) {
+				Gson gson = new Gson();
+				String dataLoad = gson.toJson("ok");
+				return dataLoad ;
+			}else {
+				Gson gson = new Gson();
+				String dataLoad = gson.toJson("wrong");
+				return dataLoad ;
+			}		
+		}
+		//選修改文章
+		@RequestMapping(path = {"/healthcolumn/QAupdateId.controller" }, produces = "text/html;charset=UTF-8", method = {
+				RequestMethod.GET, RequestMethod.POST })
+		public @ResponseBody String QAupdateId(String Id)
+		{
+			int columnIdemp=Integer.parseInt(Id);
+			List<QuestionBean> dataId = QuestionService.loadtitleId(columnIdemp);
+			Gson gson = new Gson();
+			String dataLoad = gson.toJson(dataId);			
+			return dataLoad;			 
+		}
+		//選修全部文章
+				@RequestMapping(path = {"/healthcolumn/allmempublish.controller" }, produces = "text/html;charset=UTF-8", method = {
+						RequestMethod.GET, RequestMethod.POST })
+				public @ResponseBody String QAallmempublish()
+				{					
+					List<Object[]> allmempublish = QuestionService.loadtotalcontent();
+					Gson gson = new Gson();
+					String dataLoad = gson.toJson(allmempublish);
+					System.out.println(dataLoad);
+					return dataLoad;			 
+				}
+		//選修全部文章
+		@RequestMapping(path = {"/healthcolumn/QAMemonepublish.controller" },produces = "text/html;charset=UTF-8", method = {
+				RequestMethod.GET, RequestMethod.POST })
+		public @ResponseBody String QAMemonepublish(String memname,Model model)
+			{					
+				List<Object[]> allmempublish = QuestionService.QAMemonepublish(memname);
+				if(allmempublish.size()==0) {					
+					Gson gson = new Gson();
+					String dataLoad = gson.toJson("wrong");
+					return dataLoad ;
+				}					
+				Gson gson = new Gson();
+				String dataLoad = gson.toJson(allmempublish);				
+				return dataLoad;			 
+			}	
+}

@@ -1,5 +1,12 @@
 /.settings/
+<<<<<<< HEAD
 /target/
 /.classpath
 /.project
 /.tern-project
+=======
+/.classpath
+/.project
+/.tern-project
+/target/
+>>>>>>> branch 'master' of https://github.com/EEIT99Team2/TeleHealth.git

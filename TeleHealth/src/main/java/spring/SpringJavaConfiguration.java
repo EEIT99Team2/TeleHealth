@@ -1,18 +1,49 @@
 package spring;
 
-import java.util.*;
+//本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
 
-import javax.naming.*;
-import javax.sql.*;
+//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
+import java.util.Properties;
 
-import org.hibernate.*;
-import org.springframework.context.annotation.*;
-import org.springframework.orm.hibernate5.*;
-import org.springframework.transaction.annotation.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import advisory.model.AdvisoryBean;
+import advisorymoment.model.AdvisoryMomentBean;
+import advisorymoment.model.AdvisoryTypeBean;
+import employees.model.EmployeesBean;
+import healthcolumn.model.HealthColumnBean;
+import healthcolumn.model.QuestionBean;
+import healthpassport.model.BMIBean;
+import healthpassport.model.BloodPressureBean;
+import healthpassport.model.BloodSugarBean;
+import healthpassport.model.DataAnalysisBean;
+import querydrugs.model.DrugBean;
+import register.model.MemberBean;
+import takeoffrecords.model.TakeoffBean;
 
 @Configuration
 //本類別為普通Spring用，此處加入要掃描的套件名稱，多個用,隔開
-@ComponentScan(basePackages = { "model" })
+@ComponentScan(basePackages = { 
+		"advisorymoment.model",
+		"register.model" ,
+		"healthcolumn.model",  
+		"advisory.model",
+		"employees.model",
+		"healthpassport.model",
+		"takeoffrecords.model",
+		"querydrugs.model",
+		"util"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
 	@Bean
@@ -34,14 +65,13 @@ public class SpringJavaConfiguration {
 		props.setProperty("hibernate.show_sql", "true");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
-		builder.addAnnotatedClasses();
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,DrugBean.class,TakeoffBean.class);		
 		
 		return builder.buildSessionFactory();
 	}
 	
 	@Bean
 	public HibernateTransactionManager transactionManager() {
-		System.out.println("HibernateTransactionManager");
 		return new HibernateTransactionManager(sessionFactory());
 	}
 	

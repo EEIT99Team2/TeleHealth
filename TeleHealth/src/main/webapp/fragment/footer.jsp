@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <!-- Footer -->
     <footer>
@@ -12,7 +13,7 @@
             <ul class="list-inline">
               <li class="list-inline-item">
                 <a href="#">
-                  <i><img title="Logo" src="<c:url value="/img/logo.png" />" /></i>
+                  <i><img title="Logo" src="<c:url value="/images/logo.png" />" /></i>
                 </a>
               </li>
             </ul>
@@ -42,4 +43,6 @@ $(document).ready(function(){
 
     <!-- Custom scripts for this template -->
     <script src="<c:url value="/js/agency.min.js"/>"></script>
+
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 
