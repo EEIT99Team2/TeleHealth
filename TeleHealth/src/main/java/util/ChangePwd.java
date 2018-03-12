@@ -1,7 +1,7 @@
 package util;
 
 public class ChangePwd {
-	public static String GoPwd(){
+	public static String getNewRandomPwd(){
 	    
 		char[] codeData=new char[8];
 		  int codeSelect;

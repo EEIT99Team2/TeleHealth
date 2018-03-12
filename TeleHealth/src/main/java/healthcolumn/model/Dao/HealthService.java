@@ -61,5 +61,5 @@ public class HealthService {
 		healthColumnDAO.update(title, content, fileName);
 		return true;
 	}
-	
+
 }

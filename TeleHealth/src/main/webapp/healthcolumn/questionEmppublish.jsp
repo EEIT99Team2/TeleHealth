@@ -157,6 +157,5 @@
 		})
 		})
 	</script>
-<div id="iframeck"></div>		
 </body>
 </html>

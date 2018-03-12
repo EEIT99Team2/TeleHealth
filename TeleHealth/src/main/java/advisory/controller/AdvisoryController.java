@@ -28,8 +28,9 @@ public class AdvisoryController {
 	@Autowired
 	private EmployeesDAO employeesDAO;
 	
-	@RequestMapping(path= {"/Advisory/ReserveCheck.controller"},method= {RequestMethod.POST},produces="text/plain;charset=UTF-8")
-	public @ResponseBody String ReserveCheck(String advisoryTime,String reserveItem,String reserveEmp,String empId,String UserId,String MomentId) throws ParseException {
+	//會員預約成功，新增預約記錄
+	@RequestMapping(path= {"/Advisory/reserveCheck.controller"},method= {RequestMethod.POST},produces="text/plain;charset=UTF-8")
+	public @ResponseBody String reserveCheck(String advisoryTime,String reserveItem,String reserveEmp,String empId,String UserId,String MomentId) throws ParseException {
 		String result=null;
 		SimpleDateFormat sdfForReserve = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		SimpleDateFormat sdfForCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -50,9 +51,7 @@ public class AdvisoryController {
 				code=(int)(Math.random()*26+97);
 			}		
 			codeData[i]=(char)code;
-		}
-		
-		
+		}	
 		if(advisoryTime==null || advisoryTime.trim().length()==0 || reserveItem==null || reserveItem.trim().length()==0 || reserveEmp==null || reserveEmp.trim().length()==0 || empId==null || empId.trim().length()==0 || UserId==null || UserId.trim().length()==0) {
 			result="您的預約失敗";
 		}else {
@@ -79,7 +78,18 @@ public class AdvisoryController {
 			//增加員工預約點擊數
 			employeesDAO.addResCount(empId);		
 		}
-	
 		return result+","+videoCode+",,"+sendTime;
+	}
+	
+	//會員查看預約記錄
+	@RequestMapping(path= {"/Advisory/memberReserve.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public @ResponseBody String memberReserve(String memberId){
+		String result=null;
+		
+		if(memberId!=null && memberId.trim().length()!=0) {
+			result=advisoryService.selectByMemId(memberId);
+		}
+		
+		return result;
 	}
 }

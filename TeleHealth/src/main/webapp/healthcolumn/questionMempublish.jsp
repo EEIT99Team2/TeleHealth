@@ -20,7 +20,7 @@
 <main role="main" class="container mt-2">
 <div class="row">     	
 	      <div class="card">
-			<div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
+			<span id="title">${LoginOk.memberId}B0041CB5-09F1-4E5B-8D57-1F0406019143</span><div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
 				   <table id="productTable" class="table table-bordered">
@@ -80,9 +80,7 @@
 				})
 			 CKEDITOR.replace('contenttext',
 				  {width:400, height:200,toolbarGroups:tg}								 	
-		     );
-		    //讀取EL
-// 		    var memberId=$(''); 
+		     );		 
 		    loadmember("B0041CB5-09F1-4E5B-8D57-1F0406019143")					
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
@@ -100,13 +98,15 @@
 			   })				
 		      //讀取會員發表	
 			   function loadmember(memId){
+		    			var page=10;
+		    			var datalength=8;
 				   $.getJSON('/TeleHealth/healthcolumn/QAMempublish.controller',{memId:memId},function(datas){
-						console.log(datas);
-		    			var doc=$(document.createDocumentFragment());			    		
+						var alldatalengeth=datas.length;
+						var zy= Math.ceil(alldatalengeth	/datelength);
+						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
-			    	$.each(datas,function(i,Mem){	
-				    	console.log(Mem)		    		
+			    	$.each(datas,function(i,Mem){					    			    		
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(Mem[0]);		    		
 						cell1.append(ID);
@@ -126,9 +126,8 @@
 			     //刪除會員發表
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
 				   var check=confirm("你確定要刪除此筆資料?");
-				   var Memname=$('#title').val();
-	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			   console.log(Id+"   "+Memname) 			  
+				   var Memname=$('#title').text();
+	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  		  
 	 			   if(check==true){
 	 				  $.get('/TeleHealth/healthcolumn/deleteQAMem.controller',{Id:Id,memberId:Memname},function(data){
 		 				   alert("您已刪除所po的文");
@@ -143,16 +142,12 @@
 			    //修改文章灌入ck	    
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
 	 			  $('#UnReserveItem').modal('show');	
-	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			  console.log(Id);
-	 			 $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){
-						console.log(datas);
+	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  
+	 			 $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){						
 		 				$.each(datas,function(i,QA){	 				
 	 					 CKEDITOR.instances.contenttext.setData(QA[5]);
 	 					 $('#questionId').val(QA[0]);	 								 
-		 				})	 
-	 			  
-	 					
+		 				}) 					
 	 		   })
 			   		   
 		})

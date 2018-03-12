@@ -11,7 +11,7 @@
 		<res-sharing-scope>Shareable</res-sharing-scope>
 	</resource-ref>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>home.jsp</welcome-file>
 	</welcome-file-list>
 	<listener>
 	<listener-class>util.FileUploadProgressListener</listener-class>	
@@ -33,7 +33,7 @@
 		<servlet-name>ConnectorServlet</servlet-name>
 		<url-pattern>/forCkeditor/ckfinder/core/connector/java/connector.java</url-pattern>
 	</servlet-mapping>	
-	
+   
 	<!--//HTTPS加密 -->
 	<security-constraint>
 		<web-resource-collection>

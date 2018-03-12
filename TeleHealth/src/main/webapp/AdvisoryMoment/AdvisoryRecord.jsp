@@ -1,0 +1,252 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>請假系統</title>
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link href="<c:url value='/fullCalendar/w3.css'/>" rel="stylesheet" type="text/css"/>
+<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
+
+<style>
+.txtWaring{color:red}
+</style>
+</head>
+<body>
+<div class='container'>
+<h2  class='container'>未完成預約</h2>
+<table class="table  table-hover">
+  <thead>
+    <tr>
+      <th scope="col">編號</th>
+      <th scope="col">諮詢項目</th>
+      <th scope="col">諮詢時段</th>
+      <th scope="col">負責人</th>
+      <th scope="col">狀態</th>
+    </tr>
+  </thead>
+  <tbody id="UnCheckList">
+<!--      未處理申請 -->
+  </tbody>
+</table>
+<h2 class='container'>已完成預約</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">編號</th>
+      <th scope="col">諮詢項目</th>
+      <th scope="col">諮詢時段</th>
+      <th scope="col">負責人</th>
+      <th scope="col">狀態</th>
+      <th scope="col">滿意度</th>
+    </tr>
+  </thead>
+  <tbody id="CheckList">
+<!--      已處理申請 -->
+  </tbody>
+</table>
+
+<!-- 管理員回覆視窗 -->
+<div class="modal fade" id="UnItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="responseTitle">假單明細</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 回覆內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="responseCheck">送出</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 回覆結果視窗 -->
+<div class="modal fade" id="resultItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resultTitle">核准結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 結果 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="resultCheck">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!--=======================載入script檔跟程式==========================-->
+<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	var memberId="0A21A5D0-3AA1-4A16-9742-585B4A1EA78E";
+	LoadData();
+	var DataPackage;
+function LoadData(){
+	var docFrag1 =$(document.createDocumentFragment());
+	var docFrag2 =$(document.createDocumentFragment());
+	var dataSource;
+	var unTalkOne;
+	var TalkedOne;
+	var unCheckData = $("#UnCheckList");
+	var CheckData = $("#CheckList");
+	unCheckData.empty();
+	CheckData.empty();
+$.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memberId},function(datas){
+	console.log(datas);
+	$.each(datas,function(index,data){
+		console.log(data);
+		var status=data.status;
+		if(status=="N"){			
+			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
+			var col2 = $("<td>"+data.reserveItem+"</td>");
+			var col3 = $("<td>"+moment(data.advisoryTime).format("YYYY-MM-DD HH:mm")+"</td>");
+			var col4 = $("<td>"+data.empName+" "+data.career+"</td>");
+			var col5 = $("<td>未開始</td>");
+			unTalkOne={"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"statify":data.statify,"modifyTime":data.modifyTime,"momentId":data.momentId};			
+			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
+		    docFrag1.append(allcol);		
+		}else{
+			var col21 = $("<th scope='row'>"+(index+1)+"</th>");
+			var col22 = $("<td>"+data.reserveItem+"</td>");
+			var col23 = $("<td>"+moment(data.advisoryTime).format("YYYY-MM-DD HH:mm")+"</td>");
+			var col24 = $("<td>"+data.empName+" "+data.zhCareer+"</td>");
+			var col25 = $("<td>已完成</td>");
+			var col25 = $("<td>5</td>");
+			TalkedOne={"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"statify":data.statify,"modifyTime":data.modifyTime,"momentId":data.momentId};		
+			var allcol2 = $("<tr></tr>").append([col21,col22,col23,col24,col25,col26]);
+			docFrag2.append(allcol2);
+		}
+		})
+	$("#UnCheckList").append(docFrag1);
+	$("#CheckList").append(docFrag2);
+	console.log(unTalkOne);
+	console.log(TalkedOne);
+})
+}
+//未預約
+$("body").on("click","#UnCheckList tr",function(){
+	$("#responseItem .modal-body").empty();
+	var docFrag =$(document.createDocumentFragment());
+	var empName = $(this).find("td:eq(0)").text();
+	var apType = $(this).find("td:eq(1)").text();
+	var apTime = $(this).find("td:eq(2)").text();
+	var allData = $(this).find("span").text();
+	var emptyChar1 = allData.indexOf("#");
+	var emptyChar2 = allData.indexOf("$");
+	var emptyChar3 = allData.indexOf("%");
+	var emptyChar4 = allData.indexOf("^");
+	var emptyChar5 = allData.indexOf("*");
+	var empId = allData.substr(0,emptyChar1);
+	var videoCode = allData.substr(emptyChar1+1,emptyChar2-emptyChar1-1);
+	var apReason = allData.substr(emptyChar2+1,emptyChar3-emptyChar2-1);
+	var MomentId = allData.substr(emptyChar3+1,emptyChar4-emptyChar3-1);
+	var takeoffId = allData.substr(emptyChar4+1,emptyChar5-emptyChar4-1);
+	var calendar = allData.substr(emptyChar5+1);
+	docFrag.append("<span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
+			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"	
+			+"<br/><span style='font-size:1.3em'>請假事由:  "+apReason+"</span>"
+			+"<br/><span style='font-size:1.3em'>是否核准:  </span>"
+			+"<input type='radio' value='Y' name='approve'/>是 "
+			+"<input type='radio' value='N' name='approve'/>否 "
+			+"<br/><div id='noteBox'><span>備註: </span><textarea id='noteTxt' rows='6' cols='50' style='font-size:1em'></textarea><div>");		
+	$("#responseItem .modal-body").append(docFrag);
+	DataPackage={"takeoffId":takeoffId,"empId":empId,"empName":empName,"MomentId":MomentId,"calendar":calendar,"videoCode":videoCode};
+	$("#responseItem").modal("show");
+});
+
+//已預約
+$("body").on("click","#CheckList tr",function(){
+	$("#resultItem .modal-body").empty();
+	var docFrag =$(document.createDocumentFragment());
+	var empName = $(this).find("td:eq(0)").text();
+	var apType = $(this).find("td:eq(1)").text();
+	var apTime = $(this).find("td:eq(2)").text();
+	var reResult = $(this).find("td:eq(3)").text();
+	var allData = $(this).find("span").text();
+	var emptyChar1 = allData.indexOf("#");
+	var emptyChar2 = allData.indexOf("$");
+	var emptyChar3 = allData.indexOf("%");
+	var emptyChar4 = allData.indexOf("^");
+	var emptyChar5 = allData.indexOf("*");
+	var emptyChar6 = allData.indexOf("&");
+	var empId = allData.substr(0,emptyChar1);
+	var videoCode = allData.substr(emptyChar1+1,emptyChar2-emptyChar1-1);
+	var apReason = allData.substr(emptyChar2+1,emptyChar3-emptyChar2-1);
+	var MomentId = allData.substr(emptyChar3+1,emptyChar4-emptyChar3-1);
+	var takeoffId = allData.substr(emptyChar4+1,emptyChar5-emptyChar4-1);
+	var calendar = allData.substr(emptyChar5+1,emptyChar6-emptyChar5-1);
+	var reReason = allData.substr(emptyChar6+1);
+	docFrag.append("<span style='font-size:1.3em'>申請人:  "+empName+"</span>"
+			+"<br/><span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
+			+"<br/><span style='font-size:1.3em'>請假時段:  "+calendar+"</span>"
+			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"		
+			+"<br/><span>申請說明: </span><p>"+apReason+"</p>"		
+			+"<br/><span style='font-size:1.3em'>核准結果:  "+reResult+"</span>"
+			+"<br/><span>備註: </span><p>"+reReason+"</p>");		
+	$("#resultItem .modal-body").append(docFrag);
+	$("#resultItem").modal("show");
+});
+
+$("#responseCheck").click(function(){
+	var docFrag =$(document.createDocumentFragment());
+	var apResult= $("input[name='approve']:checked").val();
+	var note = $.trim($("#noteTxt").val());
+	if(note.length==0){
+		$(".txtWaring").remove();
+		$("#responseCheck").removeAttr("data-dismiss");
+		$("#noteBox").append("<h5 class='txtWaring'>請加上備註</h5>");
+	}else{
+		$(".txtWaring").remove();
+		$("#responseCheck").attr("data-dismiss","modal");
+	console.log(DataPackage.takeoffId+";"+DataPackage.empId+";"+DataPackage.videoCode+";"+DataPackage.MomentId+";"+apResult+";"+note);
+	$.post("<c:url value='/AdvisoryMoment/approveTakeoff.controller'/>",{"takeoffId":DataPackage.takeoffId,"empId":DataPackage.empId,"empName":DataPackage.empName,"MomentId":DataPackage.MomentId,"calendar":DataPackage.calendar,"videoCode":DataPackage.videoCode,"apResult":apResult,"reason":note},function(result){
+		docFrag.append("<h4>"+result+"</h4>");
+		$("#resultItem .modal-body").append(docFrag);
+		})
+	$("#resultItem").modal("show");
+			}
+});
+
+
+
+//綁定動態產生tr滑鼠滑過變色
+$("body").on("mouseover","tr",function(){
+	$("tbody tr").mouseover(over).mouseout(out);	
+});
+
+$("tbody tr").mouseover(over).mouseout(out);
+
+function over(){
+	$(this).removeClass("Default");
+	$(this).addClass("table-success");
+}
+function out(){
+	$(this).removeClass("table-success");
+	$(this).addClass("Default");
+}
+
+$("#resultCheck").click(function(){
+	window.location.reload();
+});
+})
+</script>
+</body>
+</html>

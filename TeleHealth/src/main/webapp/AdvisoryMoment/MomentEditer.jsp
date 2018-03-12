@@ -8,15 +8,16 @@
 <title>請假系統</title>
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+<link href="<c:url value='/fullCalendar/w3.css'/>" rel="stylesheet" type="text/css"/>
+<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
+
 <style>
 .txtWaring{color:red}
 </style>
 </head>
 <body>
-<div>
-<h2>未處理申請</h2>
-<div id="UnCheck"></div>
+<div class='container'>
+<h2  class='container'>未處理申請</h2>
 <table class="table  table-hover">
   <thead>
     <tr>
@@ -31,10 +32,7 @@
 <!--      未處理申請 -->
   </tbody>
 </table>
-</div>
-<div>
-<h2>已處理申請</h2>
-<div id="Checked"></div>
+<h2 class='container'>已處理申請</h2>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -50,7 +48,7 @@
 <!--      已處理申請 -->
   </tbody>
 </table>
-</div>
+
 <!-- 管理員回覆視窗 -->
 <div class="modal fade" id="responseItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -90,20 +88,16 @@
     </div>
   </div>
 </div>
+</div>
 <!--=======================載入script檔跟程式==========================-->
-<script src="../fullCalendar/moment.min.js"></script>
-<script src="../fullCalendar/jquery-3.3.1.min.js"></script>
+<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
 	LoadData();
 	var DataPackage;
-
-function reFresh(){
-	window.location.reload();
-}
-	
 function LoadData(){
 	var docFrag1 =$(document.createDocumentFragment());
 	var docFrag2 =$(document.createDocumentFragment());
@@ -114,6 +108,7 @@ function LoadData(){
 $.getJSON("<c:url value='/AdvisoryMoment/takeoffData.controller'/>",{},function(datas){
 	console.log(datas);
 	$.each(datas,function(index,data){
+		console.log(data);
 		var momStatus=data.momStatus;
 		var reResult=data.reResult;
 		if(momStatus=="Y" && reResult=="null"){			
@@ -253,10 +248,10 @@ function out(){
 	$(this).addClass("Default");
 }
 
-
-
+$("#resultCheck").click(function(){
+	window.location.reload();
+});
 })
-$("#resultCheck").click(reFresh());
 </script>
 </body>
 </html>
