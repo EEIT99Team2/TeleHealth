@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
     <!-- Bootstrap core CSS -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/w3.css"/>">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>" />

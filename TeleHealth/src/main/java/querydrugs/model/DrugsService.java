@@ -18,6 +18,28 @@ public class DrugsService {
 	@Autowired
 	private DrugsDAO drugsDAO;
 	
+	private String licenseNum = "licenseNum";
+	private String effectiveDate = "effectiveDate";
+	private String issueDate = "issueDate";
+	private String clearanceNum = "clearanceNum";
+	private String chineseName = "chineseName";
+	private String englishName ="englishName";
+	private String symptom = "symptom";
+	private String formulation = "formulation";
+	private String packs = "packs";
+	private String category = "category";
+	private String regulatoryLevel = "regulatoryLevel";
+	private String ingredients = "ingredients";
+	private String applicatorName = "applicatorName";
+	private String manuName = "manuName";
+	private String country = "country";
+	private String usage = "usage";
+	private String shape = "shape";
+	private String color = "color";
+	private String marks = "marks";
+	private String pic = "pic";
+	
+	
 	@Transactional(readOnly=true)
 	public String queryDrugs(String licenseNumIn, String chineseNameIn, String englishNameIn, String manuNameIn,
 			String symptomIn, String marksIn, String colorIn, String shapeIn, String formulationIn) {
@@ -25,26 +47,6 @@ public class DrugsService {
 				manuNameIn, symptomIn, marksIn, colorIn, shapeIn, formulationIn);
 		LinkedList<HashMap<String,String>> beans = new LinkedList<HashMap<String,String>>();
 		Iterator iterators = result.iterator();
-		String licenseNum = "licenseNum";
-		String effectiveDate = "effectiveDate";
-		String issueDate = "issueDate";
-		String clearanceNum = "clearanceNum";
-		String chineseName = "chineseName";
-		String englishName ="englishName";
-		String symptom = "symptom";
-		String formulation = "formulation";
-		String packs = "packs";
-		String category = "category";
-		String regulatoryLevel = "regulatoryLevel";
-		String ingredients = "ingredients";
-		String applicatorName = "applicatorName";
-		String manuName = "manuName";
-		String country = "country";
-		String usage = "usage";
-		String shape = "shape";
-		String color = "color";
-		String marks = "marks";
-		String pic = "pic";
 		
 		while(iterators.hasNext()) {
 			HashMap<String, String> bean = new HashMap<String, String>();
@@ -76,5 +78,41 @@ public class DrugsService {
 		
 		String data = new Gson().toJson(datas);
 		return data;
+	}
+	
+	@Transactional(readOnly=true)
+	public String queryDrugById(String licenseNumIn) {
+		DrugBean result = null;
+		if(licenseNumIn!=null && licenseNumIn.trim().length()>0) {
+			result = drugsDAO.selectById(licenseNumIn);
+		}
+		HashMap<String, String> temp = new HashMap<>();
+		String data = null;
+		if(result != null) {
+			temp.put(licenseNum, result.getLicenseNum());
+			temp.put(effectiveDate, result.getEffectiveDate());
+			temp.put(issueDate, result.getIssueDate());
+			temp.put(clearanceNum, result.getClearanceNum());
+			temp.put(chineseName, result.getChineseName());
+			temp.put(englishName, result.getEnglishName());
+			temp.put(symptom, result.getSymptom());
+			temp.put(formulation, result.getFormulation());
+			temp.put(packs, result.getPacks());
+			temp.put(category, result.getCategory());
+			temp.put(regulatoryLevel, result.getRegulatoryLevel());
+			temp.put(ingredients, result.getIngredients());
+			temp.put(applicatorName, result.getApplicatorName());
+			temp.put(manuName, result.getManuName());
+			temp.put(country, result.getCountry());
+			temp.put(usage, result.getUsage());
+			temp.put(shape, result.getShape());
+			temp.put(color, result.getColor());
+			temp.put(marks, result.getMarks());
+			temp.put(pic, result.getPic());
+			data = new Gson().toJson(temp);
+			System.out.println("data=" + data);
+			return data;
+		}
+		return null;
 	}
 }
