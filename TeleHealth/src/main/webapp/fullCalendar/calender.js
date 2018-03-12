@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 function chooseyear() {
-    if (((this.selectedIndex + 2010) % 4 == 0 && (this.selectedIndex + 2010) % 100 != 0) || (this.selectedIndex + 2010) % 400 == 0) {
+    if (((this.selectedIndex + 2009) % 4 == 0 && (this.selectedIndex + 2009) % 100 != 0) || (this.selectedIndex + 2009) % 400 == 0) {
         a = 1;   //閏年
     } else {
         a = 2;   //不是閏年
@@ -42,23 +42,24 @@ function chooseyear() {
     finalyear = 2010 + this.selectedIndex;
 }
 function choosemonth() {
-    if ((this.selectedIndex + 1) == 2) {
+    if ((this.selectedIndex) == 2) {
         b = 1;  //28or29天
-    } else if ((this.selectedIndex + 1) == 4 || (this.selectedIndex + 1) == 6 || (this.selectedIndex + 1) == 9 || (this.selectedIndex + 1) == 11) {
+    } else if ((this.selectedIndex) == 4 || (this.selectedIndex) == 6 || (this.selectedIndex) == 9 || (this.selectedIndex) == 11) {
         b = 2;  //30
     } else {
         b = 3;  //31
     }
-    finalmonth = 1 + this.selectedIndex;
+    finalmonth = this.selectedIndex;
 }
 function choosedate() {
-    finaldate = 1 + this.selectedIndex;
+    finaldate = this.selectedIndex;
 }
 function rundate() {
     var newdate = document.getElementById("date");
-    for (var i = 1; i <= cdate; i++) {
-        newdate.firstChild.remove();
-    }
+    $("#date").empty();
+//    for (var i = 1; i <= cdate; i++) {
+//        newdate.firstChild.remove();
+//    }
     if (a == 1 && b == 1) {
         cdate = 29;
     } else if (a == 2 && b == 1) {

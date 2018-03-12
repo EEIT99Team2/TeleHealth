@@ -7,23 +7,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>諮詢時刻表</title>
     
-<link href="../fullCalendar/fullcalendar.min.css" rel="stylesheet"/>
-<link href="../fullCalendar/fullcalendar.print.min.css" rel="stylesheet"  media='print' />
+<link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
+<link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
-<link href="../css/fontstyle.css" rel="stylesheet" type="text/css"/>
+<link href="<c:url value='/css/fonts/fontstyle.css" rel="stylesheet'/>" type="text/css"/>
+<link href="<c:url value='/fullCalendar/w3.css" rel="stylesheet'/>" type="text/css"/>
 <style>
-
   #calendar {
-  
     max-width: 1100px;
     margin: 60px auto;
 /*     background-color: lightblue; */
   }
   .fc-widget-header{
      background-color:#00e3e3;
+	}
+	.fc-toolbar h2 {
+	font-family: CJKtc_Bold;
 	}
 /* 	//week格線 */
 /*    .fc .fc-agendaWeek-view .fc-bg tr > td{ */
@@ -185,18 +186,18 @@
   </div>
 </div>
 <div id="calendar"></div>
-<div id="calendar"><div><span style='color:#0080ff'>您的班表(無預約)</span><span style='color:#d26900'>您的班表(有預約)</span><span style='color:#bebebe'>未被預約班表</span></div><span style='color:#ea0000'>已被預約班表</span></div></div>
+<span style='color:#0080ff'>您的班表(無預約)</span><span style='color:#d26900'>您的班表(有預約)</span><span style='color:#bebebe'>未被預約班表</span><span style='color:#ea0000'>已被預約班表</span>
 </div>
 <!-- Footer -->
     <footer class="w3-center w3-black w3-padding-16">
         <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
     </footer>
 <!--=======================載入script檔跟程式==========================-->
-<script src="../fullCalendar/moment.min.js"></script>
-<script src="../fullCalendar/jquery-3.3.1.min.js"></script>
-<script src="../fullCalendar/fullcalendar.min.js"></script>
-<script type="text/javascript" src="../fullCalendar/zh-tw.js"></script>
-<script type="text/javascript" src="../fullCalendar/calender.js"></script>
+<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/calender.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- loading用 -->

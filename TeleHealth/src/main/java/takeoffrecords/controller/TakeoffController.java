@@ -65,7 +65,7 @@ public class TakeoffController {
 				//新增申請人請假次數
 				employeesDAO.addTakeoffCount(empId);
 				//寄信								
-				SendMail.send(account,"牽伴遠端照護系統-重要通知","親愛的會員您好，本平台員工"+empName+"由於個人因素，無法如期與您在預約時段("+calendar.substring(0, 16)+")相會，因此我們已取消了您的預約，我們至上深深的歉意。除了退還您預約所扣除的點數外，我們將給予您額外5個點數作為補償");
+				SendMail.send(account,"牽伴遠端照護系統-重要通知","親愛的會員您好，\r\n本平台員工"+empName+"由於個人因素，無法如期與您在預約時段("+calendar.substring(0, 16)+")相會，\r\n因此我們已取消了您的預約，我們至上深深的歉意。\r\n除了退還您預約時所扣除的點數外，我們將給予您額外5個點數作為補償");
 				//還錢
 				takeoffService.updateMemPoint(account);
 			//核准但沒預約

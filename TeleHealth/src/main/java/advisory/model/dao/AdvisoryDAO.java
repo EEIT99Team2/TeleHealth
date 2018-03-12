@@ -33,6 +33,22 @@ public class AdvisoryDAO {
 		return result;
 	};
 	
+	//透過會員id查詢
+	public List<Object[]> selectByMemId(String memberId) {
+		String hql="SELECT ad.videoCode,ad.empId,ad.descrip,ad.advisoryTime,ad.viedoRecord,ad.satisfy,ad.createTime,ad.modifyTime,ad.status,emp.empName,emp.career,adm.id,adt.advisoryName from Advisory ad\r\n" + 
+				"  JOIN employees emp\r\n" + 
+				"  ON ad.empId=emp.empId\r\n" + 
+				"  JOIN advisoryMoment adm\r\n" + 
+				"  ON adm.videoCode=ad.videoCode\r\n" + 
+				"  JOIN advisoryType adt\r\n" + 
+				"  ON adm.advisoryCode=adt.advisoryCode\r\n" + 
+				"  WHERE memberId=?";
+		NativeQuery query = this.getSession().createNativeQuery(hql);
+		query.setParameter(1,memberId);
+		List<Object[]> result = (List<Object[]>)query.list();
+		return result;
+	};
+	
 	public AdvisoryBean insert(AdvisoryBean bean) {
 		if (bean != null) {
 			AdvisoryBean data = this.select(bean.getVideoCode());
