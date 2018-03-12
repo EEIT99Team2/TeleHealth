@@ -253,6 +253,7 @@ public class RegisterController {
 					bb.setPhoto(photo);
 					bb.setFileName(fileName);
 					bb.setRegisterTime(new Timestamp(System.currentTimeMillis()));
+					bb.setPoint(0);
 					String A = "N";
 					bb.setStatus(A);
 					

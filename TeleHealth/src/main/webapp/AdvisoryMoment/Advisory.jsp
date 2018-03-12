@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>視訊健康諮詢</title>
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fontstyle.css" />
+<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
 <script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 <script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 <style>
