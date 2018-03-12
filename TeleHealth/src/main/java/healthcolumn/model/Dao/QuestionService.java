@@ -61,5 +61,16 @@ public class QuestionService {
 		boolean update = QuestionDAO.updateQA(Id, Content);
 		return update;
 	}
+	//選全部會員po文
+	public List<Object[]> loadtotalcontent() {
+		 List<Object[]> list = QuestionDAO.selectMempublish();		
+		return list;	
+		}
+	//搜尋一位會員po文
+	public List<Object[]> QAMemonepublish(String memname) {
+		 List<Object[]> list = QuestionDAO.QAMemonepublish(memname);
+		 System.out.println(list);
+		 return list;	
+		}
 	
 }

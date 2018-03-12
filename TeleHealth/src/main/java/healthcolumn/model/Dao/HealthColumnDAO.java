@@ -63,8 +63,7 @@ public class HealthColumnDAO  {
 	public HealthColumnBean insert(HealthColumnBean bean) {
 		if(bean!=null) {
 			NativeQuery query=this.getSession().createNativeQuery("select title from healthColumn where title=? ");
-			query.setParameter(1, bean.getTitle());	
-			System.out.println(query.list());
+			query.setParameter(1, bean.getTitle());				
 			if(query.list().size()==0) {
 				this.getSession().save(bean);
 				return bean;
@@ -105,5 +104,6 @@ public class HealthColumnDAO  {
 		NativeQuery query=this.getSession().createNativeQuery("update healthColumn set clickCount=clickCount+1 where title=? ");
 		query.setParameter(1, title);
 		int result = query.executeUpdate();	
-	}
+	}	
+	
 }
