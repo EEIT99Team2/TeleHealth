@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <!-- Footer -->
     <footer>
       <div class="container">
@@ -9,7 +12,7 @@
             <ul class="list-inline">
               <li class="list-inline-item">
                 <a href="#">
-                  <i><img title="Logo" src="${pageContext.request.contextPath}/img/logo.png" /></i>
+                  <i><img title="Logo" src="<c:url value="/img/logo.png" />" /></i>
                 </a>
               </li>
             </ul>
@@ -32,14 +35,11 @@ $(document).ready(function(){
 </script>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<c:url value="/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="${pageContext.request.contextPath}/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="<c:url value="/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="${pageContext.request.contextPath}/js/agency.min.js"></script>
+    <script src="<c:url value="/js/agency.min.js"/>"></script>
 
-  </body>
-
-</html>
