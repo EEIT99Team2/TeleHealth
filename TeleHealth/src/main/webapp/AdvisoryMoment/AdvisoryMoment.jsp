@@ -13,11 +13,8 @@
 <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+	<link href="../css/fontstyle.css" rel="stylesheet" type="text/css"/>
 <style>
-
-  body {
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-  }
 
   #calendar {
   
@@ -49,6 +46,7 @@
 </style>
 </head>
 <body>
+
  <!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
@@ -93,6 +91,7 @@
             </div>
         </nav>
     </header>
+<div class='container'>
 <!-- 點擊預約時段彈跳視窗 -->
 <div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -196,9 +195,8 @@
   </div>
 </div>
 
-
-<div id="calendar"></div>
-
+<div id="calendar"><div><span style='color:#0080ff'>尚未被預約班表</span><span style='color:#00db00'>您預約班表</span><span style='color:#ea0000'>已被預約班表</span></div></div>
+</div>
 <!--=======================載入script檔跟程式==========================-->
 <script src="../fullCalendar/moment.min.js"></script>
 <script src="../fullCalendar/jquery-3.3.1.min.js"></script>

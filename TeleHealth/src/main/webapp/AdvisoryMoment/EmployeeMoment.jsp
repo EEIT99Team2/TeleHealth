@@ -13,11 +13,8 @@
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+<link href="../css/fontstyle.css" rel="stylesheet" type="text/css"/>
 <style>
-
-  body {
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-  }
 
   #calendar {
   
@@ -48,7 +45,6 @@
 </style>
 </head>
 <body>
-<div id='loading'>
 <!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
@@ -87,6 +83,7 @@
             </div>
         </nav>
     </header>
+<div id='loading' class='container'>
 <!-- 未預約班表視窗 -->
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -102,7 +99,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="UnReTakeOff">我要請假</button>
-<!--         <button type="button" class="btn btn-primary" id="Change">我要調班</button> -->
         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
       </div>
     </div>
@@ -129,27 +125,7 @@
     </div>
   </div>
 </div>
-<!-- 調班視窗 暫定不需要 -->
-<!-- <div class="modal fade" id="changeItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
-<!--   <div class="modal-dialog modal-dialog-centered" role="document"> -->
-<!--     <div class="modal-content"> -->
-<!--       <div class="modal-header"> -->
-<!--         <h5 class="modal-title" id="changeItemTitle">申請調班</h5> -->
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
-<!--       </div> -->
-<!--       <div class="modal-body"> -->
-<!--         <h2>不准調</h2> -->
-<!--       </div> -->
-<!--       <div class="modal-footer"> -->
-<!--         <button type="button" class="btn btn-primary" data-dismiss="modal" id="checkChange">確定</button> -->
-<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div> -->
-<!-- 請假視窗 -->
+
 <div class="modal fade" id="TakeOffItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -208,8 +184,9 @@
     </div>
   </div>
 </div>
-</div>
 <div id="calendar"></div>
+<div id="calendar"><div><span style='color:#0080ff'>您的班表(無預約)</span><span style='color:#d26900'>您的班表(有預約)</span><span style='color:#bebebe'>未被預約班表</span></div><span style='color:#ea0000'>已被預約班表</span></div></div>
+</div>
 <!-- Footer -->
     <footer class="w3-center w3-black w3-padding-16">
         <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
@@ -272,20 +249,6 @@ $(document).ready(function() {
 		})
 		
 	$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectAll.controller'/>",{"EmpId":EmpId},function(eventsData){	
-// 	$("#chooseCode").change(function (){
-// 		var code = $("#chooseCode :selected").prop("id");
-// 		if(code=="all"){
-// 			$("#calendar").fullCalendar('removeEventSources');
-// 			$("#calendar").fullCalendar('addEventSource', eventsData);
-// 			$("#calendar").fullCalendar('rerenderEvents');
-// 		}else{		
-// 		$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectByCode.controller'/>",{"EmpId":EmpId,advisoryCode:code},function(data){	
-// 		$("#calendar").fullCalendar('removeEventSources');
-// 		$("#calendar").fullCalendar('addEventSource', data);
-// 		$("#calendar").fullCalendar('rerenderEvents');
-// 		})
-// 		}
-// 	});
 		
     $('#calendar').fullCalendar({
     	 columnHeaderHtml: function(mom) {
@@ -304,9 +267,9 @@ $(document).ready(function() {
         	SelectByEmpID:{
         		text:'我的班表',
 				click:function(){
-					$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectById.controller'/>",{"EmpId":EmpId},function(Mydata){	
+					$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectById.controller'/>",{"EmpId":EmpId},function(eventsData){	
 						$("#calendar").fullCalendar('removeEventSources');
-						$("#calendar").fullCalendar('addEventSource', Mydata);
+						$("#calendar").fullCalendar('addEventSource', eventsData);
 						$("#calendar").fullCalendar('rerenderEvents');
 						})
 					}

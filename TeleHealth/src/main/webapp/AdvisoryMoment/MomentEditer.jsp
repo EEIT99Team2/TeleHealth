@@ -9,11 +9,13 @@
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+<link href="../css/fontstyle.css" rel="stylesheet" type="text/css"/>
 <style>
 .txtWaring{color:red}
 </style>
 </head>
 <body>
+<div class='container'>
 <div>
 <h2>未處理申請</h2>
 <div id="UnCheck"></div>
@@ -50,7 +52,7 @@
 <!--      已處理申請 -->
   </tbody>
 </table>
-</div>
+
 <!-- 管理員回覆視窗 -->
 <div class="modal fade" id="responseItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -90,6 +92,8 @@
     </div>
   </div>
 </div>
+</div>
+</div>
 <!--=======================載入script檔跟程式==========================-->
 <script src="../fullCalendar/moment.min.js"></script>
 <script src="../fullCalendar/jquery-3.3.1.min.js"></script>
@@ -100,9 +104,7 @@ $(document).ready(function(){
 	LoadData();
 	var DataPackage;
 
-function reFresh(){
-	window.location.reload();
-}
+
 	
 function LoadData(){
 	var docFrag1 =$(document.createDocumentFragment());
@@ -253,10 +255,10 @@ function out(){
 	$(this).addClass("Default");
 }
 
-
-
+$("#resultCheck").click(function(){
+	window.location.reload();
+});
 })
-$("#resultCheck").click(reFresh());
 </script>
 </body>
 </html>
