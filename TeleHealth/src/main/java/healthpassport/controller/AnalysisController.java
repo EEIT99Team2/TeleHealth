@@ -33,7 +33,7 @@ public class AnalysisController {
 	
 	private String memid ="B0041CB5-09F1-4E5B-8D57-1F0406019143";
 	private Integer age = 19;
-	private String gender = "F";
+	private String gender = "M";
 	//BMI
 	@RequestMapping(
 			path= {"/healthpassport/querybmi.controller"},
