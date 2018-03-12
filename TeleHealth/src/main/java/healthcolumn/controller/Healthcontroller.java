@@ -243,6 +243,5 @@ public class Healthcontroller {
 		Gson gson = new Gson();
 		String dataimg = gson.toJson(data);
 		 return dataimg;
-	}
-	
+	}	
 }
