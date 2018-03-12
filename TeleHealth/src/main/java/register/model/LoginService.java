@@ -3,6 +3,7 @@ package register.model;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.struts2.components.Bean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,20 +20,16 @@ import util.SendMail;
 public class LoginService {
 	@Autowired
 	private MemberDAOHibernate memberDAO;
-	
-	@Transactional(readOnly=true)
-	public boolean UpdatePasword (String account,String pwd) {
-		List<MemberBean> Account = memberDAO.selectByAccount(account);
-		String ChangeAccount= Account.get(0).getAccount();		
-		if(ChangeAccount!=null) {
-			String NewPwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
-			
-			System.out.println("ChangePwd="+NewPwd);
-			
-			boolean ChangePw = memberDAO.UdPwd(NewPwd, ChangeAccount);		
-			if(ChangePw==true) {
+		
+	@Transactional
+	public boolean UpdatePasword (MemberBean member, String pwd) {
+		if(member != null) {
+			pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
+			System.out.println("傳入Service要修改的新密碼=" + pwd);
+			member.setPwd(pwd);
+			if(memberDAO.update(member) != null) {
 				System.out.println("新密碼修改完成");
-				return	true;
+				return true;
 			}else {
 				System.out.println("修改失敗");
 				return false;
@@ -49,6 +46,8 @@ public class LoginService {
 				String temp = MD5pwd; //使用者輸入
 				MemberBean member = beans.get(0);
 				String password = member.getPwd();
+				System.out.println("temp="+temp);
+				System.out.println("password="+password);
 				if(temp.equals(password)) {
 					return member;
 				}else {					
@@ -59,7 +58,7 @@ public class LoginService {
 		return null;		
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional
 	public String forgetPwd(String account) {
 		List<MemberBean> bean = memberDAO.selectByAccount(account);
 		if(!bean.isEmpty()) {
@@ -78,7 +77,7 @@ public class LoginService {
 		return null;		
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional
 	public String GetPwd(String account) {
 		List<MemberBean> bean = memberDAO.selectByAccount(account);
 		
@@ -96,29 +95,32 @@ public class LoginService {
 		return null;				
 	}
 	
-	@Transactional(readOnly=true)
 	public String UpdatePwd(String account) {
 		List<MemberBean> bean = memberDAO.selectByAccount(account);
 		System.out.println("qoo="+bean);
 		return account;				
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional
 	public boolean UpdatePassword (String account) {
-		List<MemberBean> Account = memberDAO.selectByAccount(account);
-		String ChangeAccount= Account.get(0).getAccount();		
-		if(ChangeAccount!=null) {
-			String pwd = ChangePwd.GoPwd(); //新的亂數密碼	
-			String NewPwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
+		List<MemberBean> members = memberDAO.selectByAccount(account);
+		if(members != null && members.size() > 0) {
+			MemberBean member = members.get(0);
+			String pwd = ChangePwd.getNewRandomPwd(); //新的亂數密碼	
+			String newPwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
 			
-			System.out.println("ChangePwd="+NewPwd);
+			System.out.println("ChangePwd=" + newPwd);
 			
-			boolean ChangePw = memberDAO.UdPwd(NewPwd, ChangeAccount);
-			String sendEmail = SendMail.send(ChangeAccount,"TeleHealth遠端照護系統-忘記密碼","親愛的會員您好，\n您的新密碼為:" + pwd + "\n牽伴健康諮詢平台全體同仁關心您！"
-					+ "\n時間:" + (new Date()).toString());
-			if(ChangePw==true && sendEmail!=null ) {
-				System.out.println("新密碼已寄到信箱");
-				return true;
+//			boolean ChangePw = memberDAO.UdPwd(NewPwd, ChangeAccount);
+			
+			member.setPwd(newPwd);
+			if(memberDAO.update(member) != null) {
+				boolean flag = SendMail.send(account,"牽伴健康諮詢平台-重設密碼信件","親愛的會員您好，\n您的新密碼為:" + pwd + "\n牽伴健康諮詢平台全體同仁關心您！"
+						+ "\n時間:" + (new Date()).toString());
+				if(member!=null && flag) {
+					System.out.println("新密碼已寄到信箱");
+					return true;
+				}
 			}
 		}
 		return false;	
