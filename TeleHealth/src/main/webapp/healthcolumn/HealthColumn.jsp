@@ -9,9 +9,7 @@
 
 <body>
 <jsp:include page="/fragment/header.jsp" />
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- Navigation -->
+   
     
     <div class="container">
         <!-- Modal -->
@@ -101,10 +99,8 @@
 		         var pager2= $('<a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom"></a>').text("Next>");    
 		         var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
 				 $('#title').append(row2);
-		 	});	
-				
-			 
-	})
+		 	});			 
+	});
  $('input[type="button"]').click(function() {
 	var value=$(this).prop("id");
 	if(value!="VID"){		
@@ -114,7 +110,7 @@
          $.each(data, function (i, data) {
             var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");          	     	          
             var cell1= $("<h2 class='post-title' ></h2>").text(data.title);
-            article.append(cell1)
+            article.append(cell1);
             var cell2=$("<p class='post-meta'></p>").text(data.createDate);
             var cell3 = $("<p></p>").html(data.content.substring(0,300));        
             var row = $('<div class="post-preview"></div>').append([article, cell2,cell3]);
@@ -132,9 +128,9 @@
 	         $.each(data, function (i, data) {
 	            var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");          	     	          
 	            var cell1= $("<h2 class='post-title' ></h2>").text(data.title);
-	            article.append(cell1)
+	            article.append(cell1);
 	            var cell2=$("<p class='post-meta'></p>").text(data.createDate);	           
-				var vid=$( '<video width="360" height="270" controls><source src="http://localhost:8090/TeleHealth/video/'+data.fileName+'" type="video/mp4"></video>')
+				var vid=$( '<video width="300" height="200" controls><source src="http://localhost:8090/TeleHealth/video/'+decodeURIComponent(data.fileName)+'" type="video/mp4"></video>')
 	            var cell3 = $("<p></p>").html(data.content.substring(0,100));        
 	            var row = $('<div class="post-preview"></div>').append([article,cell2,cell3,vid]);
 	            $('#title').append(row);

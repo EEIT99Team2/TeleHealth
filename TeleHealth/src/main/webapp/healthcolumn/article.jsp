@@ -117,12 +117,15 @@ $(document).ready(function() {
 		});
 	var url = location.href;
 	var ary1 = url.split('?');	
-	var ary2 = ary1[1].split('=');	
-	var ary3=ary2[1].split('&');		       
+	var ary2 = ary1[1].split('=');
+	var type=ary2[2];	
+	var ary3=ary2[1].split('&');			       
 	var id = ary3[0];	   
     var titledecode= decodeURIComponent(id);   	  
-    $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller', {title:titledecode}, function (data){
-		 $.each(data, function (i, data) {  
+    $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller', {title:titledecode}, function (data){		
+		 $.each(data, function (i, data) {
+			console.log(data)
+			if(data[5]!="VID"){  
         	var cell0=$("<hr>")      	     	          
             var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
             var cell2= $("<p class='lead'></p>").text("by  "+data[1]);
@@ -130,9 +133,19 @@ $(document).ready(function() {
             var cell4= $("<p class='lead'></p>").html(data[2]);                          
             var row = $(' <div class="col-lg-10" id="data"></div>').append([cell1,cell0,cell2,cell3,cell0,cell4]);
              $('#body').append(row);
+			}else
+			{
+				var cell0=$("<hr>")      	     	          
+	            var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
+	            var cell2= $("<p class='lead'></p>").text("by  "+data[1]);
+	            var cell3=$("<p></p>").text(data[3]);
+	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="http://localhost:8090/TeleHealth/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
+	            var cell4= $("<p class='lead'></p>").html(data[2]);                          
+	            var row = $(' <div class="col-lg-10" id="data"></div>').append([cell1,cell0,cell2,cell3,video,cell0,cell4]);
+	             $('#body').append(row);
+			}	
          });        
- 	});
-   
+ 	});   
     $.getJSON('/TeleHealth/healthcolumn/QAcontent.controller', {title:titledecode}, function (data){               
     	var doc=$(document.createDocumentFragment());   	
     	var div=$('<div class="col-lg-10"></div>');
@@ -160,7 +173,7 @@ $(document).ready(function() {
                }    	
        	}); 	
     	 $('#data').append(doc);               
-     });  
+     }) 
       
     </script>        
 
