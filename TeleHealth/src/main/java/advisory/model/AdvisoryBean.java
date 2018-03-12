@@ -20,6 +20,7 @@ public class AdvisoryBean {
 	private Integer satisfy;
 	private java.util.Date createTime;
 	private java.util.Date modifyTime;
+	private String status;
 	
 	public String getVideoCode() {
 		return videoCode;
@@ -75,10 +76,18 @@ public class AdvisoryBean {
 	public void setModifyTime(java.util.Date modifyTime) {
 		this.modifyTime = modifyTime;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		return "AdvisoryBean [videoCode=" + videoCode + ", memberId=" + memberId + ", empId=" + empId + ", descrip="
 				+ descrip + ", advisoryTime=" + advisoryTime + ", viedoRecord=" + Arrays.toString(viedoRecord)
-				+ ", satisfy=" + satisfy + ", createTime=" + createTime + ", modifyTime=" + modifyTime + "]";
+				+ ", satisfy=" + satisfy + ", createTime=" + createTime + ", modifyTime=" + modifyTime + ", status="
+				+ status + "]";
 	}
+	
 }

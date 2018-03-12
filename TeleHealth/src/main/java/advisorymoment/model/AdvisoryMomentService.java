@@ -164,6 +164,9 @@ public class AdvisoryMomentService {
 		String selfItemId;
 		String selfResCode;
 		String zhCareer="醫生";
+		String reResult="null";
+		String reReason="null";
+		String reTime="null";
 		for (int i = 0; i < result.size(); i++) {
 			String MomentStatus = result.get(i)[8].toString();
 			//判斷班表狀態是否存在
@@ -196,7 +199,10 @@ public class AdvisoryMomentService {
 			takeoffRecord = takeoffService.select(MomentId);							
 			if(takeoffRecord!=null && takeoffRecord.getId()!=null) {
 				takeoff="exist";
-				if(takeoffRecord.getApprovedResult()!=null) {	
+				if(takeoffRecord.getApprovedResult()!=null) {
+					reResult =takeoffRecord.getApprovedResult().toString();
+					reReason = takeoffRecord.getRejectReason().toString();
+					reTime = sdf.format(takeoffRecord.getApprovedTime());
 					if(takeoffRecord.getApprovedResult().equals("N")) {						
 						takeoff="noexist";
 					}
@@ -210,6 +216,10 @@ public class AdvisoryMomentService {
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
 			dataOne.put("takeoff", takeoff);
+			dataOne.put("MomentStatus", MomentStatus);
+			dataOne.put("reResult", reResult);
+			dataOne.put("reReason", reReason);
+			dataOne.put("reTime", reTime);
 			
 				for (int j = 0; j < selfItem.size(); j++) {
 					selfItemId = selfItem.get(j)[0].toString();
@@ -286,6 +296,7 @@ public class AdvisoryMomentService {
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
+			dataOne.put("MomentStatus", MomentStatus);
 			if(status.equals("F")) {							
 				dataOne.put("backgroundColor", "#d26900");
 				dataOne.put("borderColor", "black");
@@ -359,6 +370,18 @@ public class AdvisoryMomentService {
 		return result;
 	};
 	
+	//會員預約扣款
+		public boolean updateMemPoint(String UserId) {
+			boolean result =false;
+			if(UserId!=null && UserId.trim().length()!=0) {
+				int upResult= advisoryMomentDAO.updateMemPoint(UserId);
+				if(upResult==1) {				
+					result=true;
+				}
+			}		
+			return result;
+		}
+	
 	//會員預約時用
 	public AdvisoryMomentBean updateByReserve(AdvisoryMomentBean bean) {
 		AdvisoryMomentBean result = null;
@@ -397,7 +420,7 @@ public class AdvisoryMomentService {
 			boolean DeleteResult =false;
 			boolean FinalResult =false;
 			System.out.println("VideoCode="+VideoCode);
-			if (VideoCode != null&&VideoCode.trim().length()!=0) {
+			if (VideoCode != null && VideoCode.trim().length()!=0) {
 				List<Object[]> selectAD = this.selectByMemVCode(VideoCode);
 				System.out.println("有搜到"+selectAD);
 				if(selectAD!=null && selectAD.size()!=0) {				

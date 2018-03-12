@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import advisorymoment.model.AdvisoryMomentService;
-import advisorymoment.model.dao.AdvisoryMomentDAO;
 import employees.model.dao.EmployeesDAO;
 import takeoffrecords.model.TakeoffService;
+import util.SendMail;
 
 @Controller
 public class TakeoffController {
@@ -47,7 +47,7 @@ public class TakeoffController {
 	
 	//後臺審核假單
 	@RequestMapping(path= {"/AdvisoryMoment/approveTakeoff.controller"},method={RequestMethod.GET,RequestMethod.POST},produces= {"text/plain;charset=UTF-8"})
-	public @ResponseBody String approveTakeoff(String takeoffId,String empId,String MomentId,String videoCode,String apResult,String reason) {
+	public @ResponseBody String approveTakeoff(String takeoffId,String empId,String empName,String MomentId,String calendar,String videoCode,String apResult,String reason) {
 		boolean upResult= false;
 		String finalResult = "回覆失敗";
 		if(takeoffId!=null &&takeoffId.trim().length()!=0 && empId!=null &&empId.trim().length()!=0 && MomentId!=null &&MomentId.trim().length()!=0 && apResult!=null &&apResult.trim().length()!=0 && reason!=null &&reason.trim().length()!=0) {			
@@ -55,14 +55,25 @@ public class TakeoffController {
 			upResult= takeoffService.updateApproved(takeoffId, apResult, reason);
 		}
 		if(upResult) {
-			if(apResult.equals("Y")) {
+			//核准且已有預約
+			if(apResult.equals("Y") && !videoCode.equals("null")) {
+				String account = takeoffService.selectMemAcc(videoCode);
 				//刪除預約記錄(無預約則回傳false)
 				advisoryMomentService.deleteMemReserve(videoCode, MomentId);
 				//修改此項班表狀態
 				advisoryMomentService.updateMoment(MomentId);
 				//新增申請人請假次數
 				employeesDAO.addTakeoffCount(empId);
+				//寄信								
+				SendMail.send(account,"重要通知","親愛的會員您好，本平台員工"+empName+"由於個人因素，無法如期與您在預約時段("+calendar.substring(0, 16)+")相會，因此我們已取消了您的預約，我們至上深深的歉意。除了退還您預約所扣除的點數外，我們將給予您額外10個點數作為補償");
 				//還錢
+				takeoffService.updateMemPoint(account);
+			//核准但沒預約
+			}else if(apResult.equals("Y") && videoCode.equals("null")) {
+				//修改此項班表狀態
+				advisoryMomentService.updateMoment(MomentId);
+				//新增申請人請假次數
+				employeesDAO.addTakeoffCount(empId);
 			}
 			finalResult="已回覆申請人";
 		}		

@@ -5,19 +5,27 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 
+import register.model.MemberBean;
+import register.model.dao.MemberDAOHibernate;
 import takeoffrecords.model.dao.TakeoffDAO;
 
 @Service
+@Transactional
 public class TakeoffService {
 
 	@Autowired
 	private TakeoffDAO takeoffDao;
 
+	@Autowired
+	private MemberDAOHibernate memberDAO;
+	
 	public boolean takeoffApplication(String MomentId, String EmpId, String TakeoffItem, String TakeoffReason) {
 		java.util.Date createTime = new Date();
 		TakeoffBean tbean = new TakeoffBean();
@@ -30,6 +38,15 @@ public class TakeoffService {
 		return result;
 	}
 
+	//搜尋會員帳戶(註銷班表時用)
+		public String selectMemAcc(String videoCode) {
+			String result ="";
+			if(videoCode!=null && videoCode.trim().length()!=0) {
+				result=takeoffDao.selectMemAcc(videoCode);
+			}
+			return result;
+		}
+	
 	// 透過班表id搜尋申請假單紀錄
 	public TakeoffBean select(String MomentId) {
 		TakeoffBean result = null;
@@ -38,12 +55,12 @@ public class TakeoffService {
 		}
 		return result;
 	}
-
+	
 	// 後台管理顯示(index用)
 	public String selectAll() {
 		LinkedList<HashMap<String, String>> dataFinal = new LinkedList<HashMap<String, String>>();
 		List<Object[]> takeoffData = takeoffDao.selectAll();
-		String takeoffId, MomentId, empId, empName, career,zhCareer ="醫生", apType, apTime, apReason, status, videoCode,reResult,reTime,reReason,momStatus;
+		String takeoffId, MomentId, empId, empName, career,zhCareer ="醫生", apType, apTime, apReason, status, videoCode,reResult,reTime,reReason,momStatus,calendar;
 		if (takeoffData.size() != 0) {
 			System.out.println("請假數"+takeoffData.size());
 			for (int i = 0; i < takeoffData.size(); i++) {
@@ -77,6 +94,7 @@ public class TakeoffService {
 					reReason = takeoffData.get(i)[12].toString();
 				}
 				momStatus = takeoffData.get(i)[13].toString();
+				calendar = takeoffData.get(i)[14].toString();
 				dataOne.put("takeoffId", takeoffId);
 				dataOne.put("MomentId", MomentId);
 				dataOne.put("empId", empId);
@@ -91,6 +109,7 @@ public class TakeoffService {
 				dataOne.put("reTime", reTime);
 				dataOne.put("reReason", reReason);
 				dataOne.put("momStatus", momStatus);
+				dataOne.put("calendar", calendar);
 				dataFinal.add(dataOne);				
 			}
 		}
@@ -112,6 +131,18 @@ public class TakeoffService {
 		return takeoffDao.updateApproved(takeoffId, apResult, reason);
 	}
 
+	//退款
+	public boolean updateMemPoint(String account) {
+		boolean result =false;
+		List<MemberBean> bean= memberDAO.selectByAccount(account);
+		if(bean!=null && bean.size()!=0) {
+			int upResult = takeoffDao.updateMemPoint(account);
+			if(upResult==1) {				
+				result =true;
+			}
+		}
+		return result;
+	}
 	public boolean delete(int id) {
 		boolean result = false;
 
