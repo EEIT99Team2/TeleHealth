@@ -6,21 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>健康護照</title>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	crossorigin="anonymous"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/w3.css"/>">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>" />
+
 <style type="text/css">
 .insertBtn {
 	width: 16px;
@@ -29,9 +20,14 @@
 .chk {
 	width: 16px;
 }
+
+tbody tr:hover {
+	background-color: #d9ffff
+}
 </style>
 </head>
 <body>
+	<input type="hidden" id="member" value="${LoginOK.memberId}" />
 	<div class="container">
 		<h2>健康數據指標</h2>
 		<div class="row">
@@ -40,21 +36,21 @@
 				<h3>BMI</h3>
 			</div>
 			<div class="col-4 text-right">
-				<button id="insertBMI" data-toggle="modal" data-target="#myModal">
+				<button class="btn btn-outline-info" id="insertBMI"
+					data-toggle="modal" data-target="#myModal">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
-				<button id="bmiSelect" data-toggle="collapse"
-					data-target="#collapseExample" aria-expanded="false"
-					aria-controls="collapseExample">
-					<img class="insertBtn" src="<c:url value='/images/open.png' />">
+				<button class="btn btn-outline-dark" type="button"
+					data-toggle="collapse" data-target="#collapseExample"
+					aria-expanded="false" aria-controls="collapseExample">查詢紀錄
 				</button>
 			</div>
 
 			<!-- Modal -->
-			<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal fade " id="myModal" role="dialog">
 				<div class="modal-dialog">
 					<!-- Modal content-->
-					<div class="modal-content">
+					<div class="modal-content ">
 						<div class="modal-header">
 							<h4 class="modal-title">BMI</h4>
 						</div>
@@ -98,100 +94,46 @@
 						</h2>
 					</div>
 					<div class="col-4 text-center">
-						<h2 id="showBMI">
-							<small></small>
-						</h2>
+						<h2 id="showBMI"></h2>
 					</div>
 				</div>
 				<hr />
 				<div class="row">
 					<div class="col-12 text-center">
-						<span>這是查詢的結果!!</span>
+						<span id='bmiResult'>這是查詢結果!!</span>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12 text-center">
+						<div class="collapse container" id="collapseExample">
+							<div class="card card-body">
+								<!-- 				class="table"		 -->
+								<table id='bmiTable'
+									class="table table-bordered table-striped table-hover">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">身高</th>
+											<th scope="col">體重</th>
+											<th scope="col">BMI</th>
+											<th scope="col">結果</th>
+											<th scope="col">輸入時間</th>
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 
 		</div>
 	</div>
-
-	<div class="collapse" id="collapseExample">
-		<div class="card card-body">hihi</div>
-	</div>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-			var weight;
-			var height;
-			var BMI;
-			var re = /^[0-9]+$/;
-			$('#calBMI').click(calBMI);
-			function calBMI() {
-			     try {
-			         if ($('#insert_height').val() == "") { alert('請輸入身高'); return; }
-			         if ($('#insert_weight').val() == "") { alert('請輸入體重'); return; }
-			        	
-			         weight = $('#insert_weight').val();
-			         height = $('#insert_height').val() / 100;
-			         BMI = Math.round((weight / Math.pow(height, 2)) *100) /100;
-			         $('#insert_bmi').val(Math.round(BMI * 100) / 100);
-			         if(BMI<10 || BMI>=100){
-			        	 document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請確認後再輸入喔!</span>";
-				     }else{
-			     	    $('#insert').prop("disabled", false);
-			       	 }
-			     }catch(e){
-			    	 $('#insert').prop("disabled", true);}
-			}
-
-				$('#insert_height').focus(function() {
-					$('#insert_bmi').val("");
-		       		$('#insert').prop("disabled", true);
-				})
-				$('#insert_weight').focus(function() {
-					$('#insert_bmi').val("");
-		       		$('#insert').prop("disabled", true);
-				})
-
-			$('#insert_height').blur(function() {
-				var height = $.trim($('#insert_height').val());
-				if(isNaN(height) || height.length == 0 || height>250 || !re.test(height)) {					
-					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>可能超出預期請輸入正確身高!</span>";
-					$('#insert').prop("disabled", true);
-				} else {
-					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
-				}
-			});
-			$('#insert_weight').blur(function() {
-				var weight = $.trim($('#insert_weight').val());
-				if(isNaN(weight) || weight.length == 0 || weight>200 || !re.test(weight)) {
-					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>可能超出預期請輸入正確體重!</span>";
-					$('#insert').prop("disabled", true);
-					} else {
-					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
-				}
-			});
-			$('#insert').click(function(){
-				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
-	                	//data就是Server回傳的結果
-	                	JSON.parse(data);
-	                	//清除元素紀錄
-	                	$('#showHeight').empty();
-	                	$('#showWeight').empty();
-	                	$('#showBMI').empty();
-
-	                	$('#showHeight').prepend("<small>"+(Math.floor(height*100))+"</small><small>公分</small>");
-	                	$('#showWeight').prepend("<small>"+weight+"</small><small>公斤</small>");
-	                	$('#showBMI').prepend("<small>"+'BMI-> '+BMI+"</small>");
-	             })
-			});
-			$('#bmiSelect').click(function(){
-// 				$.get()
-			});
-
-			
-		});
-	</script>
-
+	<br>
+	<br>
 	<!--血壓-->
 	<div class="container">
 		<div class="row">
@@ -204,9 +146,9 @@
 					data-target="#myModalBloodPressure">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
-				<button id="滑入滑出" data-toggle="滑入滑出" data-target="滑入滑出">
-					<img class="insertBtn" src="<c:url value='/images/open.png' />">
-				</button>
+				<button class="btn btn-outline-dark" type="button"
+					data-toggle="collapse" data-target="#bp" aria-expanded="false"
+					aria-controls="collapseExample">查詢紀錄</button>
 			</div>
 
 			<!-- Modal -->
@@ -264,12 +206,223 @@
 						<span id='bpResult'>這是查詢結果!!</span>
 					</div>
 				</div>
-			</div>
 
+				<div class="row">
+					<div class="col-12 text-center">
+						<div class="collapse container" id="bp">
+							<div class="card card-body">
+
+								<table class="table">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col"></th>
+											<th scope="col"></th>
+											<th scope="col"></th>
+											<th scope="col"></th>
+											<th scope="col"></th>
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	<br>
+	<br>
+	<!--血糖-->
+	<div class="container">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-6">
+				<h3>血糖</h3>
+			</div>
+			<div class="col-4 text-right">
+				<button id="insertBloodSugar" data-toggle="modal"
+					data-target="#myModalBloodSugar">
+					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
+				</button>
+				<button class="btn btn-outline-dark" type="button"
+					data-toggle="collapse" data-target="#bs" aria-expanded="false"
+					aria-controls="collapseExample">查詢紀錄</button>
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModalBloodSugar" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">血糖</h4>
+						</div>
+						<div class="modal-body">
+							<label for="insert_bloodsugar" class="col-2">血糖</label> <input
+								type="text" id="insert_bloodsugar" name="bloodsugar"
+								class="col-4">mg/dL(輸入格式範例:120) <span id="bloodsugarMsg"></span>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="insertBS" class="btn btn-default"
+								disabled="disabled" data-dismiss="modal">新增</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">關閉</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-3 text-center align-middle">
+				<img src="<c:url value='/images/sugar.JPG' />" alt="血糖">
+			</div>
+			<div class="col-9">
+				<div class="row">
+					<div class="col-4 text-center">
+						<h2 id="showBloodSugar">
+							<small>mmHg</small>
+						</h2>
+					</div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-12 text-center">
+						<span id="bsResult">這是查詢結果!!</span>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12 text-center">
+						<div class="collapse container" id="bs">
+							<div class="card card-body">
+
+								<table class="table">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col"></th>
+											<th scope="col"></th>
+											<th scope="col"></th>
+											<th scope="col"></th>
+											<th scope="col"></th>
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="<c:url  value='/js/jquery-3.3.1.min.js'/>"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+	<script src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+	<!--  計算BMI -->
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$('#member').val();
+			var memberid='B0041CB5-09F1-4E5B-8D57-1F0406019143';
+			var weight;
+			var height;
+			var BMI;
+
+			$('#calBMI').click(calBMI);
+			function calBMI() {
+			     try {
+			         if ($('#insert_height').val() == "") { alert('請輸入身高'); return; }
+			         if ($('#insert_weight').val() == "") { alert('請輸入體重'); return; }
+			        	
+			         weight = $('#insert_weight').val();
+			         height = $('#insert_height').val() / 100;
+			         BMI = Math.round((weight /  Math.pow(height, 2)) *100) /100;
+			         $('#insert_bmi').val(Math.round(BMI * 100) / 100);
+			         if(BMI<10 || BMI>=100){
+			        	 alert('請確認後再輸入喔!');
+				     }else{
+			     	    $('#insert').prop("disabled", false);
+			       	 }
+			     }catch(e){
+			    	 $('#insert').prop("disabled", true);}
+			}
+				$('#insert_height').focus(function() {
+					$('#insert_bmi').val("");
+		       		$('#insert').prop("disabled", true);
+				})
+				$('#insert_weight').focus(function() {
+					$('#insert_bmi').val("");
+		       		$('#insert').prop("disabled", true);
+				})
+
+			$('#insert_height').blur(function() {
+				var height = $.trim($('#insert_height').val());
+				if(isNaN(height) || height.length == 0 || height>250 ) {					
+					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>可能超出預期請輸入正確身高!</span>";
+					$('#insert').prop("disabled", true);
+				} else {
+					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+				}
+			});
+			$('#insert_weight').blur(function() {
+				var weight = $.trim($('#insert_weight').val());
+				if(isNaN(weight) || weight.length == 0 || weight>200) {
+					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>可能超出預期請輸入正確體重!</span>";
+					$('#insert').prop("disabled", true);
+					} else {
+					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+				}
+			});
+			$('#insert').click(function(){
+				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
+	                	//data就是Server回傳的結果
+// 	                	JSON.parse(data);
+
+	             })
+			});
+	
+$('#bmiTable').dataTable().fnDestroy(); 
+$('#bmiTable').DataTable({
+    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
+    "columns": [
+        { "data": "height" },
+        { "data": "weight" },
+        { "data": "bmi" },
+        { "data": "bmiResult" },
+        { "data": "createTime" }
+    ],
+    "bProcessing": true,//顯示處理中的圖樣
+    "oLanguage": {
+        "sLengthMenu": " _MENU_ 筆/頁",
+        "sZeroRecords": "找不到符合的資料。",
+        "sInfo": "共 _MAX_ 筆",
+        "sSearch": "搜尋",
+        "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+        "sInfoEmpty": "共 0 頁",
+        "oPaginate": {
+            "sPrevious": "«",
+            "sNext": "»"
+        }
+    }
+	});
+
+						//把傳來值塞進頁面			
+	                	$('#showHeight').prepend();
+	                	$('#showWeight').prepend();
+	                	$('#showBMI').prepend();	             
+		
+
+<!--  計算血壓 -->
+
 			var systole;
 			var diastole;
 			var heartBeat;
@@ -337,87 +490,19 @@
 				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'systole':bps,'diastole':bpd, 'heartBeat': hb , 'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat}, function(data){
 	                	//data就是Server回傳的結果
 // 	                	JSON.parse(data);
-	                	$('#showBloodPressure').prepend('<h1>'+systole/diastole+'<h1>');
-	                	$('#showHeartBeat').prepend('<h1>'+heartBeat+'<h1>');
-	             })
+	             });
+	                	$('#showBloodPressure').prepend('<small>'+systole+'\/'+diastole+'</small>');
+	                	$('#showHeartBeat').prepend('<small>'+heartBeat+'</small>');
 				}
 			});
-		});
-	</script>
 
+	<!--  計算血糖 -->
 
-	<!--血糖-->
-	<div class="container">
-		<div class="row">
-			<div class="col-1"></div>
-			<div class="col-6">
-				<h3>血糖</h3>
-			</div>
-			<div class="col-4 text-right">
-				<button id="insertBloodSugar" data-toggle="modal"
-					data-target="#myModalBloodSugar">
-					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
-				</button>
-				<button id="滑入滑出" data-toggle="滑入滑出" data-target="滑入滑出">
-					<img class="insertBtn" src="<c:url value='/images/open.png' />">
-				</button>
-			</div>
-
-			<!-- Modal -->
-			<div class="modal fade" id="myModalBloodSugar" role="dialog">
-				<div class="modal-dialog">
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title">血糖</h4>
-						</div>
-						<div class="modal-body">
-							<label for="insert_bloodsugar" class="col-2">血糖</label> <input
-								type="text" id="insert_bloodsugar" name="bloodsugar"
-								class="col-4">mg/dL(輸入格式範例:120) <span id="bloodsugarMsg"></span>
-
-						</div>
-						<div class="modal-footer">
-							<button type="button" id="insertBS" class="btn btn-default"
-								disabled="disabled" data-dismiss="modal">新增</button>
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">關閉</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-1"></div>
-		</div>
-		<div class="row">
-			<div class="col-3 text-center align-middle">
-				<img src="<c:url value='/images/sugar.JPG' />" alt="血壓">
-			</div>
-			<div class="col-9">
-				<div class="row">
-					<div class="col-4 text-center">
-						<h2 id="showBloodSugar">
-							<small>mmHg</small>
-						</h2>
-					</div>
-				</div>
-				<hr />
-				<div class="row">
-					<div class="col-12 text-center">
-						<span id="bsResult">這是查詢結果!!</span>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			var bloodsugar
+			var bloodsugar;
 			var re = /^[0-9]+$/;
 			$('#insert_bloodsugar').blur(function() {
 				 bloodsugar = $.trim($('#insert_bloodsugar').val());
-				if(isNaN(bloodsugar) || bloodsugar.length == 0 || !re.test(bloodsugar) bloodsugar>200) {
+				if(isNaN(bloodsugar) || bloodsugar.length == 0 || !re.test(bloodsugar) || bloodsugar>200) {
 					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入數字!</span>";
 					$('#insertBS').prop("disabled", true);
 				} else {

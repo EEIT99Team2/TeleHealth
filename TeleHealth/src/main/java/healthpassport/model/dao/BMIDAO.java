@@ -28,7 +28,7 @@ public class BMIDAO {
 		NativeQuery query = this.getSession().createNativeQuery(memid);
 		query.setParameter(1,memberid);
 		query.addEntity(BMIBean.class);
-		List<BMIBean> data = (List<BMIBean>) query.uniqueResult();
+		List<BMIBean> data = (List<BMIBean>) query.list();
 		return data;
 	}
 }
