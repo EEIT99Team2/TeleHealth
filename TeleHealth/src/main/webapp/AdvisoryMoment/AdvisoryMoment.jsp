@@ -7,17 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>諮詢時刻表</title>
     
-<link href="../fullCalendar/fullcalendar.min.css" rel="stylesheet"/>
-<link href="../fullCalendar/fullcalendar.print.min.css" rel="stylesheet"  media='print' />
+<link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
+<link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
 
 <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+	<link href="<c:url value='/fullCalendar/w3.css'/>" rel="stylesheet" type="text/css"/>
+	<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <style>
-
-  body {
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-  }
 
   #calendar {
   
@@ -27,6 +24,9 @@
   }
   .fc-widget-header{
      background-color:#00e3e3;
+	}
+	.fc-toolbar h2 {
+	font-family: CJKtc_Bold;
 	}
 /* 	//week格線 */
 /*    .fc .fc-agendaWeek-view .fc-bg tr > td{ */
@@ -46,6 +46,7 @@
 		 }
   .columnHead{font-size:1.2em;}
   .eveMouseOver {cursor: pointer;}
+  .iBlock {display:inline-block;}
 </style>
 </head>
 <body>
@@ -68,11 +69,11 @@
                         <a class="nav-link" href="#pricing">方案介紹</a>
                     </li>
 				   </ul>
-<input type="text" id="userid" name="userid" value="B0041CB5-09F1-4E5B-8D57-1F0406019143">
+<input type="text" id="userid" name="userid" value="0A21A5D0-3AA1-4A16-9742-585B4A1EA78E">
 <span id="item1" class="item1">快速查詢:</span>
-<select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
-<select id="month" class="headerChoose"></select><span id="item1" class="headerChoose">月</span>
-<select id="date" class="headerChoose"></select><span id="item1" class="headerChoose">日</span>
+<select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">年</span>
+<select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">月</span>
+<select id="date" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">日</span>
 <button type="button" id="fastSearch" class="headerChoose">查詢</button>
 <span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose">
 <option id="allday">全天</option>
@@ -93,6 +94,8 @@
             </div>
         </nav>
     </header>
+
+<div class='container iBlock'>
 <!-- 點擊預約時段彈跳視窗 -->
 <div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -195,16 +198,15 @@
     </div>
   </div>
 </div>
-
-
-<div id="calendar"></div>
-
+<div class='iBlock'><span style='color:#0080ff'>尚未被預約班表</span><span style='color:#00db00'>您預約班表</span><span style='color:#ea0000'>已被預約班表</span></div>
+<div id="calendar" style="display:inline-block"></div>
+</div>
 <!--=======================載入script檔跟程式==========================-->
-<script src="../fullCalendar/moment.min.js"></script>
-<script src="../fullCalendar/jquery-3.3.1.min.js"></script>
-<script src="../fullCalendar/fullcalendar.min.js"></script>
-<script type="text/javascript" src="../fullCalendar/zh-tw.js"></script>
-<script type="text/javascript" src="../fullCalendar/calender.js"></script>
+<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/fullCalendar/calender.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
@@ -349,7 +351,7 @@ $(document).ready(function() {
 	$("#reserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());
 		console.log("reserveData checking=="+reserveData);
-			$.post("<c:url value='/Advisory/ReserveCheck.controller'/>",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
+			$.post("<c:url value='/Advisory/reserveCheck.controller'/>",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
 				"reserveEmp":reserveData.reserveEmp,"empId":reserveData.empId,"UserId":reserveData.UserId,"MomentId":reserveData.MomentId},function(result){			
 				var splitCode1=result.indexOf(",");
 				var splitCode2=result.indexOf(",,");
@@ -381,7 +383,7 @@ $(document).ready(function() {
 
 	$("#cancelReserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());		
-		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode},function(result){
+		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode,"UserId":reservedData.UserId},function(result){
 			$("#cancelReserveItem").modal('hide');
 			$("#cancelCheckItem").modal('show');
 			docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");

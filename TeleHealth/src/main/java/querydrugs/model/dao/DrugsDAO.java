@@ -10,7 +10,7 @@ public interface DrugsDAO {
 
 	DrugBean selectById(String licenseNum);
 
-	List<DrugBean> selectByCondition(String chineseName, String englishName, String manuName, String symptom, String marks,
+	List<DrugBean> selectByCondition(String licenseNum, String chineseName, String englishName, String manuName, String symptom, String marks,
 			String color, String shape, String formulation);
 
 	DrugBean insert(DrugBean bean);

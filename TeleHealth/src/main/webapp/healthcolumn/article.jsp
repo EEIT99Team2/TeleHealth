@@ -62,8 +62,10 @@
     <!-- Page Content -->
     <div class="container">
       <div class="row justify-content-md-center">       
-        <div class="col-lg-10" id='body'>                 
+        <div class="col-lg-10" id='body'>            
      </div>
+     <div class="col-lg-10" id='QAcontent'>                         
+     </div>              
       <div class="col-lg-10" id='foot'> 
            <c:if test="${ empty LoginOK}">
       <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"><h5>
@@ -73,8 +75,8 @@
       		<input type="hidden" id="title" name="title" >
       		<input type="hidden" id="MemId"name="MemId" value="B0041CB5-09F1-4E5B-8D57-1F0406019143">
       		<textarea class="form-control" id="textt" name="textmem" rows="3"></textarea>
-      		<input type="submit" value="送出" onclick=check()>      		
-      		<input type='button' id='clean' value='清除'>
+      		<input type="button" value="送出" onclick=insert()>      		
+      		<input type='button' id='clean' value='清除'><font id="successMsg" color="green" size="-1"></font><font id="erroeMsg" color="red" size="-1"></font>
       		</form>      	
       	</div>
       
@@ -117,12 +119,15 @@ $(document).ready(function() {
 		});
 	var url = location.href;
 	var ary1 = url.split('?');	
-	var ary2 = ary1[1].split('=');	
-	var ary3=ary2[1].split('&');		       
+	var ary2 = ary1[1].split('=');
+	var type=ary2[2];	
+	var ary3=ary2[1].split('&');			       
 	var id = ary3[0];	   
     var titledecode= decodeURIComponent(id);   	  
-    $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller', {title:titledecode}, function (data){
-		 $.each(data, function (i, data) {  
+    $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller', {title:titledecode}, function (data){		
+		 $.each(data, function (i, data) {
+			console.log(data)
+			if(data[5]!="VID"){  
         	var cell0=$("<hr>")      	     	          
             var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
             var cell2= $("<p class='lead'></p>").text("by  "+data[1]);
@@ -130,37 +135,93 @@ $(document).ready(function() {
             var cell4= $("<p class='lead'></p>").html(data[2]);                          
             var row = $(' <div class="col-lg-10" id="data"></div>').append([cell1,cell0,cell2,cell3,cell0,cell4]);
              $('#body').append(row);
+			}else
+			{
+				var cell0=$("<hr>")      	     	          
+	            var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
+	            var cell2= $("<p class='lead'></p>").text("by  "+data[1]);
+	            var cell3=$("<p></p>").text(data[3]);
+	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="http://localhost:8090/TeleHealth/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
+	            var cell4= $("<p class='lead'></p>").html(data[2]);                          
+	            var row = $(' <div class="col-lg-10" id="data"></div>').append([cell1,cell0,cell2,cell3,video,cell0,cell4]);
+	             $('#body').append(row);
+			}	
          });        
- 	});
-   
+ 	});   
     $.getJSON('/TeleHealth/healthcolumn/QAcontent.controller', {title:titledecode}, function (data){               
     	var doc=$(document.createDocumentFragment());   	
-    	var div=$('<div class="col-lg-10"></div>');
+    	var div=$('<div class="col-lg-10" ></div>');
     	 $.each(data, function (i, data) {          	 
         	 if(data[0]==null){
-        		 var cellauthor= $("<h5 class='mt-0'></h5>").text(data[1]); 
+        		 var cellauthor= $("<h6 class='mt-0'></h6>").text("會員:"+data[1]); 
         		 var cellcontent=$("<p></p>").html(data[2]);
         		 if (data[4]==null){
-        			 var celldate=$("<h6></h6>").text(data[3]);
+        			 var celldate=$("<small></small>").text(data[3]);
             	}else{
-                	var celldate=$("<h6></h6>").text(data[4]);
+                	var celldate=$("<small></small>").text(data[4]);
                 	}	
           		 var row2=$("<div class='media-body' style='border-style:dashed'></div>").append([cellauthor,celldate,cellcontent]);
           		doc.append(row2);          		        		         		       		      		
             	 }else{
-            	var cellauthor= $("<h5 class='mt-0'></h5>").text("會員"+data[0]);
+            	var cellauthor= $("<h5 class='mt-0'></h5>").text(data[0]);
             	var cellcontent=$("<p></p>").html(data[2]);	         		
             	if (data[4]==null){
-       			 var celldate=$("<h6></h6>").text(data[3]);
+       			 var celldate=$("<small></small>").text(data[3]);
            		}else{
-               	var celldate=$("<h6></h6>").text(data[4]);
+               	var celldate=$("<small></small>").text(data[4]);
                	}	
          		var row2=$("<div class='media-body' style='border-style:dashed'></div>").append([cellauthor,celldate,cellcontent]); 
          		doc.append(row2);          	             	            	
                }    	
        	}); 	
-    	 $('#data').append(doc);               
-     });  
+    	 $('#QAcontent').append(doc);               
+     })
+     function insert(){
+    	var url = location.href;
+	    var ary1 = url.split('?');	   
+	    var ary2 = ary1[1].split('=');
+	    var aryid=ary2[1].split('&');	    		       
+		var title = aryid[0];		    
+	    var atype=ary2[2];	    
+	    var MemId=$("#MemId").val();	    
+	    var content= CKEDITOR.instances.textt.getData();
+        $.getJSON("/TeleHealth/healthcolumn/insQA.controller",{advisorycode:atype,title:title,MemId:MemId,textmem:content},function(datas){
+			if(datas=="ok"){
+				$("#QAcontent").empty();
+			 $.getJSON('/TeleHealth/healthcolumn/QAcontent.controller', {title:titledecode}, function (data){               
+			    	var doc=$(document.createDocumentFragment());   	
+			    	var div=$('<div class="col-lg-10"></div>');
+			    	 $.each(data, function (i, data) {          	 
+			        	 if(data[0]==null){
+			        		 var cellauthor= $("<h5 class='mt-0'></h5>").text("會員:"+data[1]); 
+			        		 var cellcontent=$("<p></p>").html(data[2]);
+			        		 if (data[4]==null){
+			        			 var celldate=$("<h6></h6>").text(data[3]);
+			            	}else{
+			                	var celldate=$("<h6></h6>").text(data[4]);
+			                	}	
+			          		 var row2=$("<div class='media-body' style='border-style:dashed'></div>").append([cellauthor,celldate,cellcontent]);
+			          		doc.append(row2);          		        		         		       		      		
+			            	 }else{
+			            	var cellauthor= $("<h5 class='mt-0'></h5>").text(data[0]);
+			            	var cellcontent=$("<p></p>").html(data[2]);	         		
+			            	if (data[4]==null){
+			       			 var celldate=$("<h6></h6>").text(data[3]);
+			           		}else{
+			               	var celldate=$("<h6></h6>").text(data[4]);
+			               	}	
+			         		var row2=$("<div class='media-body' style='border-style:dashed'></div>").append([cellauthor,celldate,cellcontent]); 
+			         		doc.append(row2);          	             	            	
+			               }    	
+			       	}); 	
+			    	 $('#QAcontent').append(doc);
+			    	 $("#successMsg").text("po文成功");               
+			     })
+			}else{
+				$("#erroeMsg").text("po文失敗");
+				}
+            });
+   }
       
     </script>        
 

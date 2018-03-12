@@ -12,7 +12,6 @@
 		<property name="url" value="/Members/Members03.jsp"></property>
 	</bean>
 	
-	
 	<bean id="memberdata.error" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/Members/Members02.jsp"></property>
 	</bean>
@@ -59,17 +58,27 @@
 	<bean id="deletecontentok" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/healthcolumn/Dpublish.jsp"></property>
 	</bean>
+	
 	<bean id="deletecontenterror" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/healthcolumn/Dpublish.jsp"></property>
+	</bean>
+	
+	<bean id="createcontentok" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthcolumn/healthcolumn.jsp"></property>
+	</bean><bean id="createerror" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthcolumn/healthcolumn.jsp"></property>
 	</bean>
 	
 	<bean id="bmi" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/healthpassport/HealthPassport.jsp"></property>
 	</bean>
+	
 	<bean id="bloodPressure" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/healthpassport/HealthPassport.jsp"></property>
 	</bean>
+	
 	<bean id="bloodSugar" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/healthpassport/HealthPassport.jsp"></property>
 	</bean>
+	
 </beans>

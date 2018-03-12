@@ -15,6 +15,9 @@ import advisory.model.AdvisoryService;
 import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryMomentService;
 import employees.model.dao.EmployeesDAO;
+import register.model.MemberBean;
+import register.model.RegisterService;
+import register.model.dao.MemberDAOHibernate;
 
 @Controller
 public class AdvisoryController {
@@ -24,8 +27,10 @@ public class AdvisoryController {
 	private AdvisoryMomentService advisoryMomentService;
 	@Autowired
 	private EmployeesDAO employeesDAO;
-	@RequestMapping(path= {"/Advisory/ReserveCheck.controller"},method= {RequestMethod.POST},produces="text/plain;charset=UTF-8")
-	public @ResponseBody String ReserveCheck(String advisoryTime,String reserveItem,String reserveEmp,String empId,String UserId,String MomentId) throws ParseException {
+	
+	//會員預約成功，新增預約記錄
+	@RequestMapping(path= {"/Advisory/reserveCheck.controller"},method= {RequestMethod.POST},produces="text/plain;charset=UTF-8")
+	public @ResponseBody String reserveCheck(String advisoryTime,String reserveItem,String reserveEmp,String empId,String UserId,String MomentId) throws ParseException {
 		String result=null;
 		SimpleDateFormat sdfForReserve = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		SimpleDateFormat sdfForCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -46,9 +51,7 @@ public class AdvisoryController {
 				code=(int)(Math.random()*26+97);
 			}		
 			codeData[i]=(char)code;
-		}
-		
-		
+		}	
 		if(advisoryTime==null || advisoryTime.trim().length()==0 || reserveItem==null || reserveItem.trim().length()==0 || reserveEmp==null || reserveEmp.trim().length()==0 || empId==null || empId.trim().length()==0 || UserId==null || UserId.trim().length()==0) {
 			result="您的預約失敗";
 		}else {
@@ -60,6 +63,7 @@ public class AdvisoryController {
 			advisorybean.setEmpId(empId);
 			advisorybean.setAdvisoryTime(reserveDate);
 			advisorybean.setCreateTime(createTime);
+			advisorybean.setStatus("N");
 			advisoryService.insert(advisorybean);
 			//修改班表預約狀態(table:AdvisoryMoment)
 			AdvisoryMomentBean advisoryMomentBean = new AdvisoryMomentBean();
@@ -69,10 +73,23 @@ public class AdvisoryController {
 			advisoryMomentService.updateByReserve(advisoryMomentBean);
 			result="您的預約成功";			
 			sendTime = sdfForCreate.format(createTime);
+			//會員給錢			
+			advisoryService.updateMemPoint(UserId);
 			//增加員工預約點擊數
-			employeesDAO.addResCount(empId);
+			employeesDAO.addResCount(empId);		
 		}
-	
 		return result+","+videoCode+",,"+sendTime;
+	}
+	
+	//會員查看預約記錄
+	@RequestMapping(path= {"/Advisory/memberReserve.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public @ResponseBody String memberReserve(String memberId){
+		String result=null;
+		
+		if(memberId!=null && memberId.trim().length()!=0) {
+			result=advisoryService.selectByMemId(memberId);
+		}
+		
+		return result;
 	}
 }

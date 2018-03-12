@@ -2,6 +2,7 @@ package healthcolumn.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +26,7 @@ public class Questioncontroller {
 	@RequestMapping(path = { "/healthcolumn/QAcontent.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String loadQAcontent(String title) {
-		List<QuestionBean> loadpage = QuestionService.loadresponse(title);
-		System.out.println(loadpage);
+		List<QuestionBean> loadpage = QuestionService.loadresponse(title);		
 		Gson gson = new Gson();
 		String data = gson.toJson(loadpage);
 		System.out.println(data);
@@ -36,8 +36,7 @@ public class Questioncontroller {
 	@RequestMapping(path = { "/healthcolumn/QAEmpublish.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String loadQAEmppublish(String empId) {
-		List<QuestionBean> loadpage = QuestionService.loadEmp(empId);
-		System.out.println(loadpage);
+		List<QuestionBean> loadpage = QuestionService.loadEmp(empId);		
 		Gson gson = new Gson();
 		String data = gson.toJson(loadpage);
 		System.out.println(data);
@@ -48,7 +47,6 @@ public class Questioncontroller {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String loadQAMempublish(String memId) {
 		List<QuestionBean> loadpage = QuestionService.loadMem(memId);
-		System.out.println(loadpage);
 		Gson gson = new Gson();
 		String data = gson.toJson(loadpage);
 		System.out.println(data);
@@ -59,8 +57,7 @@ public class Questioncontroller {
 	"/healthcolumn/updatememQA.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.POST })
 	public @ResponseBody String updatecontent(String contenttext,String questionId,Model model) {
-		int columnIdemp=Integer.parseInt(questionId);
-		System.out.println(contenttext);
+		int columnIdemp=Integer.parseInt(questionId);		
 		boolean update = QuestionService.updateQA(columnIdemp, contenttext);
 		Map<String, String> QAerrors = new HashMap<>();
 		model.addAttribute("QA", QAerrors);
@@ -73,18 +70,7 @@ public class Questioncontroller {
 			QAerrors.put("updaterror","修改失敗!!");
 			return"修改失敗";
 		}		
-	}
-
-	
-	//新增問題
-//	@RequestMapping(path = {"/healthcolumn/QAinsertMem.controller" }, produces = "text/html;charset=UTF-8", method = {
-//			RequestMethod.POST })
-//	public @ResponseBody String insertMem(
-//			,Model model) {
-//	
-//		}		
-//	}
-//	
+	}	
 	// 刪除會員po文章
 	@RequestMapping(path = {
 	"/healthcolumn/deleteQAMem.controller" }, produces = "text/html;charset=UTF-8", method = {
@@ -140,17 +126,15 @@ public class Questioncontroller {
 			bean.setCreateTime(new Date());
 			bean.setQAtype("Q");
 			bean.setQuetitle(title);
-			boolean delete = QuestionService.insertQA(bean);
-			Map<String, String> contenterrors = new HashMap<>();
-			model.addAttribute("contenterrors", contenterrors);
-			Map<String, String> contentOK = new HashMap<String, String>();
-			model.addAttribute("contentOK", contentOK);
+			boolean delete = QuestionService.insertQA(bean);			
 			if(delete) {
-				contenterrors.put("contentok", "新增成功!!");
-				return  "deletecontentok";
+				Gson gson = new Gson();
+				String dataLoad = gson.toJson("ok");
+				return dataLoad ;
 			}else {
-				contentOK.put("contenterror", "新增失敗!!");
-				return "deletecontenterror";
+				Gson gson = new Gson();
+				String dataLoad = gson.toJson("wrong");
+				return dataLoad ;
 			}		
 		}
 		//選修改文章
@@ -161,9 +145,33 @@ public class Questioncontroller {
 			int columnIdemp=Integer.parseInt(Id);
 			List<QuestionBean> dataId = QuestionService.loadtitleId(columnIdemp);
 			Gson gson = new Gson();
-			String dataLoad = gson.toJson(dataId);
-			System.out.println(dataLoad);
+			String dataLoad = gson.toJson(dataId);			
 			return dataLoad;			 
 		}
-		
+		//選修全部文章
+				@RequestMapping(path = {"/healthcolumn/allmempublish.controller" }, produces = "text/html;charset=UTF-8", method = {
+						RequestMethod.GET, RequestMethod.POST })
+				public @ResponseBody String QAallmempublish()
+				{					
+					List<Object[]> allmempublish = QuestionService.loadtotalcontent();
+					Gson gson = new Gson();
+					String dataLoad = gson.toJson(allmempublish);
+					System.out.println(dataLoad);
+					return dataLoad;			 
+				}
+		//選修全部文章
+		@RequestMapping(path = {"/healthcolumn/QAMemonepublish.controller" },produces = "text/html;charset=UTF-8", method = {
+				RequestMethod.GET, RequestMethod.POST })
+		public @ResponseBody String QAMemonepublish(String memname,Model model)
+			{					
+				List<Object[]> allmempublish = QuestionService.QAMemonepublish(memname);
+				if(allmempublish.size()==0) {					
+					Gson gson = new Gson();
+					String dataLoad = gson.toJson("wrong");
+					return dataLoad ;
+				}					
+				Gson gson = new Gson();
+				String dataLoad = gson.toJson(allmempublish);				
+				return dataLoad;			 
+			}	
 }

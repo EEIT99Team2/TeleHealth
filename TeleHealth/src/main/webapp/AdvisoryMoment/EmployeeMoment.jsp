@@ -7,26 +7,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>諮詢時刻表</title>
     
-<link href="../fullCalendar/fullcalendar.min.css" rel="stylesheet"/>
-<link href="../fullCalendar/fullcalendar.print.min.css" rel="stylesheet"  media='print' />
+<link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
+<link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+<link href="<c:url value='/css/fonts/fontstyle.css" rel="stylesheet'/>" type="text/css"/>
+<link href="<c:url value='/fullCalendar/w3.css" rel="stylesheet'/>" type="text/css"/>
 <style>
-
-  body {
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-  }
-
   #calendar {
-  
     max-width: 1100px;
     margin: 60px auto;
 /*     background-color: lightblue; */
   }
   .fc-widget-header{
      background-color:#00e3e3;
+	}
+	.fc-toolbar h2 {
+	font-family: CJKtc_Bold;
 	}
 /* 	//week格線 */
 /*    .fc .fc-agendaWeek-view .fc-bg tr > td{ */
@@ -48,7 +46,6 @@
 </style>
 </head>
 <body>
-<div id='loading'>
 <!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
@@ -87,6 +84,7 @@
             </div>
         </nav>
     </header>
+<div id='loading' class='container'>
 <!-- 未預約班表視窗 -->
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -102,7 +100,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="UnReTakeOff">我要請假</button>
-<!--         <button type="button" class="btn btn-primary" id="Change">我要調班</button> -->
         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
       </div>
     </div>
@@ -129,27 +126,7 @@
     </div>
   </div>
 </div>
-<!-- 調班視窗 暫定不需要 -->
-<!-- <div class="modal fade" id="changeItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
-<!--   <div class="modal-dialog modal-dialog-centered" role="document"> -->
-<!--     <div class="modal-content"> -->
-<!--       <div class="modal-header"> -->
-<!--         <h5 class="modal-title" id="changeItemTitle">申請調班</h5> -->
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
-<!--       </div> -->
-<!--       <div class="modal-body"> -->
-<!--         <h2>不准調</h2> -->
-<!--       </div> -->
-<!--       <div class="modal-footer"> -->
-<!--         <button type="button" class="btn btn-primary" data-dismiss="modal" id="checkChange">確定</button> -->
-<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div> -->
-<!-- 請假視窗 -->
+
 <div class="modal fade" id="TakeOffItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -208,18 +185,19 @@
     </div>
   </div>
 </div>
-</div>
 <div id="calendar"></div>
+<span style='color:#0080ff'>您的班表(無預約)</span><span style='color:#d26900'>您的班表(有預約)</span><span style='color:#bebebe'>未被預約班表</span><span style='color:#ea0000'>已被預約班表</span>
+</div>
 <!-- Footer -->
     <footer class="w3-center w3-black w3-padding-16">
         <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
     </footer>
 <!--=======================載入script檔跟程式==========================-->
-<script src="../fullCalendar/moment.min.js"></script>
-<script src="../fullCalendar/jquery-3.3.1.min.js"></script>
-<script src="../fullCalendar/fullcalendar.min.js"></script>
-<script type="text/javascript" src="../fullCalendar/zh-tw.js"></script>
-<script type="text/javascript" src="../fullCalendar/calender.js"></script>
+<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/calender.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- loading用 -->
@@ -272,20 +250,6 @@ $(document).ready(function() {
 		})
 		
 	$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectAll.controller'/>",{"EmpId":EmpId},function(eventsData){	
-// 	$("#chooseCode").change(function (){
-// 		var code = $("#chooseCode :selected").prop("id");
-// 		if(code=="all"){
-// 			$("#calendar").fullCalendar('removeEventSources');
-// 			$("#calendar").fullCalendar('addEventSource', eventsData);
-// 			$("#calendar").fullCalendar('rerenderEvents');
-// 		}else{		
-// 		$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectByCode.controller'/>",{"EmpId":EmpId,advisoryCode:code},function(data){	
-// 		$("#calendar").fullCalendar('removeEventSources');
-// 		$("#calendar").fullCalendar('addEventSource', data);
-// 		$("#calendar").fullCalendar('rerenderEvents');
-// 		})
-// 		}
-// 	});
 		
     $('#calendar').fullCalendar({
     	 columnHeaderHtml: function(mom) {
@@ -304,9 +268,9 @@ $(document).ready(function() {
         	SelectByEmpID:{
         		text:'我的班表',
 				click:function(){
-					$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectById.controller'/>",{"EmpId":EmpId},function(Mydata){	
+					$.getJSON("<c:url value='/AdvisoryMomemt/employeeSelectById.controller'/>",{"EmpId":EmpId},function(eventsData){	
 						$("#calendar").fullCalendar('removeEventSources');
-						$("#calendar").fullCalendar('addEventSource', Mydata);
+						$("#calendar").fullCalendar('addEventSource', eventsData);
 						$("#calendar").fullCalendar('rerenderEvents');
 						})
 					}
@@ -354,8 +318,9 @@ $(document).ready(function() {
 		  var reserveEmp=events.title.substr(emptyChar+2);
 		  var MomentId=events.MomentId;
 		  var takeoff=events.takeoff;
-		  console.log(takeoff);
-		  if(events.backgroundColor=="#0080ff" && takeoff == "noexist"){
+		  var MomentStatus=events.MomentStatus;
+		  var reResult=events.reResult;
+		  if(events.backgroundColor=="#0080ff" && takeoff == "noexist" || reResult=="N"){
 			  $('#UnReserveItem').modal('show');
 			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
 			  			+"<h3>諮詢項目:</h3><h5>"+reserveItem+"</h5>"
@@ -363,16 +328,16 @@ $(document).ready(function() {
 			  	$("#UnReserveItem .modal-body").append(docFrag);
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"MomentId":MomentId};
 				console.log("events="+reserveData);
-			  }else if(events.backgroundColor=="#d26900" && takeoff == "noexist"){
+			  }else if(events.backgroundColor=="#d26900" && takeoff == "noexist" || reResult=="N"){
 				reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"MomentId":MomentId};
 				  $('#reservedItem').modal('show');
 				  docFrag.append("<h3>視訊代碼:"+events.selfResCode+"</h3>"
 				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
 				  	$("#reservedItem .modal-body").append(docFrag);
-				}else if(events.backgroundColor=="#0080ff" && takeoff == "exist"|| events.backgroundColor=="#d26900" && takeoff == "exist"){
+				}else if(events.backgroundColor=="#0080ff" && takeoff == "exist" && reResult=="null"|| events.backgroundColor=="#d26900" && takeoff == "exist"  && reResult=="null"){					
 						docFrag.append("<h3>"+"請假申請審核中"+"</h3>");
 						$("#takeoffedItem .modal-body").append(docFrag);
-						$('#takeoffedItem').modal('show');
+						$('#takeoffedItem').modal('show');								
 					}  
 	  },
 	  eventMouseover:function( event, jsEvent, view ) {
@@ -447,7 +412,6 @@ $("#ReTakeOff").click(function takeoff(){
 				$(".txtWaring").remove();
 				$("#checkTakeOff").attr("data-dismiss","modal");
 				var docFrag = $(document.createDocumentFragment());
-				console.log(reserveData.MomentId+";;;;;;;;"+reserveData.empId);
 				$.post("<c:url value='/AdvisoryMoment/takeoff.controller'/>",{"MomentId":reserveData.MomentId,"EmpId":reserveData.empId,"TakeoffItem":TakeoffItem,"TakeoffReason":TReason},function(result){
 					docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");
 					$("#takeoffResItem .modal-body").append(docFrag);

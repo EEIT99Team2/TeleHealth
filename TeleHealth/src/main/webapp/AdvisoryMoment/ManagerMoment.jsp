@@ -7,220 +7,129 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>諮詢時刻表</title>
     
-<link href="../fullCalendar/fullcalendar.min.css" rel="stylesheet"/>
-<link href="../fullCalendar/fullcalendar.print.min.css" rel="stylesheet"  media='print' />
-
+<link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
+<link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
+<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+	<link href="<c:url value='/fullCalendar/w3.css'/>" rel="stylesheet" type="text/css"/>
 <style>
 
   body {
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    margin-top: 40px;
+    text-align: center;
+  }
+	.fc-toolbar h2 {
+	font-family: CJKtc_Bold;
+	}
+	
+  #wrap {
+    width: 1100px;
+    margin: 0 auto;
+  }
+
+  #external-events {
+    float: left;
+    width: 150px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+  }
+
+  #external-events h4 {
+    font-size: 16px;
+    margin-top: 0;
+    padding-top: 1em;
+  }
+
+  #external-events .fc-event {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+
+  #external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+  }
+
+  #external-events p input {
+    margin: 0;
+    vertical-align: middle;
   }
 
   #calendar {
-  
-    max-width: 1100px;
-    margin: 60px auto;
-/*     background-color: lightblue; */
+    float: right;
+    width: 900px;
+	font-family: CJKtc_Bold;	
   }
-  .fc-widget-header{
-     background-color:#00e3e3;
-	}
-/* 	//week格線 */
-/*    .fc .fc-agendaWeek-view .fc-bg tr > td{ */
-/*     border: 2px solid grey; */
-/* 	} */
-/* 	//table格線 */
-/* 	.fc-bg table{ */
-		
-/* 	} */
-  .headerChoose {font-size:1.5em;}
-  .item1 {font-size:1.8em;
-		 margin-left:100px;}
-  .item2 {font-size:1.8em;
-		 margin-left:100px;}
-  .item3 {font-size:1.8em;
-		 padding-right:10px;
-		 }
-  .columnHead{font-size:1.2em;}
+
 </style>
 </head>
 <body>
- <!-- Navigation -->
-<!--     <header> -->
-<!--         <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black"> -->
-<!--             <a class="navbar-brand" href="#">Carousel</a> -->
-<!--             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> -->
-<!--                 <span class="navbar-toggler-icon"></span> -->
-<!--             </button> -->
-<!--             <div class="collapse navbar-collapse w3-center" id="navbarCollapse"> -->
-<!--                 <ul class="navbar-nav mr-auto"> -->
-<!--                     <li class="nav-item active"> -->
-<!--                         <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a> -->
-<!--                     </li> -->
-<!--                     <li class="nav-item"> -->
-<!--                         <a class="nav-link" href="#team">醫師介紹</a> -->
-<!--                     </li> -->
-<!--                     <li class="nav-item"> -->
-<!--                         <a class="nav-link" href="#pricing">方案介紹</a> -->
-<!--                     </li> -->
-<!--                 </ul> -->
-                <form action="<c:url value="/AdvisoryMomemt/memberSelectByCode.controller" />" method="GET">
-<input type="text" id="userId" name="userId" value="B221C929-CF1C-445F-B927-1D5E463B3006">
-<span id="item1" class="item1">快速查詢:</span>
-<select id="year" class="headerChoose"></select><span id="item1" class="headerChoose">年</span>
-<select id="month" class="headerChoose"></select><span id="item1" class="headerChoose">月</span>
-<select id="date" class="headerChoose"></select><span id="item1" class="headerChoose">日</span>
-<button type="button" id="fastSearch" class="headerChoose">查詢</button>
-<span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose">
-<option id="allday">全天</option>
-<option id="mor">上午</option>
-<option id="aft">下午</option>
-<option id="nig">晚上</option>
-</select>
-<span id="item3" class="item3">科別:</span><select id="chooseCode" class="headerChoose">
-<option id="all">所有諮詢項目</option>
-<option id="FAM">家庭醫學</option>
-<option id="EAD">生活飲食</option>
-<option id="REH">復健醫學</option>
-<option id="DIA">糖尿病諮詢</option>
-<option id="CAR">心血管慢性疾病諮詢</option>
-<option id="WEL">健康減重</option>
-</select><br>
-</form>
-                <!-- Trigger the modal with a button -->                
-<!--                 <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button> -->
-<!--             </div> -->
-<!--         </nav> -->
-<!--     </header> -->
-<!-- 點擊預約時段彈跳視窗 -->
-<div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="reserveCheckTitle">預約告示</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- 跳出視窗的內容 -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="reserveCheck">確定預約</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- 預約結果視窗 -->
-<div class="modal fade" id="reserveResult" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="reserveDoneTitle">預約結果</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- 跳出視窗的內容 -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reserveDone">我知道了</button>
-      </div>
-    </div>
-  </div>
-</div>
+ <div id='wrap'>
 
-<div id="calendar"></div>
+    <div id='external-events'>
+      <h4>Draggable Events</h4>
+      <div class='fc-event'>My Event 1</div>
+      <div class='fc-event'>My Event 2</div>
+      <div class='fc-event'>My Event 3</div>
+      <div class='fc-event'>My Event 4</div>
+      <div class='fc-event'>My Event 5</div>
+      <p>
+        <input type='checkbox' id='drop-remove' />
+        <label for='drop-remove'>remove after drop</label>
+      </p>
+    </div>
 
+    <div id='calendar'></div>
+
+    <div style='clear:both'></div>
+
+  </div>
 <!--=======================載入script檔跟程式==========================-->
-<script src="../fullCalendar/moment.min.js"></script>
-<script src="../fullCalendar/jquery-3.3.1.min.js"></script>
-<script src="../fullCalendar/fullcalendar.min.js"></script>
-<script type="text/javascript" src="../fullCalendar/zh-tw.js"></script>
-<script type="text/javascript" src="../fullCalendar/calender.js"></script>
+<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
+<script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../fullCalendar/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<c:url value='/fullCalendar/jquery-ui.min.js'/>"></script>
 <script>
 $(document).ready(function() {
-	var initialLocaleCode = 'zh';
-	var urlPath = "/TeleHealth";
-	var UserId=$("#userId").val();
-	var mom = moment();
-	var reserveData;
-	var time;
-	var minT;
-	var maxT;
-	var contentH;
-	var weekformat=["一","二","三","四","五","六","日"];
-	var today = new Date();
-	var eventsData;
-			
-	$("#chooseTime").change(function(){
-		time = $("#chooseTime :selected").prop("id");		
-		if(time=="mor"){
-			minT="08:00";
-			maxT="12:00";
-			contentH="auto";
-			}else if(time=="aft"){
-				minT="14:00";
-				maxT="18:00";
-				contentH="auto";
-			}else if(time=="nig"){
-					minT="19:00";
-					maxT="21:00";
-					contentH="auto";
-			}else{
-					minT="08:00";
-					maxT="21:00";
-					contentH="1000";
-				}
-		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
-		})
-	$.getJSON(urlPath+"/AdvisoryMomemt/memberSelectAll.controller",{"UserId":UserId},function(eventsData){	
-	$("#chooseCode").change(function (){
-		var code = $("#chooseCode :selected").prop("id");
-		if(code=="all"){
-			$("#calendar").fullCalendar('removeEventSources');
-			$("#calendar").fullCalendar('addEventSource', eventsData);
-			$("#calendar").fullCalendar('rerenderEvents');
-		}else{		
-		$.getJSON(urlPath+"/AdvisoryMomemt/memberSelectByCode.controller",{"UserId":UserId,advisoryCode:code},function(data){	
-		$("#calendar").fullCalendar('removeEventSources');
-		$("#calendar").fullCalendar('addEventSource', data);
-		$("#calendar").fullCalendar('rerenderEvents');
-		})
-		}
-	});
 
-	
 
-		
+    /* initialize the external events
+    -----------------------------------------------------------------*/
+
+    $('#external-events .fc-event').each(function() {
+
+      // store data so the calendar knows to render an event upon drop
+      $(this).data('event', {
+        title: $.trim($(this).text()), // use the element's text as the event title
+        stick: true // maintain when user navigates (see docs on the renderEvent method)
+      });
+
+      // make the event draggable using jQuery UI
+      $(this).draggable({
+        zIndex: 999,
+        revert: true,      // will cause the event to go back to its
+        revertDuration: 0  //  original position after the drag
+      });
+
+    });
+
+
+    /* initialize the calendar
+    -----------------------------------------------------------------*/
+
     $('#calendar').fullCalendar({
-    	 columnHeaderHtml: function(mom) {
-        	 for(var i = 0;i<7;i++){
-    		    if (mom.weekday() === i) {
-    		      return "<span class='columnHead'>"+mom.format('MM/DD')+"\r\n"+weekformat[i]+"</span>";
-    		    } }
-    		  },    	
-    	customButtons: {
-            myCustomButton: {
-                text: '回到今天',
-                click: function() {
-                	$('#calendar').fullCalendar('today');
-                }
-            }
-        },
       defaultView:'agendaWeek',
       header: {
         left: '',
         center: 'prev, title, next',
-        right: 'agendaWeek,agendaDay,myCustomButton'
+        right: 'month,agendaWeek'
       },
       allDaySlot:false,
 //       dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
@@ -232,73 +141,19 @@ $(document).ready(function() {
       minTime:"08:00",
       maxTime:"21:00",
       navLinks: true, // can click day/week names to navigate views
-      editable:true,
+      editable: true,
       droppable: true, // this allows things to be dropped onto the calendar
       drop: function() {
         // is the "remove after drop" checkbox checked?
-        },
-      
-//       eventLimit: true, // allow "more" link when too many events
-	  eventSources:[	
-	  		{events:eventsData}
-		  ],	   	
-	  eventClick: function eventCheck(events) {
-		  var docFrag = $(document.createDocumentFragment());
-          var reserve = $('.modal-body');
-          reserve.empty();
-		  var startTime =moment(events.start).format("a H:mm");
-		  var sendBackTime=moment(events.start).format("YYYY-MM-DD HH:mm");
-		  var endTime =moment(events.end).format("H:mm");
-		  var emptyChar = events.title.indexOf("\r\n");
-		  var reserveItem=events.title.substr(0,emptyChar);
-		  var empId=events.empId;
-		  var reserveEmp=events.title.substr(emptyChar+2);
-		  var MomentId=events.MomentId;
-		  if(events.backgroundColor=="#0080ff"){
-			  $('#reserveDataDetail').modal('show');
-			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
-			  			+"<h3>諮詢項目:</h3><h5>"+reserveItem+"</h5>"
-					  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>");
-			  	$("#reserveDataDetail .modal-body").append(docFrag);
-			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId};
-				console.log("events="+reserveData);
-			  }else if(events.backgroundColor=="#00db00"){
-				  $('#reserveResult').modal('show');
-				  docFrag.append("<h3>諮詢項目:"+reserveItem+"</h3>"
-						  	+"<h3>諮詢人員:"+reserveEmp+"</h3>"
-// 				  			+"<h3>視訊代碼:"+"<span>"+"</span>"+"</h3>"
-				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
-				  	$("#reserveResult .modal-body").append(docFrag);
-				  }  
-	  }		  
+        if ($('#drop-remove').is(':checked')) {
+          // if so, remove the element from the "Draggable Events" list
+          $(this).remove();
+        }
+      }
     });
-	});	
-	$("#fastSearch").click(function(){
-		var chooseyear = "20"+$("#year :selected").val();
-		var choosemonth = "-"+$("#month :selected").val();
-		var choosedate = "-"+$("#date :selected").val();
-		var checkDate =moment(chooseyear+choosemonth+choosedate,"YYYY-MM-DD");
-		console.log(chooseyear+choosemonth+choosedate);
-		$("#calendar").fullCalendar('gotoDate',checkDate);
-		})
-	$("#reserveCheck").click(function(){
-		var docFrag = $(document.createDocumentFragment());
-			$.post(urlPath+"/Advisory/ReserveCheck.controller",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
-				"reserveEmp":reserveData.reserveEmp,"empId":reserveData.empId,"UserId":reserveData.UserId,"MomentId":reserveData.MomentId},function(result){			
-				var splitCode1=result.indexOf(",");
-				var splitCode2=result.indexOf(",,");
-				$('#reserveDataDetail').modal('hide');
-				 $('#reserveResult').modal('show');
-				  docFrag.append("<h3>"+result.substr(0,splitCode1)+"</h3>"
-				  			+"<h3>視訊代碼為:"+"<span>"+result.substr(7,splitCode2-7)+"</span>"+"</h3>"
-				  			+"<h3>時間:"+"<span>"+result.substr(splitCode2+2)+"</span>"+"</h3>");
-				  	$("#reserveResult .modal-body").append(docFrag);
-				})
-		})  
-	$("#reserveDone").click(function(){
-		window.location.reload();
-		})
-});
+
+
+  });
 </script>
 <!-- Footer -->
 <!--     <footer class="w3-center w3-black w3-padding-16"> -->
