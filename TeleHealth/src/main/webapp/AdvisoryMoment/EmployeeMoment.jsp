@@ -203,8 +203,8 @@
 <!-- loading用 -->
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/src/loadingoverlay.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/extras/loadingoverlay_progress/loadingoverlay_progress.min.js"></script>
-<script>
-       
+</body>
+<script>     
 $(document).ready(function() {
 
 	$.LoadingOverlaySetup({
@@ -433,5 +433,4 @@ $("#ReTakeOff").click(function takeoff(){
 });
 
 </script>
-</body>
 </html>

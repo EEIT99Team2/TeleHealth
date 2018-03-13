@@ -201,6 +201,10 @@
 <div class='iBlock'><span style='color:#0080ff'>尚未被預約班表</span><span style='color:#00db00'>您預約班表</span><span style='color:#ea0000'>已被預約班表</span></div>
 <div id="calendar" style="display:inline-block"></div>
 </div>
+<!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-16">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
+    </footer>
 <!--=======================載入script檔跟程式==========================-->
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
@@ -209,6 +213,7 @@
 <script type="text/javascript" src="<c:url value='/fullCalendar/calender.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 <script>
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
@@ -393,9 +398,4 @@ $(document).ready(function() {
 		})
 });
 </script>
-<!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
-</body>
 </html>

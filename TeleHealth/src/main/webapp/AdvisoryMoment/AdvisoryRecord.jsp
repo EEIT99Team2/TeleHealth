@@ -61,7 +61,6 @@
 <!--      已處理申請 -->
   </tbody>
 </table>
-
 <!-- 未諮詢視窗 -->
 <div class="modal fade" id="UnTalkItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -119,6 +118,7 @@ $(document).ready(function(){
 	var unTalkOne;
 	var TalkedOne;
 	var TalkingOne;
+	var ms;
 function LoadData(){
 	var docFrag1 =$(document.createDocumentFragment());
 	var docFrag2 =$(document.createDocumentFragment());
@@ -133,10 +133,10 @@ $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memb
 	$.each(datas,function(index,data){
 		var now = moment(new Date()).format("YYYY-MM-DD HH:mm");
 		var advisoryTime = moment(data.advisoryTime).format("YYYY-MM-DD HH:mm");
-		var ms = moment(advisoryTime).diff(now);
+		ms = moment(advisoryTime).diff(now)/1000;
 		console.log(ms);
 		var status=data.status;
-		if(status=="N" && ms<=600000){			
+		if(status=="N" && ms<=600){			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.reserveItem+"</td>");
 			var col3 = $("<td>"+advisoryTime+"</td>");
@@ -145,7 +145,8 @@ $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memb
 			TalkingOne={"reserveItem":data.reserveItem,"advisoryTime":advisoryTime,"empName":data.empName+" "+data.career,"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"satisfy":data.satisfy,"modifyTime":data.modifyTime,"momentId":data.momentId};			
 			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
 		    docFrag1.append(allcol);		
-		}else if(status=="N"){			
+		}else if(status=="N"){
+			console.log("ms"+ms);		
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.reserveItem+"</td>");
 			var col3 = $("<td>"+advisoryTime+"</td>");
@@ -185,23 +186,20 @@ $("body").on("click","#UnTalkList tr",function(){
 	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+unTalkOne.advisoryTime+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+unTalkOne.empName+"</span>"
-			+"<div id='getting-started'></div>");		
+			+"<div id='getting-started'></div>");	
 	$("#UnTalkItem .modal-body").append(docFrag);
+	$("#getting-started").countdown({until:ms, format: 'DHMS'});	
 	$("#UnTalkItem").modal("show");
-	$("#getting-started").countdown({until:unTalkOne.advisoryTime, format: 'DHMS'});
 });
 
 //已諮詢
 $("body").on("click","#TalkList tr",function(){
 	var docFrag =$(document.createDocumentFragment());
 	$("#TalkItem .modal-body").empty();
-	docFrag.append("<span style='font-size:1.3em'>申請人:  "+empName+"</span>"
-			+"<br/><span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
-			+"<br/><span style='font-size:1.3em'>請假時段:  "+calendar+"</span>"
-			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"		
-			+"<br/><span>申請說明: </span><p>"+apReason+"</p>"		
-			+"<br/><span style='font-size:1.3em'>核准結果:  "+reResult+"</span>"
-			+"<br/><span>備註: </span><p>"+reReason+"</p>");		
+	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+TalkOne.reserveItem+"</span>"
+			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+TalkOne.advisoryTime+"</span>"
+			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+TalkOne.empName+"</span>"
+			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"	);		
 	$("#TalkItem .modal-body").append(docFrag);
 	$("#TalkItem").modal("show");
 });
@@ -223,6 +221,9 @@ function out(){
 	$(this).removeClass("table-success");
 	$(this).addClass("Default");
 }
+
+
+
 
 $("#resultCheck").click(function(){
 	window.location.reload();
