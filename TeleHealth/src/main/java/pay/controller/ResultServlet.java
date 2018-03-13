@@ -8,6 +8,7 @@ import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
 import ecpay.payment.integration.*;
+import ecpay.payment.integration.domain.AioCheckOutOneTime;
 import pay.model.ProductBean;
 import pay.model.ProductService;
 
@@ -24,10 +25,12 @@ public class ResultServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<String> errors = new ArrayList<String>();
-		Map<String, String> msg = new HashMap<>();
-		request.setAttribute("msg", msg);
+		// Set response content type
+	    response.setContentType("text/html");
+	    PrintWriter out = response.getWriter();
 
+	    List<String> enErrors = new ArrayList<String>();
+	    
 		try {
 			String MerchantTradeNo = request.getParameter("MerchantTradeNo");
 			String temp1 = request.getParameter("RtnCode"); // RtnCode
@@ -40,7 +43,7 @@ public class ResultServlet extends HttpServlet {
 					RtnCode = Integer.parseInt(temp1);
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
-					errors.add("RtnCode Error");
+					enErrors.add("RtnCode Error");
 				}
 			}
 			
@@ -52,10 +55,17 @@ public class ResultServlet extends HttpServlet {
 				bean.setPaymentDate(PaymentDate);
 				ProductBean result = productService.update(bean);
 			} else {
+				System.out.println("false");
 			}
 		} catch (Exception e) {
-			errors.add(e.getMessage());
-		}
+			enErrors.add(e.getMessage());
+		} finally {
+			if (enErrors.size() == 0) {
+	            out.println("1|OK");
+			} else {
+				out.println("0|" + enErrors);
+			}
+	    }
 	}
 
 	@Override

@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 </head>
 <body>
 <jsp:include page="/fragment/header.jsp"/>
