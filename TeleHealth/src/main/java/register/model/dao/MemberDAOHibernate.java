@@ -23,7 +23,7 @@ public class MemberDAOHibernate {
 
 	public List<MemberBean> selectByAccount(String account) {
 		String hql = "from MemberBean m WHERE m.account = ?";
-		List<MemberBean> list = getSession().createQuery(hql).setParameter(0, account).getResultList();
+		List<MemberBean> list = this.getSession().createQuery(hql).setParameter(0, account).getResultList();
 		return list;
 	}
 	
@@ -48,9 +48,16 @@ public class MemberDAOHibernate {
 	public MemberBean update(MemberBean bean) {
 		if (bean != null) {
 			MemberBean updateMember = this.getSession().get(MemberBean.class, bean.getMemberId());
-			if(updateMember != null) {
+			System.out.println("DAO取出的資料庫會員舊密碼=" + updateMember.getPwd());
+			if(updateMember != null) { 
 				if(bean.getMemName() != null && bean.getMemName().trim().length() > 0) {
 					updateMember.setMemName(bean.getMemName());
+				}
+				if(bean.getPwd() != null && bean.getPwd().trim().length() > 0) {
+					System.out.println("Update Password="+bean.getPwd().toString());
+					System.out.println("OLD Password="+ updateMember.getPwd());
+					updateMember.setPwd(bean.getPwd());
+					System.out.println("NEW Password="+ updateMember.getPwd());
 				}
 				if(bean.getMemHeight() != null && bean.getMemHeight()>0) {
 					updateMember.setMemHeight(bean.getMemHeight());			
@@ -79,15 +86,12 @@ public class MemberDAOHibernate {
 				if(bean.getStatus() != null && bean.getStatus().trim().length() > 0) {
 					updateMember.setStatus(bean.getStatus());
 				}
-				if (bean.getFileName() != null) {
+				if (bean.getPhoto() != null && bean.getFileName() != null) {
 					updateMember.setFileName(bean.getFileName());
 					updateMember.setPhoto(bean.getPhoto());
-				} else {
-					updateMember.setFileName(null);
-					updateMember.setPhoto(null);
 				}
-				System.out.println("updateMember" + updateMember);
 				updateMember.setModifiyTime(new Timestamp(System.currentTimeMillis()));
+				
 				return updateMember;
 			}
 		}
@@ -103,17 +107,17 @@ public class MemberDAOHibernate {
 		return false;
 	}
 
-	public boolean UdPwd(String NewPwd, String changeAccount) {
-		NativeQuery query = this.getSession().createNativeQuery("update members set pwd=? where account=? ");
-		query.setParameter(1, NewPwd);
-		query.setParameter(2, changeAccount);
-		int result = query.executeUpdate();
-		if (result == 1) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+//	public boolean UdPwd(String NewPwd, String changeAccount) {
+//		NativeQuery query = this.getSession().createNativeQuery("update members set pwd=? where account=? ");
+//		query.setParameter(1, NewPwd);
+//		query.setParameter(2, changeAccount);
+//		int result = query.executeUpdate();
+//		if (result == 1) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
 
 	public boolean UpdateMemberData(String memName, String memHeight, String memWeight, String bloodType,
 			String medicine, String medicalHistory, String phone, String cellphone, String address,

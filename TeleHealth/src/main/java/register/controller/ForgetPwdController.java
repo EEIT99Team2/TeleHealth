@@ -58,7 +58,8 @@ public class ForgetPwdController {
 					//要記新密碼給會員 然後 Update資料庫的舊密碼
 //					String Password = loginService.GetPwd(ForgetEmail);
 					Boolean a = loginService.UpdatePassword(account);
-					if(a==true) {
+					
+					if(a==true) {		
 						System.out.println("寄信成功Yoo");
 						return "forgetPwd.success";
 					}else{

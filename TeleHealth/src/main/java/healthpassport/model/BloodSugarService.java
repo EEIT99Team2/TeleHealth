@@ -16,26 +16,25 @@ public class BloodSugarService {
 	@Autowired
 	private DataAnalysisDAO dataAnalysisDao;
 	
-	public BloodSugarBean insert(BloodSugarBean bean,String gender,Integer age) {
+	public BloodSugarBean insert(BloodSugarBean bean ,String gender,Integer age) {
 		Integer cbSugar = bean.getBloodSugar();
-		Double cBSugar =Double.valueOf(cbSugar) ;
+		Double cbSugarDouble = Double.valueOf(cbSugar.toString());
 		//DB傳值
-		DataAnalysisBean bSugarData = dataAnalysisDao.bloodSugarUp18(gender, age, cBSugar);
+		DataAnalysisBean bSugarData = dataAnalysisDao.bloodSugarUp18(gender, age, cbSugarDouble);
 		Double DataMinBS = bSugarData.getMinvalue();
+		
 		Double DataMaxBS = bSugarData.getMaxvalue();
+		
 		String DataResult = bSugarData.getResult();
-		if(DataResult ==null && cBSugar<DataMinBS) {
+		if(DataResult ==null && cbSugarDouble<DataMinBS) {
 			DataResult = "血糖低於正常值";
-			bean.setResult(DataResult);
-		}else if(DataResult ==null && cBSugar>DataMaxBS){
+		}else if(DataResult ==null && cbSugarDouble>DataMaxBS){
 			DataResult = "血糖已超越";
-			bean.setResult(DataResult);
 		}else {
 			bean.setResult(DataResult);
 		}
 		bean.getMemberId();
 		bean.getBloodSugar();
-		
 		bean.setCreateTime(new java.util.Date());
 		BloodSugarBean result= bloodSugarDao.insert(bean);
 		return result;

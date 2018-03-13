@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
@@ -41,4 +41,3 @@ $(document).ready(function(){
     <script src="<c:url value="/js/agency.min.js"/>"></script>
 
 	<script src='https://www.google.com/recaptcha/api.js'></script>
-

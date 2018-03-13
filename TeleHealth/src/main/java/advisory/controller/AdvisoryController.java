@@ -3,21 +3,25 @@ package advisory.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import advisory.model.AdvisoryBean;
 import advisory.model.AdvisoryService;
 import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryMomentService;
 import employees.model.dao.EmployeesDAO;
-import register.model.MemberBean;
-import register.model.RegisterService;
-import register.model.dao.MemberDAOHibernate;
 
 @Controller
 public class AdvisoryController {
@@ -28,8 +32,9 @@ public class AdvisoryController {
 	@Autowired
 	private EmployeesDAO employeesDAO;
 	
-	@RequestMapping(path= {"/Advisory/ReserveCheck.controller"},method= {RequestMethod.POST},produces="text/plain;charset=UTF-8")
-	public @ResponseBody String ReserveCheck(String advisoryTime,String reserveItem,String reserveEmp,String empId,String UserId,String MomentId) throws ParseException {
+	//會員預約成功，新增預約記錄
+	@RequestMapping(path= {"/Advisory/reserveCheck.controller"},method= {RequestMethod.POST},produces="text/plain;charset=UTF-8")
+	public @ResponseBody String reserveCheck(String advisoryTime,String reserveItem,String reserveEmp,String empId,String UserId,String MomentId) throws ParseException {
 		String result=null;
 		SimpleDateFormat sdfForReserve = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		SimpleDateFormat sdfForCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -50,9 +55,7 @@ public class AdvisoryController {
 				code=(int)(Math.random()*26+97);
 			}		
 			codeData[i]=(char)code;
-		}
-		
-		
+		}	
 		if(advisoryTime==null || advisoryTime.trim().length()==0 || reserveItem==null || reserveItem.trim().length()==0 || reserveEmp==null || reserveEmp.trim().length()==0 || empId==null || empId.trim().length()==0 || UserId==null || UserId.trim().length()==0) {
 			result="您的預約失敗";
 		}else {
@@ -79,7 +82,77 @@ public class AdvisoryController {
 			//增加員工預約點擊數
 			employeesDAO.addResCount(empId);		
 		}
-	
 		return result+","+videoCode+",,"+sendTime;
+	}
+	
+	//會員查看預約記錄
+	@RequestMapping(path= {"/Advisory/memberReserve.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public @ResponseBody String memberReserve(String memberId){
+		String result=null;
+		
+		if(memberId!=null && memberId.trim().length()!=0) {
+			result=advisoryService.selectByMemId(memberId);
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(path= {"/advisorycontent.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public @ResponseBody String doctorinsert(String videoCode, String descrip){
+		System.out.println("hahahaahahaahahaha");
+		AdvisoryBean data = advisoryService.updateAdvisoryContent(videoCode, descrip);
+		if(data != null) {
+			return new Gson().toJson("insert.success");
+		}else {
+			return new Gson().toJson("insert.error");
+		}
+	}
+	
+	@RequestMapping(path= {"/Advisory/startadvisory.controller"}, method = {RequestMethod.GET,RequestMethod.POST})
+	public String startAdvisory(String videoCode, String memName, String memberId, String empId,
+			String empName, String reserveItem, Model model, HttpSession session) {
+		String videoCodeIn = null;
+		String memNameIn = null; 
+		String memberIdIn = null; 
+		String empIdIn = null; 
+		String empNameIn = null; 
+		String reserveItemIn = null;
+		Map<String, String> errorMsg = new HashMap<>();
+		model.addAttribute("advisoryError", errorMsg); 
+		if(videoCode!=null && videoCode.trim().length()>0) {
+			videoCodeIn = videoCode.trim();
+		} else {
+			errorMsg.put("videoCodeError", "此視訊代號錯誤，請重新確認，或向管理員洽詢!");
+		}
+		if(memName!=null && memName.trim().length()>0) {
+			memNameIn = memName.trim();
+		}
+		if(memberId!=null && memberId.trim().length()>0) {
+			memberIdIn = memberId.trim();
+		}
+		if(empId!=null && empId.trim().length()>0) {
+			empIdIn = empId.trim();
+		}
+		if(empName!=null && empName.trim().length()>0) {
+			empNameIn = empName.trim();
+		}
+		if(videoCode!=null && videoCode.trim().length()>0) {
+			videoCodeIn = videoCode.trim();
+		}
+		if(reserveItem!=null && reserveItem.trim().length()>0) {
+			reserveItemIn = reserveItem.trim();
+		}
+		AdvisoryBean checkBean = advisoryService.select(videoCode);
+		if(checkBean!=null && checkBean.getStatus().equals("N")) {
+			session.setAttribute("reserveItem", reserveItemIn);
+			session.setAttribute("memName", memNameIn);
+			session.setAttribute("memberId", memberIdIn);
+			session.setAttribute("empId", empIdIn);
+			session.setAttribute("empName", empNameIn);
+			session.setAttribute("advisory", checkBean);
+			return "advisory.success";
+		}
+		errorMsg.put("videoCodeError", "此視訊代號錯誤，請重新確認，或向管理員洽詢!");
+		return "advisory.error";
 	}
 }

@@ -23,7 +23,7 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 public class DownloadFile {
 
 	public static void main(String[] args) {
-		Connection conn = null;   //習慣可加上 = null
+		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -32,7 +32,7 @@ public class DownloadFile {
 //			System.setProperty("jdbc.drivers", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			String connUrl = "jdbc:sqlserver://localhost:1433;databaseName=TeleHealthDB";  //jdbc:sqlserver://192.168.50.130都不可以空白
 			conn = DriverManager.getConnection(connUrl, "sa", "passw0rd");
-			String sql = "select licenseNum,pic from drugs where licenseNum >= '衛部藥製字第059775號' and pic <> ?";
+			String sql = "select licenseNum,pic from drugs where licenseNum > '衛署藥輸字第R00068號' and pic <> ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "");
 			rs = stmt.executeQuery();

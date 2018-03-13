@@ -17,31 +17,31 @@
 </head>
 <body>
 <div class='container'>
-<h2  class='container'>未處理申請</h2>
+<h2  class='container'>未完成預約</h2>
 <table class="table  table-hover">
   <thead>
     <tr>
       <th scope="col">編號</th>
-      <th scope="col">申請人</th>
-      <th scope="col">請假事項</th>
-      <th scope="col">申請時間</th>
-      <th scope="col">預約狀態</th>
+      <th scope="col">諮詢項目</th>
+      <th scope="col">諮詢時段</th>
+      <th scope="col">負責人</th>
+      <th scope="col">狀態</th>
     </tr>
   </thead>
   <tbody id="UnCheckList">
 <!--      未處理申請 -->
   </tbody>
 </table>
-<h2 class='container'>已處理申請</h2>
+<h2 class='container'>已完成預約</h2>
 <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">編號</th>
-      <th scope="col">申請人</th>
-      <th scope="col">請假事項</th>
-      <th scope="col">申請時間</th>
-      <th scope="col">核准結果</th>
-      <th scope="col">回覆時間</th>
+      <th scope="col">諮詢項目</th>
+      <th scope="col">諮詢時段</th>
+      <th scope="col">負責人</th>
+      <th scope="col">狀態</th>
+      <th scope="col">滿意度</th>
     </tr>
   </thead>
   <tbody id="CheckList">
@@ -50,7 +50,7 @@
 </table>
 
 <!-- 管理員回覆視窗 -->
-<div class="modal fade" id="responseItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="UnItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -96,75 +96,56 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
+	var memberId="0A21A5D0-3AA1-4A16-9742-585B4A1EA78E";
 	LoadData();
 	var DataPackage;
 function LoadData(){
 	var docFrag1 =$(document.createDocumentFragment());
 	var docFrag2 =$(document.createDocumentFragment());
+	var dataSource;
+	var unTalkOne;
+	var TalkedOne;
 	var unCheckData = $("#UnCheckList");
 	var CheckData = $("#CheckList");
 	unCheckData.empty();
 	CheckData.empty();
-$.getJSON("<c:url value='/AdvisoryMoment/takeoffData.controller'/>",{},function(datas){
+$.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memberId},function(datas){
 	console.log(datas);
 	$.each(datas,function(index,data){
 		console.log(data);
-		var momStatus=data.momStatus;
-		var reResult=data.reResult;
-		if(momStatus=="Y" && reResult=="null"){			
+		var status=data.status;
+		if(status=="N"){			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
-			var col2 = $("<td>"+data.empName+" "+data.zhCareer+"</td>");
-			var col3 = $("<td>"+data.apType+"</td>");
-			var col4 = $("<td>"+moment(data.apTime).format("YYYY-MM-DD HH:mm")+"</td>");
-			var col5;
-			if(data.status == "已預約"){
-				col5 = $("<td style='color:red'>"+data.status+"</td>");
-			}else{
-				col5 = $("<td style='color:blue'>"+data.status+"</td>");
-			}
-			var col6 = $("<span hidden='hidden'>"+data.empId+"#"+data.videoCode+"$"+data.apReason+"%"+data.MomentId+"^"+data.takeoffId+"*"+data.calendar+"</span>");			
-			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6]);
+			var col2 = $("<td>"+data.reserveItem+"</td>");
+			var col3 = $("<td>"+moment(data.advisoryTime).format("YYYY-MM-DD HH:mm")+"</td>");
+			var col4 = $("<td>"+data.empName+" "+data.career+"</td>");
+			var col5 = $("<td>未開始</td>");
+			unTalkOne={"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"statify":data.statify,"modifyTime":data.modifyTime,"momentId":data.momentId};			
+			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
 		    docFrag1.append(allcol);		
 		}else{
-			if(reResult=="Y"){
-				reResult="核准";
-				}else{
-					reResult="未核准";
-					}
 			var col21 = $("<th scope='row'>"+(index+1)+"</th>");
-			var col22 = $("<td>"+data.empName+" "+data.zhCareer+"</td>");
-			var col23 = $("<td>"+data.apType+"</td>");
-			var col24 = $("<td>"+moment(data.apTime).format("YYYY-MM-DD HH:mm")+"</td>");
-			var col25 = $("<td>"+reResult+"</td>");			
-			var col26 = $("<td>"+moment(data.reTime).format("YYYY-MM-DD HH:mm")+"</td>");			
-			var col27 = $("<span hidden='hidden'>"+data.empId+"#"+data.videoCode+"$"+data.apReason+"%"+data.MomentId+"^"+data.takeoffId+"*"+data.calendar+"&"+data.reReason+"</span>");			
-			var allcol2 = $("<tr></tr>").append([col21,col22,col23,col24,col25,col26,col27]);
+			var col22 = $("<td>"+data.reserveItem+"</td>");
+			var col23 = $("<td>"+moment(data.advisoryTime).format("YYYY-MM-DD HH:mm")+"</td>");
+			var col24 = $("<td>"+data.empName+" "+data.zhCareer+"</td>");
+			var col25 = $("<td>已完成</td>");
+			var col25 = $("<td>5</td>");
+			TalkedOne={"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"statify":data.statify,"modifyTime":data.modifyTime,"momentId":data.momentId};		
+			var allcol2 = $("<tr></tr>").append([col21,col22,col23,col24,col25,col26]);
 			docFrag2.append(allcol2);
 		}
 		})
 	$("#UnCheckList").append(docFrag1);
 	$("#CheckList").append(docFrag2);
+	console.log(unTalkOne);
+	console.log(TalkedOne);
 })
 }
-//未回覆
+//未預約
 $("body").on("click","#UnCheckList tr",function(){
 	$("#responseItem .modal-body").empty();
 	var docFrag =$(document.createDocumentFragment());
-	var empName = $(this).find("td:eq(0)").text();
-	var apType = $(this).find("td:eq(1)").text();
-	var apTime = $(this).find("td:eq(2)").text();
-	var allData = $(this).find("span").text();
-	var emptyChar1 = allData.indexOf("#");
-	var emptyChar2 = allData.indexOf("$");
-	var emptyChar3 = allData.indexOf("%");
-	var emptyChar4 = allData.indexOf("^");
-	var emptyChar5 = allData.indexOf("*");
-	var empId = allData.substr(0,emptyChar1);
-	var videoCode = allData.substr(emptyChar1+1,emptyChar2-emptyChar1-1);
-	var apReason = allData.substr(emptyChar2+1,emptyChar3-emptyChar2-1);
-	var MomentId = allData.substr(emptyChar3+1,emptyChar4-emptyChar3-1);
-	var takeoffId = allData.substr(emptyChar4+1,emptyChar5-emptyChar4-1);
-	var calendar = allData.substr(emptyChar5+1);
+	
 	docFrag.append("<span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
 			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"	
 			+"<br/><span style='font-size:1.3em'>請假事由:  "+apReason+"</span>"
@@ -177,28 +158,9 @@ $("body").on("click","#UnCheckList tr",function(){
 	$("#responseItem").modal("show");
 });
 
-//已回覆
+//已預約
 $("body").on("click","#CheckList tr",function(){
 	$("#resultItem .modal-body").empty();
-	var docFrag =$(document.createDocumentFragment());
-	var empName = $(this).find("td:eq(0)").text();
-	var apType = $(this).find("td:eq(1)").text();
-	var apTime = $(this).find("td:eq(2)").text();
-	var reResult = $(this).find("td:eq(3)").text();
-	var allData = $(this).find("span").text();
-	var emptyChar1 = allData.indexOf("#");
-	var emptyChar2 = allData.indexOf("$");
-	var emptyChar3 = allData.indexOf("%");
-	var emptyChar4 = allData.indexOf("^");
-	var emptyChar5 = allData.indexOf("*");
-	var emptyChar6 = allData.indexOf("&");
-	var empId = allData.substr(0,emptyChar1);
-	var videoCode = allData.substr(emptyChar1+1,emptyChar2-emptyChar1-1);
-	var apReason = allData.substr(emptyChar2+1,emptyChar3-emptyChar2-1);
-	var MomentId = allData.substr(emptyChar3+1,emptyChar4-emptyChar3-1);
-	var takeoffId = allData.substr(emptyChar4+1,emptyChar5-emptyChar4-1);
-	var calendar = allData.substr(emptyChar5+1,emptyChar6-emptyChar5-1);
-	var reReason = allData.substr(emptyChar6+1);
 	docFrag.append("<span style='font-size:1.3em'>申請人:  "+empName+"</span>"
 			+"<br/><span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
 			+"<br/><span style='font-size:1.3em'>請假時段:  "+calendar+"</span>"
@@ -208,26 +170,6 @@ $("body").on("click","#CheckList tr",function(){
 			+"<br/><span>備註: </span><p>"+reReason+"</p>");		
 	$("#resultItem .modal-body").append(docFrag);
 	$("#resultItem").modal("show");
-});
-
-$("#responseCheck").click(function(){
-	var docFrag =$(document.createDocumentFragment());
-	var apResult= $("input[name='approve']:checked").val();
-	var note = $.trim($("#noteTxt").val());
-	if(note.length==0){
-		$(".txtWaring").remove();
-		$("#responseCheck").removeAttr("data-dismiss");
-		$("#noteBox").append("<h5 class='txtWaring'>請加上備註</h5>");
-	}else{
-		$(".txtWaring").remove();
-		$("#responseCheck").attr("data-dismiss","modal");
-	console.log(DataPackage.takeoffId+";"+DataPackage.empId+";"+DataPackage.videoCode+";"+DataPackage.MomentId+";"+apResult+";"+note);
-	$.post("<c:url value='/AdvisoryMoment/approveTakeoff.controller'/>",{"takeoffId":DataPackage.takeoffId,"empId":DataPackage.empId,"empName":DataPackage.empName,"MomentId":DataPackage.MomentId,"calendar":DataPackage.calendar,"videoCode":DataPackage.videoCode,"apResult":apResult,"reason":note},function(result){
-		docFrag.append("<h4>"+result+"</h4>");
-		$("#resultItem .modal-body").append(docFrag);
-		})
-	$("#resultItem").modal("show");
-			}
 });
 
 

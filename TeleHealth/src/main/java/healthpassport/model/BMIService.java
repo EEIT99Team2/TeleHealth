@@ -1,5 +1,7 @@
 package healthpassport.model;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,4 +55,10 @@ public class BMIService {
 		BMIBean result = bmiDao.insert(bean);
 		return result;
 	}
+	
+	public List<BMIBean> selectMemberid(String memberid) {
+		List<BMIBean> result = bmiDao.selectMemberId(memberid);
+		return result;
+	}
+	
 }

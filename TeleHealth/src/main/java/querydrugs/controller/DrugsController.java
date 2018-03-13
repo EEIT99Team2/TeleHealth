@@ -50,4 +50,14 @@ public class DrugsController {
 		
 		return drugsService.queryDrugs(licenseNum, chineseName, englishName, manuName, symptom, marks, color, shape, formulation);
 	}
+	
+	@RequestMapping(path="/querydrug.controller", 
+			method= {RequestMethod.GET, RequestMethod.POST},
+			produces = "application/json;charset=UTF-8")
+	public @ResponseBody String memberSelectBylicenseNum(String licenseNum) {
+		if(licenseNum!=null && licenseNum.trim().length()>0) {
+			return drugsService.queryDrugById(licenseNum);
+		}
+		return null;
+	}
 }
