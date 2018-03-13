@@ -40,30 +40,16 @@
 			Menu <i class="fa fa-bars"></i>
 		</button>
 
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav text-uppercase ml-auto">
-				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
-				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="<c:url value="/healthpassport/HealthPassport.jsp" />">健康護照</a></li>
-				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">諮詢預約</a></li>
-				<li class="nav-item"><a class="nav-link" 
-					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
-			</ul>
-		</div>
 		<div class="text-center">
-			<c:if test="${empty LoginOK}">
+			<c:if test="${empty empLoginOK}">
 				<button type="button" class="btn btn-primary btn-rounded" 
 					data-toggle="modal" id="myBtn">登入</button>
 			</c:if>
-			<c:if test="${not empty LoginOK}">
+			<c:if test="${not empty empLoginOK}">
 				<span>
-					<c:out value="${LoginOK.memName},你好!!" />
+					<c:out value="${empLoginOK.empName},你好!!" />
+					<input type="hidden" value="${empLoginOK.empId}" id="empId" />
 				</span>
-				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
 				<a href="<c:url value='/Members/Logout.jsp' />">
 					<button class="btn btn-sm btn-outline-secondary" 
 					id="myBtn1">登出</button>
@@ -111,15 +97,8 @@
                         </form>
 				</div>
 				<div class="modal-footer">
-					<p>
-						還不是會員? <a href="#">註冊</a>
-					</p>
-					<p>
-						忘記 <a href="#">密碼?</a>
-					</p>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

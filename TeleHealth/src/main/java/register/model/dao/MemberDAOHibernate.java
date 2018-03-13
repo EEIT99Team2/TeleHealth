@@ -90,7 +90,6 @@ public class MemberDAOHibernate {
 					updateMember.setFileName(bean.getFileName());
 					updateMember.setPhoto(bean.getPhoto());
 				}
-				System.out.println("updateMember" + updateMember);
 				updateMember.setModifiyTime(new Timestamp(System.currentTimeMillis()));
 				
 				return updateMember;

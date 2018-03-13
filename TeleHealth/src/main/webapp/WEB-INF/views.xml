@@ -26,7 +26,7 @@
 	</bean>
 	
 	<bean id="login.error" class="org.springframework.web.servlet.view.InternalResourceView">
-		<property name="url" value="/index.jsp"></property>
+		<property name="url" value="/home.jsp"></property>
 	</bean>
 	
 	<bean id="login.success" class="org.springframework.web.servlet.view.RedirectView">
@@ -80,4 +80,14 @@
 	<bean id="bloodSugar" class="org.springframework.web.servlet.view.InternalResourceView">
 		<property name="url" value="/healthpassport/HealthPassport.jsp"></property>
 	</bean>	
+	
+	<bean id="advisory.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/Advisory/Advisory.jsp"></property>
+	</bean>
+	
+	<bean id="advisory.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/AdvisoryMoment/AdvisoryRecord.jsp"></property>
+	</bean>
+	
 </beans>
