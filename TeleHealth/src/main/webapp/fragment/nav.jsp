@@ -103,18 +103,22 @@
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="usrname"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${param.usrname}">
+                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${sessionScope.user}">
                                 <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
                             </div>
                             <div class="form-group">
                                 <label for="psw">
                                     <span class="fa fa-eye"></span> 密碼</label>
-                                <input type="password" class="form-control" name="psw" id="psw" placeholder="Enter password">
+                                <input type="password" class="form-control" name="psw" id="psw" value="${sessionScope.password}" placeholder="Enter password">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPsw}</font>
                             <div class="checkbox" id="rememberMe">
                                 <label>
-                                    <input type="checkbox" value="" checked /> 記住我
+                                     <input type="checkbox" name="remember" 
+                                    	<c:if test='${sessionScope.rememberMe==true}'>
+						                	checked='checked'
+						               	</c:if> 
+                                   	 value="true" /> 記住我
                                 </label>
                             </div>
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
