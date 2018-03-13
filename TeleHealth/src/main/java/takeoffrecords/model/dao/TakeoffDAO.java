@@ -49,11 +49,13 @@ public class TakeoffDAO {
 	
 	//後台管理顯示(index用)
 	public List<Object[]> selectAll() {
-		String hql="SELECT tor.id,tor.advisoryMomentId,tor.empId,emp.empName,emp.career,tor.applicationType,tor.applicationTime,tor.applicationReason,adm.reserveStatus,adm.videoCode,tor.approvedResult,tor.approvedTime,tor.rejectReason,adm.status,adm.calendar FROM takeoffRecords tor\r\n" + 
+		String hql="SELECT tor.id,tor.advisoryMomentId,tor.empId,emp.empName,car.careerName,tor.applicationType,tor.applicationTime,tor.applicationReason,adm.reserveStatus,adm.videoCode,tor.approvedResult,tor.approvedTime,tor.rejectReason,adm.status,adm.calendar FROM takeoffRecords tor\r\n" + 
 				"JOIN employees emp\r\n" + 
 				"ON emp.empId=tor.empId\r\n" + 
 				"JOIN advisoryMoment adm\r\n" + 
-				"ON adm.id=tor.advisoryMomentId";
+				"ON adm.id=tor.advisoryMomentId\r\n"+
+				"JOIN careers car\r\n" + 
+				"ON car.careerid=emp.career";
 		NativeQuery query = this.getSession().createNativeQuery(hql);
 		List<Object[]> data = (List<Object[]>)query.list();
 		return data;

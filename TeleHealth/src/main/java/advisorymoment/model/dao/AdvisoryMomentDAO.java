@@ -33,11 +33,13 @@ public class AdvisoryMomentDAO {
 	};
 	//以科別代碼搜尋
 	public List<Object[]> select(String advisoryCode) {
-		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.status FROM AdvisoryMoment am \r\n" + 
-				"join Employees emp \r\n" + 
-				"on am.empId=emp.empId\r\n" + 
-				"join advisoryType adt\r\n" + 
-				"on am.advisoryCode=adt.advisoryCode\r\n" + 
+		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,car.careerName,am.status FROM AdvisoryMoment am \r\n" + 
+				"JOIN Employees emp \r\n" + 
+				"ON am.empId=emp.empId\r\n" + 
+				"JOIN advisoryType adt\r\n" + 
+				"ON am.advisoryCode=adt.advisoryCode\r\n" + 
+				"JOIN careers car\r\n" + 
+				"ON car.careerid=emp.career\r\n" + 
 				"WHERE am.advisoryCode=?";
 		NativeQuery query = this.getSession().createNativeQuery(hql);
 		query.setParameter(1,advisoryCode);
@@ -48,11 +50,13 @@ public class AdvisoryMomentDAO {
 	
 	//搜尋全部時段(當index用)
 	public List<Object[]> selectAll() {
-		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.videoCode,am.status FROM AdvisoryMoment am \r\n"
+		String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,car.careerName,am.videoCode,am.status FROM AdvisoryMoment am \r\n"
 				+"join Employees emp \r\n"
 				+"on am.empId=emp.empId \r\n"
 				+"join advisoryType adt \r\n"
-				+"on am.advisoryCode=adt.advisoryCode";
+				+"on am.advisoryCode=adt.advisoryCode\r\n" +
+				"JOIN careers car\r\n" + 
+				"ON car.careerid=emp.career\r\n";
 		NativeQuery query= this.getSession().createNativeQuery(hql);
 		List<Object[]> data = (List<Object[]>)query.list();		
 		return data;
@@ -60,13 +64,15 @@ public class AdvisoryMomentDAO {
 
 	//會員自己已預約的時段
 	public List<Object[]> selectByMemSelf(String UserId) {
-		String hql="select am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,a.videoCode from advisoryMoment am\r\n" + 
+		String hql="select am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,car.careerName,a.videoCode from advisoryMoment am\r\n" + 
 				"join Advisory a\r\n" + 
 				"on am.videoCode=a.videoCode\r\n" + 
 				"join employees emp\r\n" + 
 				"on am.empId=emp.empId\r\n" + 
 				"join advisoryType adt\r\n" + 
 				"on am.advisoryCode=adt.advisoryCode\r\n" + 
+				"JOIN careers car\r\n" + 
+				"ON car.careerid=emp.career\r\n" + 
 				"WHERE memberId=?";
 		NativeQuery query= this.getSession().createNativeQuery(hql);
 		query.setParameter(1,UserId);
