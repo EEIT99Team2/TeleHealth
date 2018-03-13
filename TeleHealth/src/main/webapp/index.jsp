@@ -28,18 +28,22 @@
 						action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="usrname">Username</label>
-                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${param.usrname}">
+                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${sessionScope.user}">
                                 <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
                             </div>
                             <div class="form-group">
                                 <label for="psw">
                                     </span> Password</label>
-                                <input type="password" class="form-control" name="psw" id="psw" placeholder="Enter password">
+                                <input type="password" class="form-control" name="psw" id="psw" value="${sessionScope.password}" placeholder="Enter password">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPsw}</font>
                             <div class="checkbox" id="rememberMe">
                                 <label>
-                                    <input type="checkbox" value="" checked /> Remember me
+                                    <input type="checkbox" name="remember" 
+                                    	<c:if test='${sessionScope.rememberMe==true}'>
+						                	checked='checked'
+						               	</c:if> 
+                                    value="true" /> Remember me
                                 </label>
                             </div>
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
@@ -217,6 +221,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <!-- Just to make our placeholder images work. -->
     <script src="<c:url  value='/holder.min.js' />"></script>
     <script src="<c:url  value='/scripts.js' />" ></script>

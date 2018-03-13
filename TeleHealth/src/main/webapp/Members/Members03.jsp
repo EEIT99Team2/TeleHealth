@@ -71,9 +71,7 @@
 		<div style="text-align:center;"><h3 class="title">修改密碼</h3></div>
 		<div class="context">
 			
-			 <form method="post" enctype="multipart/form-data" 
-						action="<c:url value="/ModifyPwd.controller"/>">			
-				<input type="hidden" name="csrf_test_name" value="fcf6b1a0baf094f4f73b4e3246c3a5d7" />
+			 <form method="post" action="<c:url value="/ModifyPwd.controller"/>">			
 				<div style="text-align:center;"><p style="margin:0 0 40px;">請輸入您的手機號碼、舊的會員密碼及希望更改的新密碼。</p></div>
 				<table width="270" border="0" align="center" cellpadding="0" cellspacing="0" class="table_b">
 				
