@@ -76,13 +76,13 @@
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
-		$(document).ready(function() {			
+		$(document).ready(function() {						
 			 CKEDITOR.replace('contenttext',
 				  {width:400, height:200,toolbarGroups:tg}								 	
 		     );		    			
 			    //讀取EL
 //	 		    var empId=$(''); 
-			    loademp("0A55726B-8733-451F-9939-4D387698C7B6")			
+			    loademp("930F2472-337E-4800-B774-EB0AAE703D2A")			
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})

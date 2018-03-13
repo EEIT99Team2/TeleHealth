@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<jsp:include page="/fragment/nav4.jsp" /> 
+<jsp:include page="/fragment/nav2.jsp" /> 
     <main>
         <ul class="nav nav-tabs justify-content-center w3-padding-large w3-card " id="myTab" role="tablist">
             <li class="nav-item">
@@ -40,14 +40,8 @@
                         <div class="col-lg-8 col-md-10 mx-auto" id="title">
                             <div class="post-preview">                               
                             </div>
-                            <hr>         
-                        </div>
-                    </div>
-                </div>
-            </div>          
-        </div>
-    </main> 
-    <script type="text/javascript"> 
+                            <hr> 
+ <script type="text/javascript"> 
 	$(document).ready(function() {	
 		$.getJSON('/TeleHealth/healthcolumn/hotcontent.controller',{ }, function(data){
 			console
@@ -114,7 +108,13 @@
 		$.post('/TeleHealth/healthcolumn/countarticle.controller', {title:title}, function (data){
 		});		
 	})
- </script>            
+ </script>                   
+                        </div>
+                    </div>
+                </div>
+            </div>          
+        </div>
+    </main> 
  <jsp:include page="/fragment/footer.jsp" />  
 </body>
 </html>

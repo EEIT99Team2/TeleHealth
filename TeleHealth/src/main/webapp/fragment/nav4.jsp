@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- Bootstrap core JavaScript -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Bootstrap core CSS -->
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -29,11 +28,11 @@
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark" id="mainNavB">
 	<div class="container">
 		<a class="navbar-brand js-scroll-trigger" href="#page-top"><img
 			alt="Logo" src="<c:url value="/images/logo.png" />" /></a>
-			<span class="navbar-brand">牽伴健康諮詢平台</span>
+		<span class="navbar-brand">牽伴健康諮詢平台</span>
 		<button class="navbar-toggler navbar-toggler-right" type="button"
 			data-toggle="collapse" data-target="#navbarResponsive"
 			aria-controls="navbarResponsive" aria-expanded="false"
@@ -41,7 +40,7 @@
 			Menu <i class="fa fa-bars"></i>
 		</button>
 
-		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
@@ -75,22 +74,18 @@
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="usrname"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${sessionScope.user}">
+                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${param.usrname}">
                                 <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
                             </div>
                             <div class="form-group">
                                 <label for="psw">
                                     <span class="fa fa-eye"></span> 密碼</label>
-                                <input type="password" class="form-control" name="psw" id="psw" value="${sessionScope.password}" placeholder="Enter password">
+                                <input type="password" class="form-control" name="psw" id="psw" placeholder="Enter password">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPsw}</font>
                             <div class="checkbox" id="rememberMe">
                                 <label>
-                                     <input type="checkbox" name="remember" 
-                                    	<c:if test='${sessionScope.rememberMe==true}'>
-						                	checked='checked'
-						               	</c:if> 
-                                   	 value="true" /> 記住我
+                                    <input type="checkbox" value="" checked /> 記住我
                                 </label>
                             </div>
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
