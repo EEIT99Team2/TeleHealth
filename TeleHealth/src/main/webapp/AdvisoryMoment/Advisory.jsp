@@ -6,10 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>視訊健康諮詢</title>
-<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fontstyle.css" />
-<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
-<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
-<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
+<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 <style>
 body {
 	background-color: #3D6DF2;
@@ -45,7 +42,9 @@ video {
 </head>
 
 <body>
-	<jsp:include page="/fragment/header.jsp" />
+	<jsp:include page="/fragment/nav2.jsp" />
+	<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
+	<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 	<div class="container">
 <!-- 		<div id='login-page' class="row" > -->
 <!-- 			<div class="col-12 text-center" style="height:500px"> -->
