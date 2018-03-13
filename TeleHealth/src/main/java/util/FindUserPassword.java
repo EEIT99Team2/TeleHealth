@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter("/index.jsp")
+@WebFilter("/home.jsp")
 public class FindUserPassword implements Filter {
 
 	String requestURI;
