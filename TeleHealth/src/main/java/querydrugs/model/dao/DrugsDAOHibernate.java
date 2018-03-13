@@ -27,6 +27,7 @@ public class DrugsDAOHibernate implements DrugsDAO {
 	
 	@Override
 	public DrugBean selectById(String licenseNum) {
+		System.out.println("linceseNum=" + licenseNum);
 		return this.getSession().get(DrugBean.class, licenseNum);
 	}
 	
