@@ -128,6 +128,8 @@
     <jsp:include page="/fragment/footer.jsp" />
 </body>
 <!-- </body> -->
+<!-- Custom scripts for this template -->
+
 <script type="text/javascript">
 $(document).ready(function() {	
 	$.getJSON('/TeleHealth/healthcolumn/hotcontentimg.controller',{ }, function(data){
@@ -164,6 +166,6 @@ $(document).ready(function() {
 		 })			 
 	})
 })
-
 </script>
+<script src="<c:url value="/js/agency.min.js"/>"></script>
 </html>
