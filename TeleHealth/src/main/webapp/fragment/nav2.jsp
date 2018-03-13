@@ -29,7 +29,7 @@
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNavB">
+<nav class="navbar navbar-expand-lg navbar-dark" id="mainNavB">
 	<div class="container">
 		<a class="navbar-brand js-scroll-trigger" href="#page-top"><img
 			alt="Logo" src="<c:url value="/images/logo.png" />" /></a>
