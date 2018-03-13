@@ -16,14 +16,10 @@
 .insertBtn {
 	width: 16px;
 }
-
 .chk {
 	width: 16px;
 }
 
-tbody tr:hover {
-	background-color: #d9ffff
-}
 </style>
 </head>
 <body>
@@ -107,11 +103,13 @@ tbody tr:hover {
 				<div class="row">
 					<div class="col-12 text-center">
 						<div class="collapse container" id="collapseExample">
-							<div class="card card-body">
-								<!-- 				class="table"		 -->
-								<table id='bmiTable'
-									class="table table-bordered table-striped table-hover">
-									<thead class="thead-dark">
+							<div class="card card-body table-responsive">
+<!-- 圖表 -->
+<canvas id="mybmi" height="200" width="400"></canvas>
+<hr>
+								<table id='bmiTable' width="100%"
+									class="table table-bordered table-striped table-hover ">
+									<thead class="table-dark">
 										<tr>
 											<th scope="col">身高</th>
 											<th scope="col">體重</th>
@@ -123,7 +121,7 @@ tbody tr:hover {
 									<tbody>
 
 									</tbody>
-								</table>
+</table>
 							</div>
 						</div>
 					</div>
@@ -190,12 +188,12 @@ tbody tr:hover {
 				<div class="row">
 					<div class="col-4 text-center">
 						<h2 id="showBloodPressure">
-							<small>mmHg</small>
+							<small id='showbp'>mmHg</small>
 						</h2>
 					</div>
 					<div class="col-4 text-center">
 						<h2 id="showHeartBeat">
-							<small>次/分</small>
+							<small id='showhb'>次/分</small>
 						</h2>
 					</div>
 
@@ -211,21 +209,11 @@ tbody tr:hover {
 					<div class="col-12 text-center">
 						<div class="collapse container" id="bp">
 							<div class="card card-body">
+<!-- 放圖表與表格 -->
 
-								<table class="table">
-									<thead class="thead-dark">
-										<tr>
-											<th scope="col"></th>
-											<th scope="col"></th>
-											<th scope="col"></th>
-											<th scope="col"></th>
-											<th scope="col"></th>
-										</tr>
-									</thead>
-									<tbody>
 
-									</tbody>
-								</table>
+
+<!-- 放圖表與表格 -->
 							</div>
 						</div>
 					</div>
@@ -301,21 +289,11 @@ tbody tr:hover {
 					<div class="col-12 text-center">
 						<div class="collapse container" id="bs">
 							<div class="card card-body">
+<!-- 放圖表與表格 -->
 
-								<table class="table">
-									<thead class="thead-dark">
-										<tr>
-											<th scope="col"></th>
-											<th scope="col"></th>
-											<th scope="col"></th>
-											<th scope="col"></th>
-											<th scope="col"></th>
-										</tr>
-									</thead>
-									<tbody>
 
-									</tbody>
-								</table>
+
+<!-- 放圖表與表格 -->
 							</div>
 						</div>
 					</div>
@@ -323,14 +301,22 @@ tbody tr:hover {
 			</div>
 		</div>
 	</div>
+	
+	
+
+	
 	<script src="<c:url  value='/js/jquery-3.3.1.min.js'/>"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 	<script src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
 	<!--  計算BMI -->
 	<script type="text/javascript">
 		$(document).ready(function() {
+
 			$('#member').val();
 			var memberid='B0041CB5-09F1-4E5B-8D57-1F0406019143';
 			var weight;
@@ -366,7 +352,7 @@ tbody tr:hover {
 
 			$('#insert_height').blur(function() {
 				var height = $.trim($('#insert_height').val());
-				if(isNaN(height) || height.length == 0 || height>250 ) {					
+				if(isNaN(height) || height.length == 0 || height>280 ) {					
 					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>可能超出預期請輸入正確身高!</span>";
 					$('#insert').prop("disabled", true);
 				} else {
@@ -375,7 +361,7 @@ tbody tr:hover {
 			});
 			$('#insert_weight').blur(function() {
 				var weight = $.trim($('#insert_weight').val());
-				if(isNaN(weight) || weight.length == 0 || weight>200) {
+				if(isNaN(weight) || weight.length == 0 || weight>240) {
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>可能超出預期請輸入正確體重!</span>";
 					$('#insert').prop("disabled", true);
 					} else {
@@ -383,13 +369,25 @@ tbody tr:hover {
 				}
 			});
 			$('#insert').click(function(){
-				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
+				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'memberid':memberid,'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
 	                	//data就是Server回傳的結果
 // 	                	JSON.parse(data);
-
 	             })
+	             
 			});
-	
+
+	//把傳來值塞進頁面			
+		$.get("<c:url value='/healthpassport/newOneRecords.controller'/>",{'memberid':memberid},function(oneData){
+			console.log(oneData);
+// 	       	$('#showHeight').prepend("topbmi":"h");
+// 	       	$('#showWeight').prepend("topbmi":"w");
+// 	       	$('#showBMI').prepend("topbmi":"b");
+		});
+		
+		
+			
+
+//載入會員記錄
 $('#bmiTable').dataTable().fnDestroy(); 
 $('#bmiTable').DataTable({
     "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
@@ -400,28 +398,73 @@ $('#bmiTable').DataTable({
         { "data": "bmiResult" },
         { "data": "createTime" }
     ],
-    "bProcessing": true,//顯示處理中的圖樣
-    "oLanguage": {
-        "sLengthMenu": " _MENU_ 筆/頁",
-        "sZeroRecords": "找不到符合的資料。",
-        "sInfo": "共 _MAX_ 筆",
-        "sSearch": "搜尋",
-        "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
-        "sInfoEmpty": "共 0 頁",
-        "oPaginate": {
-            "sPrevious": "«",
-            "sNext": "»"
+    "order": [[ 4, 'desc' ]],
+	"bProcessing": true,//顯示處理中的圖樣
+	"oLanguage": {
+    "sLengthMenu": " _MENU_ 筆/頁",
+    "sZeroRecords": "找不到符合的資料。",
+    "sInfo": "共 _MAX_ 筆",
+    "sSearch": "搜尋",
+    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+    "sInfoEmpty": "共 0 頁",
+    "oPaginate": {
+        "sPrevious": "«",
+        "sNext": "»"
+  	 	 }
+		}
+	});
+	
+//圖表
+
+var dates = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange","xxx","ooo" , "YYY"];
+var datas = [12, 19, 3, 5, 2, 3, 99, 88 ,66]
+//	$.each() {
+//		dates.add(xxx);
+//	}
+
+var ctx = $("#mybmi")
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: dates,
+        datasets: [{
+            label: '# of Votes',
+            data: datas,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
         }
     }
-	});
+});
 
-						//把傳來值塞進頁面			
-	                	$('#showHeight').prepend();
-	                	$('#showWeight').prepend();
-	                	$('#showBMI').prepend();	             
+
+							             
 		
 
-<!--  計算血壓 -->
+<!-- 血壓 -->
 
 			var systole;
 			var diastole;
@@ -487,16 +530,28 @@ $('#bmiTable').DataTable({
 					$('#insertBP').prop("disabled", true);
 				}else{
 
-				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'systole':bps,'diastole':bpd, 'heartBeat': hb , 'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat}, function(data){
+				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'memberid':memberid,'systole':bps,'diastole':bpd, 'heartBeat': hb , 'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat}, function(data){
 	                	//data就是Server回傳的結果
 // 	                	JSON.parse(data);
 	             });
+// 				 $('#showBloodPressure').empty();
+
+// 				 $('#showHeartBeat').empty();
+	             
 	                	$('#showBloodPressure').prepend('<small>'+systole+'\/'+diastole+'</small>');
 	                	$('#showHeartBeat').prepend('<small>'+heartBeat+'</small>');
-				}
+
+	                	$('#insert_systole').val("");
+	                	$('#insert_diastole').val("");
+	                	$('#insert_heartBeat').val("");
+
+	                	$('#systoleMsg').empty();
+	                	$('#diastoleMsg').empty();
+	                	$('#heartBeatMsg').empty();
+	         }
 			});
 
-	<!--  計算血糖 -->
+	<!--  血糖 -->
 
 			var bloodsugar;
 			var re = /^[0-9]+$/;
@@ -512,12 +567,16 @@ $('#bmiTable').DataTable({
 			});
 			
 			$('#insertBS').click(function(){
-				 $.get("<c:url value='/healthpassport/queryBloodSugar.controller' />",{'bloodsugar':bloodsugar}, function(data){
+				 $.get("<c:url value='/healthpassport/queryBloodSugar.controller' />",{'memberid':memberid,'bloodsugar':bloodsugar}, function(data){
 	                	//data就是Server回傳的結果
 // 	                	JSON.parse(data);
 	             })
 			});
-		});
+
+
+			
+	});
+		
 	</script>
 
 </body>

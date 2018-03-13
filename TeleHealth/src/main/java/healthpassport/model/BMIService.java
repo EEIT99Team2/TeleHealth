@@ -61,4 +61,10 @@ public class BMIService {
 		return result;
 	}
 	
+	public BMIBean newOne(String memberid) {
+		BMIBean result = bmiDao.topOneData(memberid);
+		return result;
+	}
+	
+	
 }
