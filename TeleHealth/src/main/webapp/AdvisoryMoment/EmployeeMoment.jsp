@@ -11,9 +11,7 @@
 <link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
 
 <!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="<c:url value='/css/fonts/fontstyle.css" rel="stylesheet'/>" type="text/css"/>
-<link href="<c:url value='/fullCalendar/w3.css" rel="stylesheet'/>" type="text/css"/>
 <style>
   #calendar {
     max-width: 1100px;
@@ -46,31 +44,13 @@
 </style>
 </head>
 <body>
-<!-- Navigation -->
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
-            <a class="navbar-brand" href="#">Carousel</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">醫師介紹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#pricing">方案介紹</a>
-                    </li>
-                </ul>
+<jsp:include page="/fragment/nav3.jsp" />
+
                 <form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
-<input type="text" id="empId" name="empId" value="0A55726B-8733-451F-9939-4D387698C7B6">
 <span id="item1" class="item1 nav-item active">快速查詢:</span>
-<select id="year" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">年</span>
-<select id="month" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">月</span>
-<select id="date" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">日</span>
+<select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">年</span>
+<select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">月</span>
+<select id="date" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">日</span>
 <button type="button" id="fastSearch" class="headerChoose">查詢</button>
 <span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose nav-item active">
 <option id="allday">全天</option>
@@ -79,11 +59,7 @@
 <option id="nig">晚上</option>
 </select>
 </form>
-                <!-- Trigger the modal with a button -->                
-                <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
-            </div>
-        </nav>
-    </header>
+                
 <div id='loading' class='container'>
 <!-- 未預約班表視窗 -->
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -185,16 +161,13 @@
     </div>
   </div>
 </div>
-<div id="calendar"></div>
 <span style='color:#0080ff'>您的班表(無預約)</span><span style='color:#d26900'>您的班表(有預約)</span><span style='color:#bebebe'>未被預約班表</span><span style='color:#ea0000'>已被預約班表</span>
+<div id="calendar"></div>
 </div>
-<!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
+	<!-- Footer -->
+	<jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
-<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/calender.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>

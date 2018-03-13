@@ -42,6 +42,22 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<c:choose>		
+		<c:when test="${not empty LoginOK}">
+			<ul class="navbar-nav text-uppercase ml-auto">
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthpassport/HealthPassport.jsp" />">健康護照</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">諮詢預約</a></li>
+				<li class="nav-item"><a class="nav-link" 
+					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
+			</ul>
+			</c:when>
+			<c:otherwise>
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
@@ -50,10 +66,26 @@
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="#team">醫師團隊</a></li>
 			</ul>
+			</c:otherwise>
+			</c:choose>
 		</div>
 		<div class="text-center">
-			<button type="button" class="btn btn-primary btn-rounded" 
-				data-toggle="modal" id="myBtn">登入</button>
+		<c:choose>
+			<c:when test="${empty LoginOK}">
+				<button type="button" class="btn btn-primary btn-rounded" 
+					data-toggle="modal" id="myBtn">登入</button>
+			</c:when>
+			<c:otherwise>
+				<span>
+					<c:out value="${LoginOK.memName},你好!!" />
+				</span>
+				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
+				<a href="<c:url value='/Members/Logout.jsp' />">
+					<button class="btn btn-sm btn-outline-secondary" 
+					id="myBtn1">登出</button>
+				</a>
+			</c:otherwise>				
+		</c:choose>
 		</div>
 	</div>
 </nav>

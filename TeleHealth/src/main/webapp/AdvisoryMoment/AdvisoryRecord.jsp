@@ -7,8 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>請假系統</title>
 <!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link href="<c:url value='/fullCalendar/w3.css'/>" rel="stylesheet" type="text/css"/>
 <link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.min.css" />
 <style>
@@ -16,6 +14,7 @@
 </style>
 </head>
 <body>
+<jsp:include page="/fragment/nav2.jsp" />
 <div class='container'>
 <h2  class='container'>即將進行諮詢</h2>
 <table class="table  table-hover">
@@ -101,6 +100,8 @@
   </div>
 </div>
 </div>
+<!-- Footer -->
+<jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -109,10 +110,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown-zh-TW.min.js"></script>
+</body>
 <script>
 $(document).ready(function(){
-	var memberId="0A21A5D0-3AA1-4A16-9742-585B4A1EA78E";
-	var memName = $("#memName").text();
+	var memberId=$("#memberId").val();
+	var memName = $("#memName").val();
 	LoadData();
 	var DataPackage;
 	var unTalkOne;
@@ -136,7 +138,7 @@ $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memb
 		ms = moment(advisoryTime).diff(now)/1000;
 		console.log(ms);
 		var status=data.status;
-		if(status=="N" && ms<=600){			
+		if(status=="N" && ms<=900){			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.reserveItem+"</td>");
 			var col3 = $("<td>"+advisoryTime+"</td>");
@@ -231,5 +233,4 @@ $("#resultCheck").click(function(){
 
 })
 </script>
-</body>
 </html>

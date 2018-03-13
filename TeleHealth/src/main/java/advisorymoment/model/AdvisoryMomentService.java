@@ -56,9 +56,9 @@ public class AdvisoryMomentService {
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
+			dataOne.put("className", "eventItem");
 			if (status.equals("E")) {
 				dataOne.put("backgroundColor", "#0080ff");
-				dataOne.put("borderColor", "black");
 				// 已有預約諮詢
 			} else if (status.equals("F") && reserved.size() != 0) {
 				for (int j = 0; j < reserved.size(); j++) {
@@ -71,12 +71,10 @@ public class AdvisoryMomentService {
 						break;
 					} else {						
 						dataOne.put("backgroundColor", "#ea0000");
-						dataOne.put("borderColor", "black");
 					}
 				}
 			} else if (status.equals("F") && reserved.size() == 0) {				
 				dataOne.put("backgroundColor", "#ea0000");
-				dataOne.put("borderColor", "black");
 			}
 			datafinal.add(dataOne);
 		}

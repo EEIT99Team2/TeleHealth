@@ -11,15 +11,14 @@
 <link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
 
 <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="<c:url value='/fullCalendar/w3.css'/>" rel="stylesheet" type="text/css"/>
 	<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <style>
 
   #calendar {
   
     max-width: 1100px;
-    margin: 60px auto;
+    margin: 30px auto;
+    
 /*     background-color: lightblue; */
   }
   .fc-widget-header{
@@ -36,45 +35,33 @@
 /* 	.fc-bg table{ */
 		
 /* 	} */
-  .headerChoose {font-size:1.5em;}
-  .item1 {font-size:1.8em;
+  .iBlock {display:inline-block;
+  		margin-left:280px;
+  		font-size:20px;}
+  .item1 {font-size:1em;
 		 margin-left:100px;}
-  .item2 {font-size:1.8em;
+  .item2 {font-size:1em;
 		 margin-left:100px;}
-  .item3 {font-size:1.8em;
+  .item3 {font-size:1em;
 		 padding-right:10px;
 		 }
-  .columnHead{font-size:1.2em;}
+  .columnHead{font-size:1em;}
   .eveMouseOver {cursor: pointer;}
-  .iBlock {display:inline-block;}
+  .momentColor {font-family: CJKtc_Bold;}
+  .eventItem{text-align:center;
+  			font-size:1em;
+  			color:white}
 </style>
 </head>
 <body>
- <!-- Navigation -->
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
-            <a class="navbar-brand" href="#">Carousel</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">醫師介紹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#pricing">方案介紹</a>
-                    </li>
-				   </ul>
-<input type="text" id="userid" name="userid" value="0A21A5D0-3AA1-4A16-9742-585B4A1EA78E">
+<jsp:include page="/fragment/nav2.jsp" />
+<div class="momentColor iBlock"><span style='color:#0080ff'>尚未被預約班表</span><br/><span style='color:#00db00'>您預約班表</span><br/><span style='color:#ea0000'>已被預約班表</span></div>
+<div class="container iBlock">
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">年</span>
 <select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">月</span>
 <select id="date" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">日</span>
-<button type="button" id="fastSearch" class="headerChoose">查詢</button>
+<button type="button" id="fastSearch" class="btn btn-secondary">查詢</button>
 <span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose">
 <option id="allday">全天</option>
 <option id="mor">上午</option>
@@ -90,12 +77,6 @@
 <option id="CAR">心血管慢性疾病諮詢</option>
 <option id="WEL">健康減重</option>
 </select><br>
-
-            </div>
-        </nav>
-    </header>
-
-<div class='container iBlock'>
 <!-- 點擊預約時段彈跳視窗 -->
 <div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -198,16 +179,12 @@
     </div>
   </div>
 </div>
-<div class='iBlock'><span style='color:#0080ff'>尚未被預約班表</span><span style='color:#00db00'>您預約班表</span><span style='color:#ea0000'>已被預約班表</span></div>
-<div id="calendar" style="display:inline-block"></div>
+<div id="calendar"></div>
 </div>
 <!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
+<jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
-<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/calender.js'/>"></script>
@@ -217,7 +194,7 @@
 <script>
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
-	var UserId=$("#userid").val();
+	var UserId=$("#memberId").val();
 	var mom = moment();
 	//預約用
 	var reserveData;
