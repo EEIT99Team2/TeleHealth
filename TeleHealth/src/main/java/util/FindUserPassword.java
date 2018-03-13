@@ -40,9 +40,7 @@ public class FindUserPassword implements Filter {
 			String rememberMe = "false";
 
 			Cookie[] cookies = req.getCookies();
-
 			if (cookies != null) {
-				
 				for (int i = 0; i < cookies.length; i++) {
 					cookieName = cookies[i].getName();
 					if (cookieName.equals("user")) {
@@ -55,7 +53,6 @@ public class FindUserPassword implements Filter {
 							//byte[] ba = Base64.decode(tmp);
 							password = 	GlobalService.decryptString(
 									GlobalService.KEY, tmp);
-							//System.out.println(password);
 						}
 					} else if (cookieName.equals("rememberMe")) {
 						//找到rm這個Cookie(rm: rememberMe)
@@ -69,6 +66,9 @@ public class FindUserPassword implements Filter {
 			session.setAttribute("rememberMe", rememberMe);
 			session.setAttribute("user", user);
 			session.setAttribute("password", password);
+			System.out.println("rememberMe=" + rememberMe);
+			System.out.println("user=" + user);
+			System.out.println("password=" + password);
 		}
 		chain.doFilter(request, response);
 	}

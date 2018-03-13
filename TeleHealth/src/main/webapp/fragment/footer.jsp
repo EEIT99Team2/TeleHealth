@@ -36,8 +36,4 @@ $(document).ready(function(){
 
     <!-- Bootstrap core JavaScript -->
     <script src="<c:url value="/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
-
-    <!-- Custom scripts for this template -->
-    <script src="<c:url value="/js/agency.min.js"/>"></script>
-
 	<script src='https://www.google.com/recaptcha/api.js'></script>

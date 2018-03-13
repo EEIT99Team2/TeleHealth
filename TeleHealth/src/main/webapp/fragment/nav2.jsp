@@ -41,6 +41,8 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarResponsive">
+		<c:choose>		
+		<c:when test="${not empty LoginOK}">
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
@@ -53,13 +55,26 @@
 				<li class="nav-item"><a class="nav-link"
 					href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
 			</ul>
+			</c:when>
+			<c:otherwise>
+			<ul class="navbar-nav text-uppercase ml-auto">
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="#introduction">簡介</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="#team">醫師團隊</a></li>
+			</ul>
+			</c:otherwise>
+			</c:choose>
 		</div>
 		<div class="text-center">
-			<c:if test="${empty LoginOK}">
+		<c:choose>
+			<c:when test="${empty LoginOK}">
 				<button type="button" class="btn btn-primary btn-rounded" 
 					data-toggle="modal" id="myBtn">登入</button>
-			</c:if>
-			<c:if test="${not empty LoginOK}">
+			</c:when>
+			<c:otherwise>
 				<span>
 					<c:out value="${LoginOK.memName},你好!!" />
 				</span>
@@ -68,8 +83,8 @@
 					<button class="btn btn-sm btn-outline-secondary" 
 					id="myBtn1">登出</button>
 				</a>
-			</c:if>				
-				
+			</c:otherwise>				
+		</c:choose>		
 		</div>
 	</div>
 </nav>

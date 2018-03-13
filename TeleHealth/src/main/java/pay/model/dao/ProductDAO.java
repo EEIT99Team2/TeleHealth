@@ -11,6 +11,7 @@ import pay.model.*;
 public class ProductDAO {
 	
 	private DataSource dataSource;
+	
 	public ProductDAO() {
 		try {
 			Context ctx = new InitialContext();

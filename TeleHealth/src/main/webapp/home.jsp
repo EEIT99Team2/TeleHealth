@@ -160,6 +160,6 @@ $(document).ready(function() {
 		 })			 
 	})
 })
-
 </script>
+<script src="<c:url value="/js/agency.min.js"/>"></script>
 </html>

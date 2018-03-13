@@ -23,7 +23,6 @@ public class AdvisoryDAO {
 	private SessionFactory sessionFactory;
 
 	public Session getSession() {
-		System.out.println("session=" + sessionFactory);
 		return sessionFactory.getCurrentSession();
 	}
 	//透過預約代碼查詢
@@ -54,15 +53,17 @@ public class AdvisoryDAO {
 	
 	//透過員工id查詢
 	public List<Object[]> selectByEmpId(String empId) {
-		String hql = "SELECT  ad.videoCode, ad.empId, ad.descrip, ad.advisoryTime, "
+		String hql = "SELECT ad.videoCode, ad.empId, ad.descrip, ad.advisoryTime, "
 				+ "ad.viedoRecord, ad.satisfy, ad.createTime, ad.modifyTime, ad.status,"
-				+ "emp.empName, car.careerName , adm.id, adt.advisoryName "
+				+ "emp.empName, car.careerName, adm.id, adt.advisoryName, mem.memberId, " 
+				+ "mem.memName "
 				+ "FROM Advisory AS ad "
 				+ "INNER JOIN employees AS emp ON ad.empId = emp.empId "
 				+ "INNER JOIN advisoryMoment AS adm ON adm.videoCode = ad.videoCode "
 				+ "INNER JOIN advisoryType AS adt ON adm.advisoryCode = adt.advisoryCode "
-				+ "INNER JOIN careers as car On emp.career = car.careerid " 
-				+ "WHERE empId=?";
+				+ "INNER JOIN careers as car ON emp.career = car.careerid " 
+				+ "INNER JOIN members as mem ON ad.memberId = mem.memberId " 
+				+ "WHERE ad.empId=?";
 		NativeQuery query = this.getSession().createNativeQuery(hql);
 		query.setParameter(1,empId);
 		List<Object[]> result = (List<Object[]>)query.list();

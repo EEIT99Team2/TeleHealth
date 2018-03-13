@@ -49,9 +49,9 @@ public class AdvisoryService {
 					dataOne.put("videoRecord", "null");
 				}
 				if(result.get(i)[5]!=null) {
-					dataOne.put("statify", result.get(i)[5].toString());
+					dataOne.put("satisfy", result.get(i)[5].toString());
 				}else {
-					dataOne.put("statify", "null");
+					dataOne.put("satisfy", "null");
 				}
 				dataOne.put("createTime", result.get(i)[6].toString());
 				if(result.get(i)[7]!=null) {
@@ -109,6 +109,8 @@ public class AdvisoryService {
 				dataOne.put("career",  result.get(i)[10].toString());
 				dataOne.put("momentId", result.get(i)[11].toString());
 				dataOne.put("reserveItem", result.get(i)[12].toString());
+				dataOne.put("memId", result.get(i)[13].toString());
+				dataOne.put("memName", result.get(i)[14].toString());
 				datafinal.add(dataOne);
 			}
 		}

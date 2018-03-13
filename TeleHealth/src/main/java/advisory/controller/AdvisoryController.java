@@ -89,15 +89,28 @@ public class AdvisoryController {
 	@RequestMapping(path= {"/Advisory/memberReserve.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")
 	public @ResponseBody String memberReserve(String memberId){
 		String result=null;
-		
 		if(memberId!=null && memberId.trim().length()!=0) {
 			result=advisoryService.selectByMemId(memberId);
 		}
-		
 		return result;
 	}
 	
-	@RequestMapping(path= {"/advisorycontent.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")
+	//員工查看預約記錄
+	@RequestMapping(path= {"/Advisory/empreserve.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public @ResponseBody String empReserve(String empId){
+		String result=null;
+		if(empId!=null && empId.trim().length()!=0) {
+			result=advisoryService.selectByEmpId(empId.trim());
+		}
+		return result;
+	}
+	
+	//員工更新諮詢內容
+	@RequestMapping(
+			path= {"/advisorycontent.controller"},
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8"
+	)
 	public @ResponseBody String doctorinsert(String videoCode, String descrip){
 		System.out.println("hahahaahahaahahaha");
 		AdvisoryBean data = advisoryService.updateAdvisoryContent(videoCode, descrip);
@@ -108,6 +121,7 @@ public class AdvisoryController {
 		}
 	}
 	
+	//開始進行視訊
 	@RequestMapping(path= {"/Advisory/startadvisory.controller"}, method = {RequestMethod.GET,RequestMethod.POST})
 	public String startAdvisory(String videoCode, String memName, String memberId, String empId,
 			String empName, String reserveItem, Model model, HttpSession session) {
@@ -150,9 +164,17 @@ public class AdvisoryController {
 			session.setAttribute("empId", empIdIn);
 			session.setAttribute("empName", empNameIn);
 			session.setAttribute("advisory", checkBean);
-			return "advisory.success";
+			if(session.getAttribute("empLoginOK") != null) {
+				return "empadvisory.success";
+			} else {
+				return "advisory.success";
+			}
 		}
 		errorMsg.put("videoCodeError", "此視訊代號錯誤，請重新確認，或向管理員洽詢!");
-		return "advisory.error";
+		if(session.getAttribute("empLoginOK") != null) {
+			return "empadvisory.error";
+		} else {
+			return "advisory.error";
+		}
 	}
 }
