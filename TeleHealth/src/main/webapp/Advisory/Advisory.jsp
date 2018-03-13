@@ -43,6 +43,7 @@ video {
 
 <body>
 	<jsp:include page="/fragment/nav2.jsp" />
+	<input type="hidden" id="videoCode" value="${sessionScope.advisory.videoCode}" />
 	<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 	<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 	<div class="container">
@@ -85,12 +86,13 @@ video {
 									<form>
 										<div class="form-group">
 											<label for="comment">視訊概要記錄:</label>
-											<textarea class="form-control" name="content" id="content" rows="10" cols="80"></textarea>
-										</div>
-										<div>
-											<button id="commit" class="btn btn-primary">確認送出</button>
+											<textarea class="form-control" id="contents" rows="10" cols="80"></textarea>
 										</div>
 									</form>
+									<div>
+										<button id="sendContent" class="btn btn-primary">確認送出</button>
+										<span id="showResultMsg"></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -106,7 +108,7 @@ video {
 	<jsp:include page="/fragment/footer.jsp"/>
 	<script type="text/javascript">
 	   $(document).ready(function() {
-		    CKEDITOR.replace('content',{
+		    CKEDITOR.replace('contents',{
 		    		filebrowserBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html',
 		    		filebrowserImageBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Images', 
 		    		filebrowserFlashBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Flash',
@@ -115,21 +117,19 @@ video {
 		    		filebrowserFlashUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
 		    });
 		    console.log("ready!");
-	    	$('#commit').click(insert);
-		    
 	    });
+	    
+	   	$('#sendContent').click(insert);
 		function insert() {
-			var descrip=$("#content").text;
-			var memId=xxx;
-			var empId=xxx;
-			var videoCode=xxx;
-			$.getJSON("/TeleHealth/Advisory/doctorinsert.controller", {memberId:memId,empId:empId,descrip:descrip,videoCode:videoCode}, function(datas) {
-					console.log(datas);
-					if(datas=="success"){
-						console.log("xx");
-					} else{
-						alert("新增失敗，請重新輸入!");
-					}
+			var descripIn= $('contents').text();
+			var videoCode= "8T1pl";
+			$.getJSON('/TeleHealth/advisorycontent.controller', {"videoCode":videoCode, "descrip":descripIn}, function(datas) {
+				console.log(datas);
+				if(datas=="insert.success"){
+					$('#showResultMsg').text("新增成功!");
+				} else{
+					$('#showResultMsg').text("新增失敗，請重新確認!");
+				}
 			});		
 		}
   	</script>
