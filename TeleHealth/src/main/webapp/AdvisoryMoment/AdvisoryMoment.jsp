@@ -9,24 +9,21 @@
     
 <link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
 <link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
-
+<link href="<c:url value='/fullCalendar/materialFullCalendar.css'/>" rel="stylesheet" type="text/css"/>
 <!-- Bootstrap core CSS -->
-	<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
+<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <style>
 
   #calendar {
   
     max-width: 1100px;
-    margin: 30px auto;
-    
-/*     background-color: lightblue; */
+    margin: 20px auto;   
+     background-color:#E1F5FE;
   }
-  .fc-widget-header{
-     background-color:#00e3e3;
-	}
-	.fc-toolbar h2 {
-	font-family: CJKtc_Bold;
-	}
+   
+ 	.fc-toolbar{ 
+ 	background-color:white;
+ 	} 
 /* 	//week格線 */
 /*    .fc .fc-agendaWeek-view .fc-bg tr > td{ */
 /*     border: 2px solid grey; */
@@ -35,6 +32,8 @@
 /* 	.fc-bg table{ */
 		
 /* 	} */
+
+
   .iBlock {display:inline-block;
   		margin-left:280px;
   		font-size:20px;}
@@ -45,17 +44,15 @@
   .item3 {font-size:1em;
 		 padding-right:10px;
 		 }
-  .columnHead{font-size:1em;}
-  .eveMouseOver {cursor: pointer;}
+  .columnHead{display:inline-block;font-size:1.5em;}
   .momentColor {font-family: CJKtc_Bold;}
   .eventItem{text-align:center;
-  			font-size:1em;
-  			color:white}
+  			font-size:18px;}
 </style>
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
-<div class="momentColor iBlock"><span style='color:#0080ff'>尚未被預約班表</span><br/><span style='color:#00db00'>您預約班表</span><br/><span style='color:#ea0000'>已被預約班表</span></div>
+<div class="momentColor iBlock"><span style='color:#0080ff'>尚未被預約</span><br/><span style='color:#00db00'>您已預約</span><br/><span style='color:#ea0000'>已被預約</span></div>
 <div class="container iBlock">
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">年</span>
@@ -64,7 +61,7 @@
 <button type="button" id="fastSearch" class="btn btn-secondary">查詢</button>
 <span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose">
 <option id="allday">全天</option>
-<option id="mor">上午</option>
+<option id="mor" SELECTED>上午</option>
 <option id="aft">下午</option>
 <option id="nig">晚上</option>
 </select>
@@ -207,13 +204,16 @@ $(document).ready(function() {
 	var weekformat=["一","二","三","四","五","六","日"];
 	var today = new Date();
 	var eventsData;
-		
+
+	$(function () {
+		  $('[data-toggle="tooltip"]').tooltip()
+		})
 	$("#chooseTime").change(function(){
 		time = $("#chooseTime :selected").prop("id");		
-		if(time=="mor"){
+		if(time=="allday"){
 			minT="08:00";
-			maxT="12:00";
-			contentH="auto";
+			maxT="21:00";
+			contentH="1000";
 			}else if(time=="aft"){
 				minT="14:00";
 				maxT="18:00";
@@ -224,8 +224,8 @@ $(document).ready(function() {
 					contentH="auto";
 			}else{
 					minT="08:00";
-					maxT="21:00";
-					contentH="1000";
+					maxT="12:00";
+					contentH="auto";
 				}
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
@@ -249,7 +249,7 @@ $(document).ready(function() {
     	 columnHeaderHtml: function(mom) {
         	 for(var i = 0;i<7;i++){
     		    if (mom.weekday() === i) {
-    		      return "<span class='columnHead'>"+mom.format('MM/DD')+"\r\n"+weekformat[i]+"</span>";
+    		      return "<span style='color:#000000'>"+mom.format('MM/DD')+"\r\n"+weekformat[i]+"</span>";
     		    } }
     		  },    	
     	customButtons: {
@@ -269,12 +269,14 @@ $(document).ready(function() {
       allDaySlot:false,
 //       dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
       firstDay:1,
+      handleWindowResize: true,
       slotDuration:'00:05:00',
       slotLabelFormat:'hh:mm',
       defaultTimedEventDuration:"00:15",
-      displayEventEnd:false,
+      displayEventTime: true,
       minTime:"08:00",
-      maxTime:"21:00",
+      maxTime:"12:00",
+      contentHeight:"auto",
       navLinks: true, // can click day/week names to navigate views
       editable: false,
 //       eventLimit: true, // allow "more" link when too many events
@@ -314,11 +316,11 @@ $(document).ready(function() {
 	  },
 	  eventMouseover:function( event, jsEvent, view ) {
 			if(event.backgroundColor=="#00db00"||event.backgroundColor=="#0080ff"){
-				$('#calendar').fullCalendar(this).addClass('eveMouseOver')
+				$(this).addClass('zoom') 
 				}
 		  },
 	  eventMouseout:function( event, jsEvent, view ) {
-				$('#calendar').fullCalendar(this).removeClass('eveMouseOver') 
+				$(this).removeClass('zoom') 
 		  }		  
     });
 	});	
