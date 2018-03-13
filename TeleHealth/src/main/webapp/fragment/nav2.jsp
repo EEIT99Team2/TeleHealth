@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- Bootstrap core JavaScript -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Bootstrap core CSS -->
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -29,7 +28,7 @@
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNavB">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
 	<div class="container">
 		<a class="navbar-brand js-scroll-trigger" href="#page-top"><img
 			alt="Logo" src="<c:url value="/images/logo.png" />" /></a>
