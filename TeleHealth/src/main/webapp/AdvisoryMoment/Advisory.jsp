@@ -84,8 +84,11 @@ video {
 								<div class="col-12 mx-auto">
 									<form>
 										<div class="form-group">
-											<label for="comment">Comment:</label>
+											<label for="comment">視訊概要記錄:</label>
 											<textarea class="form-control" name="content" id="content" rows="10" cols="80"></textarea>
+										</div>
+										<div>
+											<button id="commit" class="btn btn-primary">確認送出</button>
 										</div>
 									</form>
 								</div>
@@ -103,32 +106,32 @@ video {
 	<jsp:include page="/fragment/footer.jsp"/>
 	<script type="text/javascript">
 	   $(document).ready(function() {
-	    CKEDITOR.replace('content',{
-	    		filebrowserBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html',
-	    		filebrowserImageBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Images', 
-	    		filebrowserFlashBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Flash',
-	    		filebrowserUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files', 
-	    		filebrowserImageUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images', 
-	    		filebrowserFlashUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
-	    }	 );
-	    console.log("ready!");
-	   });
-		function insert(){
+		    CKEDITOR.replace('content',{
+		    		filebrowserBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html',
+		    		filebrowserImageBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Images', 
+		    		filebrowserFlashBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Flash',
+		    		filebrowserUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files', 
+		    		filebrowserImageUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images', 
+		    		filebrowserFlashUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
+		    });
+		    console.log("ready!");
+	    	$('#commit').click(insert);
+		    
+	    });
+		function insert() {
 			var descrip=$("#content").text;
 			var memId=xxx;
 			var empId=xxx;
 			var videoCode=xxx;
-			$.getJSON{"/TeleHealth/Advisory/doctorinsert.controller",{memberId:memId,empId:empId,descrip:descrip,videoCode:videoCode},function(datas){
+			$.getJSON("/TeleHealth/Advisory/doctorinsert.controller", {memberId:memId,empId:empId,descrip:descrip,videoCode:videoCode}, function(datas) {
 					console.log(datas);
-					if(datas="success"){
-						}else{
-
-							}
-				}}
-
-			}
-
-	   
+					if(datas=="success"){
+						console.log("xx");
+					} else{
+						alert("新增失敗，請重新輸入!");
+					}
+			});		
+		}
   	</script>
 	<script src="<c:url value='/js/client.js' />"></script>
 </body>
