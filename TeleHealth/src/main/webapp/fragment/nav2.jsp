@@ -63,6 +63,7 @@
 				<span>
 					<c:out value="${LoginOK.memName},你好!!" />
 				</span>
+				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
 				<a href="<c:url value='/Members/Logout.jsp' />">
 					<button class="btn btn-sm btn-outline-secondary" 
 					id="myBtn1">登出</button>
