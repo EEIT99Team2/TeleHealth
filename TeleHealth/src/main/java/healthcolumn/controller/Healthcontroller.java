@@ -153,21 +153,14 @@ public class Healthcontroller {
 	// 修改文章
 	@RequestMapping(path = {
 	"/healthcolumn/updatehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
-			RequestMethod.POST })
+			RequestMethod.GET,RequestMethod.POST })
 	public @ResponseBody String updatecontent(			
-			String title,
+			String heltitle,
 			String contenttext,			
 			@RequestParam(name="file1", required = false) MultipartFile file
-			,Model model) throws IOException {
-		Map<String, String> errors = new HashMap<>();
-		model.addAttribute("errors", errors);
-		Map<String, String> msgOK = new HashMap<String, String>();
-		model.addAttribute("msgOK", msgOK);		
+			) throws IOException{		
 		if (contenttext == null || contenttext.trim().length() == 0) {
-			errors.put("errorcontentEmpty", "文章必須有內容");
-		}
-		if (!errors.isEmpty()) {
-			return "form.error";
+			return  new Gson().toJson("error");
 		} else {	
 			String fileName = null;
 			InputStream in = null;
@@ -177,7 +170,7 @@ public class Healthcontroller {
 				String extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()).toLowerCase();
 				if (!extension.equals("mp4") && !extension.equals("ogg") && !extension.equals("webm")
 						&& !extension.equals("m3u8")) {
-					errors.put("errorVideo", "瀏覽器支援的影像格式為.mp4、.ogg、.webm、.m3u8，請重新上傳!");
+					return  new Gson().toJson("errormovie");
 				} else {
 					fileName = GlobalService.adjustFileName(fileName, GlobalService.IMAGE_FILENAME_LENGTH);
 					in = file.getInputStream();
@@ -196,13 +189,11 @@ public class Healthcontroller {
 					}
 				}
 			}						
-			boolean ok = healthService.updatecontent(title, contenttext, fileName);
+			boolean ok = healthService.updatecontent(heltitle, contenttext, fileName);
 			if (ok) {
-				msgOK.put("uploadok", "更新成功!!");
-				return "form.ok";
+				return  new Gson().toJson("ok");
 			} else {
-				errors.put("uploaderror", "更新失敗!!");
-				return "form.error";
+				return  new Gson().toJson("error");
 			}		
 	}
 	}
@@ -211,17 +202,12 @@ public class Healthcontroller {
 	"/healthcolumn/deletehealthcolumn.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.POST })
 	public @ResponseBody String deletecontent(String columnId,Model model) {
-		boolean delete = healthService.delete(columnId);
-		Map<String, String> contenterrors = new HashMap<>();
-		model.addAttribute("contenterrors", contenterrors);
-		Map<String, String> contentOK = new HashMap<String, String>();
-		model.addAttribute("contentOK", contentOK);
-		if(delete) {
-			contenterrors.put("contentok", "已刪除所選擇的文章!!");
-			return  "deletecontentok";
+		boolean delete = healthService.delete(columnId);		
+		if(delete) {			
+			return  new Gson().toJson("deletecontentok");
 		}else {
-			contentOK.put("contenterror", "刪除失敗!!");
-			return "deletecontenterror";
+			
+			return new Gson().toJson("deletecontenterror");
 		}		
 	}
 	

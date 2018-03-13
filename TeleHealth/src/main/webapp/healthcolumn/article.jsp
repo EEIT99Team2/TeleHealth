@@ -13,6 +13,7 @@
 <script src="../forCkeditor/ckeditor/ckeditor.js"></script>
 <script src="../forCkeditor/ckfinder/ckfinder.js"></script>
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
+<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 </head>
 <body>
    <jsp:include page="/fragment/header.jsp" />
@@ -222,6 +223,7 @@ $(document).ready(function() {
 				}
             });
    }
+    
       
     </script>        
 

@@ -30,7 +30,7 @@ public class ECPayService {
 		aio.setTradeDesc(bean.getTradeDesc());
 		aio.setItemName(bean.getItemName());
 		aio.setClientBackURL("http://tzeing.asuscomm.com:9080/TeleHealth/pay/pay.jsp");
-		aio.setReturnURL("http://tzeing.asuscomm.com:9080/TeleHealth/result.do");
+		aio.setReturnURL("https://tzeing.asuscomm.com/TeleHealth/result.do");
 		
 		//呼叫AllInOne中相應的method，產生html form字串(含JavaScript Submit)之後再放入前端即可
 		//此筆交易模擬不開發票，InvoiceObj請帶null
