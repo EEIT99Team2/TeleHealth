@@ -92,4 +92,13 @@ public class AdvisoryController {
 		
 		return result;
 	}
+	@RequestMapping(path= {"/Advisory/doctorinsert.controller"},method= {RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public @ResponseBody String doctorinsert(String memberId,String empId,String descrip,String videoCode){
+		boolean data = advisoryService.updateadvisorydata(memberId, empId, descrip, videoCode);
+		if(data) {
+			return "success";
+		}else {
+			return "error";
+		}
+	}
 }
