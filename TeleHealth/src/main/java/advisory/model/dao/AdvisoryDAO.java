@@ -1,5 +1,6 @@
 package advisory.model.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -68,7 +69,18 @@ public class AdvisoryDAO {
 		int result= query.executeUpdate();
 		return result;
 	}
-	
+	//新增視訊紀錄
+	public int insertadvisory(String memberId,String empId,String descrip,String videoCode) {
+		String hql="update  Advisory  set memberId=?,empId=?,descrip=?,modifyTime=? where videoCode=?";
+		Query<MemberBean> query = this.getSession().createQuery(hql);
+		query.setParameter(0, memberId);
+		query.setParameter(1, empId);
+		query.setParameter(2, descrip);
+		query.setParameter(3, new Date());
+		query.setParameter(4, videoCode);
+		int result= query.executeUpdate();
+		return result;
+	}
 //	public AdvisoryBean update(java.util.Date calendar, int timeInterval, String reserveStatus, String advisoryCode,
 //			String empId, String videoCode) {
 //		AdvisoryBean data = this.select(calendar, timeInterval, advisoryCode);

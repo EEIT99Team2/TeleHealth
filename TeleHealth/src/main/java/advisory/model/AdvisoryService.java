@@ -95,4 +95,13 @@ public class AdvisoryService {
 		}		
 		return result;
 	}
+	//新增紀錄
+	public boolean updateadvisorydata(String memberId,String empId,String descrip,String videoCode)
+	{
+		int data = advisoryDao.insertadvisory(memberId, empId, descrip, videoCode);
+		if (data!=0) {
+			return true;
+		}
+		return false;
+	}
 }

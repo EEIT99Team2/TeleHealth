@@ -114,6 +114,22 @@ video {
 	    }	 );
 	    console.log("ready!");
 	   });
+		function insert(){
+			var descrip=$("#content").text;
+			var memId=xxx;
+			var empId=xxx;
+			var videoCode=xxx;
+			$.getJSON{"/TeleHealth/Advisory/doctorinsert.controller",{memberId:memId,empId:empId,descrip:descrip,videoCode:videoCode},function(datas){
+					console.log(datas);
+					if(datas="success"){
+						}else{
+
+							}
+				}}
+
+			}
+
+	   
   	</script>
 	<script src="<c:url value='/js/client.js' />"></script>
 </body>
