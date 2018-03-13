@@ -15,12 +15,13 @@
 <script src="../forCkeditor/ckfinder/ckfinder.js"></script>
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 </head>
 <body>
 <main role="main" class="container mt-2">
 <div class="row">     	
 	      <div class="card">
-			<span id="title">${LoginOk.memberId}B0041CB5-09F1-4E5B-8D57-1F0406019143</span><div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
+			<div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
 				   <table id="productTable" class="table table-bordered">
@@ -36,9 +37,8 @@
                        <tbody>                       
                        </tbody>                                           
                    </table>
-                   
-				<!-- 每頁不同的內容到這裡結束 -->
-			    </div>
+                     <span id='table_page'></span>			
+			    </div>			  
 		    </div>
 		 </div>
      </div>	
@@ -53,13 +53,13 @@
         </button>
       </div>
       <div class="modal-body">
-      <form action="/TeleHealth/healthcolumn/updatememQA.controller" method="post" >	
+      <form>	
 		<input type="hidden" name="questionId" id="questionId" >
     	<textarea name="contenttext" id="contenttext" rows="10" cols="10"></textarea>       
 		<div class="modal-footer">
-     	<input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
-      	 <input type="reset" id="clean" value="清除重選" onclick='clean()' >
-       		<p style="color:green">${QA.updateok}${QAerrors.updaterror}</p>
+     	<input type="button" value='送出' onclick=postdata()>      
+      	 <input type="reset" id="clean" value="清除"  >
+       		<p style="color:green" id="reanswer"></p>
         </div>
 		</form>      
     	</div>
@@ -70,14 +70,12 @@
 	
 	<script src="../js/jquery-3.3.1.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	<script>
+	<script src="../js/jquery-tablepage-1.0.js"></script>
+	<script>		
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
-		$(document).ready(function() {
-			$('#clean').on('click',function(){
-				CKEDITOR.instances.contenttext.setData(' ');
-				})
+		$(document).ready(function() {			
 			 CKEDITOR.replace('contenttext',
 				  {width:400, height:200,toolbarGroups:tg}								 	
 		     );		 
@@ -97,12 +95,8 @@
 					
 			   })				
 		      //讀取會員發表	
-			   function loadmember(memId){
-		    			var page=10;
-		    			var datalength=8;
+			   function loadmember(memId){		    			
 				   $.getJSON('/TeleHealth/healthcolumn/QAMempublish.controller',{memId:memId},function(datas){
-						var alldatalengeth=datas.length;
-						var zy= Math.ceil(alldatalengeth	/datelength);
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
@@ -120,9 +114,11 @@
 			    		doc.append(row);			    		
 			    	})
 			    	  tb.append(doc);
+			    	$("#productTable").tablepage($("#table_page"), 5); 
 			    }) 
 			      		
-			} 
+			}
+		   
 			     //刪除會員發表
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
 				   var check=confirm("你確定要刪除此筆資料?");
@@ -150,8 +146,22 @@
 		 				}) 					
 	 		   })
 			   		   
+		})	
+		
 		})
-		})
+		function postdata(){		
+		var questionId=$("#questionId").val();
+		console.log(questionId);
+		var contenttext=CKEDITOR.instances.contenttext.getData();					
+		$.getJSON("/TeleHealth/healthcolumn/updatememQA.controller", {questionId:questionId,contenttext:contenttext}, function(datas){
+			if(datas="ok"){
+				$("#reanswer").text("修改成功!!");
+			}else{$("#reanswer").text("修改失敗!!");}
+			})
+	   }
+		$('#clean').on('click',function(){
+			CKEDITOR.instances.contenttext.setData(' ');
+			});
 	</script>
 <div id="iframeck"></div>		
 </body>

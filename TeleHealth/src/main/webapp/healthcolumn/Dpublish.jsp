@@ -15,6 +15,7 @@
 <script src="../forCkeditor/ckfinder/ckfinder.js"></script>
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 </head>
 <body>
 <main role="main" class="container mt-2">
@@ -40,6 +41,7 @@
 				<!-- 每頁不同的內容到這裡結束 -->
 			    </div>
 		    </div>
+		      <span id='table_page'></span>		
 		 </div>
      </div>	
 	</main>
@@ -53,15 +55,15 @@
         </button>
       </div>
       <div class="modal-body">
-      <form action="/TeleHealth/healthcolumn/updatehealthcolumn.controller" method="post" >
+      <form>
 	<input type="text" name="name" id="title" value="930F2472-337E-4800-B774-EB0AAE703D2A">
 	 <input type="hidden" name="heltitle" id="heltitle" >
 	 <h3>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h3><p style="color:red">${errors.errorVideo}</p>
 	  <textarea name="contenttext" id="contenttext" rows="10" cols="80"></textarea>       
 	  	<div class="modal-footer">
-     	 <input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
+     	 <input type="button" value='送出' onclick=postdata()>      
       	 <input type="reset" id="clean" value="清除"  >
-      	 <p style="color:green">${msgOK.uploadok}${errors.uploaderror}</p>
+      	 <p style="color:green" id="reanswer"></p>
      	 </div>
 	  </form>      
       </div> 
@@ -70,10 +72,11 @@
   </div>
 </div>
 	
-	<script src="../js/jquery-3.3.1.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/jquery-3.3.1.min.js"></script>	
+	<script src="../js/bootstrap.min.js"></script>	
+	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function() {			
 			$('#clean').on('click',function(){
 				CKEDITOR.instances.contenttext.setData(' ');
 				})
@@ -81,8 +84,7 @@
 		          {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
 		          ];				
 			 CKEDITOR.replace('contenttext',{width:450, height:200,toolbarGroups:tg});
-		    console.log("ready!");	
-			loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A")		
+		   	loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A")		
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -118,6 +120,7 @@
 			    		doc.append(row);			    		
 			    	})
 			    	  tb.append(doc);
+			    	$("#productTable").tablepage($("#table_page"), 5); 
 			    }) 
 		      }		
 		      
@@ -130,11 +133,12 @@
 	 			   console.log(id);
 	 			   if(check==true){
 	 				  $.post('/TeleHealth/healthcolumn/deletehealthcolumn.controller',{columnId:id},function(data){
+							console.log(data);
 		 				   alert("您已刪除所選的文章");
-		 				   loadProduct("D43B1906-F319-40DC-9E11-4DA09A2558AF");
+		 				   loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A");
 		 			   })		 			   
 	 			   }else{
-	 				  loadProduct("D43B1906-F319-40DC-9E11-4DA09A2558AF")
+	 				  loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A")
 		 		 }
 	 			 
 			  })
@@ -151,14 +155,26 @@
 	 					 $("#heltitle").val(content[0]);
 		 				}) 					
 	 		   })		   		   
-		})
+		   })							   			
 			$('#clean').on('click',function(){
 				CKEDITOR.instances.contenttext.setData(' ');
-				})
-				
-				
+				});				
 		})
+		function postdata(){		
+					var name=$("#title").val();
+					var heltitle=$("#heltitle").val();
+					var file1=$("#video").val();
+					var contenttext=CKEDITOR.instances.contenttext.getData();					
+					$.getJSON("/TeleHealth/healthcolumn/updatehealthcolumn.controller", {name:name,heltitle:heltitle,file1:file1,contenttext:contenttext}, function(datas){
+						if(datas="ok"){
+							$("#reanswer").text("修改成功!!");
+						}else if(datas="erroemovie"){
+							$("#reanswer").text("影片格式錯誤!!");}
+						else{
+							$("#reanswer").text("修改失敗!!");}
+					})					
+						}	
 	</script>
-<div id="iframeck"></div>		
+	
 </body>
 </html>
