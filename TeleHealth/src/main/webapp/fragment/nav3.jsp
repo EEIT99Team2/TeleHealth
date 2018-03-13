@@ -48,6 +48,7 @@
 			<c:if test="${not empty empLoginOK}">
 				<span>
 					<c:out value="${empLoginOK.empName},你好!!" />
+					<input type="hidden" value="${empLoginOK.empId}" id="empId" />
 				</span>
 				<a href="<c:url value='/Members/Logout.jsp' />">
 					<button class="btn btn-sm btn-outline-secondary" 
