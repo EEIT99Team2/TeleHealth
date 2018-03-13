@@ -50,9 +50,9 @@ public class AdvisoryService {
 					dataOne.put("videoRecord", "null");
 				}
 				if(result.get(i)[5]!=null) {
-					dataOne.put("statify", result.get(i)[5].toString());
+					dataOne.put("satisfy", result.get(i)[5].toString());
 				}else {
-					dataOne.put("statify", "null");
+					dataOne.put("satisfy", "null");
 				}
 				dataOne.put("createTime", result.get(i)[6].toString());
 				if(result.get(i)[7]!=null) {

@@ -72,7 +72,7 @@
 					data-toggle="modal" id="myBtn">登入</button>
 			</c:if>
 			<c:if test="${not empty LoginOK}">
-				<p>
+				<p id="memName">
 					<c:out value="${LoginOK.memName},你好!!" />
 				</p>
 				<a href="<c:url value='/Members/Logout.jsp' />">
