@@ -145,21 +145,7 @@ $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memb
 $("body").on("click","#UnCheckList tr",function(){
 	$("#responseItem .modal-body").empty();
 	var docFrag =$(document.createDocumentFragment());
-	var empName = $(this).find("td:eq(0)").text();
-	var apType = $(this).find("td:eq(1)").text();
-	var apTime = $(this).find("td:eq(2)").text();
-	var allData = $(this).find("span").text();
-	var emptyChar1 = allData.indexOf("#");
-	var emptyChar2 = allData.indexOf("$");
-	var emptyChar3 = allData.indexOf("%");
-	var emptyChar4 = allData.indexOf("^");
-	var emptyChar5 = allData.indexOf("*");
-	var empId = allData.substr(0,emptyChar1);
-	var videoCode = allData.substr(emptyChar1+1,emptyChar2-emptyChar1-1);
-	var apReason = allData.substr(emptyChar2+1,emptyChar3-emptyChar2-1);
-	var MomentId = allData.substr(emptyChar3+1,emptyChar4-emptyChar3-1);
-	var takeoffId = allData.substr(emptyChar4+1,emptyChar5-emptyChar4-1);
-	var calendar = allData.substr(emptyChar5+1);
+	
 	docFrag.append("<span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
 			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"	
 			+"<br/><span style='font-size:1.3em'>請假事由:  "+apReason+"</span>"
@@ -175,25 +161,6 @@ $("body").on("click","#UnCheckList tr",function(){
 //已預約
 $("body").on("click","#CheckList tr",function(){
 	$("#resultItem .modal-body").empty();
-	var docFrag =$(document.createDocumentFragment());
-	var empName = $(this).find("td:eq(0)").text();
-	var apType = $(this).find("td:eq(1)").text();
-	var apTime = $(this).find("td:eq(2)").text();
-	var reResult = $(this).find("td:eq(3)").text();
-	var allData = $(this).find("span").text();
-	var emptyChar1 = allData.indexOf("#");
-	var emptyChar2 = allData.indexOf("$");
-	var emptyChar3 = allData.indexOf("%");
-	var emptyChar4 = allData.indexOf("^");
-	var emptyChar5 = allData.indexOf("*");
-	var emptyChar6 = allData.indexOf("&");
-	var empId = allData.substr(0,emptyChar1);
-	var videoCode = allData.substr(emptyChar1+1,emptyChar2-emptyChar1-1);
-	var apReason = allData.substr(emptyChar2+1,emptyChar3-emptyChar2-1);
-	var MomentId = allData.substr(emptyChar3+1,emptyChar4-emptyChar3-1);
-	var takeoffId = allData.substr(emptyChar4+1,emptyChar5-emptyChar4-1);
-	var calendar = allData.substr(emptyChar5+1,emptyChar6-emptyChar5-1);
-	var reReason = allData.substr(emptyChar6+1);
 	docFrag.append("<span style='font-size:1.3em'>申請人:  "+empName+"</span>"
 			+"<br/><span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
 			+"<br/><span style='font-size:1.3em'>請假時段:  "+calendar+"</span>"
@@ -203,26 +170,6 @@ $("body").on("click","#CheckList tr",function(){
 			+"<br/><span>備註: </span><p>"+reReason+"</p>");		
 	$("#resultItem .modal-body").append(docFrag);
 	$("#resultItem").modal("show");
-});
-
-$("#responseCheck").click(function(){
-	var docFrag =$(document.createDocumentFragment());
-	var apResult= $("input[name='approve']:checked").val();
-	var note = $.trim($("#noteTxt").val());
-	if(note.length==0){
-		$(".txtWaring").remove();
-		$("#responseCheck").removeAttr("data-dismiss");
-		$("#noteBox").append("<h5 class='txtWaring'>請加上備註</h5>");
-	}else{
-		$(".txtWaring").remove();
-		$("#responseCheck").attr("data-dismiss","modal");
-	console.log(DataPackage.takeoffId+";"+DataPackage.empId+";"+DataPackage.videoCode+";"+DataPackage.MomentId+";"+apResult+";"+note);
-	$.post("<c:url value='/AdvisoryMoment/approveTakeoff.controller'/>",{"takeoffId":DataPackage.takeoffId,"empId":DataPackage.empId,"empName":DataPackage.empName,"MomentId":DataPackage.MomentId,"calendar":DataPackage.calendar,"videoCode":DataPackage.videoCode,"apResult":apResult,"reason":note},function(result){
-		docFrag.append("<h4>"+result+"</h4>");
-		$("#resultItem .modal-body").append(docFrag);
-		})
-	$("#resultItem").modal("show");
-			}
 });
 
 
