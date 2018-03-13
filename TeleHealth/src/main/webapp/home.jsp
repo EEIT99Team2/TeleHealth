@@ -64,8 +64,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading text-uppercase">醫師團隊</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading text-uppercase">諮詢團隊</h2>
+                    <h3 class="section-subheading text-muted">Our Team</h3>
                 </div>
             </div>
             <div class="row">
@@ -128,5 +128,42 @@
     <jsp:include page="/fragment/footer.jsp" />
 </body>
 <!-- </body> -->
+<script type="text/javascript">
+$(document).ready(function() {	
+	$.getJSON('/TeleHealth/healthcolumn/hotcontentimg.controller',{ }, function(data){
+		console.log(data);
+		$('.carousel-inner').empty();
+		 $.each(data, function (i, data) {			 
+			 var img =data.content;
+			 var imgsrc=img.split(" ")
+			 var imgurl=imgsrc[2].split("=");
+			 console.log(imgurl[1]);
+			 var doc=$(document.createDocumentFragment());
+			 var num=["first","secound","third","fourth","fifth"];
+			 if(i==0){
+				 var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");
+				 var divfirst=$('<div class="carousel-item active">');
+                 var img=$('<img class="'+num[i]+'-slide"'+'src='+decodeURIComponent(imgurl[1])+'alt="'+data.title+'">');
+             	 var ptitle=$('<p>'+data.title+'</p>');	
+				 img.append(ptitle);
+				 article.append(img);
+				 var heldata=divfirst.append(article);				 
+				 $('.carousel-inner').append(heldata);
+				 }else {
+				 console.log(data)	  
+				 var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");
+				 var divsecound=$('<div class="carousel-item ">')
+                 var img=$('<img class="'+num[i]+'-slide"'+'src='+decodeURIComponent(imgurl[1])+'alt="'+data.title+'">');
+             	 var ptitle=$('<p>'+data.title+'</p>');	
+				 img.append(ptitle);
+				 article.append(img);
+				 var heldata=divsecound.append(article);								 
+				 $('.carousel-inner').append(heldata);
+				}
+						 
+		 })			 
+	})
+})
 
+</script>
 </html>

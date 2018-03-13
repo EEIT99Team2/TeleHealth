@@ -49,39 +49,11 @@
 					href="#introduction">簡介</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="#team">醫師團隊</a></li>
-				<c:if test="${not empty LoginOK}">
-					<li class="nav-item"><a class="nav-link" href="#pricing">健康護照</a>
-					</li>
-				</c:if>
-				<c:if test="${not empty LoginOK}">
-					<li class="nav-item"><a class="nav-link"
-						href="<c:url value='/AdvisoryMoment/AdvisoryMoment.jsp'/>">預約時刻</a>
-					</li>
-				</c:if>
-				<c:if test="${not empty LoginOK}">
-					<li class="nav-item"><a class="nav-link"
-						href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
-				</c:if>	
 			</ul>
-			
-			
-			
 		</div>
 		<div class="text-center">
-			<c:if test="${empty LoginOK}">
-				<button type="button" class="btn btn-primary btn-rounded" 
-					data-toggle="modal" id="myBtn">登入</button>
-			</c:if>
-			<c:if test="${not empty LoginOK}">
-				<p>
-					<c:out value="${LoginOK.memName},你好!!" />
-				</p>
-				<a href="<c:url value='/Members/Logout.jsp' />">
-					<button class="btn btn-sm btn-outline-secondary" 
-					id="myBtn1">登出</button>
-				</a>
-			</c:if>				
-				
+			<button type="button" class="btn btn-primary btn-rounded" 
+				data-toggle="modal" id="myBtn">登入</button>
 		</div>
 	</div>
 </nav>
