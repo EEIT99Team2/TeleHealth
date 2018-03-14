@@ -145,7 +145,7 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 			var col3 = $("<td>"+advisoryTime+"</td>");
 			var col4 = $("<td>"+data.memName+"</td>");
 			var col5 = $("<td>未完成</td>");
-			TalkingOne={"reserveItem":data.reserveItem,"advisoryTime":advisoryTime,"empName":data.empName+" "+data.career,"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"satisfy":data.satisfy,"modifyTime":data.modifyTime,"momentId":data.momentId};			
+			TalkingOne={"reserveItem":data.reserveItem,"advisoryTime":advisoryTime,"memName":data.memName,"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"satisfy":data.satisfy,"modifyTime":data.modifyTime,"momentId":data.momentId};			
 			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
 		    docFrag1.append(allcol);		
 		}else if(status=="N"){

@@ -28,7 +28,7 @@
       <th scope="col">狀態</th>
     </tr>
   </thead>
-  <tbody id="UnCheckList">
+  <tbody id="TalkingList">
   </tbody>
 </table>
 
@@ -59,7 +59,7 @@
       <th scope="col">狀態</th>
     </tr>
   </thead>
-  <tbody id="CheckList">
+  <tbody id="TalkList">
 <!--      已處理申請 -->
   </tbody>
 </table>
