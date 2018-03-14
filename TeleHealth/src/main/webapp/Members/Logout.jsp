@@ -11,14 +11,6 @@
 	<c:set var="memberName" value="${LoginOK.memName}" />
 	<c:remove var="LoginOK" scope="session" />
 	<h1>已順利登出!!歡迎您下次光臨</h1>
-	
- <BR> 
-	${member.mid} <hr>
-	${member.password} <hr>
-	${member.Email} <hr>
-	${member.Name} <hr>
-	${member.address} <hr>
-	${member.Tel} <hr>
 	<input type="button" value="回主頁" onclick="location.href='../index.jsp'">
 
 </body>

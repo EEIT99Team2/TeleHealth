@@ -14,6 +14,7 @@
 <script src="../forCkeditor/ckeditor/ckeditor.js"></script>
 <script src="../forCkeditor/ckfinder/ckfinder.js"></script>
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
+<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 <body>
@@ -39,6 +40,7 @@
                    
 				<!-- 每頁不同的內容到這裡結束 -->
 			    </div>
+			      <span id='table_page'></span>		
 		    </div>
 		 </div>
      </div>	
@@ -57,9 +59,9 @@
 		<input type="hidden" name="questionId" id="questionId" >
     	<textarea name="contenttext" id="contenttext" rows="10" cols="10"></textarea>       
 		<div class="modal-footer">
-     	<input type="submit" value='送出' onclick="return(confirm('確認要送出本表單嗎？'))">      
-      	 <input type="reset" id="clean" value="清除重選" onclick='clean()' >
-       		<p style="color:green">${QA.updateok}${QAerrors.updaterror}</p>
+     	<input type="button" value='送出' onclick=postdata()>      
+      	 <input type="reset" id="clean" value="清除"  >
+       		<p style="color:green"></p>
         </div>
 		</form>      
     	</div>
@@ -69,20 +71,18 @@
 	
 	<script src="../js/jquery-3.3.1.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
-		$(document).ready(function() {
-			$('#clean').on('click',function(){
-				CKEDITOR.instances.contenttext.setData(' ');
-				})
+		$(document).ready(function() {						
 			 CKEDITOR.replace('contenttext',
 				  {width:400, height:200,toolbarGroups:tg}								 	
 		     );		    			
 			    //讀取EL
 //	 		    var empId=$(''); 
-			    loademp("0A55726B-8733-451F-9939-4D387698C7B6")			
+			    loademp("930F2472-337E-4800-B774-EB0AAE703D2A")			
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -119,6 +119,7 @@
 			    		doc.append(row);			    		
 			    	})
 			    	  tb.append(doc);
+			    	$("#productTable").tablepage($("#table_page"), 5); 
 			    }) 
 			      		
 			} 
@@ -156,6 +157,20 @@
 			   		   
 		})
 		})
+		function postdata(){		
+		var questionId=$("#questionId").val();
+		console.log(questionId);
+		var contenttext=CKEDITOR.instances.contenttext.getData();					
+		$.getJSON("/TeleHealth/healthcolumn/updatememQA.controller", {questionId:questionId,contenttext:contenttext}, function(datas){
+			if(datas="ok"){
+				$("#reanswer").text("修改成功!!");
+			}else{$("#reanswer").text("修改失敗!!");}
+			})
+	   }
+	$('#clean').on('click',function(){
+			CKEDITOR.instances.contenttext.setData(' ');
+			})
+			
 	</script>
 </body>
 </html>

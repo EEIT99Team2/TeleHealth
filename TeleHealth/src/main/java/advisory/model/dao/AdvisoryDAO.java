@@ -1,5 +1,7 @@
 package advisory.model.dao;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -21,7 +23,6 @@ public class AdvisoryDAO {
 	private SessionFactory sessionFactory;
 
 	public Session getSession() {
-		System.out.println("session=" + sessionFactory);
 		return sessionFactory.getCurrentSession();
 	}
 	//透過預約代碼查詢
@@ -35,19 +36,39 @@ public class AdvisoryDAO {
 	
 	//透過會員id查詢
 	public List<Object[]> selectByMemId(String memberId) {
-		String hql="SELECT ad.videoCode,ad.empId,ad.descrip,ad.advisoryTime,ad.viedoRecord,ad.satisfy,ad.createTime,ad.modifyTime,ad.status,emp.empName,emp.career,adm.id,adt.advisoryName from Advisory ad\r\n" + 
+		String hql="SELECT ad.videoCode,ad.empId,ad.descrip,ad.advisoryTime,ad.viedoRecord,ad.satisfy,ad.createTime,ad.modifyTime,ad.status,emp.empName,car.careerName,adm.id,adt.advisoryName from Advisory ad\r\n" + 
 				"  JOIN employees emp\r\n" + 
 				"  ON ad.empId=emp.empId\r\n" + 
 				"  JOIN advisoryMoment adm\r\n" + 
 				"  ON adm.videoCode=ad.videoCode\r\n" + 
 				"  JOIN advisoryType adt\r\n" + 
 				"  ON adm.advisoryCode=adt.advisoryCode\r\n" + 
+				"  JOIN careers as car On emp.career = car.careerid" +
 				"  WHERE memberId=?";
 		NativeQuery query = this.getSession().createNativeQuery(hql);
 		query.setParameter(1,memberId);
 		List<Object[]> result = (List<Object[]>)query.list();
 		return result;
 	};
+	
+	//透過員工id查詢
+	public List<Object[]> selectByEmpId(String empId) {
+		String hql = "SELECT ad.videoCode, ad.empId, ad.descrip, ad.advisoryTime, "
+				+ "ad.viedoRecord, ad.satisfy, ad.createTime, ad.modifyTime, ad.status,"
+				+ "emp.empName, car.careerName, adm.id, adt.advisoryName, mem.memberId, " 
+				+ "mem.memName "
+				+ "FROM Advisory AS ad "
+				+ "INNER JOIN employees AS emp ON ad.empId = emp.empId "
+				+ "INNER JOIN advisoryMoment AS adm ON adm.videoCode = ad.videoCode "
+				+ "INNER JOIN advisoryType AS adt ON adm.advisoryCode = adt.advisoryCode "
+				+ "INNER JOIN careers as car ON emp.career = car.careerid " 
+				+ "INNER JOIN members as mem ON ad.memberId = mem.memberId " 
+				+ "WHERE ad.empId=?";
+		NativeQuery query = this.getSession().createNativeQuery(hql);
+		query.setParameter(1,empId);
+		List<Object[]> result = (List<Object[]>)query.list();
+		return result;
+	};	
 	
 	public AdvisoryBean insert(AdvisoryBean bean) {
 		if (bean != null) {
@@ -68,27 +89,54 @@ public class AdvisoryDAO {
 		int result= query.executeUpdate();
 		return result;
 	}
+	//新增視訊紀錄
+	public int insertadvisory(String memberId,String empId,String descrip,String videoCode) {
+		String hql="update  Advisory  set memberId=?,empId=?,descrip=?,modifyTime=? where videoCode=?";
+		Query<MemberBean> query = this.getSession().createQuery(hql);
+		query.setParameter(0, memberId);
+		query.setParameter(1, empId);
+		query.setParameter(2, descrip);
+		query.setParameter(3, new Date());
+		query.setParameter(4, videoCode);
+		int result= query.executeUpdate();
+		return result;
+	}
 	
-//	public AdvisoryBean update(java.util.Date calendar, int timeInterval, String reserveStatus, String advisoryCode,
-//			String empId, String videoCode) {
-//		AdvisoryBean data = this.select(calendar, timeInterval, advisoryCode);
-//		if (data != null) {
-//			data.setCalendar(calendar);
-//			data.setTimeInterval(timeInterval);
-//			data.setReserveStatus(reserveStatus);
-//			data.setAdvisoryCode(advisoryCode);
-//			data.setEmpId(empId);
-//			data.setVideoCode(videoCode);
-//		}
-//		return data;
-//	};
-//
-//	public boolean delete(java.util.Date calendar, int timeInterval, String advisoryCode) {
-//		AdvisoryBean data = this.select(calendar, timeInterval, advisoryCode);
-//		if (data != null) {
-//			this.getSession().delete(data);
-//			return true;
-//		}
-//		return false;
-//	}
+	public AdvisoryBean update(AdvisoryBean bean) {
+		if(bean != null) {
+			AdvisoryBean updateAdvisory = this.getSession().get(AdvisoryBean.class, bean.getVideoCode());
+			if(updateAdvisory != null) {
+				if(bean.getMemberId()!=null && bean.getMemberId().trim().length() > 0) {
+					updateAdvisory.setMemberId(bean.getMemberId());
+				}
+				if(bean.getEmpId()!=null && bean.getEmpId().trim().length() > 0) {
+					updateAdvisory.setEmpId(bean.getEmpId());
+				}
+				if(bean.getStatus()!=null && bean.getStatus().trim().length()>0) {
+					updateAdvisory.setStatus(bean.getStatus());
+				}
+				if(bean.getAdvisoryTime()!=null) {
+					updateAdvisory.setAdvisoryTime(bean.getAdvisoryTime());
+				}
+				if(bean.getSatisfy()!=null && bean.getSatisfy() > 0) {
+					updateAdvisory.setSatisfy(bean.getSatisfy());
+				}
+				if(bean.getDescrip()!=null && bean.getDescrip().trim().length()>0) {
+					updateAdvisory.setDescrip(bean.getDescrip().trim());
+				}
+				updateAdvisory.setModifyTime(new Timestamp(System.currentTimeMillis()));
+			}
+			return updateAdvisory;
+		}
+		return null;
+	};
+
+	public boolean delete(java.util.Date calendar, int timeInterval, String advisoryCode) {
+		AdvisoryBean data = this.select(advisoryCode);
+		if (data != null) {
+			this.getSession().delete(data);
+			return true;
+		}
+		return false;
+	}
 }

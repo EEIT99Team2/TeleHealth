@@ -34,7 +34,6 @@ public class AdvisoryMomentService {
 		List<Object[]> reserved = this.selectByMemSelf(UserId);
 		String reservedId;
 		String VideoCode;
-		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
 			String MomentStatus = result.get(i)[8].toString();
 			//判斷班表狀態是否存在
@@ -52,17 +51,14 @@ public class AdvisoryMomentService {
 			String empId = result.get(i)[4].toString();
 			String empName = result.get(i)[5].toString();
 			String empCareer = result.get(i)[6].toString();			
-			if(empCareer.equals("Nutritionist")) {
-				zhCareer="營養師";
-			}
-			dataOne.put("title", advisoryCode + "\r\n" + empName + zhCareer);
+			dataOne.put("title", advisoryCode + "\r\n" + empName + empCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
+			dataOne.put("className", "eventItem");
 			if (status.equals("E")) {
 				dataOne.put("backgroundColor", "#0080ff");
-				dataOne.put("borderColor", "black");
 				// 已有預約諮詢
 			} else if (status.equals("F") && reserved.size() != 0) {
 				for (int j = 0; j < reserved.size(); j++) {
@@ -75,12 +71,10 @@ public class AdvisoryMomentService {
 						break;
 					} else {						
 						dataOne.put("backgroundColor", "#ea0000");
-						dataOne.put("borderColor", "black");
 					}
 				}
 			} else if (status.equals("F") && reserved.size() == 0) {				
 				dataOne.put("backgroundColor", "#ea0000");
-				dataOne.put("borderColor", "black");
 			}
 			datafinal.add(dataOne);
 		}
@@ -98,7 +92,6 @@ public class AdvisoryMomentService {
 		List<Object[]> reserved = this.selectByMemSelf(UserId);
 		String reservedId;
 		String VideoCode;
-		String zhCareer="醫生";
 		for (int i = 0; i < result.size(); i++) {
 			String MomentStatus = result.get(i)[7].toString();
 			//判斷班表狀態是否存在
@@ -115,10 +108,8 @@ public class AdvisoryMomentService {
 			String empId = result.get(i)[4].toString();
 			String empName = result.get(i)[5].toString();
 			String empCareer = result.get(i)[6].toString();			
-			if(empCareer.equals("Nutritionist")) {
-				zhCareer="營養師";
-			}
-			dataOne.put("title", adCode + "\r\n" + empName + zhCareer);
+
+			dataOne.put("title", adCode + "\r\n" + empName + empCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
@@ -163,7 +154,6 @@ public class AdvisoryMomentService {
 		TakeoffBean takeoffRecord = new TakeoffBean();
 		String selfItemId;
 		String selfResCode;
-		String zhCareer="醫生";
 		String reResult="null";
 		String reReason="null";
 		String reTime="null";
@@ -186,9 +176,6 @@ public class AdvisoryMomentService {
 			String otherResCode;
 			String takeoff;
 			String empCareer = result.get(i)[6].toString();
-			if(empCareer.equals("Nutritionist")) {
-				zhCareer="營養師";
-			}
 			//別人班表是否有預約
 			if(result.get(i)[7]==null) {
 				otherResCode="null";
@@ -210,7 +197,7 @@ public class AdvisoryMomentService {
 			}else {
 				takeoff="noexist";
 			}
-			dataOne.put("title", advisoryCode + "\r\n" + empName + zhCareer);
+			dataOne.put("title", advisoryCode + "\r\n" + empName + empCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
@@ -266,7 +253,6 @@ public class AdvisoryMomentService {
 		List<Object[]> selfItem = this.selectByEmpSelf(EmpId);
 		// 是否請假
 		TakeoffBean takeoffRecord = new TakeoffBean();
-		String zhCareer="醫生";
 		String reResult="null";
 		String reReason="null";
 		String reTime="null";
@@ -289,9 +275,6 @@ public class AdvisoryMomentService {
 			String VideoCode;
 			String empCareer = selfItem.get(i)[6].toString();
 			String takeoff;
-			if(empCareer.equals("Nutritionist")) {
-				zhCareer="營養師";
-			}
 			if(selfItem.get(i)[7]==null) {
 				VideoCode="null";
 			}else {
@@ -312,7 +295,7 @@ public class AdvisoryMomentService {
 			}else {
 				takeoff="noexist";
 			}
-			dataOne.put("title", advisoryCode + "\r\n" + empName + zhCareer);
+			dataOne.put("title", advisoryCode + "\r\n" + empName + empCareer);
 			dataOne.put("start", calendar);
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);

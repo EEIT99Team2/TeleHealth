@@ -32,14 +32,14 @@ public class AnalysisController {
 	@Autowired
 	private BloodSugarService BloodSugarService ;
 	
-	private String memid ="B0041CB5-09F1-4E5B-8D57-1F0406019143";
+
 	private Integer age = 19;
 	private String gender = "M";
 	//BMI
 	@RequestMapping(
 			path= {"/healthpassport/querybmi.controller"},
 			method= {RequestMethod.GET,RequestMethod.POST},
-			produces="text/plain;charset=UTF-8")	
+			produces="application/json;charset=UTF-8")	
 //	String gender,String age
 	public @ResponseBody String queryBMI(String memberid,
 			String height, String weight,String bmi, Model model) {
@@ -47,19 +47,13 @@ public class AnalysisController {
 			Double heightResult = Double.parseDouble(height);
 			Double weightResult = Double.parseDouble(weight);
 			Double bmiResult = Double.parseDouble(bmi);
-			
 			BMIBean bean = new BMIBean();
-			bean.setMemberid(memid);
-
+			bean.setMemberid(memberid);
 			bean.setBmi(bmiResult);
 			bean.setHeight(heightResult);
 			bean.setWeight(weightResult);
-
-			BMIBean result = bmiService.insert(bean,gender,age);
-			String bresult = result.getResult();
-			model.addAttribute("bmiresult",bresult);
-			System.out.println(bresult);
-			return bresult;
+			bmiService.insert(bean,gender,age);		
+			return null;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return null;
@@ -74,7 +68,6 @@ public class AnalysisController {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<BMIBean> result = bmiService.selectMemberid(memberid);
-		System.out.println(memberid);
 		for(int i=0 ; i<result.size() ; i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String height = result.get(i).getHeight().toString();
@@ -95,6 +88,36 @@ public class AnalysisController {
 		System.out.println("JSON=" + data);
 		return data;
 	}
+
+	@RequestMapping(
+			path= {"/healthpassport/newOneRecords.controller"},
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8")
+	public @ResponseBody String newOneRecords(String memberid) {
+		
+		BMIBean bean = new BMIBean();
+		bean.setMemberid(memberid);
+		BMIBean result = bmiService.newOne(memberid);
+		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+		HashMap<String, String> dataOne = new HashMap<String, String>();
+		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String height = result.getHeight().toString();
+		String weight = result.getWeight().toString();
+		String bmi = result.getBmi().toString();
+		String result1 = result.getResult();
+		String time = sdf.format(result.getCreateTime());
+		dataOne.put("h", height);
+		dataOne.put("w", weight);
+		dataOne.put("b", bmi);
+		dataOne.put("rs", result1);
+		dataOne.put("t", time);
+		datafinal.add(dataOne);
+		datas.put("topbmi",datafinal);
+		String data = new Gson().toJson(datas);
+		System.out.println(data);
+		return data;
+	}
 	
 	
 
@@ -103,7 +126,7 @@ public class AnalysisController {
 			path= {"/healthpassport/queryBloodPressure.controller"},
 			method= {RequestMethod.GET,RequestMethod.POST},
 			produces="application/json;charset=UTF-8")	
-	public @ResponseBody String queryBloodPressure(String diastole,String systole,String heartBeat,
+	public @ResponseBody String queryBloodPressure(String memberid,String diastole,String systole,String heartBeat,
 			String systoleData,String diastoleData,String heartBeatData,Model model) {
 //		String gender,String age
 		try {
@@ -117,7 +140,7 @@ public class AnalysisController {
 			String s = systole;
 			String h = heartBeat;
 			BloodPressureBean bean = new BloodPressureBean();
-			bean.setMemberid(memid);
+			bean.setMemberid(memberid);
 			bean.setMaxBloodPressure(SystoleD);
 			bean.setMinBloodPressure(diastoleD);
 			bean.setHeartBeat(heartBeatD);
@@ -138,13 +161,13 @@ public class AnalysisController {
 			method= {RequestMethod.GET,RequestMethod.POST},
 			produces="application/json;charset=UTF-8"
 			)
-	public @ResponseBody String queryBloodSugar(String bloodsugar,Model model) {
+	public @ResponseBody String queryBloodSugar(String memberid,String bloodsugar,Model model) {
 		//clinet端值
 		try {
 			Integer bSugar = Integer.parseInt(bloodsugar);
 			
 			BloodSugarBean bean= new BloodSugarBean();
-			bean.setMemberId(memid);
+			bean.setMemberId(memberid);
 			bean.setBloodSugar(bSugar);
 			BloodSugarBean result = BloodSugarService.insert(bean,gender,age);
 			return null;

@@ -60,7 +60,7 @@ public class TakeoffService {
 	public String selectAll() {
 		LinkedList<HashMap<String, String>> dataFinal = new LinkedList<HashMap<String, String>>();
 		List<Object[]> takeoffData = takeoffDao.selectAll();
-		String takeoffId, MomentId, empId, empName, career,zhCareer ="醫生", apType, apTime, apReason, status, videoCode,reResult,reTime,reReason,momStatus,calendar;
+		String takeoffId, MomentId, empId, empName, career, apType, apTime, apReason, status, videoCode,reResult,reTime,reReason,momStatus,calendar;
 		if (takeoffData.size() != 0) {
 			System.out.println("請假數"+takeoffData.size());
 			for (int i = 0; i < takeoffData.size(); i++) {
@@ -70,9 +70,6 @@ public class TakeoffService {
 				empId = takeoffData.get(i)[2].toString();
 				empName = takeoffData.get(i)[3].toString();
 				career = takeoffData.get(i)[4].toString();
-				if(career.equals("Nutritionist")) {
-					zhCareer="營養師";
-				}
 				apType = takeoffData.get(i)[5].toString();
 				apTime = takeoffData.get(i)[6].toString();
 				apReason = takeoffData.get(i)[7].toString();
@@ -99,7 +96,7 @@ public class TakeoffService {
 				dataOne.put("MomentId", MomentId);
 				dataOne.put("empId", empId);
 				dataOne.put("empName", empName);
-				dataOne.put("zhCareer", zhCareer);
+				dataOne.put("zhCareer", career);
 				dataOne.put("apType", apType);
 				dataOne.put("apTime", apTime);
 				dataOne.put("apReason", apReason);

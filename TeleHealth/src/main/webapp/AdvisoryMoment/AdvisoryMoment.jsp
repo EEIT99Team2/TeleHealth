@@ -9,25 +9,21 @@
     
 <link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
 <link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
-
+<link href="<c:url value='/fullCalendar/materialFullCalendar.css'/>" rel="stylesheet" type="text/css"/>
 <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="<c:url value='/fullCalendar/w3.css'/>" rel="stylesheet" type="text/css"/>
-	<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
+<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <style>
 
   #calendar {
   
     max-width: 1100px;
-    margin: 60px auto;
-/*     background-color: lightblue; */
+    margin: 20px auto;   
+     background-color:#E1F5FE;
   }
-  .fc-widget-header{
-     background-color:#00e3e3;
-	}
-	.fc-toolbar h2 {
-	font-family: CJKtc_Bold;
-	}
+   
+ 	.fc-toolbar{ 
+ 	background-color:white;
+ 	} 
 /* 	//week格線 */
 /*    .fc .fc-agendaWeek-view .fc-bg tr > td{ */
 /*     border: 2px solid grey; */
@@ -36,48 +32,36 @@
 /* 	.fc-bg table{ */
 		
 /* 	} */
-  .headerChoose {font-size:1.5em;}
-  .item1 {font-size:1.8em;
+
+
+  .iBlock {display:inline-block;
+  		margin-left:280px;
+  		font-size:20px;}
+  .item1 {font-size:1em;
 		 margin-left:100px;}
-  .item2 {font-size:1.8em;
+  .item2 {font-size:1em;
 		 margin-left:100px;}
-  .item3 {font-size:1.8em;
+  .item3 {font-size:1em;
 		 padding-right:10px;
 		 }
-  .columnHead{font-size:1.2em;}
-  .eveMouseOver {cursor: pointer;}
-  .iBlock {display:inline-block;}
+  .columnHead{display:inline-block;font-size:1.5em;}
+  .momentColor {font-family: CJKtc_Bold;}
+  .eventItem{text-align:center;
+  			font-size:18px;}
 </style>
 </head>
 <body>
- <!-- Navigation -->
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
-            <a class="navbar-brand" href="#">Carousel</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">醫師介紹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#pricing">方案介紹</a>
-                    </li>
-				   </ul>
-<input type="text" id="userid" name="userid" value="0A21A5D0-3AA1-4A16-9742-585B4A1EA78E">
+<jsp:include page="/fragment/nav2.jsp" />
+<div class="momentColor iBlock"><span style='color:#0080ff'>尚未被預約</span><br/><span style='color:#00db00'>您已預約</span><br/><span style='color:#ea0000'>已被預約</span></div>
+<div class="container iBlock">
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">年</span>
 <select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">月</span>
 <select id="date" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">日</span>
-<button type="button" id="fastSearch" class="headerChoose">查詢</button>
+<button type="button" id="fastSearch" class="btn btn-secondary">查詢</button>
 <span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose">
 <option id="allday">全天</option>
-<option id="mor">上午</option>
+<option id="mor" SELECTED>上午</option>
 <option id="aft">下午</option>
 <option id="nig">晚上</option>
 </select>
@@ -90,12 +74,6 @@
 <option id="CAR">心血管慢性疾病諮詢</option>
 <option id="WEL">健康減重</option>
 </select><br>
-
-            </div>
-        </nav>
-    </header>
-
-<div class='container iBlock'>
 <!-- 點擊預約時段彈跳視窗 -->
 <div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -198,21 +176,22 @@
     </div>
   </div>
 </div>
-<div class='iBlock'><span style='color:#0080ff'>尚未被預約班表</span><span style='color:#00db00'>您預約班表</span><span style='color:#ea0000'>已被預約班表</span></div>
-<div id="calendar" style="display:inline-block"></div>
+<div id="calendar"></div>
 </div>
+<!-- Footer -->
+<jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
-<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/calender.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 <script>
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
-	var UserId=$("#userid").val();
+	var UserId=$("#memberId").val();
 	var mom = moment();
 	//預約用
 	var reserveData;
@@ -225,13 +204,16 @@ $(document).ready(function() {
 	var weekformat=["一","二","三","四","五","六","日"];
 	var today = new Date();
 	var eventsData;
-		
+
+	$(function () {
+		  $('[data-toggle="tooltip"]').tooltip()
+		})
 	$("#chooseTime").change(function(){
 		time = $("#chooseTime :selected").prop("id");		
-		if(time=="mor"){
+		if(time=="allday"){
 			minT="08:00";
-			maxT="12:00";
-			contentH="auto";
+			maxT="21:00";
+			contentH="1000";
 			}else if(time=="aft"){
 				minT="14:00";
 				maxT="18:00";
@@ -242,8 +224,8 @@ $(document).ready(function() {
 					contentH="auto";
 			}else{
 					minT="08:00";
-					maxT="21:00";
-					contentH="1000";
+					maxT="12:00";
+					contentH="auto";
 				}
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
@@ -267,7 +249,7 @@ $(document).ready(function() {
     	 columnHeaderHtml: function(mom) {
         	 for(var i = 0;i<7;i++){
     		    if (mom.weekday() === i) {
-    		      return "<span class='columnHead'>"+mom.format('MM/DD')+"\r\n"+weekformat[i]+"</span>";
+    		      return "<span style='color:#000000'>"+mom.format('MM/DD')+"\r\n"+weekformat[i]+"</span>";
     		    } }
     		  },    	
     	customButtons: {
@@ -287,12 +269,14 @@ $(document).ready(function() {
       allDaySlot:false,
 //       dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
       firstDay:1,
+      handleWindowResize: true,
       slotDuration:'00:05:00',
       slotLabelFormat:'hh:mm',
       defaultTimedEventDuration:"00:15",
-      displayEventEnd:false,
+      displayEventTime: true,
       minTime:"08:00",
-      maxTime:"21:00",
+      maxTime:"12:00",
+      contentHeight:"auto",
       navLinks: true, // can click day/week names to navigate views
       editable: false,
 //       eventLimit: true, // allow "more" link when too many events
@@ -332,11 +316,11 @@ $(document).ready(function() {
 	  },
 	  eventMouseover:function( event, jsEvent, view ) {
 			if(event.backgroundColor=="#00db00"||event.backgroundColor=="#0080ff"){
-				$('#calendar').fullCalendar(this).addClass('eveMouseOver')
+				$(this).addClass('zoom') 
 				}
 		  },
 	  eventMouseout:function( event, jsEvent, view ) {
-				$('#calendar').fullCalendar(this).removeClass('eveMouseOver') 
+				$(this).removeClass('zoom') 
 		  }		  
     });
 	});	
@@ -393,9 +377,4 @@ $(document).ready(function() {
 		})
 });
 </script>
-<!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
-</body>
 </html>

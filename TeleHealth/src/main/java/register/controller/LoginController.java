@@ -28,7 +28,6 @@ public class LoginController {
 			String remember, HttpServletResponse response, String login,HttpSession session) {
 		// 接收資料
 		// 驗證資料
-		System.out.println("remember=" + remember);
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("MsgMap", errorMsg);
 		if (usrname == null || usrname.trim().length() == 0) {
@@ -66,18 +65,17 @@ public class LoginController {
 			} else if (a.equals("Y")) {
 				System.out.println("帳號已開通");
 				session.setAttribute("LoginOK", bean);
-				
 				if (remember != null) { // rm存放瀏覽器送來之RememberMe的選項
 					cookieUser = new Cookie("user", usrname);
 					cookieUser.setMaxAge(30 * 60 * 60);
-					cookieUser.setPath("/TeleHealth/index.jsp");
+					cookieUser.setPath("/TeleHealth/home.jsp");
 					String encodePassword = GlobalService.encryptString(psw);
 					cookiePassword = new Cookie("password", encodePassword);
 					cookiePassword.setMaxAge(30 * 60 * 60);
-					cookiePassword.setPath("/TeleHealth/index.jsp");
+					cookiePassword.setPath("/TeleHealth/home.jsp");
 					cookieRememberMe = new Cookie("rememberMe", "true");
 					cookieRememberMe.setMaxAge(30 * 60 * 60);
-					cookieRememberMe.setPath("/TeleHealth/index.jsp");
+					cookieRememberMe.setPath("/TeleHealth/home.jsp");
 				} else {
 					cookieUser = new Cookie("user", usrname);
 					cookieUser.setMaxAge(0); // MaxAge==0 表示要請瀏覽器刪除此Cookie

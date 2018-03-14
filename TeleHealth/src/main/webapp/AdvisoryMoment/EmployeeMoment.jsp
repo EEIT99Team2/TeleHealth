@@ -9,16 +9,14 @@
     
 <link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
 <link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
-
+<link href="<c:url value='/fullCalendar/materialFullCalendar.css'/>" rel="stylesheet" type="text/css"/>
 <!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="<c:url value='/css/fonts/fontstyle.css" rel="stylesheet'/>" type="text/css"/>
-<link href="<c:url value='/fullCalendar/w3.css" rel="stylesheet'/>" type="text/css"/>
 <style>
   #calendar {
     max-width: 1100px;
     margin: 60px auto;
-/*     background-color: lightblue; */
+    background-color: lightblue;
   }
   .fc-widget-header{
      background-color:#00e3e3;
@@ -34,57 +32,39 @@
 /* 	.fc-bg table{ */
 		
 /* 	} */
-  .headerChoose {}
-  .item1 {margin-left:100px;}
-  .item2 {margin-left:200px;}
-  .item3 {padding-right:10px;
+  .iBlock {display:inline-block;
+  		margin-left:280px;
+  		font-size:20px;}
+  .item1 {font-size:1em;
+		 margin-left:100px;}
+  .item2 {font-size:1em;
+		 margin-left:100px;}
+  .item3 {font-size:1em;
+		 padding-right:10px;
 		 }
-  .columnHead{font-size:1.2em;}
-  .eveMouseOver {cursor: pointer;}
-  .txtWaring{color:red}
+  .columnHead{font-size:1em;}
+  .momentColor {font-family: CJKtc_Bold;}
+  .eventItem{text-align:center;
+  			font-size:18px;}
   #loading{background-color:white}
 </style>
 </head>
 <body>
-<!-- Navigation -->
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top w3-black">
-            <a class="navbar-brand" href="#">Carousel</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse w3-center" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">健康專欄 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">醫師介紹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#pricing">方案介紹</a>
-                    </li>
-                </ul>
-                <form action="<c:url value="/AdvisoryMomemt/MemberSelectByCode.controller" />" method="GET">
-<input type="text" id="empId" name="empId" value="0A55726B-8733-451F-9939-4D387698C7B6">
+<jsp:include page="/fragment/nav3.jsp" />
+<div class="momentColor iBlock"><span style='color:#0080ff'>您的班表(無預約)</span><br/><span style='color:#d26900'>您的班表(有預約)</span><br/><span style='color:#bebebe'>未被預約班表</span><br/><span style='color:#ea0000'>已被預約班表</span></div>
+<div id='loading' class='container iBlock'>
 <span id="item1" class="item1 nav-item active">快速查詢:</span>
-<select id="year" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">年</span>
-<select id="month" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">月</span>
-<select id="date" class="headerChoose"></select><span id="item1" class="headerChoose nav-item active">日</span>
+<select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">年</span>
+<select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">月</span>
+<select id="date" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">日</span>
 <button type="button" id="fastSearch" class="headerChoose">查詢</button>
 <span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose nav-item active">
 <option id="allday">全天</option>
-<option id="mor">上午</option>
+<option id="mor" SELECTED>上午</option>
 <option id="aft">下午</option>
 <option id="nig">晚上</option>
 </select>
-</form>
-                <!-- Trigger the modal with a button -->                
-                <button type="button" class="btn btn-sm btn-outline-secondary" id="myBtn">Login</button>
-            </div>
-        </nav>
-    </header>
-<div id='loading' class='container'>
+
 <!-- 未預約班表視窗 -->
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -186,15 +166,11 @@
   </div>
 </div>
 <div id="calendar"></div>
-<span style='color:#0080ff'>您的班表(無預約)</span><span style='color:#d26900'>您的班表(有預約)</span><span style='color:#bebebe'>未被預約班表</span><span style='color:#ea0000'>已被預約班表</span>
 </div>
-<!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">eeit</a></p>
-    </footer>
+	<!-- Footer -->
+	<jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
-<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/calender.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>
@@ -203,8 +179,8 @@
 <!-- loading用 -->
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/src/loadingoverlay.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.6.0/extras/loadingoverlay_progress/loadingoverlay_progress.min.js"></script>
-<script>
-       
+</body>
+<script>     
 $(document).ready(function() {
 
 	$.LoadingOverlaySetup({
@@ -229,10 +205,10 @@ $(document).ready(function() {
 			
 	$("#chooseTime").change(function(){
 		time = $("#chooseTime :selected").prop("id");		
-		if(time=="mor"){
+		if(time=="allday"){
 			minT="08:00";
-			maxT="12:00";
-			contentH="auto";
+			maxT="21:00";
+			contentH="1000";
 			}else if(time=="aft"){
 				minT="14:00";
 				maxT="18:00";
@@ -243,8 +219,8 @@ $(document).ready(function() {
 					contentH="auto";
 			}else{
 					minT="08:00";
-					maxT="21:00";
-					contentH="1000";
+					maxT="12:00";
+					contentH="auto";
 				}
 		$("#calendar").fullCalendar('option', { minTime:minT, maxTime:maxT ,contentHeight:contentH})
 		})
@@ -296,9 +272,9 @@ $(document).ready(function() {
       slotDuration:'00:05:00',
       slotLabelFormat:'hh:mm',
       defaultTimedEventDuration:"00:15",
-      displayEventEnd:false,
       minTime:"08:00",
-      maxTime:"21:00",
+      maxTime:"12:00",
+      contentHeight:"auto",
       navLinks: true, // can click day/week names to navigate views
       editable: false,
 //       eventLimit: true, // allow "more" link when too many events
@@ -342,11 +318,11 @@ $(document).ready(function() {
 	  },
 	  eventMouseover:function( event, jsEvent, view ) {
 			if(event.backgroundColor=="#d26900"||event.backgroundColor=="#0080ff"){
-				$('#calendar').fullCalendar(this).addClass('eveMouseOver')
+				$(this).addClass('zoom') 
 				}
 		  },
 	  eventMouseout:function( event, jsEvent, view ) {
-				$('#calendar').fullCalendar(this).removeClass('eveMouseOver') 
+		  		$(this).removeClass('zoom')  
 		  }			  
     });
 	});	
@@ -433,5 +409,4 @@ $("#ReTakeOff").click(function takeoff(){
 });
 
 </script>
-</body>
 </html>

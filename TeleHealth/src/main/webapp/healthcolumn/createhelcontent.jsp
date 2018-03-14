@@ -12,6 +12,7 @@
 <script src="../forCkeditor/ckeditor/ckeditor.js"></script>
 <script src="../forCkeditor/ckfinder/ckfinder.js"></script>
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
+<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 	
 
 </head>
@@ -65,7 +66,7 @@
        <p style="color:red">${errors.errorcontentEmpty}</p>
        <textarea name="content" id="content" rows="10" cols="80"></textarea>
         <div class="form-group">
-              <input id="batchUploadBtn" type="submit" name="submit" class="btn btn-success" value="上传" />    
+              <input id="batchUploadBtn" type="submit" name="submit" class="btn btn-success" value="上傳" />    
         </div>        
        <input type="reset" id="clean" value="清除"  >
        <p style="color:green">${msgOK.uploadok}${errors.uploaderror}</p>
@@ -78,7 +79,7 @@
 		    $("#batchImportBtn").click(function(){			    		    
 		    	   $('#batchImportModal').modal('show');
 		    });		    
-		    $("#batchUploadBtn").attr('disabled', true);
+		    $("#batchUploadBtn").attr('disabled', false);
 		    // 上傳按鈕點擊的时候
 		    $("#batchUploadBtn").click(function() {
 		        // 進度條0
@@ -126,7 +127,7 @@
 		        xhr.onload = function() {		            
 		            alert("上傳完成");
 		            $("#batchUploadBtn").attr('disabled', false);
-		            $("#batchUploadBtn").val("上传");
+		            $("#batchUploadBtn").val("上傳");
 		            $("#progressBar").parent().removeClass("active");
 		            $("#progressBar").parent().hide();
 		            //$('#myModal').modal('hide');

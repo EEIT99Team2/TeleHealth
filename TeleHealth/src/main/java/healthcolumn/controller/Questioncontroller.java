@@ -55,20 +55,19 @@ public class Questioncontroller {
 	// 修改po文
 	@RequestMapping(path = {
 	"/healthcolumn/updatememQA.controller" }, produces = "text/html;charset=UTF-8", method = {
-			RequestMethod.POST })
+			RequestMethod.POST,RequestMethod.GET })
 	public @ResponseBody String updatecontent(String contenttext,String questionId,Model model) {
 		int columnIdemp=Integer.parseInt(questionId);		
 		boolean update = QuestionService.updateQA(columnIdemp, contenttext);
-		Map<String, String> QAerrors = new HashMap<>();
-		model.addAttribute("QA", QAerrors);
-		Map<String, String> QAOK = new HashMap<String, String>();
-		model.addAttribute("QA", QAOK);
+		System.out.println(update);
 		if(update) {
-			QAOK.put("updateok", "已修改選擇po文!!");
-			return "修改成功";
-		}else {
-			QAerrors.put("updaterror","修改失敗!!");
-			return"修改失敗";
+			Gson gson = new Gson();
+			String dataLoad = gson.toJson("ok");
+			return dataLoad ;			
+		}else {	
+			Gson gson = new Gson();
+			String dataLoad = gson.toJson("wrong");
+			return dataLoad ;			
 		}		
 	}	
 	// 刪除會員po文章

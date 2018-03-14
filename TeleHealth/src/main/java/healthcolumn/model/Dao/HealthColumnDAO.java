@@ -53,7 +53,7 @@ public class HealthColumnDAO  {
 	}
 	//選出前5名
 		public List<HealthColumnBean> selectimg(){
-			NativeQuery query=this.getSession().createNativeQuery("select Top 5 *  from healthColumn  order by clickCount desc ");
+			NativeQuery query=this.getSession().createNativeQuery("select Top 5 *  from healthColumn where fileName is Null order by clickCount desc ");
 			query.addEntity(HealthColumnBean.class);
 			List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();
 			return data;

@@ -42,7 +42,8 @@ video {
 </head>
 
 <body>
-	<jsp:include page="/fragment/nav2.jsp" />
+	<jsp:include page="/fragment/nav3.jsp" />
+	<input type="hidden" id="videoCode" value="${sessionScope.advisory.videoCode}" />
 	<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 	<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 	<div class="container">
@@ -84,10 +85,14 @@ video {
 								<div class="col-12 mx-auto">
 									<form>
 										<div class="form-group">
-											<label for="comment">Comment:</label>
-											<textarea class="form-control" name="content" id="content" rows="10" cols="80"></textarea>
+											<label for="comment">視訊概要記錄:</label>
+											<textarea class="form-control" id="contents" rows="10" cols="80"></textarea>
 										</div>
 									</form>
+									<div>
+										<button id="sendContent" class="btn btn-primary">確認送出</button>
+										<span id="showResultMsg"></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -103,16 +108,30 @@ video {
 	<jsp:include page="/fragment/footer.jsp"/>
 	<script type="text/javascript">
 	   $(document).ready(function() {
-	    CKEDITOR.replace('content',{
-	    		filebrowserBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html',
-	    		filebrowserImageBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Images', 
-	    		filebrowserFlashBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Flash',
-	    		filebrowserUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files', 
-	    		filebrowserImageUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images', 
-	    		filebrowserFlashUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
-	    }	 );
-	    console.log("ready!");
-	   });
+		    CKEDITOR.replace('contents',{
+		    		filebrowserBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html',
+		    		filebrowserImageBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Images', 
+		    		filebrowserFlashBrowseUrl : 'forCkeditor/ckfinder/ckfinder.html?type=Flash',
+		    		filebrowserUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files', 
+		    		filebrowserImageUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images', 
+		    		filebrowserFlashUploadUrl : 'forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
+		    });
+		    console.log("ready!");
+	    });
+	    
+	   	$('#sendContent').click(insert);
+		function insert() {
+			var descripIn= $('contents').text();
+			var videoCode= $('#videoCode').val;
+			$.getJSON('/TeleHealth/advisorycontent.controller', {"videoCode":videoCode, "descrip":descripIn}, function(datas) {
+				console.log(datas);
+				if(datas=="insert.success"){
+					$('#showResultMsg').text("新增成功!");
+				} else{
+					$('#showResultMsg').text("新增失敗，請重新確認!");
+				}
+			});		
+		}
   	</script>
 	<script src="<c:url value='/js/client.js' />"></script>
 </body>

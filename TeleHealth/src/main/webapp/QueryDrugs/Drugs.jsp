@@ -43,7 +43,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="w3-container marketing " style="padding: 20px 16px" id="team">
-				<h1 class="w3-center">藥品資訊查詢</h1>
+				<h1 class="w3-center">藥品資訊查詢</h1> 
 					<form class="form-group" id="drugForm" >
 						<div class="form-group has-success has-feedback row">
 					    	<label class="col-2 control-label" for="chineseName">食藥署核准字號:</label>
@@ -238,7 +238,7 @@
 	
 	<!-- Footer -->
 	<jsp:include page="/fragment/footer.jsp" />
-	
+
 	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>	
 	<script>
 		$(document).ready(function() {
