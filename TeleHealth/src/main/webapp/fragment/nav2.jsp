@@ -30,7 +30,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark" id="mainNavB">
 	<div class="container">
-		<a class="navbar-brand js-scroll-trigger" href="#page-top"><img
+		<a class="navbar-brand js-scroll-trigger" href="<c:url value="/home.jsp" />"><img
 			alt="Logo" src="<c:url value="/images/logo.png" />" /></a>
 		<span class="navbar-brand">牽伴健康諮詢平台</span>
 		<button class="navbar-toggler navbar-toggler-right" type="button"

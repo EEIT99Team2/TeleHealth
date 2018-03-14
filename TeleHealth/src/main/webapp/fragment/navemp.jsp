@@ -30,7 +30,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark" id="mainNavB">
 	<div class="container">
-		<a class="navbar-brand js-scroll-trigger" href="#page-top"><img
+		<a class="navbar-brand js-scroll-trigger" href="<c:url value="/home.jsp" />"><img
 			alt="Logo" src="<c:url value="/images/logo.png" />" /></a>
 		<span class="navbar-brand">牽伴健康諮詢平台</span>
 		<button class="navbar-toggler navbar-toggler-right" type="button"
@@ -49,11 +49,9 @@
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/createhelcontent.jsp" />">新增專欄文章</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">諮詢預約</a></li>
+					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">查詢班表</a></li>
 				<li class="nav-item"><a class="nav-link" 
-					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
+					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a></li>				
 			</ul>
 			</c:when>
 			<c:otherwise>
