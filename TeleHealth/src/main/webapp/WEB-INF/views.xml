@@ -26,7 +26,7 @@
 	</bean>
 	
 	<bean id="login.error" class="org.springframework.web.servlet.view.InternalResourceView">
-		<property name="url" value="/index.jsp"></property>
+		<property name="url" value="/home.jsp"></property>
 	</bean>
 	
 	<bean id="login.success" class="org.springframework.web.servlet.view.RedirectView">
