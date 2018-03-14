@@ -23,6 +23,8 @@
 </style>
 </head>
 <body>
+<jsp:include page="/fragment/nav2.jsp" />
+
 	<input type="hidden" id="member" value="${LoginOK.memberId}" />
 	<div class="container">
 		<h2>健康數據指標</h2>
@@ -33,17 +35,17 @@
 			</div>
 			<div class="col-4 text-right">
 				<button class="btn btn-outline-info" id="insertBMI"
-					data-toggle="modal" data-target="#myModal">
+					data-toggle="modal" data-target="#mybmi">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
-				<button class="btn btn-outline-dark" type="button"
+				<button id='bmiselect' class="btn btn-outline-dark" type="button"
 					data-toggle="collapse" data-target="#collapseExample"
 					aria-expanded="false" aria-controls="collapseExample">查詢紀錄
 				</button>
 			</div>
 
 			<!-- Modal -->
-			<div class="modal fade " id="myModal" role="dialog">
+			<div class="modal fade " id="mybmi" role="dialog">
 				<div class="modal-dialog">
 					<!-- Modal content-->
 					<div class="modal-content ">
@@ -80,23 +82,19 @@
 			<div class="col-9">
 				<div class="row">
 					<div class="col-4 text-center">
-						<h2 id="showHeight">
-							<small>公分</small>
-						</h2>
+						<h1 id="showHeight"></h1><h2><small>公分</small></h2>
 					</div>
 					<div class="col-4 text-center">
-						<h2 id="showWeight">
-							<small>公斤</small>
-						</h2>
+						<h1 id="showWeight"></h1><h2><small>公斤</small></h2>
 					</div>
 					<div class="col-4 text-center">
-						<h2 id="showBMI"></h2>
+						<h4 id="showTime"></h4>
 					</div>
 				</div>
 				<hr />
 				<div class="row">
 					<div class="col-12 text-center">
-						<span id='bmiResult'>這是查詢結果!!</span>
+						<span id='bmiResult'></span>
 					</div>
 				</div>
 
@@ -187,21 +185,17 @@
 			<div class="col-9">
 				<div class="row">
 					<div class="col-4 text-center">
-						<h2 id="showBloodPressure">
-							<small id='showbp'>mmHg</small>
-						</h2>
+						<h1 id="showBloodPressure"></h1><h2><small>mmHg</small></h2>
 					</div>
 					<div class="col-4 text-center">
-						<h2 id="showHeartBeat">
-							<small id='showhb'>次/分</small>
-						</h2>
+						<h1 id="showHeartBeat"></h1><h2><small>次/分</small></h2>
 					</div>
 
 				</div>
 				<hr />
 				<div class="row">
 					<div class="col-12 text-center">
-						<span id='bpResult'>這是查詢結果!!</span>
+						<span id='bpResult'></span>
 					</div>
 				</div>
 
@@ -273,9 +267,7 @@
 			<div class="col-9">
 				<div class="row">
 					<div class="col-4 text-center">
-						<h2 id="showBloodSugar">
-							<small>mmHg</small>
-						</h2>
+						<h1 id="showBloodSugar"></h1><h2><small>mmHg</small></h2>
 					</div>
 				</div>
 				<hr />
@@ -308,20 +300,24 @@
 	<script src="<c:url  value='/js/jquery-3.3.1.min.js'/>"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
 	<script src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+	<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 	<!--  計算BMI -->
 	<script type="text/javascript">
+	var memberid='B0041CB5-09F1-4E5B-8D57-1F0406019143';
 		$(document).ready(function() {
 
 			$('#member').val();
-			var memberid='B0041CB5-09F1-4E5B-8D57-1F0406019143';
+		
 			var weight;
 			var height;
 			var BMI;
+			$('#bmiselect').click(bmitable());
+        	$('#bmiselect').click(bmiview());
+
 
 			$('#calBMI').click(calBMI);
 			function calBMI() {
@@ -376,92 +372,30 @@
 	             
 			});
 
-	//把傳來值塞進頁面			
-		$.get("<c:url value='/healthpassport/newOneRecords.controller'/>",{'memberid':memberid},function(oneData){
-			console.log(oneData);
-// 	       	$('#showHeight').prepend("topbmi":"h");
-// 	       	$('#showWeight').prepend("topbmi":"w");
-// 	       	$('#showBMI').prepend("topbmi":"b");
-		});
-		
-		
-			
-
-//載入會員記錄
-$('#bmiTable').dataTable().fnDestroy(); 
-$('#bmiTable').DataTable({
-    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
-    "columns": [
-        { "data": "height" },
-        { "data": "weight" },
-        { "data": "bmi" },
-        { "data": "bmiResult" },
-        { "data": "createTime" }
-    ],
-    "order": [[ 4, 'desc' ]],
-	"bProcessing": true,//顯示處理中的圖樣
-	"oLanguage": {
-    "sLengthMenu": " _MENU_ 筆/頁",
-    "sZeroRecords": "找不到符合的資料。",
-    "sInfo": "共 _MAX_ 筆",
-    "sSearch": "搜尋",
-    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
-    "sInfoEmpty": "共 0 頁",
-    "oPaginate": {
-        "sPrevious": "«",
-        "sNext": "»"
-  	 	 }
-		}
-	});
-	
-//圖表
-
-var dates = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange","xxx","ooo" , "YYY"];
-var datas = [12, 19, 3, 5, 2, 3, 99, 88 ,66]
-//	$.each() {
-//		dates.add(xxx);
-//	}
-
-var ctx = $("#mybmi")
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: dates,
-        datasets: [{
-            label: '# of Votes',
-            data: datas,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
+	//新增一筆回傳欄位	
+	function newbmirecords(){	
+		$.getJSON("<c:url value='/healthpassport/newOneRecords.controller'/>",{'memberid':memberid},function(oneData){
+			console.log(oneData); 			
+ 		 	$('#showHeight').empty();
+	       	$('#showWeight').empty();
+	       	$('#showTime').empty();
+	       	$('#bmiResult').empty();
+           $.each(oneData,function(i,value){               
+        	var height = value[0].h;   	       			
+   			var weight = value[0].w;
+   			var bmi = value[0].b;
+   			var result = value[0].rs;
+   			var time = value[0].t;   			
+   		 	$('#showHeight').prepend(height);
+   	       	$('#showWeight').prepend(weight);
+   	       	$('#showTime').prepend(time);
+   	       	$('#bmiResult').prepend('<h2>'+'BMI --> '+weight+'</h2>'+'<br>'+'<h2>'+result+'</h2>');
+               })
+          });
+	};
 
 
-							             
+        
 		
 
 <!-- 血壓 -->
@@ -576,6 +510,91 @@ var myChart = new Chart(ctx, {
 
 			
 	});
+		//載入會員記錄
+		
+		function bmitable(){
+			$('#bmiTable').dataTable().fnDestroy(); 
+			$('#bmiTable').DataTable({
+			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
+			    "columns": [
+			        { "data": "height" },
+			        { "data": "weight" },
+			        { "data": "bmi" },
+			        { "data": "bmiResult" },
+			        { "data": "createTime" }
+			    ],
+			    "order": [[ 4, 'desc' ]],
+				"bProcessing": true,//顯示處理中的圖樣
+				"oLanguage": {
+			    "sLengthMenu": " _MENU_ 筆/頁",
+			    "sZeroRecords": "找不到符合的資料。",
+			    "sInfo": "共 _MAX_ 筆",
+			    "sSearch": "搜尋",
+			    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+			    "sInfoEmpty": "共 0 頁",
+			    "oPaginate": {
+			        "sPrevious": "«",
+			        "sNext": "»"
+			  	 	 }
+					}
+				});
+		};			     
+
+		
+		//圖表
+		var dates=[];
+	    var datas1 = [];
+		 function bmiview(){
+			$.getJSON('/TeleHealth/healthpassport/bmirecords.controller',{memberid:memberid},function(datas){
+				$.each(datas.data,function(index,value) {
+					var date = moment(value.createTime).format('MM/DD HH:mm');
+					dates.push(date);
+					var data1 = value.bmi;
+					datas1.push(data1);
+				});
+			});
+				var ctx = $("#mybmi")
+				var myChart = new Chart(ctx, {
+				    type: 'line',
+				    data: {
+				        labels: dates,
+				        datasets: [{
+				            label: '2018',
+				            data: datas1,
+				            backgroundColor: [
+				                'rgba(255, 99, 132, 0.2)',
+				                'rgba(54, 162, 235, 0.2)',
+				                'rgba(255, 206, 86, 0.2)',
+				                'rgba(75, 192, 192, 0.2)',
+				                'rgba(153, 102, 255, 0.2)',
+				                'rgba(255, 159, 64, 0.2)'
+				            ],
+				            order:[dates,'desc'],
+				            order:[datas1,'desc'],
+				            borderColor: [
+				                'rgba(255,99,132,1)',
+				                'rgba(54, 162, 235, 1)',
+				                'rgba(255, 206, 86, 1)',
+				                'rgba(75, 192, 192, 1)',
+				                'rgba(153, 102, 255, 1)',
+				                'rgba(255, 159, 64, 1)'
+				            ],
+				            borderWidth: 1
+				        }]
+				    },
+				    options: {
+				        scales: {
+				            yAxes: [{
+				                ticks: {
+				                   beginAtZero:true
+				                }
+				            }]
+				        }
+				    }
+				});
+		 }
+
+		
 		
 	</script>
 
