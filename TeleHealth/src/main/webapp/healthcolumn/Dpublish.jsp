@@ -16,12 +16,18 @@
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
+<style type="text/css">
+#updatestyle{
+width:50em;
+}
+
+</style>
 </head>
 <body>
 <main role="main" class="container mt-2">
 <div class="row">     	
 	      <div class="card">
-			<span>${empLoginOk.empId}</span><div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
+			<span>${empLoginOK.empName}</span><input type="hidden" id="empId" value="${empLoginOK.empId}"><div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
 				   <table id="productTable" class="table table-bordered">
@@ -46,8 +52,8 @@
      </div>	
 	</main>
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="form" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered" id="updatestyle" role="document">
+    <div class="modal-content" >
       <div class="modal-header">
         <h5 class="modal-title" id="UnReserveItemTitle"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -55,15 +61,15 @@
         </button>
       </div>
       <div class="modal-body">
-      <form>
-	<input type="text" name="name" id="title" value="${empLoginOk.empId}">
+     <form>
+	<input type="hidden" name="name" id="title" value="${empLoginOk.empId}">
 	 <input type="hidden" name="heltitle" id="heltitle" >
-	 <h3>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h3><p style="color:red">${errors.errorVideo}</p>
+	 <h6>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h6><p style="color:red">${errors.errorVideo}</p>
 	  <textarea name="contenttext" id="contenttext" rows="10" cols="80"></textarea>       
 	  	<div class="modal-footer">
      	 <input type="button" value='送出' onclick=postdata()>      
       	 <input type="reset" id="clean" value="清除"  >
-      	 <p style="color:green" id="reanswer"></p>
+      	 	<font id="reanswer" color="green" size="-1"></font><font id="reanswererror" color="red" size="-1"></font>
      	 </div>
 	  </form>      
       </div> 
@@ -76,15 +82,17 @@
 	<script src="../js/bootstrap.min.js"></script>	
 	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
+	 var empIdlogin=$('empId').val();
 		$(document).ready(function() {			
 			$('#clean').on('click',function(){
 				CKEDITOR.instances.contenttext.setData(' ');
 				})
 			 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
-		          {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
+		          {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},{ name: 'insert', groups: [ 'Image' ] },
 		          ];				
-			 CKEDITOR.replace('contenttext',{width:450, height:200,toolbarGroups:tg});
-		   	loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A")		
+			 CKEDITOR.replace('contenttext',{width:450, height:500,toolbarGroups:tg});
+		   	loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A");
+// 			loadProduct(empIdlogin);
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -135,10 +143,10 @@
 	 				  $.post('/TeleHealth/healthcolumn/deletehealthcolumn.controller',{columnId:id},function(data){
 							console.log(data);
 		 				   alert("您已刪除所選的文章");
-		 				   loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A");
+		 				   loadProduct(empIdlogin);
 		 			   })		 			   
 	 			   }else{
-	 				  loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A")
+	 				  loadProduct(empIdlogin)
 		 		 }
 	 			 
 			  })
@@ -164,7 +172,11 @@
 					var name=$("#title").val();
 					var heltitle=$("#heltitle").val();
 					var file1=$("#video").val();
-					var contenttext=CKEDITOR.instances.contenttext.getData();					
+					var contenttext=CKEDITOR.instances.contenttext.getData();
+					if(contenttext==null|| contenttext.length==0){
+			    		document.getElementById("reanswer").innerHTML=' ';    		
+			    		document.getElementById("reanswererror").innerHTML='內容不能空白';		
+			    	}else{ 					
 					$.getJSON("/TeleHealth/healthcolumn/updatehealthcolumn.controller", {name:name,heltitle:heltitle,file1:file1,contenttext:contenttext}, function(datas){
 						if(datas="ok"){
 							$("#reanswer").text("修改成功!!");
@@ -172,8 +184,10 @@
 							$("#reanswer").text("影片格式錯誤!!");}
 						else{
 							$("#reanswer").text("修改失敗!!");}
+					
 					})					
-						}	
+					}
+		}	
 	</script>
 	
 </body>
