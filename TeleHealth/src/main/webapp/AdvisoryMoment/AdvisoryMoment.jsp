@@ -50,7 +50,7 @@
   .momentColor {font-family: CJKtc_Bold;}
   .eventItem{text-align:center;
   			font-size:1em;
-  			color:white}
+  			color:white;}
 </style>
 </head>
 <body>
