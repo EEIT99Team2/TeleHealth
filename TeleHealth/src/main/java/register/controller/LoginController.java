@@ -98,17 +98,15 @@ public class LoginController {
 			}
 		}
 		return "login.error";
-
-		// if(checkaccount.equals("N")) {
-		// errorMsg.put("errorPsw", "此帳號未開通");
-		// }else if(checkaccount.equals("Y")) {
-		// if(bean==null) {
-		// errorMsg.put("errorPsw", "帳號或密碼不正確");
-		// return "login.error";
-		// }else {
-		// session.setAttribute("LoginOK",bean);
-		// return "login.success";
-		// }
-		// }
+	}
+	
+	@RequestMapping(path = { "/logout.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public String logout(HttpSession session) {
+		if(session.getAttribute("LoginOK") != null) {
+			session.removeAttribute("LoginOK");
+		} else if(session.getAttribute("empLoginOK") != null) {
+			session.removeAttribute("empLoginOK");
+		}
+		return "logout.success";
 	}
 }
