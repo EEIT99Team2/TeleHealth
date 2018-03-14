@@ -42,7 +42,7 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<c:choose>		
+	<c:choose>		
 		<c:when test="${not empty LoginOK}">
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
@@ -55,6 +55,18 @@
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="<c:url value='/Members/Members04.jsp'/>">會員專區</a></li>
+			</ul>
+			</c:when>
+			<c:when test="${not empty empLoginOK}">
+			<ul class="navbar-nav text-uppercase ml-auto">
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthcolumn/createhelcontent.jsp" />">新增專欄文章</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">查詢班表</a></li>
+				<li class="nav-item"><a class="nav-link" 
+					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a></li>				
 			</ul>
 			</c:when>
 			<c:otherwise>

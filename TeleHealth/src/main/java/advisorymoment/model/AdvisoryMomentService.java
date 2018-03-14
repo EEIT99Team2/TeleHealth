@@ -66,7 +66,6 @@ public class AdvisoryMomentService {
 					VideoCode = reserved.get(j)[7].toString();
 					if (reservedId.equals(MomentId)) {
 						dataOne.put("backgroundColor", "#00db00");
-						dataOne.put("borderColor", "black");
 						dataOne.put("VideoCode", VideoCode);
 						break;
 					} else {						
@@ -114,9 +113,9 @@ public class AdvisoryMomentService {
 			dataOne.put("empId", empId);
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
+			dataOne.put("className", "eventItem");
 			if (status.equals("E")) {
 				dataOne.put("backgroundColor", "#0080ff");
-				dataOne.put("borderColor", "black");
 				// 已有預約諮詢
 			} else if (status.equals("F") && reserved.size() != 0) {
 				for (int j = 0; j < reserved.size(); j++) {
@@ -124,17 +123,14 @@ public class AdvisoryMomentService {
 					VideoCode = reserved.get(j)[7].toString();
 					if (reservedId.equals(MomentId)) {
 						dataOne.put("backgroundColor", "#00db00");
-						dataOne.put("borderColor", "black");
 						dataOne.put("VideoCode", VideoCode);
 						break;
 					} else {
 						dataOne.put("backgroundColor", "#ea0000");
-						dataOne.put("borderColor", "black");
 					}
 				}
 			} else if (status.equals("F") && reserved.size() == 0) {
 				dataOne.put("backgroundColor", "#ea0000");
-				dataOne.put("borderColor", "black");
 			}
 			datafinal.add(dataOne);
 		}
@@ -207,7 +203,7 @@ public class AdvisoryMomentService {
 			dataOne.put("reResult", reResult);
 			dataOne.put("reReason", reReason);
 			dataOne.put("reTime", reTime);
-			
+			dataOne.put("className", "eventItem");
 				for (int j = 0; j < selfItem.size(); j++) {
 					selfItemId = selfItem.get(j)[0].toString();
 					//當自己負責的班表id equal到此項班表id
@@ -220,20 +216,16 @@ public class AdvisoryMomentService {
 						//此項班表有預約
 						if(!selfResCode.equals("null")&&status.equals("F")) {							
 							dataOne.put("backgroundColor", "#d26900");
-							dataOne.put("borderColor", "black");
 							dataOne.put("selfResCode", selfResCode);
 						}else {
 							dataOne.put("backgroundColor", "#0080ff");
-							dataOne.put("borderColor", "black");
 						}
 						break;
 					} else {
 						if(!otherResCode.equals("null")&&status.equals("F")) {
 							dataOne.put("backgroundColor", "#ea0000");
-							dataOne.put("borderColor", "black");
 						}else {
 							dataOne.put("backgroundColor", "#bebebe");
-							dataOne.put("borderColor", "black");
 						}
 					}
 				}
@@ -305,13 +297,12 @@ public class AdvisoryMomentService {
 			dataOne.put("reResult", reResult);
 			dataOne.put("reReason", reReason);
 			dataOne.put("reTime", reTime);
+			dataOne.put("className", "eventItem");
 			if(status.equals("F")) {							
 				dataOne.put("backgroundColor", "#d26900");
-				dataOne.put("borderColor", "black");
 				dataOne.put("selfResCode", VideoCode);
 			}else {
 				dataOne.put("backgroundColor", "#0080ff");
-				dataOne.put("borderColor", "black");
 				dataOne.put("selfResCode", VideoCode);
 
 			}			
