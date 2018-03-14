@@ -43,7 +43,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="w3-container marketing " style="padding: 20px 16px" id="team">
-				<h1 class="w3-center">藥品資訊查詢</h1> 
+				<h1 class="w3-center">藥品資訊查詢</h1>
 					<form class="form-group" id="drugForm" >
 						<div class="form-group has-success has-feedback row">
 					    	<label class="col-2 control-label" for="chineseName">食藥署核准字號:</label>
@@ -162,6 +162,18 @@
 		   						<label class="radio-inline">
 		     							<input type="radio" name="formulation" id="formulation11" value="液">液劑
 		   						</label>    	   						    										
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation12" value="注射">注射劑
+		   						</label>    	   						    										
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation13" value="漱口">漱口劑
+		   						</label>    	   						    										
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation14" value="膏">軟膏劑
+		   						</label>    	   						    										
+		   						<label class="radio-inline">
+		     							<input type="radio" name="formulation" id="formulation15" value="糖漿">糖漿劑
+		   						</label>    	   						    										
 							</div>
 						</div>
 						<div class="form-group row">
@@ -238,7 +250,7 @@
 	
 	<!-- Footer -->
 	<jsp:include page="/fragment/footer.jsp" />
-
+	
 	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>	
 	<script>
 		$(document).ready(function() {
@@ -271,7 +283,7 @@
 			              "orderable": false,
 			              "width": "60px",
 			              "render": function(data,type,row,meta) {
-			            	  return data =   '<img style="width:100px" src="/TeleHealth/querydrugs/drugsimages/' + data +'.png">';
+			            	  return data =   '<img style="width:100px" src="/TeleHealth/QueryDrugs/drugsimages/' + data +'.jpg">';
 					    }}
 			        ],
 		        
@@ -325,7 +337,7 @@
 					var cell17 = $('<div class="form-group has-success has-feedback row"><label class="control-label" for="shape1">形狀：</lable><input id="shape1" type="text"  readonly="readonly" value="' + data.shape + '" /></div>');
 					var cell18 = $('<div class="form-group has-success has-feedback row"><label class="control-label" for="color1">顏色：</lable><input id="color1" type="text" readonly="readonly" value="' + data.color + '" /></div>');
 					var cell19 = $('<div class="form-group has-success has-feedback row"><label class="control-label" for="marks1">有無刻痕：</lable><input id="marks1" type="text"  readonly="readonly" value="' + data.marks + '" /></div>');
-					var cell20 = $('<img style="width:200px; height:200px;" src="/TeleHealth/querydrugs/drugsimages/' + data.licenseNum +'.png">');
+					var cell20 = $('<img style="width:200px; height:200px;" src="/TeleHealth/QueryDrugs/drugsimages/' + data.licenseNum +'.jpg">');
 					$(container).append(cell20);
 					$(container).append(cell1);
 					$(container).append(cell2);

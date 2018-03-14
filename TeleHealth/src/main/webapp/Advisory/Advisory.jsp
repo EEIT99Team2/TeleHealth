@@ -43,14 +43,14 @@ video {
 
 <body>
 	<jsp:include page="/fragment/nav2.jsp" />
-	<input type="hidden" id="videoCode" value="${sessionScope.advisory.videoCode}" />
+	<input type="hidden" id="roomName" value="${sessionScope.advisory.videoCode}" />
 	<div class="container">
 		<div id="call-page" class="row clearfix" style="margin-top: 50px">
 			<input type="hidden" id="user" value="${LoginOK.account}" />
 			<div class="col-12">
 				<video id="yours" autoplay muted playsinline></video>
 				<video id="theirs" autoplay playsinline></video>
-				<input type="text" id="roomName" />
+<!-- 				<input type="text" id="roomName" /> -->
 				<button id="join" class="btn"><img class="phoneBtn" src='<c:url value="/images/joinbutton.png" />'/></button>
 				<button id="hang-up" class="btn" disabled="disabled"><img class="phoneBtn" src='<c:url value="/images/hangup.jpg" />'/></button>
 				<button id="fullscreen" class="btn"><img class="phoneBtn" src='<c:url value="/images/fullscreen.jpg" />'/></button>

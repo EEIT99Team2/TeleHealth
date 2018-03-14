@@ -1,5 +1,8 @@
 package employees.model.dao;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import employees.model.EmployeesBean;
+import register.model.MemberBean;
 
 @Repository
 @Transactional
@@ -37,4 +41,12 @@ public class EmployeesDAO {
 		int result= query.executeUpdate();
 		return result;
 		}
-}
+	//驗證員工
+	public EmployeesBean selectByAccount(String account) {			
+		Query<EmployeesBean> list = this.getSession().createQuery("from EmployeesBean where account=?",EmployeesBean.class);
+		list.setParameter(0, account);
+		EmployeesBean result=list.uniqueResult();
+		return result;
+		}	
+	}
+
