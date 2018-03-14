@@ -25,6 +25,9 @@
 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 	rel='stylesheet' type='text/css'>
 
+<!-- 提醒視訊諮詢的小圖示用 -->
+<link href='/TeleHealth/css/advisory.css'  rel="stylesheet" type='text/css' >
+
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
 <!-- Navigation -->
@@ -52,6 +55,7 @@
 					href="<c:url value="/AdvisoryMoment/EmployeeMoment.jsp" />">查詢班表</a></li>
 				<li class="nav-item"><a class="nav-link" 
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a></li>				
+
 			</ul>
 			</c:when>
 			<c:otherwise>
@@ -104,7 +108,7 @@
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="username"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${param.usrname}">
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${param.username}">
                                 <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
                             </div>
                             <div class="form-group">
@@ -136,3 +140,4 @@
 		</div>
 	</div>
 </div>
+

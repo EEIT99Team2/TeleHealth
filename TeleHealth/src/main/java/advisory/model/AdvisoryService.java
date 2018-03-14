@@ -145,6 +145,7 @@ public class AdvisoryService {
 		AdvisoryBean bean = new AdvisoryBean();
 		bean.setVideoCode(videoCode);
 		bean.setDescrip(descrip);
+		bean.setStatus("Y");
 		return advisoryDao.update(bean);
 	}
 }
