@@ -123,13 +123,8 @@ public class AdvisoryController {
 	
 	//開始進行視訊
 	@RequestMapping(path= {"/Advisory/startadvisory.controller"}, method = {RequestMethod.GET,RequestMethod.POST})
-	public String startAdvisory(String videoCode, String memName, String memberId, String empId,
-			String empName, String reserveItem, Model model, HttpSession session) {
+	public String startAdvisory(String videoCode, String reserveItem, Model model, HttpSession session) {
 		String videoCodeIn = null;
-		String memNameIn = null; 
-		String memberIdIn = null; 
-		String empIdIn = null; 
-		String empNameIn = null; 
 		String reserveItemIn = null;
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("advisoryError", errorMsg); 
@@ -137,18 +132,6 @@ public class AdvisoryController {
 			videoCodeIn = videoCode.trim();
 		} else {
 			errorMsg.put("videoCodeError", "此視訊代號錯誤，請重新確認，或向管理員洽詢!");
-		}
-		if(memName!=null && memName.trim().length()>0) {
-			memNameIn = memName.trim();
-		}
-		if(memberId!=null && memberId.trim().length()>0) {
-			memberIdIn = memberId.trim();
-		}
-		if(empId!=null && empId.trim().length()>0) {
-			empIdIn = empId.trim();
-		}
-		if(empName!=null && empName.trim().length()>0) {
-			empNameIn = empName.trim();
 		}
 		if(videoCode!=null && videoCode.trim().length()>0) {
 			videoCodeIn = videoCode.trim();
@@ -159,10 +142,7 @@ public class AdvisoryController {
 		AdvisoryBean checkBean = advisoryService.select(videoCode);
 		if(checkBean!=null && checkBean.getStatus().equals("N")) {
 			session.setAttribute("reserveItem", reserveItemIn);
-			session.setAttribute("memName", memNameIn);
-			session.setAttribute("memberId", memberIdIn);
-			session.setAttribute("empId", empIdIn);
-			session.setAttribute("empName", empNameIn);
+			session.setAttribute("videoCode", videoCodeIn);
 			session.setAttribute("advisory", checkBean);
 			if(session.getAttribute("empLoginOK") != null) {
 				return "empadvisory.success";
