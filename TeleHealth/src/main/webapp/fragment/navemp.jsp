@@ -42,7 +42,7 @@
 
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 		<c:choose>		
-		<c:when test="${not empty LoginOK}">
+		<c:when test="${not empty empLoginOK}">
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
@@ -76,7 +76,7 @@
 				<span>
 					<c:out value="${empLoginOK.empName},你好!!" />
 				</span>
-				<input type="hidden" value="${empLoginOK.empId}" id="memberId" />
+				<input type="hidden" value="${empLoginOK.empId}" id="empId" />
 				<a href="<c:url value='/Members/Logout.jsp' />">
 					<button class="btn btn-sm btn-outline-secondary" 
 					id="myBtn1">登出</button>
