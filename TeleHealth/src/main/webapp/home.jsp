@@ -7,40 +7,36 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>牽伴健康諮詢平台</title>
+    <style type="text/css">
+    .hotcontent{padding-left:10em; width:90%;}
+    
+    
+    </style>
 </head>
 
 <body id="page-top">
     <jsp:include page="/fragment/nav.jsp" />
     <!-- Header -->
     <header>
-        <div>
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="https://static.runoob.com/images/mix/img_fjords_wide.jpg" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="https://static.runoob.com/images/mix/img_nature_wide.jpg" alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="https://static.runoob.com/images/mix/img_mountains_wide.jpg" alt="Third slide">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">	
+	<ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                 <li data-target="#myCarousel" data-slide-to="3"></li>
+                  <li data-target="#myCarousel" data-slide-to="4"></li>
+            </ol>
+    <div class="carousel-inner">               
             </div>
-        </div>
+   			<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>         
+ </div>    
     </header>
     <!-- Introduction -->
     <section id="introduction">
@@ -141,9 +137,9 @@ $(document).ready(function() {
 			 var doc=$(document.createDocumentFragment());
 			 var num=["first","secound","third","fourth","fifth"];
 			 if(i==0){
-				 var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");
+				 var article=$("<a class='heltitle' name="+data.title+" href='healthcolumn/article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank' ></a>");
 				 var divfirst=$('<div class="carousel-item active">');
-                 var img=$('<img class="'+num[i]+'-slide"'+'src='+decodeURIComponent(imgurl[1])+'alt="'+data.title+'">');
+                 var img=$('<img  class="'+num[i]+'-slide hotcontent"'+'src='+decodeURIComponent(imgurl[1])+'alt="'+data.title+'">');
              	 var ptitle=$('<p>'+data.title+'</p>');	
 				 img.append(ptitle);
 				 article.append(img);
@@ -151,9 +147,9 @@ $(document).ready(function() {
 				 $('.carousel-inner').append(heldata);
 				 }else {
 				 console.log(data)	  
-				 var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");
+				 var article=$("<a class='heltitle' name="+data.title+" href='healthcolumn/article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");
 				 var divsecound=$('<div class="carousel-item ">')
-                 var img=$('<img class="'+num[i]+'-slide"'+'src='+decodeURIComponent(imgurl[1])+'alt="'+data.title+'">');
+                 var img=$('<img class="'+num[i]+'-slide hotcontent"'+'src='+decodeURIComponent(imgurl[1])+'alt="'+data.title+'">');
              	 var ptitle=$('<p>'+data.title+'</p>');	
 				 img.append(ptitle);
 				 article.append(img);
@@ -164,6 +160,6 @@ $(document).ready(function() {
 		 })			 
 	})
 })
-
 </script>
+<script src="<c:url value="/js/agency.min.js"/>"></script>
 </html>

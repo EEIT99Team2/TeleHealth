@@ -109,6 +109,8 @@ public class AdvisoryService {
 				dataOne.put("career",  result.get(i)[10].toString());
 				dataOne.put("momentId", result.get(i)[11].toString());
 				dataOne.put("reserveItem", result.get(i)[12].toString());
+				dataOne.put("memId", result.get(i)[13].toString());
+				dataOne.put("memName", result.get(i)[14].toString());
 				datafinal.add(dataOne);
 			}
 		}

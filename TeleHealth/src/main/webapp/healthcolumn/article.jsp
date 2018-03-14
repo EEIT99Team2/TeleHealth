@@ -16,50 +16,8 @@
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 </head>
 <body>
-   <jsp:include page="/fragment/header.jsp" />
-    
-    <div class="container">
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header" style="padding:35px 50px;">
-                        <h4 class="modal-title">Login</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" style="padding:40px 50px;">
-                        <form role="form">
-                            <div class="form-group">
-                                <label for="usrname">Username</label>
-                                <input type="text" class="form-control" id="usrname" placeholder="Enter email">
-                            </div>
-                            <div class="form-group">
-                                <label for="psw">
-                                    </span> Password</label>
-                                <input type="text" class="form-control" id="psw" placeholder="Enter password">
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="" checked /> Remember me
-                                </label>
-                            </div>
-                           
-                            <button type="submit" class="btn btn-success btn-block">Login</button>
-                            <button type="submit" class="btn btn-danger btn-block">Cancel</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <p>Not a member? <a href="#">Sign Up</a></p>
-                        <p>Forgot <a href="#">Password?</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <main>
+   <jsp:include page="/fragment/nav2.jsp" />
+     <main>
     <!-- Page Content -->
     <div class="container">
       <div class="row justify-content-md-center">       
@@ -68,7 +26,7 @@
      <div class="col-lg-10" id='QAcontent'>                         
      </div>              
       <div class="col-lg-10" id='foot'> 
-           <c:if test="${ empty LoginOK}">
+           <c:if test="${not empty LoginOK}">
       <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"><h5>
       	<div class="form-group">
       		<form id="Msg" action="/TeleHealth/healthcolumn/insQA.controller" method="post" >

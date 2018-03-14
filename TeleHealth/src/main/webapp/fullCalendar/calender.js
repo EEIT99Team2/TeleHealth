@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     for (var i = 10; i <= 20 ; i++) {
         var yea = document.createElement("option");
         yea.setAttribute("value", i);
+        yea.setAttribute("width", "100%");
         var yeatxt = document.createTextNode("20" + i);
         yea.appendChild(yeatxt);
         document.getElementById("year").appendChild(yea);
