@@ -23,7 +23,7 @@
       <th scope="col">編號</th>
       <th scope="col">諮詢項目</th>
       <th scope="col">諮詢時段</th>
-      <th scope="col">會員姓名</th>
+      <th scope="col">諮詢人員</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -38,8 +38,7 @@
       <th scope="col">編號</th>
       <th scope="col">諮詢項目</th>
       <th scope="col">諮詢時段</th>
-      <th scope="col">會員姓名</th>
-      <th scope="col">狀態</th>
+      <th scope="col">諮詢人員</th>
     </tr>
   </thead>
   <tbody id="UnTalkList">
@@ -53,8 +52,8 @@
       <th scope="col">編號</th>
       <th scope="col">諮詢項目</th>
       <th scope="col">諮詢時段</th>
-      <th scope="col">會員姓名</th>
-      <th scope="col">狀態</th>
+      <th scope="col">諮詢人員</th>
+      <th scope="col">滿意度</th>
     </tr>
   </thead>
   <tbody id="TalkList">
@@ -114,9 +113,8 @@
 </body>
 <script>
 $(document).ready(function(){
-// 	var empId =$("#empId").val();
-	var empId ="A56DC04E-7C45-4BB4-B4F4-B95F7A321994";
-	var empName = $("#empName").val();
+	var memberId=$("#memberId").val();
+	var memName = $("#memName").val();
 	LoadData();
 	var DataPackage;
 	var unTalkOne;
@@ -132,7 +130,7 @@ function LoadData(){
 	var CheckData = $("#CheckList");
 	unCheckData.empty();
 	CheckData.empty();
-$.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
+$.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memberId},function(datas){
 	console.log(datas);
 	$.each(datas,function(index,data){
 		var now = moment(new Date()).format("YYYY-MM-DD HH:mm");
@@ -140,34 +138,35 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 		ms = moment(advisoryTime).diff(now)/1000;
 		console.log(ms);
 		var status=data.status;
-		if(status=="N" && ms<=900){			
+		if(status=="N"){			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.reserveItem+"</td>");
 			var col3 = $("<td>"+advisoryTime+"</td>");
-			var col4 = $("<td>"+data.memName+"</td>");
+			var col4 = $("<td>"+data.empName+"</td>");
+			var col5 = $("<td>"+data.career+"</td>");
 			var col6 = $("<input type='hidden' name='videoCode' value='"+data.videoCode+"'/>");
 			var col7 = $("<input type='hidden' name='reserveItem' value='"+data.reserveItem+"'/>");
-			TalkingOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};			
-			var btn = $("<input type='submit' value='開始' class='btn btn-danger' />");
+			TalkingOne={"reserveItem":data.reserveItem,"advisoryTime":advisoryTime,"empName":data.empName+" "+data.career,"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"satisfy":data.satisfy,"modifyTime":data.modifyTime,"momentId":data.momentId};			
+			var btn = $("<input type='submit' value='開始' class='btn-primary' />");
 			var form1 = $("<form style='padding-top:7px;'  action='<c:url value="/Advisory/startadvisory.controller"/>' method=GET></form>").append([col6, col7, btn]);
 			var tr1 = $("<tr></tr>").append([col1,col2,col3,col4,col5, form1]);
-		    docFrag1.append(tr1);				
+		    docFrag1.append(tr1);		
 		}else if(status=="N"){
+			console.log("ms"+ms);		
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.reserveItem+"</td>");
 			var col3 = $("<td>"+advisoryTime+"</td>");
-			var col4 = $("<td>"+data.memName+"</td>");
-			var col5 = $("<td>未完成</td>");
-			unTalkOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};			
-			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
+			var col4 = $("<td>"+data.empName+" "+data.career+"</td>");
+			unTalkOne={"reserveItem":data.reserveItem,"advisoryTime":data.advisoryTime,"empName":data.empName+" "+data.career,"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"satisfy":data.satisfy,"modifyTime":data.modifyTime,"momentId":data.momentId};			
+			var allcol = $("<tr></tr>").append([col1,col2,col3,col4]);
 		    docFrag2.append(allcol);		
 		}else{
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.reserveItem+"</td>");
 			var col3 = $("<td>"+advisoryTime+"</td>");
-			var col4 = $("<td>"+data.memName+"</td>");
-			var col5 = $("<td>已完成</td>");
-			TalkedOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};		
+			var col4 = $("<td>"+data.empName+" "+data.career+"</td>");
+			var col5 = $("<td>"+data.satisfy+"</td>");
+			TalkedOne={"reserveItem":data.reserveItem,"advisoryTime":advisoryTime,"empName":data.empName+" "+data.career,"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"satisfy":data.satisfy,"modifyTime":data.modifyTime,"momentId":data.momentId};		
 			var allcol2 = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
 			docFrag3.append(allcol2);
 		}
@@ -184,7 +183,7 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 $("body").on("click","#TalkingList tr",function(){
 	console.log(TalkingOne.reserveItem);
 	$.get("<c:url value='/Advisory/startadvisory.controller'/>",{"memName":memName,"memberId":memberId,"reserveItem":TalkingOne.reserveItem,"empName":TalkingOne.empName,"empId":TalkingOne.empId,"videoCode":TalkingOne.videoCode},function(data){
-	})
+		})
 });
 
 //未諮詢 videoCodeError
@@ -229,6 +228,9 @@ function out(){
 	$(this).removeClass("table-success");
 	$(this).addClass("Default");
 }
+
+
+
 
 $("#resultCheck").click(function(){
 	window.location.reload();
