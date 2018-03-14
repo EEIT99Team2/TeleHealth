@@ -129,7 +129,7 @@ public class LoginController {
 				} else if (EmpStatus.equals("E")) {
 					session.setAttribute("empLoginOK", bean);
 					if (remember != null) { // rm存放瀏覽器送來之RememberMe的選項
-						cookieUser = new Cookie("user", bean.getEmpName());
+						cookieUser = new Cookie("user", bean.getAccount());
 						cookieUser.setMaxAge(30 * 60 * 60);
 						cookieUser.setPath("/TeleHealth/home.jsp");
 						String encodePassword = GlobalService.encryptString(pwd);
