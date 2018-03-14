@@ -147,10 +147,10 @@ $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memb
 			var col6 = $("<input type='hidden' name='videoCode' value='"+data.videoCode+"'/>");
 			var col7 = $("<input type='hidden' name='reserveItem' value='"+data.reserveItem+"'/>");
 			TalkingOne={"reserveItem":data.reserveItem,"advisoryTime":advisoryTime,"empName":data.empName+" "+data.career,"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"satisfy":data.satisfy,"modifyTime":data.modifyTime,"momentId":data.momentId};			
-			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6,col7]);
-			var allcol2 = $("<button type='submit'>送出</button>");
-			var allco2 = $("<form action='<c:url value="/Advisory/startadvisory.controller"/>' method=GET></form>").append([allcol,allcol2]);
-		    docFrag1.append(allco2);		
+			var btn = $("<input type='submit' value='開始' class='btn-primary' />");
+			var form1 = $("<form style='padding-top:7px;'  action='<c:url value="/Advisory/startadvisory.controller"/>' method=GET></form>").append([col6, col7, btn]);
+			var tr1 = $("<tr></tr>").append([col1,col2,col3,col4,col5, form1]);
+		    docFrag1.append(tr1);		
 		}else if(status=="N"){
 			console.log("ms"+ms);		
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
