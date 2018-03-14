@@ -44,15 +44,10 @@
 		<div class="col-2"></div>
 		<div class="col-8">
 			<form enctype="multipart/form-data">
-				<input type="hidden" name="name" value="${empLogin.empId}">
-				<h6>
-					標題:<input type="text" id="title" placeholder="title">
-				</h6>
-				<p style="color: red">${errors.errortitleEmpty}</p>
-				<h6>
-					影片上傳:<input type="file" name="file1" id="video" accept="video/*" />
-				</h6>
-				<p style="color: red">${errors.errorVideo}</p>
+				<input type="hidden" id="name" value="${empLoginOK.empId}">
+				<h6>標題:<input type="text" id="title" placeholder="title"></h6>
+				<font id="erroeMsgtitle" color="red" size="-1"></font>
+				<h6>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h6>				
 				<div id="batchImportModal" class="modal fade" role="dialog"
 					aria-labelledby="gridSystemModalLabel">
 					<div class="modal-dialog">
@@ -77,11 +72,10 @@
 						<option id="EYE" value="EYE">眼睛保健</option>
 						<option id="VID" value="VID">影音專區</option>
 					</select>
-				</h6>
-				<p style="color: red">${errors.errorcontentEmpty}</p>
-				<textarea name="content" id="content" rows="10" cols="80"></textarea>
+				</h6><font id="erroeMsg" color="red" size="-1"></font>				
+				<textarea name="content" id="content" rows="10" cols="80"></textarea><font id="erroeMsgcontent" color="red" size="-1"></font>
 				<div class="form-group">
-					<input id="batchUploadBtn" type="submit" name="submit"
+					<input id="batchUploadBtn" type="button" name="submit"
 						class="btn btn-success" value="上傳" /><input type="reset"
 						id="clean" class="btn btn-danger" value="清除">
 					<p style="color: green">${msgOK.uploadok}${errors.uploaderror}</p>
@@ -117,20 +111,31 @@
 			$("#video").change(function() {
 				$("#batchUploadBtn").val("上傳");
 				$("#progressBar").width("0%");
-				var file = $(this).prop('files');
-				if (file.length != 0) {
-					$("#batchUploadBtn").attr('disabled', false);
-				}
-
+				var file = $(this).prop('files');				
 			});
 
 			function UpladFile() {
 				var fileObj = $("#video").get(0).files[0]; // js 获取文件对象
-				console.info("文件：" + fileObj);
+				var filename = $("#video").val();
+				console.info("文件：" + filename);
 				var title = $("#title").val();
+				console.log(title)
 				var name = $("#name").val();
 				var type = $(":selected").val();
 				var content = CKEDITOR.instances.content.getData();
+				if(title==""||title.length==0){
+					$('#erroeMsgtitle').text('標題不能為空')
+					$("#batchUploadBtn").attr('disabled', false);
+				}else if(content==null||content.length==0){
+					$('#erroeMsgtitle').text('')
+					$('#erroeMsgcontent').text('文章不能為空')
+					$("#batchUploadBtn").attr('disabled', false);
+				}				
+				else if(filename!=" " && type!="VID"){					
+					$('#erroeMsg').text("請選影音專區喔!!");
+					$("#batchUploadBtn").attr('disabled', false);
+				}else{			
+				
 				console.log(title + " " + name + " " + type + " " + content);
 				var FileController = "/TeleHealth/healthcolumn/inshealthcolumn.controller"; // 接收上传文件的后台地址 
 				// FormData 对象
@@ -151,10 +156,13 @@
 					$("#progressBar").parent().removeClass("active");
 					$("#progressBar").parent().hide();
 					//$('#myModal').modal('hide');
+					$('#erroeMsgtitle').text('');
+					$('#erroeMsgtcontent').text('');
+					$('#erroeMsg').text("");
 				};
-				xhr.upload
-						.addEventListener("progress", progressFunction, false);
+				xhr.upload.addEventListener("progress", progressFunction, false);
 				xhr.send(form);
+				}
 			}
 			;
 			function progressFunction(evt) {
@@ -170,5 +178,6 @@
 			;
 		})
 	</script>
+	<jsp:include page="/fragment/footer.jsp" />
 </body>
 </html>
