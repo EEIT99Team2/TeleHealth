@@ -92,6 +92,7 @@
 					<c:out value="${LoginOK.memName}${empLoginOK.empName},你好!!" />
 				</span>
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
+				<input type="hidden" value="${empLoginOK.empId}" id="empId" />
 				<form style="display: inline-block" method="get" action="<c:url value='/logout.controller' />">
 					<input type="submit" class="btn btn-sm btn-outline-secondary" 
 					id="myBtn1" value="登出" />
