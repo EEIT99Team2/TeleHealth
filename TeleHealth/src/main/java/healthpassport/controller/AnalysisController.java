@@ -32,7 +32,6 @@ public class AnalysisController {
 	@Autowired
 	private BloodSugarService BloodSugarService ;
 	
-
 	private Integer age = 19;
 	private String gender = "M";
 	//BMI
