@@ -24,14 +24,7 @@
 	.fc-toolbar h2 {
 	font-family: CJKtc_Bold;
 	}
-/* 	//week格線 */
-/*    .fc .fc-agendaWeek-view .fc-bg tr > td{ */
-/*     border: 2px solid grey; */
-/* 	} */
-/* 	//table格線 */
-/* 	.fc-bg table{ */
-		
-/* 	} */
+	
   .iBlock {display:inline-block;
   		margin-left:280px;
   		font-size:20px;}
@@ -165,6 +158,48 @@
     </div>
   </div>
 </div>
+
+<!-- 新增班表確認 -->
+<div class="modal fade" id="addNewItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNewTitle">確認新增</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="addNew">確定</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新增班表結果 -->
+<div class="modal fade" id="addResultItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addResultTitle">新增結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="addResult">我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" id="account" value="${empLoginOK.account}"/>
 <div id="calendar"></div>
 </div>
 	<!-- Footer -->
@@ -193,6 +228,7 @@ $(document).ready(function() {
 
 	var initialLocaleCode = 'zh';
 	var EmpId=$("#empId").val();
+	var account=$("#account").val();
 	var mom = moment();
 	var reserveData;
 	var time;
@@ -202,7 +238,7 @@ $(document).ready(function() {
 	var weekformat=["一","二","三","四","五","六","日"];
 	var today = new Date();
 	var eventsData;
-			
+	var addNewTime;		
 	$("#chooseTime").change(function(){
 		time = $("#chooseTime :selected").prop("id");		
 		if(time=="allday"){
@@ -277,6 +313,7 @@ $(document).ready(function() {
       contentHeight:"auto",
       navLinks: true, // can click day/week names to navigate views
       editable: false,
+      selectable: true,
 //       eventLimit: true, // allow "more" link when too many events
 	  eventSources:[	
 	  		{events:eventsData}
@@ -323,7 +360,20 @@ $(document).ready(function() {
 		  },
 	  eventMouseout:function( event, jsEvent, view ) {
 		  		$(this).removeClass('zoom')  
-		  }			  
+		  },
+	  //新增班表
+	  select: function(startDate, endDate) {
+		  var docFrag = $(document.createDocumentFragment());
+          var addNew = $('#addNewItem .modal-body');
+          addNew.empty();
+		  var start = moment(startDate).format("YYYY-MM-DD HH:mm");
+		  var add15m = moment(startDate).add(15,"m");
+		  var end = moment(add15m).format("HH:mm");
+		  addNewTime={"start":start};
+		  docFrag.append("<span>您選擇的時段為<br/>"+start+"~"+end+"</span><br/><span>確定要在此時段新增諮詢?</span>");
+		  addNew.append(docFrag);
+		  $('#addNewItem').modal('show');		      
+		    }			  
     });
 	});	
 	$("#fastSearch").click(function(){
@@ -397,8 +447,26 @@ $("#ReTakeOff").click(function takeoff(){
 			})
 		$("#takeoffRes").click(function(){
 			window.location.reload();
+		});
+		$("#addResult").click(function(){
+			window.location.reload();
+		});
+		$("#addNew").click(function(){
+			$.post("<c:url value='/AdvisoryMomemt/empAddMoment.controller'/>",{"empId":EmpId,"account":account,"start":addNewTime.start},function(result){
+				console.log(result);
+				var docFrag = $(document.createDocumentFragment());
+				var addResult = $('#addResultItem .modal-body');
+				addResult.empty();
+				if(result=="success"){
+					docFrag.append("<h3>新增成功</h3>");
+					}else{
+					docFrag.append("<h3>新增班表失敗，請重新輸入或洽詢管理員</h3>");
+						}
+				addResult.append(docFrag);				
+				$('#addNewItem').modal('hide');						
+				$('#addResultItem').modal('show');						
+		      })
 			})
-		
 						
 // 	$("#Change").click(function(){
 // 		$('#UnReserveItem').modal('hide');

@@ -1,9 +1,7 @@
 package advisorymoment.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,14 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
-
+import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryMomentService;
+import employees.model.EmployeesBean;
+import employees.model.dao.EmployeesDAO;
 
 @Controller
 public class AdvisoryMomemtController {
 	@Autowired
 	private AdvisoryMomentService advisoryMomentService;
+	@Autowired
+	private EmployeesDAO employeesDAO;
+	
 	//會員用代號搜尋
 	@RequestMapping(path = { "/AdvisoryMomemt/memberSelectByCode.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
@@ -90,35 +92,28 @@ public class AdvisoryMomemtController {
 		return data;
 	}	
 	
-	
-	@RequestMapping(path = { "/AdvisoryMomemt/ManagerEdit.controller" }, method = { RequestMethod.GET,
-			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String ManagerEdit() {
-		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<Object[]> result = advisoryMomentService.selectAll();
-		for (int i = 0; i < result.size(); i++) {
-			HashMap<String, String> dataOne = new HashMap<String, String>();
-			String calendar = sdf.format(result.get(i)[0]);
-			String status = result.get(i)[1].toString();
-			String advisoryCode = result.get(i)[2].toString();
-			String empId = result.get(i)[3].toString();
-			String empName = result.get(i)[4].toString();
-			dataOne.put("title", advisoryCode + "\r\n" + empName + "醫生");
-			dataOne.put("start", calendar);
-			dataOne.put("empId", empId);
-			if (status.equals("E")) {
-				dataOne.put("backgroundColor", "#0080ff");
-				dataOne.put("borderColor", "black");
-				dataOne.put("editable", "true");
-			} else if (status.equals("F")) {
-				dataOne.put("backgroundColor", "#ea0000");
-				dataOne.put("borderColor", "black");
+	//員工自行新增班表
+	@RequestMapping(path = { "/AdvisoryMomemt/empAddMoment.controller" }, method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String empAddMoment(String empId,String account,String start) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String result=null;
+		if(account!=null && account.trim().length()!=0 && start!=null && start.trim().length()!=0) {
+			EmployeesBean empBean = employeesDAO.selectByAccount(account);
+			if(empBean.getEmpId().equals(empId)) {			
+				java.util.Date newCalendar = sdf.parse(start);
+				AdvisoryMomentBean admBean = new AdvisoryMomentBean();
+				admBean.setCalendar(newCalendar);
+				admBean.setReserveStatus("E");
+				admBean.setAdvisoryCode(empBean.getAdvisoryCode());
+				admBean.setEmpId(empId);
+				admBean.setStatus("Y");
+				advisoryMomentService.insert(admBean);
+				result="success";
 			}
-			datafinal.add(dataOne);
+		}else {
+			result="fail";
 		}
-		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON=" + data);
-		return data;
+		return result;
 	}
 }

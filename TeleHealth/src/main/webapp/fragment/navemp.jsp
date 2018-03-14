@@ -25,6 +25,9 @@
 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 	rel='stylesheet' type='text/css'>
 
+<!-- 提醒視訊諮詢的小圖示用 -->
+<link href='/TeleHealth/css/advisory.css'  rel="stylesheet" type='text/css' >
+
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
 <!-- Navigation -->
@@ -49,9 +52,10 @@
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/createhelcontent.jsp" />">新增專欄文章</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">查詢班表</a></li>
+					href="<c:url value="/AdvisoryMoment/EmployeeMoment.jsp" />">查詢班表</a></li>
 				<li class="nav-item"><a class="nav-link" 
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a></li>				
+
 			</ul>
 			</c:when>
 			<c:otherwise>
@@ -104,7 +108,7 @@
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="username"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${param.usrname}">
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${param.username}">
                                 <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
                             </div>
                             <div class="form-group">
@@ -120,7 +124,7 @@
                             </div>
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
                             <button type="submit" class="btn btn-success btn-block">登入</button>
-                            <button type="submit" class="btn btn-danger btn-block">取消</button>
+                            <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">取消</button>
                         </form>
 				</div>
 				<div class="modal-footer">
@@ -136,3 +140,4 @@
 		</div>
 	</div>
 </div>
+

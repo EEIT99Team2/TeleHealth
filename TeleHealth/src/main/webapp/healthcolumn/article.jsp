@@ -34,8 +34,7 @@
       		<input type="hidden" id="title" name="title" >
       		<input type="hidden" id="MemId"name="MemId" value="${LoginOK.memberId}${empLoginOK.empId}">
       		<textarea class="form-control" id="textt" name="textmem" rows="3"></textarea>
-      		<input type="button" value="送出" onclick=insert()>      		
-      		<input type='button' id='clean' value='清除'><font id="successMsg" color="green" size="-1"></font><font id="erroeMsg" color="red" size="-1"></font>
+      		<input type="button" value="送出" onclick=insert()><input type='button' id='clean' value='清除'><font id="successMsg" color="green" size="-1"></font><font id="erroeMsg" color="red" size="-1"></font>
       		</form>      	
       	</div>
       

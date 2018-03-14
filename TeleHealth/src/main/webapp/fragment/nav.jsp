@@ -28,6 +28,9 @@
 
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
+<!-- 提醒視訊諮詢的小圖示用 -->
+<link href='/TeleHealth/css/advisory.css'  rel="stylesheet" type='text/css' >
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
 	<div class="container">
@@ -64,7 +67,7 @@
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/createhelcontent.jsp" />">新增專欄文章</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">查詢班表</a></li>
+					href="<c:url value="/AdvisoryMoment/EmployeeMoment.jsp" />">查詢班表</a></li>
 				<li class="nav-item"><a class="nav-link" 
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a></li>				
 			</ul>
@@ -140,7 +143,7 @@
                             </div>
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
                             <button type="submit" class="btn btn-success btn-block">登入</button>
-                            <button type="submit" class="btn btn-danger btn-block">取消</button>
+                            <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">取消</button>
                         </form>
 				</div>
 				<div class="modal-footer">

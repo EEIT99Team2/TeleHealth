@@ -1,0 +1,15 @@
+#advisoryIcon {
+	z-index: 10;
+}
+
+#advisoryNum {
+	height:20px;
+	width: 20px;
+	background:red;
+	color: white;
+	border-radius:10px;
+	margin-top:8px;
+	right:30px;
+	position: relative;
+	z-index:1
+}
