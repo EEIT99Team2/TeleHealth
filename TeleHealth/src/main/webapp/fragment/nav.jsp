@@ -42,7 +42,7 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<c:choose>		
+	<c:choose>		
 		<c:when test="${not empty LoginOK}">
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
@@ -55,6 +55,18 @@
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="<c:url value='/Members/Members04.jsp'/>">會員專區</a></li>
+			</ul>
+			</c:when>
+			<c:when test="${not empty empLoginOK}">
+			<ul class="navbar-nav text-uppercase ml-auto">
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthcolumn/createhelcontent.jsp" />">新增專欄文章</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">查詢班表</a></li>
+				<li class="nav-item"><a class="nav-link" 
+					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a></li>				
 			</ul>
 			</c:when>
 			<c:otherwise>
@@ -71,15 +83,16 @@
 		</div>
 		<div class="text-center">
 		<c:choose>
-			<c:when test="${empty LoginOK}">
+			<c:when test="${empty LoginOK && empty empLoginOK}">
 				<button type="button" class="btn btn-primary btn-rounded" 
 					data-toggle="modal" id="myBtn">登入</button>
 			</c:when>
 			<c:otherwise>
 				<span>
-					<c:out value="${LoginOK.memName},你好!!" />
+					<c:out value="${LoginOK.memName}${empLoginOK.empName},你好!!" />
 				</span>
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
+				<input type="hidden" value="${empLoginOK.empId}" id="empId" />
 				<form style="display: inline-block" method="get" action="<c:url value='/logout.controller' />">
 					<input type="submit" class="btn btn-sm btn-outline-secondary" 
 					id="myBtn1" value="登出" />
@@ -106,14 +119,14 @@
 				<div class="modal-body" style="padding: 40px 50px;">
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
-                                <label for="usrname"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${sessionScope.user}">
+                                <label for="username"><span class="fa fa-user"></span> 帳號</label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${sessionScope.user}">
                                 <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
                             </div>
                             <div class="form-group">
-                                <label for="psw">
+                                <label for="pwd">
                                     <span class="fa fa-eye"></span> 密碼</label>
-                                <input type="password" class="form-control" name="psw" id="psw" value="${sessionScope.password}" placeholder="Enter password">
+                                <input type="password" class="form-control" name="pwd" id="pwd" value="${sessionScope.password}" placeholder="Enter password">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPsw}</font>
                             <div class="checkbox" id="rememberMe">

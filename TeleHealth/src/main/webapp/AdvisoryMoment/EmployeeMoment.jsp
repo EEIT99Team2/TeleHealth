@@ -50,7 +50,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="/fragment/nav3.jsp" />
+<jsp:include page="/fragment/navemp.jsp" />
 <div class="momentColor iBlock"><span style='color:#0080ff'>您的班表(無預約)</span><br/><span style='color:#d26900'>您的班表(有預約)</span><br/><span style='color:#bebebe'>未被預約班表</span><br/><span style='color:#ea0000'>已被預約班表</span></div>
 <div id='loading' class='container iBlock'>
 <span id="item1" class="item1 nav-item active">快速查詢:</span>

@@ -21,7 +21,7 @@
 <main role="main" class="container mt-2">
 <div class="row">     	
 	      <div class="card">
-			<div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
+			<span>${empLoginOk.empId}</span><div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
 				   <table id="productTable" class="table table-bordered">
@@ -56,7 +56,7 @@
       </div>
       <div class="modal-body">
       <form>
-	<input type="text" name="name" id="title" value="930F2472-337E-4800-B774-EB0AAE703D2A">
+	<input type="text" name="name" id="title" value="${empLoginOk.empId}">
 	 <input type="hidden" name="heltitle" id="heltitle" >
 	 <h3>影片上傳:<input type="file" name="file1" id="video" accept="video/*" /></h3><p style="color:red">${errors.errorVideo}</p>
 	  <textarea name="contenttext" id="contenttext" rows="10" cols="80"></textarea>       

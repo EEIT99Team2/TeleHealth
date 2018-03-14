@@ -32,7 +32,7 @@
       		<form id="Msg" action="/TeleHealth/healthcolumn/insQA.controller" method="post" >
       		<input type="hidden" id="advisorycode" name="advisorycode" >
       		<input type="hidden" id="title" name="title" >
-      		<input type="hidden" id="MemId"name="MemId" value="B0041CB5-09F1-4E5B-8D57-1F0406019143">
+      		<input type="hidden" id="MemId"name="MemId" value="${LoginOK.memberId}${empLoginOK.empId}">
       		<textarea class="form-control" id="textt" name="textmem" rows="3"></textarea>
       		<input type="button" value="送出" onclick=insert()>      		
       		<input type='button' id='clean' value='清除'><font id="successMsg" color="green" size="-1"></font><font id="erroeMsg" color="red" size="-1"></font>
@@ -47,14 +47,7 @@
  <jsp:include page="/fragment/footer.jsp" />
    
 <script type="text/javascript">
-function check(){
-	var content=$.trim($('#textt').text());
-	if(content==null|| content.length()==0){
-		document.getElementById("error").innerHTML='內容不能空白';		
-		}else{
-            document.Msg.submit();
-        }
-	
+function check(){	
 }
 
 $(document).ready(function() {     
@@ -136,6 +129,13 @@ $(document).ready(function() {
     	 $('#QAcontent').append(doc);               
      })
      function insert(){
+    	var content= CKEDITOR.instances.textt.getData()
+    	console.log(content)
+    	if(content==null|| content.length==0){
+    		document.getElementById("erroeMsg").innerHTML=' ';
+    		document.getElementById("successMsg").innerHTML=' ';
+    		document.getElementById("erroeMsg").innerHTML='內容不能空白';		
+    	}else{ 	
     	var url = location.href;
 	    var ary1 = url.split('?');	   
 	    var ary2 = ary1[1].split('=');
@@ -174,14 +174,18 @@ $(document).ready(function() {
 			               }    	
 			       	}); 	
 			    	 $('#QAcontent').append(doc);
+			    	 document.getElementById("erroeMsg").innerHTML=' ';
+			    	 document.getElementById("successMsg").innerHTML=' ';
 			    	 $("#successMsg").text("po文成功");               
 			     })
 			}else{
+				document.getElementById("erroeMsg").innerHTML=' ';
+	    		document.getElementById("successMsg").innerHTML=' ';
 				$("#erroeMsg").text("po文失敗");
 				}
             });
    }
-    
+    }
       
     </script>        
 

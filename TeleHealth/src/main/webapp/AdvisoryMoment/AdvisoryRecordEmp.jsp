@@ -14,7 +14,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="/fragment/nav2.jsp" />
+<jsp:include page="/fragment/navemp.jsp" />
 <div class='container'>
 <h2  class='container'>即將進行諮詢</h2>
 <table class="table  table-hover">
