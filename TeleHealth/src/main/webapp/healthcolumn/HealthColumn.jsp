@@ -7,10 +7,15 @@
     <title>Document</title> 
     <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script> 
     <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
+<style type="text/css">
+.contentdescrip{font-size:12px
+}
+</style>
+
 </head>
 
 <body>
-<jsp:include page="/fragment/nav4.jsp" /> 
+<jsp:include page="/fragment/nav2.jsp" /> 
     <main>
         <ul class="nav nav-tabs justify-content-center w3-padding-large w3-card " id="myTab" role="tablist">
             <li class="nav-item">
@@ -37,42 +42,46 @@
                 <!-- Main Content -->
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8 col-md-10 mx-auto" id="title">
-                            <div class="post-preview">                               
-                            </div>
-                            <hr>         
-                        </div>
+                        <table class="col-lg-8 col-md-10 mx-auto" id="title">
+                            <tbody id="tbody">
+                            <tr class="post-preview">                               
+                            </tr>
+                            <hr>
+                            </tbody>         
+                        </table>                        		
+                    </div>
+                    <div>
+                    <span id='table_page' class='text-center'></span>	
                     </div>
                 </div>
             </div>          
         </div>
-    </main> 
+    </main>
+   	<script src="../js/jquery-tablepage-1.0.js"></script> 
     <script type="text/javascript"> 
 	$(document).ready(function() {	
 		$.getJSON('/TeleHealth/healthcolumn/hotcontent.controller',{ }, function(data){
-			console
-			$('#title').empty();
+			var doc=$(document.createDocumentFragment());			
+			$('#tbody').empty();
 			 $.each(data, function (i, data) {
 				 var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");          	     	          
 		            var cell1= $("<h2 class='post-title'></h2>").text(data.title);
 		            article.append(cell1)
 		            var cell2=$("<p class='post-meta'></p>").text(data.createDate);
-		            var cell3 = $("<p></p>").html(data.content.substring(0,200));        
-		            var row = $('<div class="post-preview"></div>').append([article, cell2,cell3]);
-		            $('#title').append(row);
+		            var cell3 = $("<p class='contentdescrip'></p>").html(data.content.substring(0,200));        
+		            var row = $('<tr class="post-preview"></tr>').append([article, cell2,cell3]);
+		            doc.append(row);
 		         });
-		         var pager= $('<a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom"></a>').text("<Previous");
-		         var pager2= $('<a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom"></a>').text("Next>");    
-		         var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
-				 $('#title').append(row2);
+			 $('#tbody').append(doc);
+			 $("#title").tablepage($("#table_page"), 5);       
 		 	});			 
 	});
  $('input[type="button"]').click(function() {
 	var value=$(this).prop("id");
 	if(value!="VID"){		
 	$.getJSON('/TeleHealth/healthcolumn/healthcolumn.controller', {advisoryCode:value}, function (data){
-		console.log(data);				
-		$('#title').empty();	  
+		var doc=$(document.createDocumentFragment());				
+		$('#tbody').empty();	  
          $.each(data, function (i, data) {
             var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");          	     	          
             var cell1= $("<h2 class='post-title' ></h2>").text(data.title);
@@ -80,17 +89,15 @@
             var cell2=$("<p class='post-meta'></p>").text(data.createDate);
             var cell3 = $("<p></p>").html(data.content.substring(0,300));        
             var row = $('<div class="post-preview"></div>').append([article, cell2,cell3]);
-            $('#title').append(row);
+            doc.append(row);
          });
-         var pager= $('<a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom"></a>').text("<Previous");
-         var pager2= $('<a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom"></a>').text("Next>");    
-         var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
-		 $('#title').append(row2);
+         $('#tbody').append(doc);
+         $("#title").tablepage($("#table_page"), 5);  
  	});
 	}else{
 		$.getJSON('/TeleHealth/healthcolumn/healthcolumn.controller', {advisoryCode:value}, function (data){
-			console.log(data);				
-			$('#title').empty();	  
+			var doc=$(document.createDocumentFragment());					
+			$('#tbody').empty();	  
 	         $.each(data, function (i, data) {
 	            var article=$("<a class='heltitle' name="+data.title+" href='article.jsp?title="+data.title+"&advisoryCode="+data.advisoryCode+"'"+"target='_blank'></a>");          	     	          
 	            var cell1= $("<h2 class='post-title' ></h2>").text(data.title);
@@ -99,12 +106,10 @@
 				var vid=$( '<video width="300" height="200" controls><source src="http://localhost:8090/TeleHealth/video/'+decodeURIComponent(data.fileName)+'" type="video/mp4"></video>')
 	            var cell3 = $("<p></p>").html(data.content.substring(0,100));        
 	            var row = $('<div class="post-preview"></div>').append([article,cell2,cell3,vid]);
-	            $('#title').append(row);
+	            doc.append(row);
 	         });
-	         var pager= $('<a href="#" class="previous btn btn-primary float-left w3-padding-large w3-margin-bottom"></a>').text("<Previous");
-	         var pager2= $('<a href="#" class="next btn btn-primary float-right w3-padding-large w3-margin-bottom"></a>').text("Next>");    
-	         var row2=$( '<div class="clearfix"></div>').append([pager,pager2]);
-			 $('#title').append(row2);
+	         $('#tbody').append(doc);  
+	         $("#title").tablepage($("#table_page"), 5);    
 	 	});
 	}
 	 });

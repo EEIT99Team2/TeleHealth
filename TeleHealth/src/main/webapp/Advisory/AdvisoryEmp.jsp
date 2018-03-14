@@ -42,7 +42,7 @@ video {
 </head>
 
 <body>
-	<jsp:include page="/fragment/nav3.jsp" />
+	<jsp:include page="/fragment/navemp.jsp" />
 	<input type="hidden" id="videoCode" value="${sessionScope.advisory.videoCode}" />
 	<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 	<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>

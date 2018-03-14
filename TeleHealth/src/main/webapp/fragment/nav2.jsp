@@ -30,7 +30,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark" id="mainNavB">
 	<div class="container">
-		<a class="navbar-brand js-scroll-trigger" href="#page-top"><img
+		<a class="navbar-brand js-scroll-trigger" href="<c:url value="/home.jsp" />"><img
 			alt="Logo" src="<c:url value="/images/logo.png" />" /></a>
 		<span class="navbar-brand">牽伴健康諮詢平台</span>
 		<button class="navbar-toggler navbar-toggler-right" type="button"
@@ -73,16 +73,16 @@
 			<c:when test="${empty LoginOK}">
 				<button type="button" class="btn btn-primary btn-rounded" 
 					data-toggle="modal" id="myBtn">登入</button>
-			</c:when>
+			</c:when>			
 			<c:otherwise>
 				<span>
 					<c:out value="${LoginOK.memName},你好!!" />
 				</span>
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
-				<a href="<c:url value='/Members/Logout.jsp' />">
-					<button class="btn btn-sm btn-outline-secondary" 
-					id="myBtn1">登出</button>
-				</a>
+				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
+					<input type="submit" class="btn btn-sm btn-outline-secondary" 
+					id="myBtn1" value="登出" />
+				</form>
 			</c:otherwise>				
 		</c:choose>		
 		</div>
@@ -105,14 +105,14 @@
 				<div class="modal-body" style="padding: 40px 50px;">
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
-                                <label for="usrname"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${param.usrname}">
+                                <label for="username"><span class="fa fa-user"></span> 帳號</label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${param.usrname}">
                                 <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
                             </div>
                             <div class="form-group">
-                                <label for="psw">
+                                <label for="pwd">
                                     <span class="fa fa-eye"></span> 密碼</label>
-                                <input type="password" class="form-control" name="psw" id="psw" placeholder="Enter password">
+                                <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPsw}</font>
                             <div class="checkbox" id="rememberMe">

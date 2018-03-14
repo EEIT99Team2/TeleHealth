@@ -56,7 +56,7 @@
 					$('#date').val(value4);
 					
 			   })
-			   //讀取員工發表
+			   //讀取所有會員發表
 			   function loadall(){
 				   $.getJSON('/TeleHealth/healthcolumn/allmempublish.controller',{ },function(datas){
 						console.log(datas);

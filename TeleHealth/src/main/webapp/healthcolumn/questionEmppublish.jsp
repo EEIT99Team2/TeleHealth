@@ -21,7 +21,7 @@
 <main role="main" class="container mt-2">
 <div class="row">     	
 	      <div class="card">
-			<div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
+			<div class="card-header"><span>${empLoginOK.empName}</span><input type="hidden" id="empId" value="${empLoginOK.empId}">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
 				   <table id="productTable" class="table table-bordered">
@@ -61,7 +61,7 @@
 		<div class="modal-footer">
      	<input type="button" value='送出' onclick=postdata()>      
       	 <input type="reset" id="clean" value="清除"  >
-       		<p style="color:green"></p>
+       		<font id="reanswer" color="green" size="-1"></font><font id="reanswererror" color="red" size="-1"></font>
         </div>
 		</form>      
     	</div>
@@ -73,16 +73,17 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
+	var empIdlogin=$('#empId').val();
+	  console.log(empIdlogin);	
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
 		$(document).ready(function() {						
 			 CKEDITOR.replace('contenttext',
 				  {width:400, height:200,toolbarGroups:tg}								 	
-		     );		    			
-			    //讀取EL
-//	 		    var empId=$(''); 
-			    loademp("930F2472-337E-4800-B774-EB0AAE703D2A")			
+		     );				
+
+			    loademp(empIdlogin)			
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -97,7 +98,42 @@
 					$('#date').val(value4);
 					
 			   })
-			   //讀取員工發表
+			  
+			     //刪除員工發表
+			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
+				   var check=confirm("你確定要刪除此筆資料?");
+				   var Empname=$('#title').val();
+	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();
+	 			   console.log(Id+"   "+Empname) 			  
+	 			   if(check==true){
+	 				  $.get('/TeleHealth/healthcolumn/deleteQAEmp.controller',{Id:Id,EmpId:Empname},function(data){
+		 				   alert("您已刪除所po的文");
+		 				  loadmember(empIdlogin);
+		 			   })		 			   
+	 			   }else{
+	 				  loadmember(empIdlogin);
+		 		 }
+	 			 
+			  })
+			    
+			    //修改CK
+	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
+	 			  $('#UnReserveItem').modal('show');	
+	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();
+	 			  console.log(Id);
+	 			 $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){
+						console.log(datas);
+		 				$.each(datas,function(i,QA){	 				
+	 					 CKEDITOR.instances.contenttext.setData(QA[5]); 
+	 					 $('#questionId').val(QA[0]);						
+		 				})	 
+	 			  
+	 					
+	 		   })
+			   		   
+		})
+		})
+		 //讀取員工發表
 			   function loademp(empId){
 				   $.getJSON('/TeleHealth/healthcolumn/QAEmpublish.controller',{empId:empId},function(datas){
 						console.log(datas);
@@ -123,53 +159,29 @@
 			    }) 
 			      		
 			} 
-			     //刪除會員發表
-			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
-				   var check=confirm("你確定要刪除此筆資料?");
-				   var Empname=$('#title').val();
-	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			   console.log(Id+"   "+Empname) 			  
-	 			   if(check==true){
-	 				  $.get('/TeleHealth/healthcolumn/deleteQAEmp.controller',{Id:Id,EmpId:Empname},function(data){
-		 				   alert("您已刪除所po的文");
-		 				  loadmember(Empname);
-		 			   })		 			   
-	 			   }else{
-	 				  loadmember(Empname);
-		 		 }
-	 			 
-			  })
-			    
-			    //修改產品
-	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
-	 			  $('#UnReserveItem').modal('show');	
-	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			  console.log(Id);
-	 			 $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){
-						console.log(datas);
-		 				$.each(datas,function(i,QA){	 				
-	 					 CKEDITOR.instances.contenttext.setData(QA[5]); 
-	 					 $('#questionId').val(QA[0]);						
-		 				})	 
-	 			  
-	 					
-	 		   })
-			   		   
-		})
-		})
+		
 		function postdata(){		
-		var questionId=$("#questionId").val();
-		console.log(questionId);
-		var contenttext=CKEDITOR.instances.contenttext.getData();					
-		$.getJSON("/TeleHealth/healthcolumn/updatememQA.controller", {questionId:questionId,contenttext:contenttext}, function(datas){
-			if(datas="ok"){
-				$("#reanswer").text("修改成功!!");
-			}else{$("#reanswer").text("修改失敗!!");}
-			})
-	   }
+			var questionId=$("#questionId").val();
+			console.log(questionId);
+			var contenttext=CKEDITOR.instances.contenttext.getData();
+			if(contenttext==null|| contenttext.length==0){
+	    		document.getElementById("reanswer").innerHTML=' ';    		
+	    		document.getElementById("reanswererror").innerHTML='內容不能空白';		
+	    	}else{ 						
+			$.getJSON("/TeleHealth/healthcolumn/updatememQA.controller", {questionId:questionId,contenttext:contenttext}, function(datas){
+				if(datas="ok"){
+					document.getElementById("reanswer").innerHTML=' ';   
+					$("#reanswer").text("修改成功!!");
+					loadmember(memIdlogin);				
+				}else{
+					document.getElementById("reanswer").innerHTML=' ';   
+					$("#reanswer").text("修改失敗!!");}
+				})
+	    	}
+		   }
 	$('#clean').on('click',function(){
 			CKEDITOR.instances.contenttext.setData(' ');
-			})
+			});
 			
 	</script>
 </body>

@@ -19,7 +19,7 @@ import advisorymoment.model.AdvisoryMomentService;
 public class AdvisoryMomemtController {
 	@Autowired
 	private AdvisoryMomentService advisoryMomentService;
-
+	//會員用代號搜尋
 	@RequestMapping(path = { "/AdvisoryMomemt/memberSelectByCode.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public @ResponseBody String memberSelectByCode(String UserId, String advisoryCode) {
@@ -35,7 +35,7 @@ public class AdvisoryMomemtController {
 		}
 		return data;
 	}
-
+	//會員進入查詢班表畫面
 	@RequestMapping(path = { "/AdvisoryMomemt/memberSelectAll.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public @ResponseBody String memberSelectAll(String UserId) {
@@ -48,7 +48,7 @@ public class AdvisoryMomemtController {
 		return data;
 	}
 	
-	
+	//會員取消預約
 	@RequestMapping(path = { "/AdvisoryMomemt/memberCancelRes.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String memberCancelRes(String MomentId,String VideoCode,String UserId) {
@@ -65,7 +65,7 @@ public class AdvisoryMomemtController {
 		}
 		return ReturnResult;
 	}
-	
+	//員工進入查詢班表畫面
 	@RequestMapping(path = { "/AdvisoryMomemt/employeeSelectAll.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public @ResponseBody String employeeSelectAll(String EmpId) throws InterruptedException {

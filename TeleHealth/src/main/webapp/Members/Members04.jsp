@@ -35,7 +35,7 @@
 					<li><a href="Members02.jsp">修改會員資料</a></li>
 					<li><a href="Members03.jsp">修改會員密碼</a></li>
 					<li><a href='<c:url value="/AdvisoryMoment/Advisory.jsp" />'>視訊健康諮詢</a></li>
-					<li><a href="Members04.jsp">會員</a></li>
+					<li><a href=<c:url value="/healthcolumn/questionMempublish.jsp" />>會員</a></li>
 				</ul>
 						<!--上下margin左右padding  / 被float right推過去 -->
 				<form class="navbar-form navbar-left" role="search">
