@@ -52,8 +52,11 @@
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
-<div class="momentColor iBlock"><span style='color:#0080ff'>尚未被預約</span><br/><span style='color:#00db00'>您已預約</span><br/><span style='color:#ea0000'>已被預約</span></div>
-<div class="container iBlock">
+<div class="container">
+<div class="row">
+<div class="momentColor col-3"><span style='color:#0080ff'>尚未被預約</span><br/><span style='color:#00db00'>您已預約</span><br/><span style='color:#ea0000'>已被預約</span></div>
+<div class="col-2"></div>
+
 <span id="item1" class="item1">快速查詢:</span>
 <select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">年</span>
 <select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">月</span>
@@ -74,6 +77,7 @@
 <option id="CAR">心血管慢性疾病諮詢</option>
 <option id="WEL">健康減重</option>
 </select><br>
+<div class="col-8"></div>
 <!-- 點擊預約時段彈跳視窗 -->
 <div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -177,6 +181,7 @@
   </div>
 </div>
 <div id="calendar"></div>
+</div>
 </div>
 <!-- Footer -->
 <jsp:include page="/fragment/footer.jsp" />
