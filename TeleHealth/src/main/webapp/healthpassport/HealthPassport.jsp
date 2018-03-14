@@ -6,9 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>健康護照</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<c:url value="/css/w3.css"/>">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>" />
 
@@ -24,8 +21,6 @@
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
-
-	<input type="hidden" id="member" value="${LoginOK.memberId}" />
 	<div class="container">
 		<h2>健康數據指標</h2>
 		<div class="row">
@@ -54,8 +49,8 @@
 						</div>
 						<div class="modal-body">
 							<label for="insert_height" class="col-2">身高</label> <input
-								type="text" id="insert_height" name="height" class="col-4">公分
-							<span id="heiMsg"></span> <br> <label for="insert_weight"
+								type="text" id="insert_height" name="height" class="col-4">公分<span
+								id="heiMsg"></span> <br> <label for="insert_weight"
 								class="col-2">體重</label> <input type="text" id="insert_weight"
 								name="weight" class="col-4">公斤 <span id="weiMsg"></span>
 							<br> <label for="height" class="col-2">BMI</label> <input
@@ -103,7 +98,7 @@
 						<div class="collapse container" id="collapseExample">
 							<div class="card card-body table-responsive">
 <!-- 圖表 -->
-<canvas id="mybmi" height="200" width="400"></canvas>
+<canvas id="mychart1" height="200" width="400"></canvas>
 <hr>
 								<table id='bmiTable' width="100%"
 									class="table table-bordered table-striped table-hover ">
@@ -142,7 +137,7 @@
 					data-target="#myModalBloodPressure">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
-				<button class="btn btn-outline-dark" type="button"
+				<button id='bpselect' class="btn btn-outline-dark" type="button"
 					data-toggle="collapse" data-target="#bp" aria-expanded="false"
 					aria-controls="collapseExample">查詢紀錄</button>
 			</div>
@@ -203,11 +198,24 @@
 					<div class="col-12 text-center">
 						<div class="collapse container" id="bp">
 							<div class="card card-body">
-<!-- 放圖表與表格 -->
+<!-- 圖表 -->
+<canvas id="mychart2" height="200" width="400"></canvas>
+<hr>
+								<table id='bpTable' width="100%"
+									class="table table-bordered table-striped table-hover ">
+									<thead class="table-dark">
+										<tr>
+											<th scope="col">收縮壓</th>
+											<th scope="col">舒張壓</th>
+											<th scope="col">脈搏</th>
+											<th scope="col">結果</th>
+											<th scope="col">輸入時間</th>
+										</tr>
+									</thead>
+									<tbody>
 
-
-
-<!-- 放圖表與表格 -->
+									</tbody>
+</table>
 							</div>
 						</div>
 					</div>
@@ -229,7 +237,7 @@
 					data-target="#myModalBloodSugar">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
-				<button class="btn btn-outline-dark" type="button"
+				<button id='' class="btn btn-outline-dark" type="button"
 					data-toggle="collapse" data-target="#bs" aria-expanded="false"
 					aria-controls="collapseExample">查詢紀錄</button>
 			</div>
@@ -281,11 +289,24 @@
 					<div class="col-12 text-center">
 						<div class="collapse container" id="bs">
 							<div class="card card-body">
-<!-- 放圖表與表格 -->
+<!-- 圖表 -->
+<canvas id="mychart3" height="200" width="400"></canvas>
+<hr>
+								<table id='bsTable' width="100%"
+									class="table table-bordered table-striped table-hover ">
+									<thead class="table-dark">
+										<tr>
+											<th scope="col">血糖值</th>
+											<th scope="col">舒張壓</th>
+											<th scope="col">脈搏</th>
+											<th scope="col">結果</th>
+											<th scope="col">輸入時間</th>
+										</tr>
+									</thead>
+									<tbody>
 
-
-
-<!-- 放圖表與表格 -->
+									</tbody>
+</table>
 							</div>
 						</div>
 					</div>
@@ -293,31 +314,22 @@
 			</div>
 		</div>
 	</div>
-	
-	
-
-	
-	<script src="<c:url  value='/js/jquery-3.3.1.min.js'/>"></script>
+	<jsp:include page="/fragment/footer.jsp" />
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-
 	<script src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
 	<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 	<!--  計算BMI -->
 	<script type="text/javascript">
-	var memberid='B0041CB5-09F1-4E5B-8D57-1F0406019143';
+	var memberid=$('#memberId').val();
 		$(document).ready(function() {
-
-			$('#member').val();
-		
 			var weight;
 			var height;
 			var BMI;
 			$('#bmiselect').click(bmitable());
-        	$('#bmiselect').click(bmiview());
-
+// 			$('#bmiselect').click(bmiview());
 
 			$('#calBMI').click(calBMI);
 			function calBMI() {
@@ -329,7 +341,7 @@
 			         height = $('#insert_height').val() / 100;
 			         BMI = Math.round((weight /  Math.pow(height, 2)) *100) /100;
 			         $('#insert_bmi').val(Math.round(BMI * 100) / 100);
-			         if(BMI<10 || BMI>=100){
+			         if(BMI<10 || BMI>=100 || isNaN(BMI)){
 			        	 alert('請確認後再輸入喔!');
 				     }else{
 			     	    $('#insert').prop("disabled", false);
@@ -367,36 +379,107 @@
 			$('#insert').click(function(){
 				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'memberid':memberid,'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
 	                	//data就是Server回傳的結果
-// 	                	JSON.parse(data);
+	                	 
 	             })
-	             
-			});
-
-	//新增一筆回傳欄位	
-	function newbmirecords(){	
-		$.getJSON("<c:url value='/healthpassport/newOneRecords.controller'/>",{'memberid':memberid},function(oneData){
-			console.log(oneData); 			
- 		 	$('#showHeight').empty();
-	       	$('#showWeight').empty();
-	       	$('#showTime').empty();
-	       	$('#bmiResult').empty();
-           $.each(oneData,function(i,value){               
-        	var height = value[0].h;   	       			
-   			var weight = value[0].w;
-   			var bmi = value[0].b;
-   			var result = value[0].rs;
-   			var time = value[0].t;   			
-   		 	$('#showHeight').prepend(height);
-   	       	$('#showWeight').prepend(weight);
-   	       	$('#showTime').prepend(time);
-   	       	$('#bmiResult').prepend('<h2>'+'BMI --> '+weight+'</h2>'+'<br>'+'<h2>'+result+'</h2>');
-               })
-          });
-	};
-
-
-        
+			//抓一筆最新資料回傳欄位	
 		
+			   	$('#showHeight').empty();
+			    $('#showWeight').empty();
+			    $('#showTime').empty();
+			    $('#bmiResult').empty();
+
+				$('#insert_height').val("");
+				$('#insert_weight').val("");
+				$('#insert_bmi').val("");
+				$('#heiMsg').empty();
+				$('#weiMsg').empty();
+				
+			});
+			
+			
+
+			
+//載入會員記錄
+			function bmitable(){
+				$('#bmiTable').dataTable().fnDestroy(); 
+				$('#bmiTable').DataTable({
+				    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
+				    "columns": [
+				        { "data": "height" },
+				        { "data": "weight" },
+				        { "data": "bmi" },
+				        { "data": "bmiResult" },
+				        { "data": "createTime" }
+				    ],
+				    "order": [[ 4, 'desc' ]],
+					"bProcessing": true,//顯示處理中的圖樣
+					"oLanguage": {
+				    "sLengthMenu": " _MENU_ 筆/頁",
+				    "sZeroRecords": "找不到符合的資料。",
+				    "sInfo": "共 _MAX_ 筆",
+				    "sSearch": "搜尋",
+				    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+				    "sInfoEmpty": "共 0 頁",
+				    "oPaginate": {
+				        "sPrevious": "«",
+				        "sNext": "»"
+				  	 	 }
+						}
+					});
+			};	
+
+	//圖表
+	var dates=[];
+    var datas=[];
+// 	 function bmiview(){
+		$.getJSON('/TeleHealth/healthpassport/bmirecords.controller',{memberid:memberid},function(result){
+			$.each(result.data,function(index,value) {
+				var date = moment(value.createTime).format('MM/DD HH:mm');
+				dates.push(date);
+				var bmiresult = value.bmi;
+				datas.push(bmiresult);
+			});
+		});
+			var ctx = $("#mychart1")
+			var myChart = new Chart(ctx, {
+			    type: 'line',
+			    data: {
+			        labels: dates,
+			        datasets: [{
+			            label: '2018',
+			            data: datas,
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(255, 206, 86, 0.2)',
+			                'rgba(75, 192, 192, 0.2)',
+			                'rgba(153, 102, 255, 0.2)',
+			                'rgba(255, 159, 64, 0.2)'
+			            ],
+			            order:[dates,'desc'],
+			            order:[datas,'desc'],
+			            borderColor: [
+			                'rgba(255,99,132,1)',
+			                'rgba(54, 162, 235, 1)',
+			                'rgba(255, 206, 86, 1)',
+			                'rgba(75, 192, 192, 1)',
+			                'rgba(153, 102, 255, 1)',
+			                'rgba(255, 159, 64, 1)'
+			            ],
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                   beginAtZero:true
+			                }
+			            }]
+			        }
+			    }
+			});
+// 	 }
 
 <!-- 血壓 -->
 
@@ -468,23 +551,20 @@
 	                	//data就是Server回傳的結果
 // 	                	JSON.parse(data);
 	             });
-// 				 $('#showBloodPressure').empty();
-
-// 				 $('#showHeartBeat').empty();
-	             
-	                	$('#showBloodPressure').prepend('<small>'+systole+'\/'+diastole+'</small>');
-	                	$('#showHeartBeat').prepend('<small>'+heartBeat+'</small>');
-
+// 	                	$('#showBloodPressure').
+// 	                	$('#showHeartBeat').
 	                	$('#insert_systole').val("");
 	                	$('#insert_diastole').val("");
 	                	$('#insert_heartBeat').val("");
-
 	                	$('#systoleMsg').empty();
 	                	$('#diastoleMsg').empty();
 	                	$('#heartBeatMsg').empty();
 	         }
 			});
 
+
+
+			
 	<!--  血糖 -->
 
 			var bloodsugar;
@@ -510,89 +590,28 @@
 
 			
 	});
-		//載入會員記錄
-		
-		function bmitable(){
-			$('#bmiTable').dataTable().fnDestroy(); 
-			$('#bmiTable').DataTable({
-			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
-			    "columns": [
-			        { "data": "height" },
-			        { "data": "weight" },
-			        { "data": "bmi" },
-			        { "data": "bmiResult" },
-			        { "data": "createTime" }
-			    ],
-			    "order": [[ 4, 'desc' ]],
-				"bProcessing": true,//顯示處理中的圖樣
-				"oLanguage": {
-			    "sLengthMenu": " _MENU_ 筆/頁",
-			    "sZeroRecords": "找不到符合的資料。",
-			    "sInfo": "共 _MAX_ 筆",
-			    "sSearch": "搜尋",
-			    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
-			    "sInfoEmpty": "共 0 頁",
-			    "oPaginate": {
-			        "sPrevious": "«",
-			        "sNext": "»"
-			  	 	 }
-					}
-				});
-		};			     
+				     
 
+//ready外抓一筆最新資料回傳欄位	
+ 		$.getJSON("<c:url value='/healthpassport/newOneRecords.controller'/>",{'memberid':memberid},function(oneData){
+ 			console.log(oneData); 			
+  		 	$('#showHeight').empty();
+ 	       	$('#showWeight').empty();
+ 	       	$('#showTime').empty();
+ 	       	$('#bmiResult').empty();
+            $.each(oneData,function(i,value){               
+         	var height = value[0].h;   	       			
+    		var weight = value[0].w;
+    		var bmi = value[0].b;
+    		var result = value[0].rs;
+    		var time = value[0].t;   			
+    		 	$('#showHeight').prepend(height);
+    	       	$('#showWeight').prepend(weight);
+    	       	$('#showTime').prepend(time);
+    	       	$('#bmiResult').prepend('<h4><small>'+'BMI --> '+bmi+'\|'+result+'</small></h4>');
+                })
+           });
 		
-		//圖表
-		var dates=[];
-	    var datas1 = [];
-		 function bmiview(){
-			$.getJSON('/TeleHealth/healthpassport/bmirecords.controller',{memberid:memberid},function(datas){
-				$.each(datas.data,function(index,value) {
-					var date = moment(value.createTime).format('MM/DD HH:mm');
-					dates.push(date);
-					var data1 = value.bmi;
-					datas1.push(data1);
-				});
-			});
-				var ctx = $("#mybmi")
-				var myChart = new Chart(ctx, {
-				    type: 'line',
-				    data: {
-				        labels: dates,
-				        datasets: [{
-				            label: '2018',
-				            data: datas1,
-				            backgroundColor: [
-				                'rgba(255, 99, 132, 0.2)',
-				                'rgba(54, 162, 235, 0.2)',
-				                'rgba(255, 206, 86, 0.2)',
-				                'rgba(75, 192, 192, 0.2)',
-				                'rgba(153, 102, 255, 0.2)',
-				                'rgba(255, 159, 64, 0.2)'
-				            ],
-				            order:[dates,'desc'],
-				            order:[datas1,'desc'],
-				            borderColor: [
-				                'rgba(255,99,132,1)',
-				                'rgba(54, 162, 235, 1)',
-				                'rgba(255, 206, 86, 1)',
-				                'rgba(75, 192, 192, 1)',
-				                'rgba(153, 102, 255, 1)',
-				                'rgba(255, 159, 64, 1)'
-				            ],
-				            borderWidth: 1
-				        }]
-				    },
-				    options: {
-				        scales: {
-				            yAxes: [{
-				                ticks: {
-				                   beginAtZero:true
-				                }
-				            }]
-				        }
-				    }
-				});
-		 }
 
 		
 		
