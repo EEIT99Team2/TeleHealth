@@ -84,10 +84,10 @@
 					<c:out value="${LoginOK.memName}${empLoginOK.empName},你好!!" />
 				</span>
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
-				<a href="<c:url value='/Members/Logout.jsp' />">
-					<button class="btn btn-sm btn-outline-secondary" 
-					id="myBtn1">登出</button>
-				</a>
+				<form style="display: inline-block" method="get" action="<c:url value='/logout.controller' />">
+					<input type="submit" class="btn btn-sm btn-outline-secondary" 
+					id="myBtn1" value="登出" />
+				</form>
 			</c:otherwise>				
 		</c:choose>
 		</div>
@@ -136,10 +136,10 @@
 				</div>
 				<div class="modal-footer">
 					<p>
-						還不是會員? <a href="#">註冊</a>
+						還不是會員? <a href="Members/register.jsp">註冊</a>
 					</p>
 					<p>
-						忘記 <a href="#">密碼?</a>
+						忘記 <a href="Members/ForgetPwd.jsp">密碼?</a>
 					</p>
 				</div>
 			</div>
