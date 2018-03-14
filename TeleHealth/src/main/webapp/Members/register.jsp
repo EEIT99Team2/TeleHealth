@@ -12,25 +12,23 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- stylesheets -->
-	<link rel="stylesheet" href="css/font-awesome.css">
 	<link rel="stylesheet" href="css/style.css">
 	<!-- google fonts  -->
-	<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" rel="stylesheet">
-	<link href="//fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i,700" rel="stylesheet">
+<!-- 	<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" rel="stylesheet"> -->
+<!-- 	<link href="//fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i,700" rel="stylesheet"> -->
+	<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-	<div class="w3ls-banner">
-	<div class="heading">
-		<h1>Register Account</h1>
-	</div>
+<div >
+<jsp:include page="/fragment/nav2.jsp" />
 		<div class="container">
 			<div class="heading">
-				<h2>Please Enter Basic Information</h2>
-				<p>Fill in the form below and submit your information</p>
+				<h3>歡迎成為牽伴的一份子</h3>
+<!-- 				<p>Fill in the form below and submit your information</p> -->
 			</div>
 			<div class="agile-form">
 				<form method="post" enctype="multipart/form-data"
-						action="<c:url value="/register.controller" />">
+						action="<c:url value="/register.controller"/>">
 					<ul class="field-list">
 					
 						<li>
@@ -50,7 +48,7 @@
 								<span class="form-required"> * </span>
 							</label>
 							<div class="form-input11">
-								<input type="password" name="pwd" id="pwd" value="${param.pwd}" placeholder="Enter Password" required >
+								<input type="password" class="form-input11" name="pwd" id="pwd" value="${param.pwd}" placeholder="Enter Password" required >
 <%-- 								<font color="red" size="-1">${MsgMap.errorPwd}</font> --%>
 							</div>	
 							<span id="checkPwdResult" display="inline-block"></span>		
@@ -62,7 +60,7 @@
 								<span class="form-required"> * </span>
 							</label>
 							<div class="form-input11">
-								<input type="password" name="pwdCheck" id="pwdCheck" value="${param.pwdCheck}" placeholder="Enter Password" required >
+								<input type="password" class="form-input11" name="pwdCheck" id="pwdCheck" value="${param.pwdCheck}" placeholder="Enter Password" required >
 								<font color="red" size="-1">${MsgMap.errorPwdCheck}</font>
 							</div>	
 							<span id="checkPwdCheckResult" display="inline-block"></span>			
@@ -87,7 +85,7 @@
 							   <span class="form-required"> * </span>
 							</label>
 							<div class="form-input11">
-								<select class="form-dropdown" name="gender" id="gender" required>
+								<select class="choose2" name="gender" id="gender" required>
 									<option value="" selected="true">請選擇性別</option>
 									<option value="M"> 男性 </option>
 									<option value="F"> 女性 </option>
@@ -126,10 +124,9 @@
 							   生日
 							   <span class="form-required"> * </span>
 							</label>
-							<div class="form-input dob">
-								<span class="form-sub-label">
-									<select name="day" class="day">
-										<option>&nbsp;</option>
+							<div class="form-input">
+									<select name="day" class="choose">
+										<option>請選擇</option>
 										<option value="1"> 1 </option>
 										<option value="2"> 2 </option>
 										<option value="3"> 3 </option>
@@ -162,11 +159,8 @@
 										<option value="30"> 30 </option>
 										<option value="31"> 31 </option>
 									</select>
-									<label class="form-sub-label1"> Day </label>
-								</span>
-								<span class="form-sub-label">
-									<select name="month">
-										<option>&nbsp;</option>
+									<select name="month" class="choose">
+										<option>請選擇</option>
 										<option value="1"> January </option>
 										<option value="2"> February </option>
 										<option value="3"> March </option>
@@ -180,12 +174,7 @@
 										<option value="11"> November </option>
 										<option value="12"> December </option>
 									 </select>
-									<label class="form-sub-label1"> Month </label>
-								</span>
-								<span class="form-sub-label">
 									<input type="text" class="year" name="year"id="year" placeholder="yyyy" required>
-									<label class="form-sub-label1"> Year </label>
-								</span>
 							</div>
 							<span id="checkYear" display="inline-block"></span>
 						</li>
@@ -220,7 +209,7 @@
 							   <span class="form-required"> * </span>
 							</label>
 							<div class="form-input11">
-								<select class="form-dropdown" name="bloodType" id="bloodType" required>
+								<select class="choose2" name="bloodType" id="bloodType" required>
 									<option value=""  selected="true">請選擇血型</option>
 									<option value="A">A型</option>
 									<option value="B">B型</option>
@@ -260,25 +249,23 @@
 						</li>						
 												
 						<li> 
-							<label class="form-label1">
+							<label class="form-label">
 								藥物過敏
 								<span class="form-required"> * </span>
 							</label>
-							<div class="form-input2">
-								<textarea rows="5" cols="20" name="medicine" value="${param.medicine}"></textarea>
+							
+								<textarea class="textarea" rows="5" cols="20" name="medicine" value="${param.medicine}"></textarea>
 								 <font color="red" size="-1">${MsgMap.errorMedicine}</font>
-							</div>
+							
 						</li>
 						
 						<li> 
-							<label class="form-label1">
+							<label class="form-label">
 								過去病史
 								<span class="form-required"> * </span>
 							</label>
-							<div class="form-input2">
-								<textarea rows="5" cols="20" name="medicalHistory" value="${param.medicalHistory}"></textarea>
+								<textarea class="textarea" rows="5" cols="20" name="medicalHistory" value="${param.medicalHistory}"></textarea>
 								<font color="red" size="-1">${MsgMap.errorMedicalHistory}</font>
-							</div>
 						</li>
 						
 						
@@ -300,14 +287,15 @@
 				</form>	
 			</div>
 		</div>
-		<div class="copyright">
-			<p>© 2018 牽伴健康諮詢平台 | Design by <a href="<c:url value="../home.jsp"/>">TeleHealth</a></p> 
-		</div>
+<!-- 		<div class="copyright"> -->
+<%-- 			<p>© 2018 牽伴健康諮詢平台 | Design by <a href="<c:url value="../home.jsp"/>">TeleHealth</a></p>  --%>
+<!-- 		</div> -->
+	<jsp:include page="/fragment/footer.jsp" />	
 	</div>
-	
 <!-- 	JavaScript -->
 <!-- ====================載入JQuery========================= -->
 <script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>	
+</body>
 <script type="text/javascript">
 $('#account').blur(function(){
 	var account = $('#account').val();
@@ -510,6 +498,4 @@ $('#address').blur(function(){
 		}
 })
 </script>
-	
-</body>
 </html>
