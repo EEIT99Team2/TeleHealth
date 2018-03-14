@@ -145,9 +145,9 @@ $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memb
 			var col4 = $("<td>"+data.empName+"</td>");
 			var col5 = $("<td>"+data.career+"</td>");
 			var col6 = $("<input type='hidden' name='videoCode' value='"+data.videoCode+"'/>");
-			var col6 = $("<input type='hidden' name='reserveItem' value='"+data.reserveItem+"'/>");
+			var col7 = $("<input type='hidden' name='reserveItem' value='"+data.reserveItem+"'/>");
 			TalkingOne={"reserveItem":data.reserveItem,"advisoryTime":advisoryTime,"empName":data.empName+" "+data.career,"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"satisfy":data.satisfy,"modifyTime":data.modifyTime,"momentId":data.momentId};			
-			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
+			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6,col7]);
 			var allcol2 = $("<button type='submit'>送出</button>");
 			var allco2 = $("<form action='<c:url value="/Advisory/startadvisory.controller"/>' method=GET></form>").append([allcol,allcol2]);
 		    docFrag1.append(allco2);		
