@@ -18,7 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.Gson;
 
 import register.model.MemberBean;
 import register.model.RegisterService;
@@ -33,14 +36,27 @@ public class RegisterController {
 	@Autowired
 	private RegisterService registerService =null;
 
-//	@Autowired
-//	private ApplicationContext context; 多國語系
-
+	@RequestMapping(
+			path= {"/checkaccount.controller"},
+			method= {RequestMethod.GET, RequestMethod.POST},
+			produces ="application/json;charset=UTF-8"
+	)
+	public @ResponseBody String checkAccount(String account) {
+		String accountIn = null;
+		if(account != null && account.trim().length()>0) {
+			accountIn = account;
+		}
+		if(registerService.selectByAccount(accountIn) == null) {
+			return new Gson().toJson("此帳號可以使用!");
+		}
+		return new Gson().toJson("此帳號已被註冊，請重新輸入!");
+	}
+	
 	@RequestMapping(
 			path={"/register.controller"},
 			method={RequestMethod.GET, RequestMethod.POST}
 	)
-	public String method(
+	public String register(
 				String account, 
 				String memName, 
 				String phone1,
@@ -48,6 +64,9 @@ public class RegisterController {
 				String cellphone, 
 				String gender, 
 				String birth,
+				String year,
+				String month,
+				String day,
 				String memHeight,
 				String memWeight,
 				String bloodType,
@@ -90,10 +109,9 @@ public class RegisterController {
 					errorMsg.put("errormemName", "姓名欄位格式錯誤");
 				}
 				
-				if(phone ==null|| phone.trim().length()==0||phone1 ==null|| phone1.trim().length()==0) {
+				if(phone ==null|| phone.trim().length()==0) {
 					errorMsg.put("errorPhone", "電話欄位不能空白");
-				}else if(phone!=null && phone1!=null) {
-					phone = phone1+"-"+phone;
+				}else if(phone!=null) {
 					if(phone.matches("0\\d{1,2}-(\\d{6,8})")) {
 						System.out.println("電話欄位格式正確");
 					}else {
@@ -121,6 +139,8 @@ public class RegisterController {
 				//生日欄位必須是日期，並且符合YYYY-MM-DD的格式
 				//日期轉java.util.data型態
 				java.util.Date b = null;
+				birth = year+"-"+month+"-"+ day;
+				System.out.println("=======birth="+birth);
 				if(birth == null || birth.trim().length() == 0){
 					errorMsg.put("errorBirth", "生日欄位不能空白");
 				}else if(birth!=null && birth.trim().length()>0) {
