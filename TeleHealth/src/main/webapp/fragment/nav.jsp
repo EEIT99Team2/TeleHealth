@@ -54,7 +54,7 @@
 				<li class="nav-item"><a class="nav-link" 
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
+					href="<c:url value='/Members/Members04.jsp'/>">會員專區</a></li>
 			</ul>
 			</c:when>
 			<c:otherwise>

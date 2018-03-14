@@ -36,7 +36,7 @@
 	
 	<bean id="login.success" class="org.springframework.web.servlet.view.RedirectView">
 		<property name="contextRelative" value="true"></property>
-		<property name="url" value="/Members/Members04.jsp"></property>
+		<property name="url" value="/home.jsp"></property>
 	</bean>
 	
 	<bean id="forgetPwd.success" class="org.springframework.web.servlet.view.RedirectView">
