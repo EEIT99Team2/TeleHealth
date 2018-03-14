@@ -138,15 +138,19 @@ $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memb
 		ms = moment(advisoryTime).diff(now)/1000;
 		console.log(ms);
 		var status=data.status;
-		if(status=="N" && ms<=900){			
+		if(status=="N"){			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.reserveItem+"</td>");
 			var col3 = $("<td>"+advisoryTime+"</td>");
-			var col4 = $("<td>"+data.empName+" "+data.career+"</td>");
-			var col5 = $("<td></td>");
+			var col4 = $("<td>"+data.empName+"</td>");
+			var col5 = $("<td>"+data.career+"</td>");
+			var col6 = $("<input type='hidden' name='videoCode' value='"+data.videoCode+"'/>");
+			var col6 = $("<input type='hidden' name='reserveItem' value='"+data.reserveItem+"'/>");
 			TalkingOne={"reserveItem":data.reserveItem,"advisoryTime":advisoryTime,"empName":data.empName+" "+data.career,"empId":data.empId,"videoCode":data.videoCode,"descrip":data.descrip,"videoRecord":data.videoRecord,"satisfy":data.satisfy,"modifyTime":data.modifyTime,"momentId":data.momentId};			
 			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
-		    docFrag1.append(allcol);		
+			var allcol2 = $("<button type='submit'>送出</button>");
+			var allco2 = $("<form action='<c:url value="/Advisory/startadvisory.controller"/>' method=GET></form>").append([allcol,allcol2]);
+		    docFrag1.append(allco2);		
 		}else if(status=="N"){
 			console.log("ms"+ms);		
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
@@ -178,7 +182,8 @@ $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memb
 //即將諮詢
 $("body").on("click","#TalkingList tr",function(){
 	console.log(TalkingOne.reserveItem);
-// 	$.get("<c:url value=''/>",{"memName":memName,"memberId":memberId,"reserveItem":TalkingOne.reserveItem,"empName":TalkingOne.empName,"empId":TalkingOne.empId,"videoCode":TalkingOne.videoCode},function(){})
+	$.get("<c:url value='/Advisory/startadvisory.controller'/>",{"memName":memName,"memberId":memberId,"reserveItem":TalkingOne.reserveItem,"empName":TalkingOne.empName,"empId":TalkingOne.empId,"videoCode":TalkingOne.videoCode},function(data){
+		})
 });
 
 //未諮詢 videoCodeError
