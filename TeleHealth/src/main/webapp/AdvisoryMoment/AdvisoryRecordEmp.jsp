@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.min.css" />
 <style>
 .txtWaring{color:red}
+
 </style>
 </head>
 <body>
@@ -114,11 +115,26 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown-zh-TW.min.js"></script>
+
 </body>
 <script>
 $(document).ready(function(){
-// 	var empId =$("#empId").val();
-	var empId ="A56DC04E-7C45-4BB4-B4F4-B95F7A321994";
+	var empId =$("#empId").val();
+	var count = 0;
+	$.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
+		console.log(datas);
+		$.each(datas,function(index,data){
+			var status=data.status;
+			if(status=="N"){			
+				count++;
+			}
+		});
+		$('#advisoryNum').text(count);
+		if(count == 0) {
+			$('#advisoryNum').css("display", "none");
+		}
+	});
+	getAdvisory(empId);
 	var empName = $("#empName").val();
 	LoadData();
 	var DataPackage;
@@ -226,9 +242,9 @@ $('#TalkList').on('click','tr button:nth-child(1)',function(){
 	  $('#TalkItem').modal('show');	
 	  var modifyVideo = $(this).parents('tr').find('td:nth-child(2)').text();
 	 $.getJSON('/TeleHealth/selectadvisory.controller',{"videoCode":modifyVideo},function(data){
-			console.log(data);				
-			 CKEDITOR.instances.contenttext.setData(data.data.descrip);	 					 	 					
-			}) 					
+				console.log(data);				
+				CKEDITOR.instances.contenttext.setData(data.data.descrip);	 					 	 					
+			}); 					
  	 });
 });
 
@@ -254,4 +270,11 @@ $("#resultCheck").click(function(){
 });
 
 </script>
+<script>
+$.ready(function(){
+	
+});
+</script>
+
+
 </html>

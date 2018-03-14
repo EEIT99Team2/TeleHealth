@@ -43,12 +43,12 @@ video {
 
 <body>
 	<jsp:include page="/fragment/navemp.jsp" />
-	<input type="hidden" id="videoCode" value="${sessionScope.advisory.videoCode}" />
+	<input type="hidden" id="roomName" value="${sessionScope.advisory.videoCode}" />
 	<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 	<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 	<div class="container">
 		<div id="call-page" class="row clearfix" style="margin-top: 50px">
-			<input type="hidden" id="user" value="${LoginOK.account}" />
+			<input type="hidden" id="user" value="${empLoginOK.account}" />
 			<div class="col-5 float-left">
 				<video id="yours" autoplay muted playsinline></video>
 				<video id="theirs" autoplay playsinline></video>
@@ -114,7 +114,7 @@ video {
 	   	$('#sendContent').click(insert);
 		function insert() {
 			var descripIn= CKEDITOR.instances.contents.getData();
-			var videoCode= $('#videoCode').val();
+			var videoCode= $('#roomName').val();
 			console.log("descripIn="+ descripIn + ",videoCode=" + videoCode);
 			$.getJSON('/TeleHealth/advisorycontent.controller', {"videoCode":videoCode, "descrip":descripIn}, function(datas) {
 				console.log(datas);
