@@ -71,11 +71,7 @@
 		</div>
 		<div class="text-center">
 		<c:choose>
-			<c:when test="${empty LoginOK}">
-				<button type="button" class="btn btn-primary btn-rounded" 
-					data-toggle="modal" id="myBtn">登入</button>
-			</c:when>
-			<c:when test="${empty empLoginOK}">
+			<c:when test="${empty LoginOK && empty empLoginOK}">
 				<button type="button" class="btn btn-primary btn-rounded" 
 					data-toggle="modal" id="myBtn">登入</button>
 			</c:when>
