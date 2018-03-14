@@ -21,9 +21,10 @@
   <thead>
     <tr>
       <th scope="col">編號</th>
+      <th scope="col">視訊代號</th>
       <th scope="col">諮詢項目</th>
-      <th scope="col">諮詢時段</th>
       <th scope="col">會員姓名</th>
+      <th scope="col">諮詢時段</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -36,9 +37,10 @@
   <thead>
     <tr>
       <th scope="col">編號</th>
+      <th scope="col">視訊代號</th>      
       <th scope="col">諮詢項目</th>
-      <th scope="col">諮詢時段</th>
       <th scope="col">會員姓名</th>
+      <th scope="col">諮詢時段</th>
       <th scope="col">狀態</th>
     </tr>
   </thead>
@@ -51,9 +53,10 @@
   <thead>
     <tr>
       <th scope="col">編號</th>
+      <th scope="col">視訊代號</th>
       <th scope="col">諮詢項目</th>
-      <th scope="col">諮詢時段</th>
       <th scope="col">會員姓名</th>
+      <th scope="col">諮詢時段</th>
       <th scope="col">狀態</th>
     </tr>
   </thead>
@@ -86,12 +89,12 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="TalkTitle">諮詢結果</h5>
+        <h5 class="modal-title" id="TalkTitle">修改諮詢概要內容</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="modifyContent">
         <!-- 結果 -->
       </div>
       <div class="modal-footer">
@@ -142,9 +145,10 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 		var status=data.status;
 		if(status=="N" && ms<=900){			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
-			var col2 = $("<td>"+data.reserveItem+"</td>");
-			var col3 = $("<td>"+advisoryTime+"</td>");
+			var col2 = $("<td>"+data.videoCode+"</th>");
+			var col3 = $("<td>"+data.reserveItem+"</td>");
 			var col4 = $("<td>"+data.memName+"</td>");
+			var col5 = $("<td>"+advisoryTime+"</td>");
 			var col6 = $("<input type='hidden' name='videoCode' value='"+data.videoCode+"'/>");
 			var col7 = $("<input type='hidden' name='reserveItem' value='"+data.reserveItem+"'/>");
 			TalkingOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};			
@@ -154,21 +158,25 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 		    docFrag1.append(tr1);				
 		}else if(status=="N"){
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
-			var col2 = $("<td>"+data.reserveItem+"</td>");
-			var col3 = $("<td>"+advisoryTime+"</td>");
+			var col2 = $("<td>"+data.videoCode+"</th>");
+			var col3 = $("<td>"+data.reserveItem+"</td>");
 			var col4 = $("<td>"+data.memName+"</td>");
-			var col5 = $("<td>未完成</td>");
+			var col5 = $("<td>"+advisoryTime+"</td>");
+			var col6 = $("<td>未完成</td>");
 			unTalkOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};			
-			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
+			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6]);
 		    docFrag2.append(allcol);		
 		}else{
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
-			var col2 = $("<td>"+data.reserveItem+"</td>");
-			var col3 = $("<td>"+advisoryTime+"</td>");
+			var col2 = $("<td>"+data.videoCode+"</th>");
+			var col3 = $("<td>"+data.reserveItem+"</td>");
 			var col4 = $("<td>"+data.memName+"</td>");
-			var col5 = $("<td>已完成</td>");
-			TalkedOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};		
-			var allcol2 = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
+			var col5 = $("<td>"+advisoryTime+"</td>");
+			var col6 = $("<td>已完成    </td>");
+			var modifyBtn = $("<button class='btn btn-info'><i class='fas fa-edit'></i></button>")
+			col6.append(modifyBtn);
+			TalkedOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};	
+			var allcol2 = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6]);
 			docFrag3.append(allcol2);
 		}
 		})
@@ -180,6 +188,7 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 	console.log(TalkedOne);
 })
 }
+
 //即將諮詢
 $("body").on("click","#TalkingList tr",function(){
 	console.log(TalkingOne.reserveItem);
@@ -212,6 +221,16 @@ $("body").on("click","#TalkList tr",function(){
 	$("#TalkItem").modal("show");
 });
 
+//修改視訊諮詢內容功能的function
+$('#TalkList').on('click','tr button:nth-child(1)',function(){
+	  $('#TalkItem').modal('show');	
+	  var modifyVideo = $(this).parents('tr').find('td:nth-child(2)').text();
+	 $.getJSON('/TeleHealth/selectadvisory.controller',{"videoCode":modifyVideo},function(data){
+			console.log(data);				
+			 CKEDITOR.instances.contenttext.setData(data.data.descrip);	 					 	 					
+			}) 					
+ 	 });
+});
 
 
 //綁定動態產生tr滑鼠滑過變色
@@ -234,6 +253,5 @@ $("#resultCheck").click(function(){
 	window.location.reload();
 });
 
-})
 </script>
 </html>

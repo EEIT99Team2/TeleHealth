@@ -112,7 +112,6 @@ public class AdvisoryController {
 			produces="application/json;charset=UTF-8"
 	)
 	public @ResponseBody String doctorinsert(String videoCode, String descrip){
-		System.out.println("hahahaahahaahahaha");
 		AdvisoryBean data = advisoryService.updateAdvisoryContent(videoCode, descrip);
 		if(data != null) {
 			return new Gson().toJson("insert.success");
@@ -120,6 +119,27 @@ public class AdvisoryController {
 			return new Gson().toJson("insert.error");
 		}
 	}
+	
+	//員工修改視訊諮詢內容前，先呼叫controller取出原內容
+	@RequestMapping(
+			path= {"/selectadvisory.controller"},
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8"
+	)
+	public @ResponseBody String advisorySelectByCode(String videoCode){
+		AdvisoryBean bean =null;
+		if(videoCode!=null && videoCode.trim().length()>0) {
+			bean = advisoryService.select(videoCode.trim());
+		}
+		if(bean != null) {
+			Map<String, AdvisoryBean> data = new HashMap<>();
+			data.put("data", bean);
+			return new Gson().toJson(data);
+		}else {
+			return new Gson().toJson("insert.error");
+		}
+	}
+	
 	
 	//開始進行視訊
 	@RequestMapping(path= {"/Advisory/startadvisory.controller"}, method = {RequestMethod.GET,RequestMethod.POST})
