@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-<script src="../forCkeditor/ckeditor/ckeditor.js"></script>
+<script src="../forCkeditor/ckeditorckeditor.js"></script>
 <script src="../forCkeditor/ckfinder/ckfinder.js"></script>
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>

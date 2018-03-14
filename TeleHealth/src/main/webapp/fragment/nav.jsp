@@ -75,9 +75,13 @@
 				<button type="button" class="btn btn-primary btn-rounded" 
 					data-toggle="modal" id="myBtn">登入</button>
 			</c:when>
+			<c:when test="${empty empLoginOK}">
+				<button type="button" class="btn btn-primary btn-rounded" 
+					data-toggle="modal" id="myBtn">登入</button>
+			</c:when>
 			<c:otherwise>
 				<span>
-					<c:out value="${LoginOK.memName},你好!!" />
+					<c:out value="${LoginOK.memName}${empLoginOK.empName},你好!!" />
 				</span>
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
 				<a href="<c:url value='/Members/Logout.jsp' />">
@@ -106,14 +110,14 @@
 				<div class="modal-body" style="padding: 40px 50px;">
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
-                                <label for="usrname"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="usrname" id="usrname" placeholder="Enter email" value="${sessionScope.user}">
+                                <label for="username"><span class="fa fa-user"></span> 帳號</label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${sessionScope.user}">
                                 <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
                             </div>
                             <div class="form-group">
-                                <label for="psw">
+                                <label for="pwd">
                                     <span class="fa fa-eye"></span> 密碼</label>
-                                <input type="password" class="form-control" name="psw" id="psw" value="${sessionScope.password}" placeholder="Enter password">
+                                <input type="password" class="form-control" name="pwd" id="pwd" value="${sessionScope.password}" placeholder="Enter password">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPsw}</font>
                             <div class="checkbox" id="rememberMe">
