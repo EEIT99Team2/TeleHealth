@@ -140,7 +140,7 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 		ms = moment(advisoryTime).diff(now)/1000;
 		console.log(ms);
 		var status=data.status;
-		if(status=="N" && ms<=900){			
+		if(status=="N" && ms<=900 && ms>0){			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.reserveItem+"</td>");
 			var col3 = $("<td>"+advisoryTime+"</td>");
