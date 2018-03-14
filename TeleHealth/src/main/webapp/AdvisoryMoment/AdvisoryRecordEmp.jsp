@@ -16,6 +16,8 @@
 </head>
 <body>
 <jsp:include page="/fragment/navemp.jsp" />
+<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
+<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 <div class='container'>
 <h2  class='container'>即將進行諮詢</h2>
 <table class="table  table-hover">
@@ -93,11 +95,13 @@
         <h5 class="modal-title" id="TalkTitle">修改諮詢概要內容</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="modifyContent">
-        <!-- 結果 -->
-      </div>
+        </button>        
+      </div>     
+      <div class="modal-bodyfb" id="modifyContent">        
+      	<form>
+     	<textarea class="form-control" id="contents" rows="10" cols="80"></textarea>       
+        </form>  
+      </div>      
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal" id="Talk">OK</button>
       </div>
@@ -119,6 +123,15 @@
 </body>
 <script>
 $(document).ready(function(){
+	 CKEDITOR.replace('contents',{
+ 		filebrowserBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html',
+ 		filebrowserImageBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html?type=Images', 
+ 		filebrowserFlashBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html?type=Flash',
+ 		filebrowserUploadUrl : '/TeleHealth/forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files', 
+ 		filebrowserImageUploadUrl : '/TeleHealth/forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images', 
+ 		filebrowserFlashUploadUrl : '/TeleHealth/forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
+ 		});
+ 	console.log("ready!");
 	var empId =$("#empId").val();
 	var count = 0;
 	$.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
@@ -134,7 +147,6 @@ $(document).ready(function(){
 			$('#advisoryNum').css("display", "none");
 		}
 	});
-	getAdvisory(empId);
 	var empName = $("#empName").val();
 	LoadData();
 	var DataPackage;
@@ -243,7 +255,8 @@ $('#TalkList').on('click','tr button:nth-child(1)',function(){
 	  var modifyVideo = $(this).parents('tr').find('td:nth-child(2)').text();
 	 $.getJSON('/TeleHealth/selectadvisory.controller',{"videoCode":modifyVideo},function(data){
 				console.log(data);				
-				CKEDITOR.instances.contenttext.setData(data.data.descrip);	 					 	 					
+				CKEDITOR.instances.contents.setData(data.data.descrip);				
+						 					 	 					
 			}); 					
  	 });
 });
