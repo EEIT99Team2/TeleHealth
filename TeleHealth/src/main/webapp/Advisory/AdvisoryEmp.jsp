@@ -47,13 +47,6 @@ video {
 	<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 	<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 	<div class="container">
-<!-- 		<div id='login-page' class="row" > -->
-<!-- 			<div class="col-12 text-center" style="height:500px"> -->
-<!-- 				<h2>Login As</h2> -->
-<!-- 				<input type="text" id="username" /> -->
-<!-- 				<input type="button" id="login"	value="Login" /> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
 		<div id="call-page" class="row clearfix" style="margin-top: 50px">
 			<input type="hidden" id="user" value="${LoginOK.account}" />
 			<div class="col-5 float-left">
