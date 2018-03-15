@@ -58,17 +58,19 @@ public class DataAnalysisDAO {
 		DataAnalysisBean data = (DataAnalysisBean) query.uniqueResult();
 		return data;
 	}
-	//18歲以上BloobSugar
-	String bs ="select * from dataanalysis where groupid ='BloodSugar' and gender = ? and  ?>= minage and ?< maxage and ?>=minvalue and ?<=maxvalue";
-	public DataAnalysisBean bloodSugarUp18(String gender,Integer age,Double value) {
+	//18歲以上BloobSugar or HeartBeat
+	String bs ="select * from dataanalysis where groupid =? and gender = ? and  ?>= minage and ? <= maxage and ?>=minvalue and ?<=maxvalue";
+	public DataAnalysisBean Up18HBandBS(String groupid,String gender,Integer age,Double value) {
 		NativeQuery query = this.getSession().createNativeQuery(bs);
-		query.setParameter(1,gender);
-		query.setParameter(2,age);
+		query.setParameter(1,groupid);
+		query.setParameter(2,gender);
 		query.setParameter(3,age);
-		query.setParameter(4,value);
+		query.setParameter(4,age);
 		query.setParameter(5,value);
+		query.setParameter(6,value);
 		query.addEntity(DataAnalysisBean.class);
 		DataAnalysisBean data = (DataAnalysisBean) query.uniqueResult();
 		return data;
 	}
+	
 }

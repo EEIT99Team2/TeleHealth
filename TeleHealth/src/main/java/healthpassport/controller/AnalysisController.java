@@ -62,16 +62,16 @@ public class AnalysisController {
 			String strweight = returnweight.toString(); 
 			String strbmi = bmiResult.toString(); 
 			String stresult = result.getResult();
-			String strtime = result.getCreateTime().toString();
+			String strtime = sdf.format(result.getCreateTime()).toString();
 			dataOne.put("hei", strheight);
 			dataOne.put("wei", strweight);
 			dataOne.put("bmi", strbmi);
 			dataOne.put("bmiresult", stresult);
 			dataOne.put("time", strtime);
-
-//			String data = new Gson().toJson(datas);
-//			System.out.println(data);
-			return null;
+			
+			String data = new Gson().toJson(dataOne);
+			System.out.println(data);
+			return data;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return null;
@@ -108,7 +108,7 @@ public class AnalysisController {
 	}
 
 	@RequestMapping(
-			path= {"/healthpassport/newOneRecords.controller"},
+			path= {"/healthpassport/bmitopRecord.controller"},
 			method= {RequestMethod.GET,RequestMethod.POST},
 			produces="application/json;charset=UTF-8")
 	public @ResponseBody String newOneRecords(String memberid) {
@@ -144,41 +144,109 @@ public class AnalysisController {
 	}
 	
 	
-
-	//血壓
+//血壓
 	@RequestMapping(
 			path= {"/healthpassport/queryBloodPressure.controller"},
 			method= {RequestMethod.GET,RequestMethod.POST},
-			produces="application/json;charset=UTF-8")	
-	public @ResponseBody String queryBloodPressure(String memberid,String diastole,String systole,String heartBeat,
+			produces="application/json;charset=UTF-8")
+	public @ResponseBody String queryBloodPressure(String memberid,
 			String systoleData,String diastoleData,String heartBeatData,Model model) {
-//		String gender,String age
 		try {
 			//client傳進值
-			Integer SystoleD = Integer.parseInt(systoleData);
+			Integer systoleD = Integer.parseInt(systoleData);
 			Integer diastoleD = Integer.parseInt(diastoleData);
 			Integer heartBeatD = Integer.parseInt(heartBeatData);
-//			Integer Age =Integer.parseInt(age);
-//			String gender = ?
-			String d = diastole;
-			String s = systole;
-			String h = heartBeat;
+
 			BloodPressureBean bean = new BloodPressureBean();
 			bean.setMemberid(memberid);
-			bean.setMaxBloodPressure(SystoleD);
+			bean.setMaxBloodPressure(systoleD);
 			bean.setMinBloodPressure(diastoleD);
 			bean.setHeartBeat(heartBeatD);
-			BloodPressureBean bpresult = bloodPressureService.insert(bean,gender,age,d,s,h);
+			BloodPressureBean bpresult = bloodPressureService.insert(bean,gender,age);
 			String result = bpresult.getResult();
 			System.out.println(result);
 			return result;
-//			return "bloodPressure";
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
-	}	
+	}
+	//查詢血壓紀錄
+	@RequestMapping(
+			path= {"/healthpassport/bloodPressureRecords.controller"},
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8")
+	public @ResponseBody String bpRecords(String memberid) {
+		
+		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<BloodPressureBean> result = bloodPressureService.selectMemberid(memberid);
+		for(int i=0 ; i<result.size() ; i++) {
+			HashMap<String, String> dataOne = new HashMap<String, String>();
+			String systole = result.get(i).getMaxBloodPressure().toString();
+			String diastole = result.get(i).getMinBloodPressure().toString();
+			String heartBeat = result.get(i).getHeartBeat().toString();
+			String bpResult = result.get(i).getResult();
+			String createTime =sdf.format(result.get(i).getCreateTime());
+			dataOne.put("systole", systole);
+			dataOne.put("diastole", diastole);
+			dataOne.put("heartBeat", heartBeat);
+			dataOne.put("bpResult", bpResult);
+			dataOne.put("createTime", createTime);
+			datafinal.add(dataOne);
+		}
+		HashMap<String,LinkedList<HashMap<String,String>>> datas = new HashMap<String,LinkedList<HashMap<String,String>>>();
+		datas.put("data", datafinal);
+		String data = new Gson().toJson(datas);
+		System.out.println("JSON=" + data);
+		return data;
+	}
+	
+	//當網頁開啟給予上次資料
+	@RequestMapping(
+			path= {"/healthpassport/bptopRecord.controller"},
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8")
+	public @ResponseBody String bpnewOneRecords(String memberid) {
+		BloodPressureBean bean = new BloodPressureBean();
+		bean.setMemberid(memberid);
+		BloodPressureBean result = bloodPressureService.newOne(memberid);
+		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+		HashMap<String, String> dataOne = new HashMap<String, String>();
+		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String getmaxbp  = result.getMaxBloodPressure().toString();
+		String getminbp = result.getMinBloodPressure().toString();
+		String gethb = result.getHeartBeat().toString();
+		String getresult = result.getResult();
+		String time = sdf.format(result.getCreateTime());
+		dataOne.put("maxbp", getmaxbp);
+		dataOne.put("minbp", getminbp);
+		dataOne.put("hb", gethb);
+		dataOne.put("rs", getresult);
+		dataOne.put("t", time);
+		datafinal.add(dataOne);
+		datas.put("topbp",datafinal);
+		String data = new Gson().toJson(datas);
+		System.out.println(data);
+		return data;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping(
 			path= {"/healthpassport/queryBloodSugar.controller"},
@@ -189,17 +257,64 @@ public class AnalysisController {
 		//clinet端值
 		try {
 			Integer bSugar = Integer.parseInt(bloodsugar);
-			
 			BloodSugarBean bean= new BloodSugarBean();
 			bean.setMemberId(memberid);
 			bean.setBloodSugar(bSugar);
 			BloodSugarBean result = BloodSugarService.insert(bean,gender,age);
-			return null;
-//		return "bloodSugar";
+			String bloodsugarresult = new Gson().toJson(result);
+			return bloodsugarresult;
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
+	}
+	@RequestMapping(
+			path= {"/healthpassport/bloodSugarRecords.controller"},
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8")
+	public @ResponseBody String bsRecords(String memberid) {		
+		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<BloodSugarBean> result = BloodSugarService.selectMemberid(memberid);
+		for(int i=0 ; i<result.size() ; i++) {
+			HashMap<String, String> dataOne = new HashMap<String, String>();
+			String bloodSugar = result.get(i).getBloodSugar().toString();
+			String bsResult = result.get(i).getResult();
+			String createTime =sdf.format(result.get(i).getCreateTime());
+			dataOne.put("bloodSugar", bloodSugar);			
+			dataOne.put("bsResult", bsResult);
+			dataOne.put("createTime", createTime);
+			datafinal.add(dataOne);
+		}
+		HashMap<String,LinkedList<HashMap<String,String>>> datas = new HashMap<String,LinkedList<HashMap<String,String>>>();
+		datas.put("data", datafinal);
+		String data = new Gson().toJson(datas);
+		System.out.println("JSON=" + data);
+		return data;
+	}
+	
+	@RequestMapping(
+			path= {"/healthpassport/bstopRecord.controller"},
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8")
+	public @ResponseBody String bsnewOneRecords(String memberid) {
+		BloodSugarBean bean = new BloodSugarBean();
+		bean.setMemberId(memberid);
+		BloodSugarBean result = BloodSugarService.newOne(memberid);
+		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+		HashMap<String, String> dataOne = new HashMap<String, String>();
+		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String getbs  = result.getBloodSugar().toString();
+		String getbsresult = result.getResult();
+		String time = sdf.format(result.getCreateTime());
+		dataOne.put("getbs", getbs);	
+		dataOne.put("getbsresult", getbsresult);
+		dataOne.put("t", time);
+		datafinal.add(dataOne);
+		datas.put("topbs",datafinal);
+		String data = new Gson().toJson(datas);
+		System.out.println(data);
+		return data;
 	}
 }
