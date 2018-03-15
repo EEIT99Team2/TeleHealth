@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="/fragment/navemp.jsp" />
+<jsp:include page="/fragment/nav2.jsp" />
 <script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 <script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 <div class='container'>
@@ -142,6 +142,7 @@ $(document).ready(function(){
 				count++;
 			}
 		});
+		console.log("count="+count);
 		$('#advisoryNum').text(count);
 		if(count == 0) {
 			$('#advisoryNum').css("display", "none");
