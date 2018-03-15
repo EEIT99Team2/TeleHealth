@@ -448,7 +448,7 @@ public class AnalysisController {
 	public @ResponseBody String bmiRecordsseven(String memberid) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<BMIBean> result = bmiService.selectMemberid(memberid);
+		List<BMIBean> result = bmiService.selectMemberidseven(memberid);
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String height = result.get(i).getHeight().toString();

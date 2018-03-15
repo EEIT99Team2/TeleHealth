@@ -1,5 +1,7 @@
 package healthpassport.model.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -47,13 +49,18 @@ public class BloodPressureDAO {
 			String sevenday="select * from BloodPressureRecords where memberid = ? and createTime between ? and ? order by createTime desc";
 			public List<BloodPressureBean> sevenData(String memberid) {
 				NativeQuery query = this.getSession().createNativeQuery(sevenday);		
-				int days = 7;
-				Date date = new Date();
-				long res = (date.getTime()-(days*24*60*60*1000));			
-				java.util.Date dt = new Date(res);	 		
-				query.setParameter(1,memberid);
-				query.setParameter(2,dt);
-				query.setParameter(3,date);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date today = new Date();
+				String endDate = sdf.format(today);// 当前日期
+				// 获取三十天前日期
+				Calendar theCa = Calendar.getInstance();
+				theCa.setTime(today);
+				theCa.add(theCa.DATE, -7);// 最后一个数字30可改，30天的意思
+				Date start = theCa.getTime();
+				String startDate = sdf.format(start);// 三十天之前日期		
+				query.setParameter(1, memberid);
+				query.setParameter(2, startDate);
+				query.setParameter(3, endDate);
 				query.addEntity(BMIBean.class);
 				List<BloodPressureBean> data = (List<BloodPressureBean>) query.list();
 				return data;
@@ -62,13 +69,18 @@ public class BloodPressureDAO {
 			String thirtyday="select * from BloodPressureRecords where memberid = ? and createTime between ? and ? order by createTime desc";
 			public List<BloodPressureBean> thirtyData(String memberid) {
 				NativeQuery query = this.getSession().createNativeQuery(sevenday);		
-				int days = 30;
-				Date date = new Date();
-				long res = (date.getTime()-(days*24*60*60*1000));			
-				java.util.Date dt = new Date(res);	 		
-				query.setParameter(1,memberid);
-				query.setParameter(2,dt);
-				query.setParameter(3,date);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date today = new Date();
+				String endDate = sdf.format(today);// 当前日期
+				// 获取三十天前日期
+				Calendar theCa = Calendar.getInstance();
+				theCa.setTime(today);
+				theCa.add(theCa.DATE, -30);// 最后一个数字30可改，30天的意思
+				Date start = theCa.getTime();
+				String startDate = sdf.format(start);// 三十天之前日期		
+				query.setParameter(1, memberid);
+				query.setParameter(2, startDate);
+				query.setParameter(3, endDate);
 				query.addEntity(BMIBean.class);
 				List<BloodPressureBean> data = (List<BloodPressureBean>) query.list();
 				return data;
@@ -77,14 +89,19 @@ public class BloodPressureDAO {
 				String thrmonthday="select * from BloodSugarRecords where memberid = ? and createTime between ? and ? order by createTime desc";
 				public List<BloodPressureBean> thrmonthData(String memberid) {
 					NativeQuery query = this.getSession().createNativeQuery(sevenday);		
-					int days = 180;
-					Date date = new Date();
-					long res = (date.getTime()-(days*24*60*60*1000));			
-					java.util.Date dt = new Date(res);	 		
-					query.setParameter(1,memberid);
-					query.setParameter(2,dt);
-					query.setParameter(3,date);
-					query.addEntity(BMIBean.class);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					Date today = new Date();
+					String endDate = sdf.format(today);// 当前日期
+					// 获取三十天前日期
+					Calendar theCa = Calendar.getInstance();
+					theCa.setTime(today);
+					theCa.add(theCa.DATE, -180);// 最后一个数字30可改，30天的意思
+					Date start = theCa.getTime();
+					String startDate = sdf.format(start);// 三十天之前日期		
+					query.setParameter(1, memberid);
+					query.setParameter(2, startDate);
+					query.setParameter(3, endDate);
+					query.addEntity(BloodPressureBean.class);
 					List<BloodPressureBean> data = (List<BloodPressureBean>) query.list();
 					return data;
 				}		

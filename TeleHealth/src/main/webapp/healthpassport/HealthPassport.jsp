@@ -378,8 +378,7 @@
 		$(document).ready(function() {
 			var weight;
 			var height;
-			var BMI;
-			$('#bmiselect').click(bmitable());
+			var BMI;					
 			$.getJSON("<c:url value='/healthpassport/bmitopRecord.controller'/>",{'memberid':memberid},function(oneData){
 	 			console.log(oneData); 			
 	  		 	$('#showHeight').empty();
@@ -413,7 +412,6 @@
 		       	$('#bpResult').prepend('<h4><small>'+'血壓結果 --> '+result+'</small></h4>');
 	                })
 	           });
-
 	 		$.getJSON("<c:url value='/healthpassport/bstopRecord.controller'/>",{'memberid':memberid},function(data){
 	 			console.log(data); 			 			
 	 			$.each(data,function(i,value){
@@ -427,7 +425,6 @@
 				$('#bloodsugarMsg').empty();		
 	 			})
 	           });
-
 			$('#calBMI').click(calBMI);
 			function calBMI() {
 			     try {
@@ -473,7 +470,7 @@
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 				}
 			});
-			$('#insert').click(function(){
+			$('#insert').click(function(){				 
 				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'memberid':memberid,'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
 	                	console.log(data);
 	                	$('#showHeight').empty();
@@ -488,10 +485,8 @@
 						$('#insert_weight').val("");
 						$('#insert_bmi').val("");
 						$('#heiMsg').empty();
-						$('#weiMsg').empty();
-						bmitable();
-						bmiview();
-	             })
+						$('#weiMsg').empty();												
+	             })	            
 			});
 
 			$('#bmiselect').click(bmitable());
@@ -579,9 +574,7 @@
 		});
 			
  	 }
-
 <!-- 血壓 -->
-
 			var systole;
 			var diastole;
 			var heartBeat;
@@ -781,7 +774,6 @@
 
 
 	<!--  血糖 -->
-
 		$('#bsrecords').click(bstable());
 		$('#bsrecords').click(bsview());
 
@@ -842,8 +834,7 @@
 	//bs圖表
 	var bsdates=[];
 	var bsdatas=[];
-function bsview(){
-	console.log("1223")
+function bsview(){	
 		$.getJSON('/TeleHealth/healthpassport/bloodSugarRecords.controller',{memberid:memberid},function(result){
 			 console.log(result);
 			$.each(result.data,function(index,value) {
@@ -894,9 +885,242 @@ function bsview(){
 	    }
 	});	
 	 }
-
-
 	});
+$("#bmiweek").on('click',function(){
+	$.getJSON('/TeleHealth/healthpassport/bmirecordsseven.controller',{memberid:memberid},function(datas){
+		console.log(datas.data);
+		var datesbmi=[];
+		var datasbmi=[];			
+		$.each(datas.data,function(i,value) {			
+				var date = moment(value.createTime).format('MM/DD HH:mm');
+				datesbmi.push(date);
+				var bmiresult = value.bmi;
+				datasbmi.push(bmiresult);
+			});
+			var ctx = $("#mychart1")								
+			var myChart = new Chart(ctx, {
+			    type: 'line',
+			    data: {
+			        labels: datesbmi,
+			        datasets: [{
+			            label: '一星期測量圖',
+			            data: datasbmi,
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(255, 206, 86, 0.2)',
+			                'rgba(75, 192, 192, 0.2)',
+			                'rgba(153, 102, 255, 0.2)',
+			                'rgba(255, 159, 64, 0.2)'
+			            ],
+			            order:[datesbmi,'desc'],
+			            order:[datasbmi,'desc'],
+			            borderColor: [
+			                'rgba(255,99,132,1)',
+			                'rgba(54, 162, 235, 1)',
+			                'rgba(255, 206, 86, 1)',
+			                'rgba(75, 192, 192, 1)',
+			                'rgba(153, 102, 255, 1)',
+			                'rgba(255, 159, 64, 1)'
+			            ],
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                   beginAtZero:true
+			                }
+			            }]
+			        }
+			    }
+			});
+			$('#bmiTable').dataTable().fnDestroy(); 
+			$('#bmiTable').DataTable({
+			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
+			    "columns": [
+			        { "data": "height" },
+			        { "data": "weight" },
+			        { "data": "bmi" },
+			        { "data": "bmiResult" },
+			        { "data": "createTime" }
+			    ],
+			    "order": [[ 4, 'desc' ]],
+				"bProcessing": true,//顯示處理中的圖樣
+				"oLanguage": {
+			    "sLengthMenu": " _MENU_ 筆/頁",
+			    "sZeroRecords": "找不到符合的資料。",
+			    "sInfo": "共 _MAX_ 筆",
+			    "sSearch": "搜尋",
+			    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+			    "sInfoEmpty": "共 0 頁",
+			    "oPaginate": {
+			        "sPrevious": "«",
+			        "sNext": "»"
+			  	 	 }
+					}
+				});
+
+
+		})
+});
+$("#bmimonth").on('click',function(){
+	$.getJSON('/TeleHealth/healthpassport/bmirecordsthirty.controller',{memberid:memberid},function(datas){
+		console.log(datas.data);
+		var datesbmi=[];
+		var datasbmi=[];			
+		$.each(datas.data,function(i,value) {			
+				var date = moment(value.createTime).format('MM/DD HH:mm');
+				datesbmi.push(date);
+				var bmiresult = value.bmi;
+				datasbmi.push(bmiresult);
+			});
+			var ctx = $("#mychart1")								
+			var myChart = new Chart(ctx, {
+			    type: 'line',
+			    data: { 
+			        labels: datesbmi,
+			        datasets: [{
+			            label: '一個月測量圖',
+			            data: datasbmi,
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(255, 206, 86, 0.2)',
+			                'rgba(75, 192, 192, 0.2)',
+			                'rgba(153, 102, 255, 0.2)',
+			                'rgba(255, 159, 64, 0.2)'
+			            ],
+			            order:[datesbmi,'desc'],
+			            order:[datasbmi,'desc'],
+			            borderColor: [
+			                'rgba(255,99,132,1)',
+			                'rgba(54, 162, 235, 1)',
+			                'rgba(255, 206, 86, 1)',
+			                'rgba(75, 192, 192, 1)',
+			                'rgba(153, 102, 255, 1)',
+			                'rgba(255, 159, 64, 1)'
+			            ],
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                   beginAtZero:true
+			                }
+			            }]
+			        }
+			    }
+			});
+			$('#bmiTable').dataTable().fnDestroy(); 
+			$('#bmiTable').DataTable({
+			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
+			    "columns": [
+			        { "data": "height" },
+			        { "data": "weight" },
+			        { "data": "bmi" },
+			        { "data": "bmiResult" },
+			        { "data": "createTime" }
+			    ],
+			    "order": [[ 4, 'desc' ]],
+				"bProcessing": true,//顯示處理中的圖樣
+				"oLanguage": {
+			    "sLengthMenu": " _MENU_ 筆/頁",
+			    "sZeroRecords": "找不到符合的資料。",
+			    "sInfo": "共 _MAX_ 筆",
+			    "sSearch": "搜尋",
+			    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+			    "sInfoEmpty": "共 0 頁",
+			    "oPaginate": {
+			        "sPrevious": "«",
+			        "sNext": "»"
+			  	 	 }
+					}
+				});
+		})
+});
+$("#bmithreemonth").on('click',function(){
+	$.getJSON('/TeleHealth/healthpassport/bmirecordsthreemon.controller',{memberid:memberid},function(datas){
+		console.log(datas.data);
+		var datesbmi=[];
+		var datasbmi=[];			
+		$.each(datas.data,function(i,value) {			
+				var date = moment(value.createTime).format('MM/DD HH:mm');
+				datesbmi.push(date);
+				var bmiresult = value.bmi;
+				datasbmi.push(bmiresult);
+			});
+			var ctx = $("#mychart1")								
+			var myChart = new Chart(ctx, {
+			    type: 'line',
+			    data: {
+			        labels: datesbmi,
+			        datasets: [{
+			            label: '三個月測量圖',
+			            data: datasbmi,
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(255, 206, 86, 0.2)',
+			                'rgba(75, 192, 192, 0.2)',
+			                'rgba(153, 102, 255, 0.2)',
+			                'rgba(255, 159, 64, 0.2)'
+			            ],
+			            order:[datesbmi,'desc'],
+			            order:[datasbmi,'desc'],
+			            borderColor: [
+			                'rgba(255,99,132,1)',
+			                'rgba(54, 162, 235, 1)',
+			                'rgba(255, 206, 86, 1)',
+			                'rgba(75, 192, 192, 1)',
+			                'rgba(153, 102, 255, 1)',
+			                'rgba(255, 159, 64, 1)'
+			            ],
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                   beginAtZero:true
+			                }
+			            }]
+			        }
+			    }
+			});
+			$('#bmiTable').dataTable().fnDestroy(); 
+			$('#bmiTable').DataTable({
+			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
+			    "columns": [
+			        { "data": "height" },
+			        { "data": "weight" },
+			        { "data": "bmi" },
+			        { "data": "bmiResult" },
+			        { "data": "createTime" }
+			    ],
+			    "order": [[ 4, 'desc' ]],
+				"bProcessing": true,//顯示處理中的圖樣
+				"oLanguage": {
+			    "sLengthMenu": " _MENU_ 筆/頁",
+			    "sZeroRecords": "找不到符合的資料。",
+			    "sInfo": "共 _MAX_ 筆",
+			    "sSearch": "搜尋",
+			    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+			    "sInfoEmpty": "共 0 頁",
+			    "oPaginate": {
+			        "sPrevious": "«",
+			        "sNext": "»"
+			  	 	 }
+					}
+				});
+
+
+		})
+});
 				     
 
  	
