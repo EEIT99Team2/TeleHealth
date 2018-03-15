@@ -60,7 +60,8 @@ public class BloodPressureService {
 			DiastoleResult ="偏高";
 		}		
 		//心跳值
-		String HeartBeatResult = HeartBeat.getResult();		
+		String HeartBeatResult = HeartBeat.getResult();
+		System.out.println(HeartBeatResult);
 		if(HB<50) {
 			HeartBeatResult="太慢";
 		}else if(HB>110){

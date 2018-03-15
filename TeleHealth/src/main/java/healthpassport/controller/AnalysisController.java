@@ -68,7 +68,6 @@ public class AnalysisController {
 			dataOne.put("bmi", strbmi);
 			dataOne.put("bmiresult", stresult);
 			dataOne.put("time", strtime);
-			
 			String data = new Gson().toJson(dataOne);
 			System.out.println(data);
 			return data;
@@ -162,10 +161,10 @@ public class AnalysisController {
 			bean.setMaxBloodPressure(systoleD);
 			bean.setMinBloodPressure(diastoleD);
 			bean.setHeartBeat(heartBeatD);
-			BloodPressureBean bpresult = bloodPressureService.insert(bean,gender,age);
-			String result = bpresult.getResult();
-			System.out.println(result);
-			return result;
+			BloodPressureBean bpresult = bloodPressureService.insert(bean,gender,age);			
+			String data = new Gson().toJson(bpresult);
+			System.out.println("JSON=" + data);
+			return data;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return null;
@@ -233,21 +232,6 @@ public class AnalysisController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	@RequestMapping(
 			path= {"/healthpassport/queryBloodSugar.controller"},
 			method= {RequestMethod.GET,RequestMethod.POST},

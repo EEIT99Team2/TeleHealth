@@ -6,21 +6,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>健康護照</title>
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>" />
+<!-- Custom styles for this template -->
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/css/index.css"/>" />
 
 <style type="text/css">
 .insertBtn {
 	width: 16px;
 }
+
 .chk {
 	width: 16px;
 }
-
 </style>
 </head>
 <body>
-<jsp:include page="/fragment/nav2.jsp" />
+	<jsp:include page="/fragment/nav2.jsp" />
 	<div class="container">
 		<h2>健康數據指標</h2>
 		<div class="row">
@@ -77,10 +78,16 @@
 			<div class="col-9">
 				<div class="row">
 					<div class="col-4 text-center">
-						<h1 id="showHeight"></h1><h2><small>公分</small></h2>
+						<h1 id="showHeight"></h1>
+						<h2>
+							<small>公分</small>
+						</h2>
 					</div>
 					<div class="col-4 text-center">
-						<h1 id="showWeight"></h1><h2><small>公斤</small></h2>
+						<h1 id="showWeight"></h1>
+						<h2>
+							<small>公斤</small>
+						</h2>
 					</div>
 					<div class="col-4 text-center">
 						<h4 id="showTime"></h4>
@@ -97,9 +104,17 @@
 					<div class="col-12 text-center">
 						<div class="collapse container" id="collapseExample">
 							<div class="card card-body table-responsive">
-<!-- 圖表 -->
-<canvas id="mychart1" height="200" width="400"></canvas>
-<hr>
+								<div>
+									<button type="button" id='bmiweek'
+										class="btn btn-outline-primary">一星期</button>
+									<button type="button" id='bmimonth'
+										class="btn btn-outline-primary">一個月</button>
+									<button type="button" id='bmithreemonth'
+										class="btn btn-outline-primary">三個月</button>
+								</div>
+								<!-- 圖表 -->
+								<canvas id="mychart1" height="200" width="400"></canvas>
+								<hr>
 								<table id='bmiTable' width="100%"
 									class="table table-bordered table-striped table-hover ">
 									<thead class="table-dark">
@@ -114,7 +129,7 @@
 									<tbody>
 
 									</tbody>
-</table>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -180,10 +195,16 @@
 			<div class="col-9">
 				<div class="row">
 					<div class="col-4 text-center">
-						<h1 id="showBloodPressure"></h1><h2><small>mmHg</small></h2>
+						<h1 id="showBloodPressure"></h1>
+						<h2>
+							<small>mmHg</small>
+						</h2>
 					</div>
 					<div class="col-4 text-center">
-						<h1 id="showHeartBeat"></h1><h2><small>次/分</small></h2>
+						<h1 id="showHeartBeat"></h1>
+						<h2>
+							<small>次/分</small>
+						</h2>
 					</div>
 					<div class="col-4 text-center">
 						<h4 id="showbpTime"></h4>
@@ -200,9 +221,17 @@
 					<div class="col-12 text-center">
 						<div class="collapse container" id="bp">
 							<div class="card card-body">
-<!-- 圖表 -->
-<canvas id="mychart2" height="200" width="400"></canvas>
-<hr>
+								<div>
+									<button type="button" id='bpweek'
+										class="btn btn-outline-primary">一星期</button>
+									<button type="button" id='bpmonth'
+										class="btn btn-outline-primary">一個月</button>
+									<button type="button" id='bpthreemonth'
+										class="btn btn-outline-primary">三個月</button>
+								</div>
+								<!-- 圖表 -->
+								<canvas id="mychart2" height="200" width="400"></canvas>
+								<hr>
 								<table id='bpTable' width="100%"
 									class="table table-bordered table-striped table-hover ">
 									<thead class="table-dark">
@@ -217,7 +246,7 @@
 									<tbody>
 
 									</tbody>
-</table>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -277,7 +306,13 @@
 			<div class="col-9">
 				<div class="row">
 					<div class="col-4 text-center">
-						<h1 id="showBloodSugar"></h1><h2><small>mmHg</small></h2>
+						<h1 id="showBloodSugar"></h1>
+						<h2>
+							<small>mmHg</small>
+						</h2>
+					</div>
+					<div class="col-4 text-center">
+						<h4></h4>
 					</div>
 					<div class="col-4 text-center">
 						<h4 id="showbsTime"></h4>
@@ -294,9 +329,17 @@
 					<div class="col-12 text-center">
 						<div class="collapse container" id="bs">
 							<div class="card card-body">
-<!-- 圖表 -->
-<canvas id="mychart3" height="200" width="400"></canvas>
-<hr>
+								<div>
+									<button type="button" id='bsweek'
+										class="btn btn-outline-primary">一星期</button>
+									<button type="button" id='bsmonth'
+										class="btn btn-outline-primary">一個月</button>
+									<button type="button" id='bsthreemonth'
+										class="btn btn-outline-primary">三個月</button>
+								</div>
+								<!-- 圖表 -->
+								<canvas id="mychart3" height="200" width="400"></canvas>
+								<hr>
 								<table id='bsTable' width="100%"
 									class="table table-bordered table-striped table-hover ">
 									<thead class="table-dark">
@@ -309,7 +352,7 @@
 									<tbody>
 
 									</tbody>
-</table>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -318,11 +361,16 @@
 		</div>
 	</div>
 	<jsp:include page="/fragment/footer.jsp" />
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-	<script src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+	<script
+		src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
 	<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 	<!--  計算BMI -->
 	<script type="text/javascript">
@@ -351,8 +399,6 @@
 	                })
 	           });
 			
-	 		
-	 		
 	 		$.getJSON("<c:url value='/healthpassport/bptopRecord.controller'/>",{'memberid':memberid},function(oneData){
 	 			console.log(oneData); 			
 	            $.each(oneData,function(i,value){               
@@ -364,12 +410,10 @@
 	    		$('#showBloodPressure').prepend(sysbp+'\/'+diabp);
 		       	$('#showHeartBeat').prepend(hb);
 		       	$('#showbpTime').prepend(time);
-		       	$('#bpResult').prepend('<h4><small>'+'結果為 --> '+result+'</small></h4>');
+		       	$('#bpResult').prepend('<h4><small>'+'血壓結果 --> '+result+'</small></h4>');
 	                })
 	           });
 
-
-	 			
 	 		$.getJSON("<c:url value='/healthpassport/bstopRecord.controller'/>",{'memberid':memberid},function(data){
 	 			console.log(data); 			 			
 	 			$.each(data,function(i,value){
@@ -378,13 +422,11 @@
 		 	    $('#bsResult').empty();		 	    
 	         	$('#showBloodSugar').prepend(value[0].getbs);	    	      
 	 	       	$('#showbsTime').prepend(value[0].t);
-	 	       	$('#bsResult').prepend('<h4><small>'+'BloodSugar --> '+value[0].getbs+'\|'+value[0].getbsresult+'</small></h4>');
+	 	       	$('#bsResult').prepend('<h4><small>'+'血糖結果 --> '+value[0].getbs+'\|'+value[0].getbsresult+'</small></h4>');
 	 	       	$('#insert_bloodsugar').val("");				
 				$('#bloodsugarMsg').empty();		
 	 			})
 	           });
-
-
 
 			$('#calBMI').click(calBMI);
 			function calBMI() {
@@ -447,13 +489,13 @@
 						$('#insert_bmi').val("");
 						$('#heiMsg').empty();
 						$('#weiMsg').empty();
-						bmitable()
+						bmitable();
 						bmiview();
-	                	
 	             })
-	             
-					
 			});
+
+			$('#bmiselect').click(bmitable());
+			$('#miselect').click(bmiview());
 			
 //bmi載入會員記錄
 			function bmitable(){
@@ -600,24 +642,28 @@
 					alert("三個欄位都要輸入")
 					$('#insertBP').prop("disabled", true);
 				}else{
-
 				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'memberid':memberid,'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat}, function(data){
-	                	//data就是Server回傳的結果
-// 	                	JSON.parse(data);
-	             });
-// 	                	$('#showBloodPressure').
-// 	                	$('#showHeartBeat').
-	                	$('#insert_systole').val("");
+					 console.log(data);
+					 	$('#showBloodPressure').empty();
+				       	$('#showHeartBeat').empty();
+				       	$('#showbpTime').empty();
+				       	$('#bpResult').empty();
+					 	$('#showBloodPressure').prepend(data.maxBloodPressure+'\/'+data.minBloodPressure);
+				       	$('#showHeartBeat').prepend(data.heartBeat);
+				       	$('#showbpTime').prepend(data.createTime);
+				       	$('#bpResult').prepend('<h4><small>'+'血壓結果 --> '+data.result+'</small></h4>');
+				    	$('#insert_systole').val("");
 	                	$('#insert_diastole').val("");
 	                	$('#insert_heartBeat').val("");
 	                	$('#systoleMsg').empty();
 	                	$('#diastoleMsg').empty();
 	                	$('#heartBeatMsg').empty();
+	                	
+	             });                
 	         }
 			});
 			$('#bpselect').click(bpTable());
-			$('#bpselect').click(bpview());
-			
+			$('#bpselect').click(bpview());			
 //血壓載入會員記錄
 			function bpTable(){
 				$('#bpTable').dataTable().fnDestroy(); 
@@ -731,10 +777,10 @@
 		});
 			
 	 }
-		$('#bsrecords').click(bstable());
-		$('#bsrecords').click(bsview());
 
 	<!--  血糖 -->
+		$('#bsrecords').click(bstable());
+		$('#bsrecords').click(bsview());
 			var bloodsugar;
 			var re = /^[0-9]+$/;
 			$('#insert_bloodsugar').blur(function() {
@@ -757,12 +803,11 @@
 	    	       	$('#showbsTime').prepend(data.createTime);
 	    	       	$('#bsResult').prepend('<h4><small>'+'BloodSugar --> '+data.bloodSugar+'\|'+data.result+'</small></h4>');
 	    	       	$('#insert_bloodsugar').val("");				
-					$('#bloodsugarMsg').empty();					
-					bstable();
-					bsview();
-	                
-	             })
-			});	
+					$('#bloodsugarMsg').empty(); 
+					               
+	             })	             
+	             bsview();
+	 			});	
 			
 //bs載入會員記錄
 			function bstable(){
@@ -792,8 +837,8 @@
 			};	
 
 	//bs圖表
-	var dates=[];
-	var datas=[];
+	var bsdates=[];
+	var bsdatas=[];
 function bsview(){
 	console.log("1223")
 		$.getJSON('/TeleHealth/healthpassport/bloodSugarRecords.controller',{memberid:memberid},function(result){
@@ -801,51 +846,50 @@ function bsview(){
 			$.each(result.data,function(index,value) {
 				console.log(value);
 				var date = moment(value.createTime).format('MM/DD HH:mm');
-				dates.push(date);
+				bsdates.push(date);
 				var bloodSugar = value.bloodSugar;
-				datas.push(bloodSugar);
-			});
-			var ctx = $("#mychart3")
-			var myChart = new Chart(ctx, {
-			    type: 'line',
-			    data: {
-			        labels: dates,
-			        datasets: [{
-			            label: '2018',
-			            data: datas,
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0.2)',
-			                'rgba(54, 162, 235, 0.2)',
-			                'rgba(255, 206, 86, 0.2)',
-			                'rgba(75, 192, 192, 0.2)',
-			                'rgba(153, 102, 255, 0.2)',
-			                'rgba(255, 159, 64, 0.2)'
-			            ],
-			            order:[dates,'desc'],
-			            order:[datas,'desc'],
-			            borderColor: [
-			                'rgba(255,99,132,1)',
-			                'rgba(54, 162, 235, 1)',
-			                'rgba(255, 206, 86, 1)',
-			                'rgba(75, 192, 192, 1)',
-			                'rgba(153, 102, 255, 1)',
-			                'rgba(255, 159, 64, 1)'
-			            ],
-			            borderWidth: 1
-			        }]
-			    },
-			    options: {
-			        scales: {
-			            yAxes: [{
-			                ticks: {
-			                   beginAtZero:true
-			                }
-			            }]
-			        }
-			    }
-			});
+				bsdatas.push(bloodSugar);
+			});			
 		});
-			
+	  var ctx = $("#mychart3")
+	  var myChart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: bsdates,
+	        datasets: [{
+	            label: '2018',
+	            data: bsdatas,
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            order:[dates,'desc'],
+	            order:[datas,'desc'],
+	            borderColor: [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                   beginAtZero:true
+	                }
+	            }]
+	        }
+	    }
+	});	
 	 }
 
 
