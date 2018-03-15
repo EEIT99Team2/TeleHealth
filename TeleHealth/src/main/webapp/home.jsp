@@ -12,6 +12,18 @@
 	padding-left: 10em;
 	width: 90%;
 }
+.div_right_bottom {
+	width:300px;
+	height:300px;
+	padding:10px;
+	float:right;
+	position:fixed;
+	right:0px;
+	bottom:0px;
+	z-index:20;
+	border:2px solid #69c;
+	_position:absolute; /* position fixed for IE6 */
+}
 </style>
 </head>
 
@@ -145,9 +157,21 @@
 			</div>
 		</div>
 	</section>
+	<div class="div_right_bottom" style="background: navajowhite;">
+		<div style="border-bottom: 1px red solid">
+			<span>線上諮詢</span>
+		</div>
+		<div style="background: navajowhite; height:70%">
+			
+		</div>
+		<div class="row" style="background: navajowhite;">
+			<textarea style="border: 1px red solid; width:60%" cols="5" id="inputMsg"></textarea>
+			<button style='width:10%'>送出</button>
+		</div>
+	</div>
 	<jsp:include page="/fragment/footer.jsp" />
 </body>
-<!-- </body> -->
+
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -247,6 +271,16 @@
 															})
 										})
 					})
+					
 </script>
-<script src="<c:url value="/js/agency.min.js"/>"></script>
+<!--Start of Zendesk Chat Script-->
+<!-- <script type="text/javascript"> -->
+// window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+// d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+// _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+// $.src="https://v2.zopim.com/?5YaBt8JJAcDDLMRWkjhB3EUIQfZXywg7";z.t=+new Date;$.
+// type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+<!-- </script> -->
+<!-- <!--End of Zendesk Chat Script--> -->
+<%-- <script src="<c:url value="/js/agency.min.js"/>"></script> --%>
 </html>
