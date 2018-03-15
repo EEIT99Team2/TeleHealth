@@ -18,35 +18,43 @@ import register.model.MemberBean;
 public class EmployeesDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	public Session getSession() {
-		System.out.println("session="+sessionFactory);
+		System.out.println("session=" + sessionFactory);
 		return sessionFactory.getCurrentSession();
 	}
-	
-	//增加員工預約次數
-	public int addResCount(String empId){
-		String hql="UPDATE EmployeesBean SET reserveCount=reserveCount+1 WHERE empId=?";
-		Query<EmployeesBean> query=this.getSession().createQuery(hql);
+
+	// 增加員工預約次數
+	public int addResCount(String empId) {
+		String hql = "UPDATE EmployeesBean SET reserveCount=reserveCount+1 WHERE empId=?";
+		Query<EmployeesBean> query = this.getSession().createQuery(hql);
 		query.setParameter(0, empId);
-		int result= query.executeUpdate();
+		int result = query.executeUpdate();
 		return result;
-	}
-	
-	//增加員工請假次數
-	public int addTakeoffCount(String empId){
-		String hql="UPDATE EmployeesBean SET takeOff=takeOff+1 WHERE empId=?";
-		Query<EmployeesBean> query=this.getSession().createQuery(hql);
-		query.setParameter(0, empId);
-		int result= query.executeUpdate();
-		return result;
-		}
-	//驗證員工
-	public EmployeesBean selectByAccount(String account) {			
-		Query<EmployeesBean> list = this.getSession().createQuery("from EmployeesBean where account=?",EmployeesBean.class);
-		list.setParameter(0, account);
-		EmployeesBean result=list.uniqueResult();
-		return result;
-		}	
 	}
 
+	// 增加員工請假次數
+	public int addTakeoffCount(String empId) {
+		String hql = "UPDATE EmployeesBean SET takeOff=takeOff+1 WHERE empId=?";
+		Query<EmployeesBean> query = this.getSession().createQuery(hql);
+		query.setParameter(0, empId);
+		int result = query.executeUpdate();
+		return result;
+	}
+
+	// 驗證員工
+	public EmployeesBean selectByAccount(String account) {
+		Query<EmployeesBean> list = this.getSession().createQuery("from EmployeesBean where account=?",
+				EmployeesBean.class);
+		list.setParameter(0, account);
+		EmployeesBean result = list.uniqueResult();
+		return result;
+	}
+	
+	public EmployeesBean selectById(String empId) {
+		if(empId != null && empId.trim().length() > 0) {
+			return this.getSession().get(EmployeesBean.class, empId);
+		}
+		return null;
+	}
+}

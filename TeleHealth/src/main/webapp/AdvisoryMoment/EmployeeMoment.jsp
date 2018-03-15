@@ -15,7 +15,7 @@
 <style>
   #calendar {
     max-width: 1100px;
-    margin: 60px auto;
+    margin:0px auto;
     background-color: lightblue;
   }
   .fc-widget-header{
@@ -24,24 +24,7 @@
 	.fc-toolbar h2 {
 	font-family: CJKtc_Bold;
 	}
-/* 	//week格線 */
-/*    .fc .fc-agendaWeek-view .fc-bg tr > td{ */
-/*     border: 2px solid grey; */
-/* 	} */
-/* 	//table格線 */
-/* 	.fc-bg table{ */
-		
-/* 	} */
-  .iBlock {display:inline-block;
-  		margin-left:280px;
-  		font-size:20px;}
-  .item1 {font-size:1em;
-		 margin-left:100px;}
-  .item2 {font-size:1em;
-		 margin-left:100px;}
-  .item3 {font-size:1em;
-		 padding-right:10px;
-		 }
+  .headFont {font-size:1.3em;}
   .columnHead{font-size:1em;}
   .momentColor {font-family: CJKtc_Bold;}
   .eventItem{text-align:center;
@@ -50,21 +33,27 @@
 </style>
 </head>
 <body>
-<jsp:include page="/fragment/navemp.jsp" />
-<div class="momentColor iBlock"><span style='color:#0080ff'>您的班表(無預約)</span><br/><span style='color:#d26900'>您的班表(有預約)</span><br/><span style='color:#bebebe'>未被預約班表</span><br/><span style='color:#ea0000'>已被預約班表</span></div>
-<div id='loading' class='container iBlock'>
-<span id="item1" class="item1 nav-item active">快速查詢:</span>
-<select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">年</span>
-<select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">月</span>
-<select id="date" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">日</span>
-<button type="button" id="fastSearch" class="headerChoose">查詢</button>
-<span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose nav-item active">
+<jsp:include page="/fragment/nav2.jsp" />
+<div id='loading' class="container">
+<div class="row headFont">
+<div class="momentColor col-3"><span style='color:#0080ff'>您的班表(無預約)</span><br/><span style='color:#d26900'>您的班表(有預約)</span><br/><span style='color:#bebebe'>未被預約班表</span><br/><span style='color:#ea0000'>已被預約班表</span></div>
+<div class="col-6">
+<span>快速查詢:</span>
+<select id="year"><option>請選擇</option></select><span>年</span>
+<select id="month"><option>請選擇</option></select><span>月</span>
+<select id="date"><option>請選擇</option></select><span>日</span>
+<button type="button" id="fastSearch" class="btn btn-success">查詢</button>
+</div>
+<div class="col-3">
+<span>時段:</span>
+<select id="chooseTime">
 <option id="allday">全天</option>
 <option id="mor" SELECTED>上午</option>
 <option id="aft">下午</option>
 <option id="nig">晚上</option>
 </select>
-
+</div>
+</div>
 <!-- 未預約班表視窗 -->
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -165,11 +154,54 @@
     </div>
   </div>
 </div>
+
+<!-- 新增班表確認 -->
+<div class="modal fade" id="addNewItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNewTitle">確認新增</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="addNew">確定</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新增班表結果 -->
+<div class="modal fade" id="addResultItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addResultTitle">新增結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="addResult">我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" id="account" value="${empLoginOK.account}"/>
 <div id="calendar"></div>
 </div>
 	<!-- Footer -->
 	<jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
+<script type="text/javascript" src="/TeleHealth/js/showIcon.js"></script>
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/calender.js'/>"></script>
@@ -190,9 +222,25 @@ $(document).ready(function() {
 	setTimeout(function(){
 	    $.LoadingOverlay("hide");
 	}, 2500);
-
+// 	var empId =$("#empId").val();
+// 	var count = 0;
+// 	$.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
+// 		console.log(datas);
+// 		$.each(datas,function(index,data){
+// 			var status=data.status;
+// 			if(status=="N"){			
+// 				count++;
+// 			}
+// 		});
+// 		console.log("count="+count);
+// 		$('#advisoryNum').text(count);
+// 		if(count == 0) {
+// 			$('#advisoryNum').css("display", "none");
+// 		}
+// 	});
 	var initialLocaleCode = 'zh';
 	var EmpId=$("#empId").val();
+	var account=$("#account").val();
 	var mom = moment();
 	var reserveData;
 	var time;
@@ -202,7 +250,7 @@ $(document).ready(function() {
 	var weekformat=["一","二","三","四","五","六","日"];
 	var today = new Date();
 	var eventsData;
-			
+	var addNewTime;		
 	$("#chooseTime").change(function(){
 		time = $("#chooseTime :selected").prop("id");		
 		if(time=="allday"){
@@ -277,6 +325,7 @@ $(document).ready(function() {
       contentHeight:"auto",
       navLinks: true, // can click day/week names to navigate views
       editable: false,
+      selectable: true,
 //       eventLimit: true, // allow "more" link when too many events
 	  eventSources:[	
 	  		{events:eventsData}
@@ -323,7 +372,20 @@ $(document).ready(function() {
 		  },
 	  eventMouseout:function( event, jsEvent, view ) {
 		  		$(this).removeClass('zoom')  
-		  }			  
+		  },
+	  //新增班表
+	  select: function(startDate, endDate) {
+		  var docFrag = $(document.createDocumentFragment());
+          var addNew = $('#addNewItem .modal-body');
+          addNew.empty();
+		  var start = moment(startDate).format("YYYY-MM-DD HH:mm");
+		  var add15m = moment(startDate).add(15,"m");
+		  var end = moment(add15m).format("HH:mm");
+		  addNewTime={"start":start};
+		  docFrag.append("<span>您選擇的時段為<br/>"+start+"~"+end+"</span><br/><span>確定要在此時段新增諮詢?</span>");
+		  addNew.append(docFrag);
+		  $('#addNewItem').modal('show');		      
+		    }			  
     });
 	});	
 	$("#fastSearch").click(function(){
@@ -397,8 +459,26 @@ $("#ReTakeOff").click(function takeoff(){
 			})
 		$("#takeoffRes").click(function(){
 			window.location.reload();
+		});
+		$("#addResult").click(function(){
+			window.location.reload();
+		});
+		$("#addNew").click(function(){
+			$.post("<c:url value='/AdvisoryMomemt/empAddMoment.controller'/>",{"empId":EmpId,"account":account,"start":addNewTime.start},function(result){
+				console.log(result);
+				var docFrag = $(document.createDocumentFragment());
+				var addResult = $('#addResultItem .modal-body');
+				addResult.empty();
+				if(result=="success"){
+					docFrag.append("<h3>新增成功</h3>");
+					}else{
+					docFrag.append("<h3>新增班表失敗，請重新輸入或洽詢管理員</h3>");
+						}
+				addResult.append(docFrag);				
+				$('#addNewItem').modal('hide');						
+				$('#addResultItem').modal('show');						
+		      })
 			})
-		
 						
 // 	$("#Change").click(function(){
 // 		$('#UnReserveItem').modal('hide');
@@ -407,6 +487,10 @@ $("#ReTakeOff").click(function takeoff(){
 
 
 });
+
+function rload(){
+	window.location.reload();
+}
 
 </script>
 </html>

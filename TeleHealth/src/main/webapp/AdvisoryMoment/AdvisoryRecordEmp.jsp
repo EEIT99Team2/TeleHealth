@@ -11,19 +11,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.min.css" />
 <style>
 .txtWaring{color:red}
+
 </style>
 </head>
 <body>
-<jsp:include page="/fragment/navemp.jsp" />
+<jsp:include page="/fragment/nav2.jsp" />
+<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
+<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 <div class='container'>
 <h2  class='container'>即將進行諮詢</h2>
 <table class="table  table-hover">
   <thead>
     <tr>
       <th scope="col">編號</th>
+      <th scope="col">視訊代號</th>
       <th scope="col">諮詢項目</th>
-      <th scope="col">諮詢時段</th>
       <th scope="col">會員姓名</th>
+      <th scope="col">諮詢時段</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -36,9 +40,10 @@
   <thead>
     <tr>
       <th scope="col">編號</th>
+      <th scope="col">視訊代號</th>      
       <th scope="col">諮詢項目</th>
-      <th scope="col">諮詢時段</th>
       <th scope="col">會員姓名</th>
+      <th scope="col">諮詢時段</th>
       <th scope="col">狀態</th>
     </tr>
   </thead>
@@ -51,9 +56,10 @@
   <thead>
     <tr>
       <th scope="col">編號</th>
+      <th scope="col">視訊代號</th>
       <th scope="col">諮詢項目</th>
-      <th scope="col">諮詢時段</th>
       <th scope="col">會員姓名</th>
+      <th scope="col">諮詢時段</th>
       <th scope="col">狀態</th>
     </tr>
   </thead>
@@ -63,7 +69,7 @@
 </table>
 <!-- 未諮詢視窗 -->
 <div class="modal fade" id="UnTalkItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered  col-12" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="UnTalkTitle">諮詢資訊</h5>
@@ -86,14 +92,16 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="TalkTitle">諮詢結果</h5>
+        <h5 class="modal-title" id="TalkTitle">修改諮詢概要內容</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- 結果 -->
-      </div>
+        </button>        
+      </div>     
+      <div class="modal-body" id="modifyContent">   
+      	<form>
+     		<textarea class="form-control" id="contents" rows="10" cols="80"></textarea>       
+        </form>  
+      </div>      
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal" id="Talk">OK</button>
       </div>
@@ -111,11 +119,39 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown-zh-TW.min.js"></script>
+
 </body>
 <script>
 $(document).ready(function(){
-// 	var empId =$("#empId").val();
-	var empId ="A56DC04E-7C45-4BB4-B4F4-B95F7A321994";
+	 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
+        {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},{ name: 'insert', groups: [ 'Image' ] },
+     ];
+	 CKEDITOR.replace('contents',{
+		width:450, height:400, toolbarGroups:tg,
+ 		filebrowserBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html',
+ 		filebrowserImageBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html?type=Images', 
+ 		filebrowserFlashBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html?type=Flash',
+ 		filebrowserUploadUrl : '/TeleHealth/forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files', 
+ 		filebrowserImageUploadUrl : '/TeleHealth/forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images', 
+ 		filebrowserFlashUploadUrl : '/TeleHealth/forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
+ 		});
+ 	console.log("ready!");
+	var empId =$("#empId").val();
+	var count = 0;
+	$.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
+		console.log(datas);
+		$.each(datas,function(index,data){
+			var status=data.status;
+			if(status=="N"){			
+				count++;
+			}
+		});
+		console.log("count="+count);
+		$('#advisoryNum').text(count);
+		if(count == 0) {
+			$('#advisoryNum').css("display", "none");
+		}
+	});
 	var empName = $("#empName").val();
 	LoadData();
 	var DataPackage;
@@ -140,11 +176,12 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 		ms = moment(advisoryTime).diff(now)/1000;
 		console.log(ms);
 		var status=data.status;
-		if(status=="N" && ms<=900){			
+		if(status=="N" && ms<=900 && ms>0){			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
-			var col2 = $("<td>"+data.reserveItem+"</td>");
-			var col3 = $("<td>"+advisoryTime+"</td>");
+			var col2 = $("<td>"+data.videoCode+"</th>");
+			var col3 = $("<td>"+data.reserveItem+"</td>");
 			var col4 = $("<td>"+data.memName+"</td>");
+			var col5 = $("<td>"+advisoryTime+"</td>");
 			var col6 = $("<input type='hidden' name='videoCode' value='"+data.videoCode+"'/>");
 			var col7 = $("<input type='hidden' name='reserveItem' value='"+data.reserveItem+"'/>");
 			TalkingOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};			
@@ -154,21 +191,25 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 		    docFrag1.append(tr1);				
 		}else if(status=="N"){
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
-			var col2 = $("<td>"+data.reserveItem+"</td>");
-			var col3 = $("<td>"+advisoryTime+"</td>");
+			var col2 = $("<td>"+data.videoCode+"</th>");
+			var col3 = $("<td>"+data.reserveItem+"</td>");
 			var col4 = $("<td>"+data.memName+"</td>");
-			var col5 = $("<td>未完成</td>");
+			var col5 = $("<td>"+advisoryTime+"</td>");
+			var col6 = $("<td>未完成</td>");
 			unTalkOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};			
-			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
+			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6]);
 		    docFrag2.append(allcol);		
 		}else{
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
-			var col2 = $("<td>"+data.reserveItem+"</td>");
-			var col3 = $("<td>"+advisoryTime+"</td>");
+			var col2 = $("<td>"+data.videoCode+"</th>");
+			var col3 = $("<td>"+data.reserveItem+"</td>");
 			var col4 = $("<td>"+data.memName+"</td>");
-			var col5 = $("<td>已完成</td>");
-			TalkedOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};		
-			var allcol2 = $("<tr></tr>").append([col1,col2,col3,col4,col5]);
+			var col5 = $("<td>"+advisoryTime+"</td>");
+			var col6 = $("<td>已完成    </td>");
+			var modifyBtn = $("<button class='btn btn-info'><i class='fas fa-edit'></i></button>")
+			col6.append(modifyBtn);
+			TalkedOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};	
+			var allcol2 = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6]);
 			docFrag3.append(allcol2);
 		}
 		})
@@ -180,6 +221,7 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 	console.log(TalkedOne);
 })
 }
+
 //即將諮詢
 $("body").on("click","#TalkingList tr",function(){
 	console.log(TalkingOne.reserveItem);
@@ -200,18 +242,28 @@ $("body").on("click","#UnTalkList tr",function(){
 	$("#UnTalkItem").modal("show");
 });
 
-//已諮詢
-$("body").on("click","#TalkList tr",function(){
-	var docFrag =$(document.createDocumentFragment());
-	$("#TalkItem .modal-body").empty();
-	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+TalkOne.reserveItem+"</span>"
-			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+TalkOne.advisoryTime+"</span>"
-			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+TalkOne.empName+"</span>"
-			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"	);		
-	$("#TalkItem .modal-body").append(docFrag);
-	$("#TalkItem").modal("show");
-});
+//已諮詢 (查看諮詢內容)
+// $("body").on("click","#TalkList tr",function(){
+// 	var docFrag =$(document.createDocumentFragment());
+// 	$("#TalkItem .modal-body").empty();
+// 	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+TalkedOne.reserveItem+"</span>"
+// 			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+TalkedOne.advisoryTime+"</span>"
+// 			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+TalkedOne.empName+"</span>");		
+// 	$("#TalkItem .modal-body").append(docFrag);
+// 	$("#TalkItem").modal("show");
+// });
 
+//修改視訊諮詢內容功能的function
+$('#TalkList').on('click','tr button:nth-child(1)',function(){
+	  $('#TalkItem').modal('show');	
+	  var modifyVideo = $(this).parents('tr').find('td:nth-child(2)').text();
+	 $.getJSON('/TeleHealth/selectadvisory.controller',{"videoCode":modifyVideo},function(data){
+				console.log(data);				
+				CKEDITOR.instances.contents.setData(data.data.descrip);				
+						 					 	 					
+			}); 					
+ 	 });
+});
 
 
 //綁定動態產生tr滑鼠滑過變色
@@ -234,6 +286,12 @@ $("#resultCheck").click(function(){
 	window.location.reload();
 });
 
-})
 </script>
+<script>
+$.ready(function(){
+	
+});
+</script>
+
+
 </html>

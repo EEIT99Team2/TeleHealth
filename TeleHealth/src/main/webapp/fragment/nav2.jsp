@@ -11,6 +11,9 @@
 <!-- w3 core CSS -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+<!-- 提醒視訊諮詢的小圖示用 -->
+<link href='/TeleHealth/css/advisory.css'  rel="stylesheet" type='text/css' >
+
 <!-- Custom fonts for this template -->
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
 	rel="stylesheet" type="text/css">
@@ -24,6 +27,7 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 	rel='stylesheet' type='text/css'>
+
 
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
@@ -55,8 +59,38 @@
 				<li class="nav-item"><a class="nav-link"
 					href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
 			</ul>
+		<div class="text-center">
+				<img style="width:40px;height:35px;" src="/TeleHealth/getImage.controller" >
+				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
+				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
+					<input type="submit" class="btn btn-sm btn-outline-secondary" 
+					id="myBtn1" value="登出" />
+				</form>
+		</div>
 			</c:when>
-			<c:otherwise>
+			<c:when test="${not empty empLoginOK}">
+			<ul class="navbar-nav text-uppercase ml-auto">
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthcolumn/createhelcontent.jsp" />">新增專欄文章</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/AdvisoryMoment/EmployeeMoment.jsp" />">查詢班表</a></li>
+				<li class="nav-item"><div class="row showIcon"><a class="nav-link" id="advisoryIcon"
+					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>				
+			</ul>
+		<div class="text-center">
+				<span>
+					<c:out value="${empLoginOK.empName},你好!!" />
+				</span>
+				<input type="hidden" value="${empLoginOK.empId}" id="empId" />
+				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
+					<input type="submit" class="btn btn-sm btn-outline-secondary" 
+					id="myBtn1" value="登出" />
+				</form>
+		</div>
+			</c:when>
+			<c:otherwise>			
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
@@ -64,28 +98,14 @@
 					href="#introduction">簡介</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="#team">醫師團隊</a></li>
-			</ul>
-			</c:otherwise>
-			</c:choose>
-		</div>
-		<div class="text-center">
-		<c:choose>
-			<c:when test="${empty LoginOK}">
+			</ul>			
+			<div class="text-center">
 				<button type="button" class="btn btn-primary btn-rounded" 
 					data-toggle="modal" id="myBtn">登入</button>
-			</c:when>			
-			<c:otherwise>
-				<span>
-					<c:out value="${LoginOK.memName},你好!!" />
-				</span>
-				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
-				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
-					<input type="submit" class="btn btn-sm btn-outline-secondary" 
-					id="myBtn1" value="登出" />
-				</form>
-			</c:otherwise>				
-		</c:choose>		
-		</div>
+			</div>
+			</c:otherwise>
+			</c:choose>
+		</div>		
 	</div>
 </nav>
 
@@ -122,7 +142,7 @@
                             </div>
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
                             <button type="submit" class="btn btn-success btn-block">登入</button>
-                            <button type="submit" class="btn btn-danger btn-block">取消</button>
+                            <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">取消</button>
                         </form>
 				</div>
 				<div class="modal-footer">
