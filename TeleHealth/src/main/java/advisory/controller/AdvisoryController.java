@@ -21,6 +21,7 @@ import advisory.model.AdvisoryBean;
 import advisory.model.AdvisoryService;
 import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryMomentService;
+import employees.model.EmployeesService;
 import employees.model.dao.EmployeesDAO;
 
 @Controller
@@ -30,7 +31,7 @@ public class AdvisoryController {
 	@Autowired
 	private AdvisoryMomentService advisoryMomentService;
 	@Autowired
-	private EmployeesDAO employeesDAO;
+	private EmployeesService employeesService;
 	
 	//會員預約成功，新增預約記錄
 	@RequestMapping(path= {"/Advisory/reserveCheck.controller"},method= {RequestMethod.POST},produces="text/plain;charset=UTF-8")
@@ -80,7 +81,7 @@ public class AdvisoryController {
 			//會員給錢			
 			advisoryService.updateMemPoint(UserId);
 			//增加員工預約點擊數
-			employeesDAO.addResCount(empId);		
+			employeesService.addResCount(empId);		
 		}
 		return result+","+videoCode+",,"+sendTime;
 	}

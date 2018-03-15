@@ -94,11 +94,13 @@ public class AdvisoryMomentDAO {
 	
 	//諮詢人員自己負責的時段
 		public List<Object[]> selectByEmpSelf(String EmpId) {
-			String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,emp.career,am.videoCode,am.status FROM advisoryMoment am\r\n" + 
+			String hql="SELECT am.id,am.calendar,am.reserveStatus,adt.advisoryName,emp.empId,emp.empName,car.careerName,am.videoCode,am.status FROM advisoryMoment am\r\n" + 
 					"join employees emp\r\n" + 
 					"on am.empId=emp.empId\r\n" + 
 					"join advisoryType adt\r\n" + 
-					"on am.advisoryCode=adt.advisoryCode\r\n" + 
+					"on am.advisoryCode=adt.advisoryCode\r\n" +
+					"JOIN careers car\r\n" + 
+					"ON car.careerid=emp.career\r\n" + 
 					"WHERE am.empId=?";
 			NativeQuery query= this.getSession().createNativeQuery(hql);
 			query.setParameter(1,EmpId);
