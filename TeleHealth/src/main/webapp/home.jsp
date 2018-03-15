@@ -16,7 +16,7 @@
 </head>
 
 <body id="page-top">
-	<jsp:include page="/fragment/nav.jsp" />
+	<jsp:include page="/fragment/nav2.jsp" />
 	<!-- Header -->
 	<header>
 		<div id="myCarousel" class="carousel slide" data-ride="carousel">
