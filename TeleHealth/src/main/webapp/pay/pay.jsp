@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,38 +81,51 @@
 			<div class="row border border-primary">
 				<div class="col-3">商品資料</div>
 				<div class="col-2">優惠</div>
-				<div class="col-2 text-center">單件價格</div>
-				<div class="col-3 text-center">數量</div>
+				<div class="col-2 text-center">每點價格</div>
+				<div class="col-3 text-center">點數</div>
 				<div class="col-2 text-center">小計</div>
 			</div>
 			<div class="row border border-primary">
 				<div class="col-3">
-					<img class="small" width="200" src="images.jpg" /> <br />
+					<img class="small" width="200" src="<c:url value="/images/point.png" />" /> <br />
 					<p>1點</p>
 				</div>
 				<div class="col-2"></div>
 				<div class="col-2 text-center">
 					<span>NT$50</span>
 				</div>
+				
+				<!-- Point -->
 				<div class="col-3 text-center">
 					<div id="msg" class="input-group input-group-sm mb-3">
+						<!-- - -->
 						<div class="input-group-prepend">
 							<button id="decrease" class="btn btn-outline-secondary"
 								type="button">
 								<i class="fa fa-minus"></i>
 							</button>
 						</div>
+						<!-- - End -->
+						
+						
+						<!-- text input -->
 						<input type="text" name="quantity" value="1"
 							class="text form-control text-center" aria-label=""
 							aria-describedby="basic-addon1" />
+						<!-- text input End -->	
+						
+						
+						<!-- + -->	
 						<div class="input-group-prepend">
 							<button id="increase" class="btn btn-outline-secondary"
 								type="button">
 								<i class="fa fa-plus"></i>
 							</button>
 						</div>
+						<!-- + End -->
 					</div>
 				</div>
+				<!-- Point End -->
 				<div class="col-2 text-center">
 					<span>NT$</span> <span class="price">50</span>
 				</div>
