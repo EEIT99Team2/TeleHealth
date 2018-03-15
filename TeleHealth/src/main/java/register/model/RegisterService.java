@@ -21,6 +21,19 @@ public class RegisterService {
 		return result;
 	}
 	
+	@Transactional
+	public MemberBean selectById(String memberId) {
+		MemberBean result = null;
+		MemberBean members = memberDAO.selectById(memberId);
+		if(members!= null) {
+			result = members;
+		}
+		return result;
+	}
+	
+	
+	
+	
 	@Transactional(readOnly=true)
 	public MemberBean selectByAccount(String account) {
 		MemberBean result = null;
