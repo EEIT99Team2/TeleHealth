@@ -36,4 +36,6 @@ $(document).ready(function(){
 
     <!-- Bootstrap core JavaScript -->
     <script src="<c:url value="/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
+    
+<!--     google 我不是機器人 -->
+<!-- 	<script src='https://www.google.com/recaptcha/api.js'></script> -->

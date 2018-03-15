@@ -32,8 +32,8 @@ blockquote
 	font-style: italic;
 	font-family: Georgia, Times, "Times New Roman", serif;
 	padding: 2px 0;
-	border-style: solid;
-	border-color: #ccc;
+	/*border-style: solid;*/
+	/*border-color: #ccc;*/
 	border-width: 0;
 }
 
@@ -73,12 +73,12 @@ h1,h2,h3,h4,h5,h6
 hr
 {
 	border: 0px;
-	border-top: 1px solid #ccc;
+/*	border: 1px solid #ccc;*/
 }
 
 img.right
 {
-	border: 1px solid #ccc;
+/*	border: 1px solid #ccc;*/
 	float: right;
 	margin-left: 15px;
 	padding: 5px;
@@ -86,7 +86,7 @@ img.right
 
 img.left
 {
-	border: 1px solid #ccc;
+/*	border: 1px solid #ccc;*/
 	float: left;
 	margin-right: 15px;
 	padding: 5px;
@@ -113,7 +113,7 @@ span[lang]
 figure
 {
 	text-align: center;
-	border: solid 1px #ccc;
+/*	border: 1px solid #ccc;*/
 	border-radius: 2px;
 	background: rgba(0,0,0,0.05);
 	padding: 10px;

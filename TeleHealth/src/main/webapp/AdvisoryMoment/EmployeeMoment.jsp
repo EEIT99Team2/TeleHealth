@@ -17,6 +17,7 @@
     max-width: 1100px;
     margin:0px auto;
     background-color: lightblue;
+    font-size:18px;
   }
   .fc-widget-header{
      background-color:#00e3e3;
@@ -24,12 +25,14 @@
 	.fc-toolbar h2 {
 	font-family: CJKtc_Bold;
 	}
-  .headFont {font-size:1.3em;}
+  .headFont {font-size:20px;}
   .columnHead{font-size:1em;}
   .momentColor {font-family: CJKtc_Bold;}
   .eventItem{text-align:center;
   			font-size:18px;}
   #loading{background-color:white}
+  .selectTime{margin-top:40px;}
+  .selectWord {padding:0px 5px;}
 </style>
 </head>
 <body>
@@ -37,15 +40,15 @@
 <div id='loading' class="container">
 <div class="row headFont">
 <div class="momentColor col-3"><span style='color:#0080ff'>您的班表(無預約)</span><br/><span style='color:#d26900'>您的班表(有預約)</span><br/><span style='color:#bebebe'>未被預約班表</span><br/><span style='color:#ea0000'>已被預約班表</span></div>
-<div class="col-6">
-<span>快速查詢:</span>
-<select id="year"><option>請選擇</option></select><span>年</span>
-<select id="month"><option>請選擇</option></select><span>月</span>
-<select id="date"><option>請選擇</option></select><span>日</span>
+<div class="col-6 selectTime">
+<span class="selectWord">快速查詢:</span>
+<select id="year"><option>請選擇</option></select><span class="selectWord">年</span>
+<select id="month"><option>請選擇</option></select><span class="selectWord">月</span>
+<select id="date"><option>請選擇</option></select><span class="selectWord">日</span>
 <button type="button" id="fastSearch" class="btn btn-success">查詢</button>
 </div>
-<div class="col-3">
-<span>時段:</span>
+<div class="col-3 selectTime">
+<span class="selectWord">時段:</span>
 <select id="chooseTime">
 <option id="allday">全天</option>
 <option id="mor" SELECTED>上午</option>
@@ -201,7 +204,6 @@
 	<!-- Footer -->
 	<jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
-<script type="text/javascript" src="/TeleHealth/js/showIcon.js"></script>
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/calender.js'/>"></script>
@@ -222,22 +224,6 @@ $(document).ready(function() {
 	setTimeout(function(){
 	    $.LoadingOverlay("hide");
 	}, 2500);
-// 	var empId =$("#empId").val();
-// 	var count = 0;
-// 	$.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
-// 		console.log(datas);
-// 		$.each(datas,function(index,data){
-// 			var status=data.status;
-// 			if(status=="N"){			
-// 				count++;
-// 			}
-// 		});
-// 		console.log("count="+count);
-// 		$('#advisoryNum').text(count);
-// 		if(count == 0) {
-// 			$('#advisoryNum').css("display", "none");
-// 		}
-// 	});
 	var initialLocaleCode = 'zh';
 	var EmpId=$("#empId").val();
 	var account=$("#account").val();
@@ -366,9 +352,7 @@ $(document).ready(function() {
 					}  
 	  },
 	  eventMouseover:function( event, jsEvent, view ) {
-			if(event.backgroundColor=="#d26900"||event.backgroundColor=="#0080ff"){
-				$(this).addClass('zoom') 
-				}
+				$(this).addClass('zoom')
 		  },
 	  eventMouseout:function( event, jsEvent, view ) {
 		  		$(this).removeClass('zoom')  
@@ -470,7 +454,7 @@ $("#ReTakeOff").click(function takeoff(){
 				var addResult = $('#addResultItem .modal-body');
 				addResult.empty();
 				if(result=="success"){
-					docFrag.append("<h3>新增成功</h3>");
+					docFrag.append("<span>新增成功</span><img src='<c:url value="/images/yes.png"/>'/>");
 					}else{
 					docFrag.append("<h3>新增班表失敗，請重新輸入或洽詢管理員</h3>");
 						}

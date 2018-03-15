@@ -13,7 +13,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,8 +46,7 @@ public class Healthcontroller {
 	@RequestMapping(path = { "/healthcolumn/titlecontent.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Loadtitle(String title) {
-		List<Object[]> loadtitle = healthService.loadtitle(title);
-		System.out.println(loadtitle);
+		List<Object[]> loadtitle = healthService.loadtitle(title);		
 		Gson gson = new Gson();
 		String data = gson.toJson(loadtitle);		
 		return data;
@@ -68,8 +66,7 @@ public class Healthcontroller {
 	@RequestMapping(path = { "/healthcolumn/publishcontent.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Doctorpublish(String empId) {
-		List<HealthColumnBean> doctorpublish = healthService.doctorpublish(empId);
-		System.out.println(doctorpublish);
+		List<HealthColumnBean> doctorpublish = healthService.doctorpublish(empId);		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd ").create(); ;
 		String datafordoctor = gson.toJson(doctorpublish);		
 		return datafordoctor;
@@ -131,8 +128,7 @@ public class Healthcontroller {
 					int len = 0;
 					while ((len = in.read(readByte)) != -1) {
 						out.write(readByte, 0, len);
-					}
-					System.out.println("fileName= " + fileName);
+					}					
 				}
 			}
 			bean.setFileName(fileName);	
@@ -224,8 +220,7 @@ public class Healthcontroller {
 	"/healthcolumn/hotcontentimg.controller" }, produces = "text/html;charset=UTF-8", method = {
 			RequestMethod.GET})
 	public @ResponseBody String hotcontentimg() {
-		List<HealthColumnBean> data = healthService.hotcontextimg();
-		System.out.println(data);
+		List<HealthColumnBean> data = healthService.hotcontextimg();		
 		Gson gson = new Gson();
 		String dataimg = gson.toJson(data);
 		 return dataimg;

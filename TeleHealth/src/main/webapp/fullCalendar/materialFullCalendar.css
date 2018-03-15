@@ -15,7 +15,7 @@
 }
 /* Styling for each event from Schedule */
 .fc-time-grid-event.fc-v-event.fc-event {
-    border-radius: 4px;
+    border-radius: 5px;
     border: none;
     opacity: .8;
 

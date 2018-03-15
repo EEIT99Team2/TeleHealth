@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>牽伴遠距健康諮詢平台</title>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="../forCkeditor/ckeditor/ckeditor.js"></script>
@@ -37,7 +37,7 @@ hieght:32px;
      <div class="col-lg-10" id='QAcontent'>                         
      </div>              
       <div class="col-lg-10" id='foot'> 
-           <c:if test="${not empty LoginOK}">
+           <c:if test="${not empty LoginOK || not empty empLoginOK}">
       <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"><h5>
       	<div class="form-group">
       		<form id="Msg" action="/TeleHealth/healthcolumn/insQA.controller" method="post" >
@@ -47,8 +47,7 @@ hieght:32px;
       		<textarea class="form-control" id="textt" name="textmem" rows="3"></textarea>
       		<input type="button" value="送出" onclick=insert()><input type='button' id='clean' value='清除'><font id="successMsg" color="green" size="-1"></font><font id="erroeMsg" color="red" size="-1"></font>
       		</form>      	
-      	</div>
-      
+      	</div>      
       </div>
      </c:if>
     </div>                                                                                                                 
@@ -87,8 +86,7 @@ $(document).ready(function() {
 	var id = ary3[0];	   
     var titledecode= decodeURIComponent(id);   	  
     $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller', {title:titledecode}, function (data){		
-		 $.each(data, function (i, data) {
-			console.log(data)
+		 $.each(data, function (i, data) {			
 			if(data[5]!="VID"){  
         	var cell0=$("<hr>")      	     	          
             var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
@@ -103,7 +101,7 @@ $(document).ready(function() {
 	            var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
 	            var cell2= $("<p class='lead'></p>").text("by  "+data[1]);
 	            var cell3=$("<p></p>").text(data[3]);
-	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="http://localhost:8090/TeleHealth/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
+	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="https://localhost:8443/TeleHealth/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
 	            var cell4= $("<p class='lead'></p>").html(data[2]);                          
 	            var row = $(' <div class="col-lg-10" id="data"></div>').append([cell1,cell0,cell2,cell3,video,cell0,cell4]);
 	             $('#body').append(row);
@@ -113,8 +111,7 @@ $(document).ready(function() {
     $.getJSON('/TeleHealth/healthcolumn/QAcontent.controller', {title:titledecode}, function (data){               
     	var doc=$(document.createDocumentFragment());   	
     	var div=$('<div class="col-lg-10" ></div>');
-    	 $.each(data, function (i, data) { 
-        	 console.log(data)         	 
+    	 $.each(data, function (i, data) {         	          	 
         	 if(data[0]==null){
          		 var memberimg=$("<img src='/TeleHealth/getimagebyid.controller?id="+data[3] +"' class='imgsize'/>") 
         		 var cellauthor= $("<h6 class='mt-0'></h6>").text("會員:"+data[1]); 
@@ -144,8 +141,7 @@ $(document).ready(function() {
     	 $('#QAcontent').append(doc);               
      })
      function insert(){
-    	var content= CKEDITOR.instances.textt.getData()
-    	console.log(content)
+    	var content= CKEDITOR.instances.textt.getData()    	
     	if(content==null|| content.length==0){
     		document.getElementById("erroeMsg").innerHTML=' ';
     		document.getElementById("successMsg").innerHTML=' ';

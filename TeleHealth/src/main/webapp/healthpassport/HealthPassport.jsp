@@ -185,7 +185,9 @@
 					<div class="col-4 text-center">
 						<h1 id="showHeartBeat"></h1><h2><small>次/分</small></h2>
 					</div>
-
+					<div class="col-4 text-center">
+						<h4 id="showbpTime"></h4>
+					</div>
 				</div>
 				<hr />
 				<div class="row">
@@ -237,7 +239,7 @@
 					data-target="#myModalBloodSugar">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
-				<button id='' class="btn btn-outline-dark" type="button"
+				<button id='bsrecords' class="btn btn-outline-dark" type="button"
 					data-toggle="collapse" data-target="#bs" aria-expanded="false"
 					aria-controls="collapseExample">查詢紀錄</button>
 			</div>
@@ -277,6 +279,9 @@
 					<div class="col-4 text-center">
 						<h1 id="showBloodSugar"></h1><h2><small>mmHg</small></h2>
 					</div>
+					<div class="col-4 text-center">
+						<h4 id="showbsTime"></h4>
+					</div>
 				</div>
 				<hr />
 				<div class="row">
@@ -297,8 +302,6 @@
 									<thead class="table-dark">
 										<tr>
 											<th scope="col">血糖值</th>
-											<th scope="col">舒張壓</th>
-											<th scope="col">脈搏</th>
 											<th scope="col">結果</th>
 											<th scope="col">輸入時間</th>
 										</tr>
@@ -329,7 +332,59 @@
 			var height;
 			var BMI;
 			$('#bmiselect').click(bmitable());
-// 			$('#bmiselect').click(bmiview());
+			$.getJSON("<c:url value='/healthpassport/bmitopRecord.controller'/>",{'memberid':memberid},function(oneData){
+	 			console.log(oneData); 			
+	  		 	$('#showHeight').empty();
+	 	       	$('#showWeight').empty();
+	 	       	$('#showTime').empty();
+	 	       	$('#bmiResult').empty();
+	            $.each(oneData,function(i,value){               
+	         	var height = value[0].h;   	       			
+	    		var weight = value[0].w;
+	    		var bmi = value[0].b;
+	    		var result = value[0].rs;
+	    		var time = value[0].t;   			
+	    		 	$('#showHeight').prepend(height);
+	    	       	$('#showWeight').prepend(weight);
+	    	       	$('#showTime').prepend(time);
+	    	       	$('#bmiResult').prepend('<h4><small>'+'BMI --> '+bmi+'\|'+result+'</small></h4>');
+	                })
+	           });
+			
+	 		
+	 		
+	 		$.getJSON("<c:url value='/healthpassport/bptopRecord.controller'/>",{'memberid':memberid},function(oneData){
+	 			console.log(oneData); 			
+	            $.each(oneData,function(i,value){               
+	         	var sysbp = value[0].maxbp;   	       			
+	    		var diabp = value[0].minbp;
+	    		var hb = value[0].hb;
+	    		var result = value[0].rs;
+	    		var time = value[0].t;   			
+	    		$('#showBloodPressure').prepend(sysbp+'\/'+diabp);
+		       	$('#showHeartBeat').prepend(hb);
+		       	$('#showbpTime').prepend(time);
+		       	$('#bpResult').prepend('<h4><small>'+'結果為 --> '+result+'</small></h4>');
+	                })
+	           });
+
+
+	 			
+	 		$.getJSON("<c:url value='/healthpassport/bstopRecord.controller'/>",{'memberid':memberid},function(data){
+	 			console.log(data); 			 			
+	 			$.each(data,function(i,value){
+	 				console.log(value); 	
+	 			$('#showBloodSugar').empty();
+		 	    $('#bsResult').empty();		 	    
+	         	$('#showBloodSugar').prepend(value[0].getbs);	    	      
+	 	       	$('#showbsTime').prepend(value[0].t);
+	 	       	$('#bsResult').prepend('<h4><small>'+'BloodSugar --> '+value[0].getbs+'\|'+value[0].getbsresult+'</small></h4>');
+	 	       	$('#insert_bloodsugar').val("");				
+				$('#bloodsugarMsg').empty();		
+	 			})
+	           });
+
+
 
 			$('#calBMI').click(calBMI);
 			function calBMI() {
@@ -378,28 +433,29 @@
 			});
 			$('#insert').click(function(){
 				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'memberid':memberid,'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
-	                	//data就是Server回傳的結果
-	                	 
+	                	console.log(data);
+	                	$('#showHeight').empty();
+			 	       	$('#showWeight').empty();
+			 	       	$('#showTime').empty();
+			 	       	$('#bmiResult').empty()
+	                	$('#showHeight').prepend(data.hei);
+		    	       	$('#showWeight').prepend(data.wei);
+		    	       	$('#showTime').prepend(data.time);
+		    	       	$('#bmiResult').prepend('<h4><small>'+'BMI --> '+data.bmi+'\|'+data.bmiresult+'</small></h4>');
+		    	       	$('#insert_height').val("");
+						$('#insert_weight').val("");
+						$('#insert_bmi').val("");
+						$('#heiMsg').empty();
+						$('#weiMsg').empty();
+						bmitable()
+						bmiview();
+	                	
 	             })
-			//抓一筆最新資料回傳欄位	
-		
-			   	$('#showHeight').empty();
-			    $('#showWeight').empty();
-			    $('#showTime').empty();
-			    $('#bmiResult').empty();
-
-				$('#insert_height').val("");
-				$('#insert_weight').val("");
-				$('#insert_bmi').val("");
-				$('#heiMsg').empty();
-				$('#weiMsg').empty();
-				
+	             
+					
 			});
 			
-			
-
-			
-//載入會員記錄
+//bmi載入會員記錄
 			function bmitable(){
 				$('#bmiTable').dataTable().fnDestroy(); 
 				$('#bmiTable').DataTable({
@@ -428,10 +484,10 @@
 					});
 			};	
 
-	//圖表
+	//bmi圖表
 	var dates=[];
     var datas=[];
-// 	 function bmiview(){
+ function bmiview(){
 		$.getJSON('/TeleHealth/healthpassport/bmirecords.controller',{memberid:memberid},function(result){
 			$.each(result.data,function(index,value) {
 				var date = moment(value.createTime).format('MM/DD HH:mm');
@@ -439,7 +495,6 @@
 				var bmiresult = value.bmi;
 				datas.push(bmiresult);
 			});
-		});
 			var ctx = $("#mychart1")
 			var myChart = new Chart(ctx, {
 			    type: 'line',
@@ -479,7 +534,9 @@
 			        }
 			    }
 			});
-// 	 }
+		});
+			
+ 	 }
 
 <!-- 血壓 -->
 
@@ -539,15 +596,12 @@
 			
 			
 			$('#insertBP').click(function(){
-				var bps='BloodPressureSystole';
-				var bpd='BloodPressureDiastole';
-				var hb = 'HeartBeat';
 				if(systole==null || diastole==null || heartBeat==null){
 					alert("三個欄位都要輸入")
 					$('#insertBP').prop("disabled", true);
 				}else{
 
-				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'memberid':memberid,'systole':bps,'diastole':bpd, 'heartBeat': hb , 'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat}, function(data){
+				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'memberid':memberid,'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat}, function(data){
 	                	//data就是Server回傳的結果
 // 	                	JSON.parse(data);
 	             });
@@ -561,12 +615,124 @@
 	                	$('#heartBeatMsg').empty();
 	         }
 			});
-
-
-
+			$('#bpselect').click(bpTable());
+			$('#bpselect').click(bpview());
 			
-	<!--  血糖 -->
+//血壓載入會員記錄
+			function bpTable(){
+				$('#bpTable').dataTable().fnDestroy(); 
+				$('#bpTable').DataTable({
+				    "ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid,
+				    "columns": [
+				        { "data": "systole"},
+				        { "data": "diastole"},
+				        { "data": "heartBeat"},
+				        { "data": "bpResult"},
+				        { "data": "createTime" }
+				    ],
+				    "order": [[ 4, 'desc' ]],
+					"bProcessing": true,//顯示處理中的圖樣
+					"oLanguage": {
+				    "sLengthMenu": " _MENU_ 筆/頁",
+				    "sZeroRecords": "找不到符合的資料。",
+				    "sInfo": "共 _MAX_ 筆",
+				    "sSearch": "搜尋",
+				    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+				    "sInfoEmpty": "共 0 頁",
+				    "oPaginate": {
+				        "sPrevious": "«",
+				        "sNext": "»"
+				  	 	 }
+						}
+					});
+			};	
 
+//血壓圖表
+	var bpdate=[];
+    var sysdatas=[];
+    var diadatas=[];
+    var heartBeatdatas=[];
+	 function bpview(){
+		$.getJSON('/TeleHealth/healthpassport/bloodPressureRecords.controller',{memberid:memberid},function(result){
+			console.log(result);
+			$.each(result.data,function(index,value) {
+				console.log(value);
+				var date = moment(value.createTime).format('MM/DD HH:mm');
+				console.log(date)
+				bpdate.push(date);
+				var systoleresult = value.systole;
+				sysdatas.push(systoleresult);
+				var diastoleresult = value.diastole;
+				diadatas.push(diastoleresult);
+				var heartBeatresult = value.heartBeat;
+				heartBeatdatas.push(heartBeatresult);				
+			});
+			var ctx = $("#mychart2")
+			var myChart = new Chart(ctx, {
+			    type: 'line',
+			    data: {
+			        labels: bpdate,
+			        datasets: [{
+			            label: '收縮壓',
+			            data: sysdatas,
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(153, 102, 255, 0.2)',
+			                'rgba(255, 159, 64, 0.2)'
+			            ],
+			            order:[dates,'desc'],
+
+			            borderColor: [
+			                'rgba(255,99,132,1)',
+			                'rgba(153, 102, 255, 1)',
+			                'rgba(255, 159, 64, 1)'
+			            ],
+			            borderWidth: 1
+			        },{
+			        	label: '舒張壓',
+			            data: diadatas,
+			            backgroundColor: [
+			                'rgba(255, 159, 64, 0.2)'
+			            ],
+			            borderColor: [
+			                'rgba(255, 159, 64, 1)'
+			            ],
+			            borderWidth: 1
+			         },{
+				        	label: '脈搏',
+				            data: heartBeatdatas,
+				            backgroundColor: [
+				            	'rgba(54, 162, 235, 0.2)',
+				                'rgba(255, 206, 86, 0.2)',
+				                'rgba(75, 192, 192, 0.2)'
+				            ],
+				            borderColor: [
+				            	'rgba(54, 162, 235, 0.2)',
+				                'rgba(255, 206, 86, 0.2)',
+				                'rgba(75, 192, 192, 0.2)'
+				            ],
+				            borderWidth: 1
+				     },{	
+				        type:'line',
+				        label:'標準值',
+				        data:[10, 20, 30]				        
+				      }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                   beginAtZero:true
+			                }
+			            }]
+			        }
+			    }
+			});
+		});			
+	 }		
+	<!--  血糖 -->
+	$('#bsrecords').click(bstable());
+	$('#bsrecords').click(bsview());
 			var bloodsugar;
 			var re = /^[0-9]+$/;
 			$('#insert_bloodsugar').blur(function() {
@@ -582,37 +748,106 @@
 			
 			$('#insertBS').click(function(){
 				 $.get("<c:url value='/healthpassport/queryBloodSugar.controller' />",{'memberid':memberid,'bloodsugar':bloodsugar}, function(data){
-	                	//data就是Server回傳的結果
-// 	                	JSON.parse(data);
+	                console.log(data);
+	                $('#showBloodSugar').empty();
+		 	       	$('#bsResult').empty();		 	    
+                	$('#showBloodSugar').prepend(data.bloodSugar);	    	      
+	    	       	$('#showbsTime').prepend(data.createTime);
+	    	       	$('#bsResult').prepend('<h4><small>'+'BloodSugar --> '+data.bloodSugar+'\|'+data.result+'</small></h4>');
+	    	       	$('#insert_bloodsugar').val("");				
+					$('#bloodsugarMsg').empty();					
+					bstable();
+					bsview();
+	                
 	             })
+			});	
+			
+//bs載入會員記錄
+			function bstable(){
+				$('#bsTable').dataTable().fnDestroy(); 
+				$('#bsTable').DataTable({
+				    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid,
+				    "columns": [				        
+				        { "data": "bloodSugar" },
+				        { "data": "bsResult" },
+				        { "data": "createTime" }
+				    ],
+				    "order": [[ 2, 'desc' ]],
+					"bProcessing": true,//顯示處理中的圖樣
+					"oLanguage": {
+				    "sLengthMenu": " _MENU_ 筆/頁",
+				    "sZeroRecords": "找不到符合的資料。",
+				    "sInfo": "共 _MAX_ 筆",
+				    "sSearch": "搜尋",
+				    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+				    "sInfoEmpty": "共 0 頁",
+				    "oPaginate": {
+				        "sPrevious": "«",
+				        "sNext": "»"
+				  	 	 }
+						}
+					});
+			};	
+	//bs圖表
+	var dates=[];
+	var datas=[];
+function bsview(){
+	console.log("1223")
+		$.getJSON('/TeleHealth/healthpassport/bloodSugarRecords.controller',{memberid:memberid},function(result){
+			 console.log(result);
+			$.each(result.data,function(index,value) {
+				console.log(value);
+				var date = moment(value.createTime).format('MM/DD HH:mm');
+				dates.push(date);
+				var bloodSugar = value.bloodSugar;
+				datas.push(bloodSugar);
 			});
-
-
+			var ctx = $("#mychart3")
+			var myChart = new Chart(ctx, {
+			    type: 'line',
+			    data: {
+			        labels: dates,
+			        datasets: [{
+			            label: '2018',
+			            data: datas,
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(255, 206, 86, 0.2)',
+			                'rgba(75, 192, 192, 0.2)',
+			                'rgba(153, 102, 255, 0.2)',
+			                'rgba(255, 159, 64, 0.2)'
+			            ],
+			            order:[dates,'desc'],
+			            order:[datas,'desc'],
+			            borderColor: [
+			                'rgba(255,99,132,1)',
+			                'rgba(54, 162, 235, 1)',
+			                'rgba(255, 206, 86, 1)',
+			                'rgba(75, 192, 192, 1)',
+			                'rgba(153, 102, 255, 1)',
+			                'rgba(255, 159, 64, 1)'
+			            ],
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                   beginAtZero:true
+			                }
+			            }]
+			        }
+			    }
+			});
+		});			
+	 }			
 			
 	});
 				     
 
-//ready外抓一筆最新資料回傳欄位	
- 		$.getJSON("<c:url value='/healthpassport/newOneRecords.controller'/>",{'memberid':memberid},function(oneData){
- 			console.log(oneData); 			
-  		 	$('#showHeight').empty();
- 	       	$('#showWeight').empty();
- 	       	$('#showTime').empty();
- 	       	$('#bmiResult').empty();
-            $.each(oneData,function(i,value){               
-         	var height = value[0].h;   	       			
-    		var weight = value[0].w;
-    		var bmi = value[0].b;
-    		var result = value[0].rs;
-    		var time = value[0].t;   			
-    		 	$('#showHeight').prepend(height);
-    	       	$('#showWeight').prepend(weight);
-    	       	$('#showTime').prepend(time);
-    	       	$('#bmiResult').prepend('<h4><small>'+'BMI --> '+bmi+'\|'+result+'</small></h4>');
-                })
-           });
-		
-
+ 	
 		
 		
 	</script>

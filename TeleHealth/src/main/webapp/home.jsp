@@ -6,11 +6,27 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <title>牽伴遠距健康諮詢平台</title>
 <style type="text/css">
 .hotcontent {
 	padding-left: 10em;
 	width: 90%;
+}
+.div_right_bottom {
+	width:300px;
+	height:300px;
+	padding:10px;
+	float:right;
+	position:fixed;
+	right:0px;
+	bottom:0px;
+	z-index:20;
+	border:2px solid #69c;
+	_position:absolute; /* position fixed for IE6 */
+}
+.right_button{
+	float:right;
 }
 </style>
 </head>
@@ -87,8 +103,8 @@
 				<div class="w3-row-padding w3-grayscale" style="margin-top: 64px">
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor2.png "/>" alt="John"
-								style="width: 100%">
+							<img src="<c:url value="/images/doctor2.png"/>" alt="John"
+								style="width: 100%;background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>John Doe</h3>
 								<p class="w3-opacity">CEO & Founder</p>
@@ -99,7 +115,7 @@
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor1.png "/>" alt="Jane"
+							<img src="<c:url value="/images/doctor1.jpg"/>" alt="Jane"
 								style="width: 100%;background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>Anja Doe</h3>
@@ -111,7 +127,7 @@
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor3.png "/>" alt="Mike"
+							<img src="<c:url value="/images/doctor3.png"/>" alt="Mike"
 								style="width: 100%; background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>Mike Ross</h3>
@@ -123,7 +139,7 @@
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor4.png "/>" alt="Dan"
+							<img src="<c:url value="/images/doctor4.png"/>" alt="Dan"
 								style="width: 100%;background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>Dan Star</h3>
@@ -148,9 +164,21 @@
 			</div>
 		</div>
 	</section>
+	<div class="div_right_bottom" style="background: navajowhite;">
+		<div style="border-bottom: 1px red solid">
+			<span>線上諮詢</span>
+			<button class="btn btn-warning right_button" style="height:20px"><i class="fas fa-angle-down" style="margin-bottom:8px" ></i></button>
+		</div>
+		<div style="background: navajowhite; height:70%">		
+		</div>
+		<div class="row" style="margin-left:1px;background: navajowhite;width:100%">
+			<textarea style="border: 1px red solid; width:75%;margin-left:5px" cols="5" id="inputMsg"></textarea>
+			<button class="btn .btn-default" style='width:20%;margin-left:3px;'>送出</button>
+		</div>
+	</div>
 	<jsp:include page="/fragment/footer.jsp" />
 </body>
-<!-- </body> -->
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$.getJSON('/TeleHealth/healthcolumn/hotcontentimg.controller',{}, function(data) {
@@ -194,10 +222,28 @@
 						var heldata = divsecound.append(article);
 						$('.carousel-inner').append(heldata);
 				}
+			});
+		});
 
-			})
-		})
+		var errorMsg = $('#errorMsg').val();
+		if(errorMsg != "" && errorMsg != null && errorMsg != undefined) {
+			 $(function(){
+		        $('#myModal').modal({
+		        show:true,
+		        backdrop:true
+		        })
+			 });
+		}
 	})
 </script>
-<script src="<c:url value="/js/agency.min.js"/>"></script>
+<!--Start of Zendesk Chat Script-->
+<!-- <script type="text/javascript"> -->
+// window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+// d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+// _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+// $.src="https://v2.zopim.com/?5YaBt8JJAcDDLMRWkjhB3EUIQfZXywg7";z.t=+new Date;$.
+// type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+<!-- </script> -->
+<!-- <!--End of Zendesk Chat Script--> -->
+<%-- <script src="<c:url value="/js/agency.min.js"/>"></script> --%>
 </html>

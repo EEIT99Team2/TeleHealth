@@ -14,48 +14,47 @@
 <link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <style>
 
-  #calendar {
-  
+  #calendar { 
     max-width: 1100px;
     margin: 20px auto;   
-     background-color:#E1F5FE;
+    background-color:#E1F5FE;
+    font-size:18px;
   }
    
  	.fc-toolbar{ 
  	background-color:white;
  	} 
-
-  .item1 {font-size:1em;}
-  .item3 {padding-right:10px;
-		 }
+  .headFont {font-size:20px;}
   .columnHead{display:inline-block;font-size:1.5em;}
   .momentColor {font-family: CJKtc_Bold;}
   .eventItem{text-align:center;
   			font-size:18px;}
+  .selectTime{margin-top:40px;}
+  .selectWord {padding:0px 5px;}
 </style>
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
 <div class="container">
-<div class="row item1">
+<div class="row headFont">
 <div class="momentColor col-2"><span style='color:#0080ff'>尚未被預約</span><br/><span style='color:#00db00'>您已預約</span><br/><span style='color:#ea0000'>已被預約</span></div>
-<div class="col-5">
-<span id="item1" class="item3">快速查詢:</span>
-<select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">年</span>
-<select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">月</span>
-<select id="date" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">日</span>
+<div class="col-6 selectTime">
+<span class="selectWord">快速查詢:</span>
+<select id="year"><option>請選擇</option></select><span class="selectWord">年</span>
+<select id="month"><option>請選擇</option></select><span class="selectWord">月</span>
+<select id="date"><option>請選擇</option></select><span class="selectWord">日</span>
 <button type="button" id="fastSearch" class="btn btn-secondary">查詢</button>
 </div>
-<div class="col-2">
-<span id="item2" class="item3">時段:</span><select id="chooseTime" class="headerChoose">
+<div class="col-2 selectTime">
+<span class="selectWord">時段:</span><select id="chooseTime">
 <option id="allday">全天</option>
 <option id="mor" SELECTED>上午</option>
 <option id="aft">下午</option>
 <option id="nig">晚上</option>
 </select>
 </div>
-<div class="col-3">
-<span id="item3" class="item3">科別:</span><select id="chooseCode" class="headerChoose">
+<div class="col-2 selectTime">
+<span class="selectWord">科別:</span><select id="chooseCode">
 <option id="all">所有諮詢項目</option>
 <option id="FAM">家庭醫學</option>
 <option id="EAD">生活飲食</option>
@@ -173,7 +172,6 @@
 <!-- Footer -->
 <jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
-<script type="text/javascript" src="/TeleHealth/js/showIcon.js"></script>
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>
@@ -308,9 +306,7 @@ $(document).ready(function() {
 				  }  
 	  },
 	  eventMouseover:function( event, jsEvent, view ) {
-			if(event.backgroundColor=="#00db00"||event.backgroundColor=="#0080ff"){
-				$(this).addClass('zoom') 
-				}
+				$(this).addClass('zoom')
 		  },
 	  eventMouseout:function( event, jsEvent, view ) {
 				$(this).removeClass('zoom') 
@@ -363,7 +359,7 @@ $(document).ready(function() {
 		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode,"UserId":reservedData.UserId},function(result){
 			$("#cancelReserveItem").modal('hide');
 			$("#cancelCheckItem").modal('show');
-			docFrag.append("<h3>"+result+"<img src='../images/yes.png'/>"+"</h3>");
+			docFrag.append("<h3>"+result+"<img src='<c:url value="/images/yes.png"/> '/>"+"</h3>");
 			console.log("result="+result);
 	  	$("#cancelCheckItem .modal-body").append(docFrag);
 			})

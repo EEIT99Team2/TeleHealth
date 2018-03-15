@@ -58,8 +58,6 @@ public class GetImageController {
 			return null;
 		}
 	}
-	
-	
 
 	@RequestMapping(value = "/getimagebyid.controller", method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<byte[]> getImageByIdAsResponseEntity(String id,HttpSession session) {
