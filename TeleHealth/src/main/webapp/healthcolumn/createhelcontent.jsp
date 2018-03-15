@@ -19,7 +19,7 @@
 }
 </style>
 </head>
-<jsp:include page="/fragment/navemp.jsp" />
+<jsp:include page="/fragment/nav2.jsp" />
 <body>
 	<script type="text/javascript">
 		$(document)

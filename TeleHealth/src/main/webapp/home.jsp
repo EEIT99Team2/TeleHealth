@@ -188,8 +188,19 @@
 						$('.carousel-inner').append(heldata);
 				}
 
-			})
-		})
+			});
+		});
+
+		var errorMsg = $('#errorMsg').val();
+		if(errorMsg != "" && errorMsg != null && errorMsg != undefined) {
+			 $(function(){
+		        $('#myModal').modal({
+		        show:true,
+		        backdrop:true
+		        })
+			 });
+		}
+		
 	})
 </script>
 <script src="<c:url value="/js/agency.min.js"/>"></script>

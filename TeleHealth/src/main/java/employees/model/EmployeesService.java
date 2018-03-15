@@ -35,7 +35,7 @@ public class EmployeesService {
 	public EmployeesBean checkAccountEmp(String account,String MD5pwd) {
 		EmployeesBean result = employeesDAO.selectByAccount(account);
 		System.out.println(account+" " +MD5pwd);
-		if (result.getAccount()!=null) {			
+		if (result != null) {			
 			if(MD5pwd!=null && MD5pwd.length()!=0) {			
 				String temp = MD5pwd; //使用者輸入
 				EmployeesBean Emp = result;
