@@ -19,22 +19,29 @@
 	<jsp:include page="/fragment/nav2.jsp" />
 	<!-- Header -->
 	<header>
-		<div id="myCarousel" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				<li data-target="#myCarousel" data-slide-to="1"></li>
-				<li data-target="#myCarousel" data-slide-to="2"></li>
-				<li data-target="#myCarousel" data-slide-to="3"></li>
-				<li data-target="#myCarousel" data-slide-to="4"></li>
-			</ol>
-			<div class="carousel-inner"></div>
-			<a class="carousel-control-prev" href="#myCarousel" role="button"
-				data-slide="prev"> <span class="carousel-control-prev-icon"
-				aria-hidden="true"></span> <span class="sr-only">Previous</span>
-			</a> <a class="carousel-control-next" href="#myCarousel" role="button"
-				data-slide="next"> <span class="carousel-control-next-icon"
-				aria-hidden="true"></span> <span class="sr-only">Next</span>
-			</a>
+		<div class="container">
+			<div class="row">
+				<div class="col-1"></div>
+				<div id="myCarousel" class="carousel slide col-12"
+					data-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<li data-target="#myCarousel" data-slide-to="2"></li>
+						<li data-target="#myCarousel" data-slide-to="3"></li>
+						<li data-target="#myCarousel" data-slide-to="4"></li>
+					</ol>
+					<div class="carousel-inner"></div>
+					<a class="carousel-control-prev" href="#myCarousel" role="button"
+						data-slide="prev"> <span class="carousel-control-prev-icon"
+						aria-hidden="true"></span> <span class="sr-only">Previous</span>
+					</a> <a class="carousel-control-next" href="#myCarousel" role="button"
+						data-slide="next"> <span class="carousel-control-next-icon"
+						aria-hidden="true"></span> <span class="sr-only">Next</span>
+					</a>
+				</div>
+			</div>
+			<div class="col-1"></div>
 		</div>
 	</header>
 	<!-- Introduction -->
@@ -80,7 +87,7 @@
 				<div class="w3-row-padding w3-grayscale" style="margin-top: 64px">
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/team2.jpg "/>" alt="John"
+							<img src="<c:url value="/images/doctor2.png "/>" alt="John"
 								style="width: 100%">
 							<div class="w3-container bg-light">
 								<h3>John Doe</h3>
@@ -92,8 +99,8 @@
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/team1.jpg "/>" alt="Jane"
-								style="width: 100%">
+							<img src="<c:url value="/images/doctor1.png "/>" alt="Jane"
+								style="width: 100%;background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>Anja Doe</h3>
 								<p class="w3-opacity">Art Director</p>
@@ -104,8 +111,8 @@
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/team3.jpg "/>" alt="Mike"
-								style="width: 100%">
+							<img src="<c:url value="/images/doctor3.png "/>" alt="Mike"
+								style="width: 100%; background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>Mike Ross</h3>
 								<p class="w3-opacity">Web Designer</p>
@@ -116,8 +123,8 @@
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/team4.jpg "/>" alt="Dan"
-								style="width: 100%">
+							<img src="<c:url value="/images/doctor4.png "/>" alt="Dan"
+								style="width: 100%;background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>Dan Star</h3>
 								<p class="w3-opacity">Designer</p>

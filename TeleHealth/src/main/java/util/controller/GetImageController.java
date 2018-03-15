@@ -60,16 +60,16 @@ public class GetImageController {
 	}
 	
 	
-	@SuppressWarnings("unused")
+
 	@RequestMapping(value = "/getimagebyid.controller", method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<byte[]> getImageByIdAsResponseEntity(String id,HttpSession session) {
 		MemberBean member = null;
 		EmployeesBean emp = null;
 		String queryId = null;
 		String flag = "member";
-		if(queryId != null) {
+		if(id != null) {
 			queryId = id.trim();
-			if(queryId.indexOf("@") < 0 ) {
+			if(queryId.indexOf("@") < 1 ) {
 				flag = "emp";
 			}
 			if(flag.equals("member")) {
