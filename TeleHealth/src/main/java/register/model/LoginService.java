@@ -100,6 +100,14 @@ public class LoginService {
 		System.out.println("qoo="+bean);
 		return account;				
 	}
+	
+	@Transactional
+	public MemberBean selectById(String memberId) {
+		if(memberId != null && memberId.trim().length() > 0) {
+			return memberDAO.selectById(memberId.trim());
+		}
+		return null;
+	}
 
 	@Transactional
 	public boolean UpdatePassword (String account) {

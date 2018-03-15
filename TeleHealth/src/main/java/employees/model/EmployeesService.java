@@ -51,4 +51,11 @@ public class EmployeesService {
 		return null;		
 	}
 	
+	public EmployeesBean selectById(String empId) {
+		if(empId != null && empId.trim().length() > 0) {
+			return employeesDAO.selectById(empId);
+		}
+		return null;
+	}
+	
 }

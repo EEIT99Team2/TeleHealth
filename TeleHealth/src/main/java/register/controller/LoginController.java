@@ -25,7 +25,7 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService = null;
 	@Autowired
-	private EmployeesService EmployeesService;
+	private EmployeesService employeesService;
 
 	@RequestMapping(path = { "/login.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public String method(String username, String pwd, Model model, String remember, HttpServletResponse response,
@@ -116,7 +116,7 @@ public class LoginController {
 			Cookie cookiePassword = null;
 			Cookie cookieRememberMe = null;
 			String MD5pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
-			EmployeesBean bean = EmployeesService.checkAccountEmp(username, MD5pwd);
+			EmployeesBean bean = employeesService.checkAccountEmp(username, MD5pwd);
 			System.out.println(bean);
 			if (bean == null) {
 				errorMsg.put("errorPsw", "帳號或密碼不正確");
