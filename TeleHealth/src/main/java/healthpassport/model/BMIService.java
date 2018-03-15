@@ -65,6 +65,20 @@ public class BMIService {
 		BMIBean result = bmiDao.topOneData(memberid);
 		return result;
 	}
-	
+			//7
+			public List<BMIBean> selectMemberidseven(String memberid) {
+				List<BMIBean> result = bmiDao.sevenData(memberid);
+				return result;
+			}
+			//30
+			public List<BMIBean> selectMemberidthirty(String memberid) {
+				List<BMIBean> result = bmiDao.thirtyData(memberid);
+				return result;
+			}
+			//180
+			public List<BMIBean> selectMemberidthreemon(String memberid) {
+				List<BMIBean> result = bmiDao.thrmonthData(memberid);
+				return result;
+			}
 	
 }
