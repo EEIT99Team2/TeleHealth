@@ -24,11 +24,13 @@ width:50em;
 </style>
 </head>
 <body>
-<main role="main" class="container mt-2">
-<div class="row">     	
-	      <div class="card">
-			<span>${empLoginOK.empName}</span><input type="hidden" id="empId" value="${empLoginOK.empId}"><div class="card-header">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
-				<div class="card-body">
+<jsp:include page="/fragment/nav2.jsp" />
+<div class="container">
+<div class="row col-12">     	
+	      <div class="col-2"></div>
+	      <div class="card col-8">
+			<input type="hidden" id="empId" value="${empLoginOK.empId}"><div class="card-header">發佈過的文章列表<span>${contenterrors.contenterror}${contentOK.contentok}</span>
+				<div class="card-body ">
 				<!-- 每頁不同的內容從這裡開始 -->
 				   <table id="productTable" class="table table-bordered">
                        <thead>
@@ -49,8 +51,9 @@ width:50em;
 		    </div>
 		      <span id='table_page'></span>		
 		 </div>
+		 <div class="col-2"></div>
      </div>	
-	</main>
+</div>
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="form" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" id="updatestyle" role="document">
     <div class="modal-content" >
@@ -82,7 +85,7 @@ width:50em;
 	<script src="../js/bootstrap.min.js"></script>	
 	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
-	 var empIdlogin=$('empId').val();
+	 var empIdlogin=$('#empId').val();
 		$(document).ready(function() {			
 			$('#clean').on('click',function(){
 				CKEDITOR.instances.contenttext.setData(' ');
@@ -90,9 +93,8 @@ width:50em;
 			 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
 		          {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},{ name: 'insert', groups: [ 'Image' ] },
 		          ];				
-			 CKEDITOR.replace('contenttext',{width:450, height:500,toolbarGroups:tg});
-		   	loadProduct("930F2472-337E-4800-B774-EB0AAE703D2A");
-// 			loadProduct(empIdlogin);
+			 CKEDITOR.replace('contenttext',{width:450, height:500,toolbarGroups:tg});		
+ 			 loadProduct(empIdlogin);
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -110,8 +112,7 @@ width:50em;
 			   //讀取醫生發表
 			   function loadProduct(empId){
 			    $.getJSON('/TeleHealth/healthcolumn/publishcontent.controller',{empId:empId},function(datas){
-						console.log(datas);
-		    			var doc=$(document.createDocumentFragment());			    		
+						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
 			    	$.each(datas,function(i,product){			    		
@@ -135,18 +136,15 @@ width:50em;
 			    
 			     //刪除產品
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
-				   var check=confirm("你確定要刪除此筆資料?");
-				   console.log(check);
-	 			   var id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			   console.log(id);
+				   var check=confirm("你確定要刪除此筆資料?");				   
+	 			   var id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  
 	 			   if(check==true){
 	 				  $.post('/TeleHealth/healthcolumn/deletehealthcolumn.controller',{columnId:id},function(data){
-							console.log(data);
-		 				   alert("您已刪除所選的文章");
+						   alert("您已刪除所選的文章");
 		 				   loadProduct(empIdlogin);
 		 			   })		 			   
 	 			   }else{
-	 				  loadProduct(empIdlogin)
+	 				  loadProduct(empIdlogin);
 		 		 }
 	 			 
 			  })
@@ -155,10 +153,8 @@ width:50em;
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var id = $(this).parents('tr').find('td:nth-child(2)').text();
-	 			  console.log(id);
-	 			 $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller',{title:id},function(datas){
-						console.log(datas);
-		 				$.each(datas,function(i,content){	 				
+	 		   $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller',{title:id},function(datas){
+						$.each(datas,function(i,content){	 				
 	 					 CKEDITOR.instances.contenttext.setData(content[2]);	 					 	 					
 	 					 $("#heltitle").val(content[0]);
 		 				}) 					

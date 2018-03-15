@@ -28,8 +28,7 @@ public class Questioncontroller {
 	public @ResponseBody String loadQAcontent(String title) {
 		List<QuestionBean> loadpage = QuestionService.loadresponse(title);		
 		Gson gson = new Gson();
-		String data = gson.toJson(loadpage);
-		System.out.println(data);
+		String data = gson.toJson(loadpage);		
 		return data;
 	}
 	//員工文章
@@ -38,8 +37,7 @@ public class Questioncontroller {
 	public @ResponseBody String loadQAEmppublish(String empId) {
 		List<QuestionBean> loadpage = QuestionService.loadEmp(empId);		
 		Gson gson = new Gson();
-		String data = gson.toJson(loadpage);
-		System.out.println(data);
+		String data = gson.toJson(loadpage);		
 		return data;
 	}
 	//會員文章
@@ -48,8 +46,7 @@ public class Questioncontroller {
 	public @ResponseBody String loadQAMempublish(String memId) {
 		List<QuestionBean> loadpage = QuestionService.loadMem(memId);
 		Gson gson = new Gson();
-		String data = gson.toJson(loadpage);
-		System.out.println(data);
+		String data = gson.toJson(loadpage);		
 		return data;
 	}
 	// 修改po文
@@ -58,8 +55,7 @@ public class Questioncontroller {
 			RequestMethod.POST,RequestMethod.GET })
 	public @ResponseBody String updatecontent(String contenttext,String questionId,Model model) {
 		int columnIdemp=Integer.parseInt(questionId);		
-		boolean update = QuestionService.updateQA(columnIdemp, contenttext);
-		System.out.println(update);
+		boolean update = QuestionService.updateQA(columnIdemp, contenttext);		
 		if(update) {
 			Gson gson = new Gson();
 			String dataLoad = gson.toJson("ok");
@@ -116,8 +112,7 @@ public class Questioncontroller {
 				String textmem,
 				String advisorycode,
 				String title,
-				Model model) {	
-			System.out.println(MemId+"123 "+textmem+" "+advisorycode+" "+title);
+				Model model) {				
 			QuestionBean bean=new QuestionBean();
 			bean.setAdvisorycode(advisorycode);
 			bean.setMemberId(MemId);
@@ -154,8 +149,7 @@ public class Questioncontroller {
 				{					
 					List<Object[]> allmempublish = QuestionService.loadtotalcontent();
 					Gson gson = new Gson();
-					String dataLoad = gson.toJson(allmempublish);
-					System.out.println(dataLoad);
+					String dataLoad = gson.toJson(allmempublish);					
 					return dataLoad;			 
 				}
 		//選修全部文章

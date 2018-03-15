@@ -53,8 +53,8 @@
 					href="<c:url value="/healthcolumn/createhelcontent.jsp" />">新增專欄文章</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/AdvisoryMoment/EmployeeMoment.jsp" />">查詢班表</a></li>
-				<li class="nav-item"><a class="nav-link" 
-					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a></li>				
+				<li class="nav-item"><div class="row"><a class="nav-link" id="advisoryIcon"
+					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>				
 
 			</ul>
 			</c:when>

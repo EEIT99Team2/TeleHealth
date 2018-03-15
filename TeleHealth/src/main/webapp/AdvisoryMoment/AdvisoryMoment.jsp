@@ -170,7 +170,6 @@
 </div>
 <div id="calendar"></div>
 </div>
-</div>
 <!-- Footer -->
 <jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->

@@ -58,8 +58,7 @@ public class GetImageController {
 			return null;
 		}
 	}
-	
-	
+
 	@RequestMapping(value = "/getimagebyid.controller", method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<byte[]> getImageByIdAsResponseEntity(String id,HttpSession session) {
 		MemberBean member = null;
@@ -68,7 +67,7 @@ public class GetImageController {
 		String flag = "member";
 		if(id != null) {
 			queryId = id.trim();
-			if(queryId.indexOf("@") < 0 ) {
+			if(queryId.indexOf("@") < 1 ) {
 				flag = "emp";
 			}
 			if(flag.equals("member")) {

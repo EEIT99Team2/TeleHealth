@@ -115,8 +115,7 @@
 			$("#title").tablepage($("#table_page"),3);});}
 						});
 		$('#title').on('click', '.heltitle', function() {
-			var title = ($(this).attr('name'));
-			console.log(title);
+			var title = ($(this).attr('name'));			
 			$.post('/TeleHealth/healthcolumn/countarticle.controller', {
 				title : title
 			}, function(data) {

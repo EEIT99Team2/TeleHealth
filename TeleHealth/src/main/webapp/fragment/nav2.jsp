@@ -24,9 +24,10 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
 	rel='stylesheet' type='text/css'>
-<link
-	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
-	rel='stylesheet' type='text/css'>
+<!-- 	google 我不是機器人 -->
+<!-- <link -->
+<!-- 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' -->
+<!-- 	rel='stylesheet' type='text/css'> -->
 
 
 <!-- Custom styles for this template -->
@@ -34,8 +35,8 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark" id="mainNavB">
 	<div class="container">
-		<a class="navbar-brand js-scroll-trigger" href="<c:url value="/home.jsp" />"><img
-			alt="Logo" src="<c:url value="/images/logo.png" />" /></a>
+		<a class="navbar-brand js-scroll-trigger" href="<c:url value="/home.jsp" />">
+		<img id="logo" alt="Logo" src="<c:url value="/images/logo.png" />" /></a>
 		<span class="navbar-brand">牽伴健康諮詢平台</span>
 		<button class="navbar-toggler navbar-toggler-right" type="button"
 			data-toggle="collapse" data-target="#navbarResponsive"
@@ -53,14 +54,55 @@
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthpassport/HealthPassport.jsp" />">健康護照</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/QueryDrugs/Drugs.jsp"/>">藥品查詢</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">諮詢預約</a></li>
 				<li class="nav-item"><a class="nav-link" 
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
 			</ul>
+		<div class="text-center">
+				<img style="width:40px;height:35px;" src="/TeleHealth/getImage.controller" >
+				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
+				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
+					<input type="submit" class="btn btn-sm btn-outline-secondary" 
+					id="myBtn1" value="登出" />
+				</form>
+		</div>
 			</c:when>
-			<c:otherwise>
+			<c:when test="${not empty empLoginOK}">
+			<ul class="navbar-nav text-uppercase ml-auto">
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
+				<li class="nav-item">
+					<div class="dropdown nav-link">
+						<button class="btn btn-Info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">維護專欄</button>
+						<div class="dropdown-menu" aria-labelledby="dropdwonMenuButton">
+							<a class="dropdown-item" href="<c:url value="/healthcolumn/createhelcontent.jsp" />">新增專欄文章</a>
+							<a class="dropdown-item" href="<c:url value="/healthcolumn/Dpublish.jsp" />">已發佈文章</a>				
+						</div>
+					</div>
+				</li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/QueryDrugs/Drugs.jsp"/>">藥品查詢</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/AdvisoryMoment/EmployeeMoment.jsp" />">查詢班表</a></li>
+				<li class="nav-item"><div class="row showIcon"><a class="nav-link" id="advisoryIcon"
+					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>				
+			</ul>
+		<div class="text-center">
+				<span>
+					<c:out value="${empLoginOK.empName},你好!!" />
+				</span>
+				<input type="hidden" value="${empLoginOK.empId}" id="empId" />
+				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
+					<input type="submit" class="btn btn-sm btn-outline-secondary" 
+					id="myBtn1" value="登出" />
+				</form>
+		</div>
+			</c:when>
+			<c:otherwise>			
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
@@ -68,31 +110,18 @@
 					href="#introduction">簡介</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="#team">醫師團隊</a></li>
-			</ul>
-			</c:otherwise>
-			</c:choose>
-		</div>
-		<div class="text-center">
-		<c:choose>
-			<c:when test="${empty LoginOK}">
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/QueryDrugs/Drugs.jsp"/>">藥品查詢</a></li>
+			</ul>			
+			<div class="text-center">
 				<button type="button" class="btn btn-primary btn-rounded" 
 					data-toggle="modal" id="myBtn">登入</button>
-			</c:when>			
-			<c:otherwise>
-				<span>
-					<c:out value="${LoginOK.memName},你好!!" />
-				</span>
-				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
-				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
-					<input type="submit" class="btn btn-sm btn-outline-secondary" 
-					id="myBtn1" value="登出" />
-				</form>
-			</c:otherwise>				
-		</c:choose>		
-		</div>
+			</div>
+			</c:otherwise>
+			</c:choose>
+		</div>		
 	</div>
 </nav>
-
 <div class="container">
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" role="dialog">
@@ -110,21 +139,24 @@
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="username"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${param.usrname}">
-                                <font color="red" size="-1">${MsgMap.errorUsrName}</font>                              
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${param.username}">
+                                <font color="red" size="-1">${MsgMap.errorUserName}</font>                              
                             </div>
                             <div class="form-group">
                                 <label for="pwd">
                                     <span class="fa fa-eye"></span> 密碼</label>
                                 <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password">
                             </div>
-                            <font color="red" size="-1">${MsgMap.errorPsw}</font>
+                            <font color="red" size="-1">${MsgMap.errorPwd}</font>
                             <div class="checkbox" id="rememberMe">
                                 <label>
                                     <input type="checkbox" value="" checked /> 記住我
                                 </label>
                             </div>
+                            
+<!--                             google 我不是機器人 -->
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
+                          	
                             <button type="submit" class="btn btn-success btn-block">登入</button>
                             <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">取消</button>
                         </form>
@@ -141,3 +173,5 @@
 		</div>
 	</div>
 </div>
+<!-- 提醒視訊諮詢的小圖示用 -->
+<script type="text/javascript" src="/TeleHealth/js/showIcon.js"></script>
