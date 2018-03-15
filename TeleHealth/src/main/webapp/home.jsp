@@ -6,6 +6,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <title>牽伴遠距健康諮詢平台</title>
 <style type="text/css">
 .hotcontent {
@@ -23,6 +24,9 @@
 	z-index:20;
 	border:2px solid #69c;
 	_position:absolute; /* position fixed for IE6 */
+}
+.right_button{
+	float:right;
 }
 </style>
 </head>
@@ -163,13 +167,13 @@
 	<div class="div_right_bottom" style="background: navajowhite;">
 		<div style="border-bottom: 1px red solid">
 			<span>線上諮詢</span>
+			<button class="btn btn-warning right_button" style="height:20px"><i class="fas fa-angle-down" style="margin-bottom:8px" ></i></button>
 		</div>
-		<div style="background: navajowhite; height:70%">
-			
+		<div style="background: navajowhite; height:70%">		
 		</div>
-		<div class="row" style="background: navajowhite;">
-			<textarea style="border: 1px red solid; width:60%" cols="5" id="inputMsg"></textarea>
-			<button style='width:10%'>送出</button>
+		<div class="row" style="margin-left:1px;background: navajowhite;width:100%">
+			<textarea style="border: 1px red solid; width:75%;margin-left:5px" cols="5" id="inputMsg"></textarea>
+			<button class="btn .btn-default" style='width:20%;margin-left:3px;'>送出</button>
 		</div>
 	</div>
 	<jsp:include page="/fragment/footer.jsp" />
