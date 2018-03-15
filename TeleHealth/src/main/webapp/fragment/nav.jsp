@@ -79,14 +79,18 @@
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="#introduction">簡介</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="#team">醫師團隊</a></li>
+					href="#team">諮詢團隊</a></li>
 			</ul>
 			</c:otherwise>
 			</c:choose>
 		</div>
 		<div class="text-center">
 		<c:choose>
-			<c:when test="${empty LoginOK && empty empLoginOK}">
+			<c:when test="${empty LoginOK}">
+				<button type="button" class="btn btn-primary btn-rounded" 
+					data-toggle="modal" id="myBtn">登入</button>
+			</c:when>
+			<c:when test="${empty empLoginOK}">
 				<button type="button" class="btn btn-primary btn-rounded" 
 					data-toggle="modal" id="myBtn">登入</button>
 			</c:when>
@@ -143,7 +147,7 @@
                             </div>
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
                             <button type="submit" class="btn btn-success btn-block">登入</button>
-                            <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">取消</button>
+                            <button type="reset" class="btn btn-danger btn-block">清除</button>
                         </form>
 				</div>
 				<div class="modal-footer">
