@@ -774,13 +774,17 @@
 			        }
 			    }
 			});
+
 		});
 			
 	 }
 
+
 	<!--  血糖 -->
+
 		$('#bsrecords').click(bstable());
 		$('#bsrecords').click(bsview());
+
 			var bloodsugar;
 			var re = /^[0-9]+$/;
 			$('#insert_bloodsugar').blur(function() {
@@ -835,7 +839,6 @@
 						}
 					});
 			};	
-
 	//bs圖表
 	var bsdates=[];
 	var bsdatas=[];
@@ -893,8 +896,6 @@ function bsview(){
 	 }
 
 
-			
-			
 	});
 				     
 

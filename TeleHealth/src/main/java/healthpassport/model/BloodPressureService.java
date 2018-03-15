@@ -86,4 +86,20 @@ public class BloodPressureService {
 		return result;
 	}
 	
+	//7
+	public List<BloodPressureBean> selectMemberidseven(String memberid) {
+		List<BloodPressureBean> result = bloodPressureDao.sevenData(memberid);
+		return result;
+	}
+	//30
+	public List<BloodPressureBean> selectMemberidthirty(String memberid) {
+		List<BloodPressureBean> result = bloodPressureDao.thirtyData(memberid);
+		return result;
+	}
+	//180
+	public List<BloodPressureBean> selectMemberidthreemon(String memberid) {
+		List<BloodPressureBean> result = bloodPressureDao.thrmonthData(memberid);
+		return result;
+	}
+	
 }
