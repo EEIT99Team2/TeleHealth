@@ -1,10 +1,12 @@
 package healthpassport.controller;
 
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +34,6 @@ public class AnalysisController {
 	@Autowired
 	private BloodSugarService BloodSugarService ;
 	
-
 	private Integer age = 19;
 	private String gender = "M";
 	//BMI
@@ -52,7 +53,12 @@ public class AnalysisController {
 			bean.setBmi(bmiResult);
 			bean.setHeight(heightResult);
 			bean.setWeight(weightResult);
-			bmiService.insert(bean,gender,age);		
+			BMIBean result = bmiService.insert(bean,gender,age);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+//			String data = new Gson().toJson(datas);
+//			System.out.println(data);
 			return null;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -102,8 +108,14 @@ public class AnalysisController {
 		HashMap<String, String> dataOne = new HashMap<String, String>();
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String height = result.getHeight().toString();
-		String weight = result.getWeight().toString();
+		Double getheight = result.getHeight();
+		Double getweight = result.getWeight();
+		Double heightChangeInt = new Double(getheight);
+		Double weightChangeInt = new Double(getweight);
+		Integer h =heightChangeInt.intValue();
+		Integer w =weightChangeInt.intValue();
+		String height = h.toString();
+		String weight = w.toString();
 		String bmi = result.getBmi().toString();
 		String result1 = result.getResult();
 		String time = sdf.format(result.getCreateTime());

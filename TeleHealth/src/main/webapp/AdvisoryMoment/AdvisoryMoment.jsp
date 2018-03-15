@@ -24,25 +24,9 @@
  	.fc-toolbar{ 
  	background-color:white;
  	} 
-/* 	//week格線 */
-/*    .fc .fc-agendaWeek-view .fc-bg tr > td{ */
-/*     border: 2px solid grey; */
-/* 	} */
-/* 	//table格線 */
-/* 	.fc-bg table{ */
-		
-/* 	} */
 
-
-  .iBlock {display:inline-block;
-  		margin-left:280px;
-  		font-size:20px;}
-  .item1 {font-size:1em;
-		 margin-left:100px;}
-  .item2 {font-size:1em;
-		 margin-left:100px;}
-  .item3 {font-size:1em;
-		 padding-right:10px;
+  .item1 {font-size:1em;}
+  .item3 {padding-right:10px;
 		 }
   .columnHead{display:inline-block;font-size:1.5em;}
   .momentColor {font-family: CJKtc_Bold;}
@@ -52,28 +36,36 @@
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
-<div class="momentColor iBlock"><span style='color:#0080ff'>尚未被預約</span><br/><span style='color:#00db00'>您已預約</span><br/><span style='color:#ea0000'>已被預約</span></div>
-<div class="container iBlock">
-<span id="item1" class="item1">快速查詢:</span>
+<div class="container">
+<div class="row item1">
+<div class="momentColor col-2"><span style='color:#0080ff'>尚未被預約</span><br/><span style='color:#00db00'>您已預約</span><br/><span style='color:#ea0000'>已被預約</span></div>
+<div class="col-5">
+<span id="item1" class="item3">快速查詢:</span>
 <select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">年</span>
 <select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">月</span>
 <select id="date" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose">日</span>
 <button type="button" id="fastSearch" class="btn btn-secondary">查詢</button>
-<span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose">
+</div>
+<div class="col-2">
+<span id="item2" class="item3">時段:</span><select id="chooseTime" class="headerChoose">
 <option id="allday">全天</option>
 <option id="mor" SELECTED>上午</option>
 <option id="aft">下午</option>
 <option id="nig">晚上</option>
 </select>
+</div>
+<div class="col-3">
 <span id="item3" class="item3">科別:</span><select id="chooseCode" class="headerChoose">
 <option id="all">所有諮詢項目</option>
 <option id="FAM">家庭醫學</option>
 <option id="EAD">生活飲食</option>
 <option id="REH">復健醫學</option>
 <option id="DIA">糖尿病諮詢</option>
-<option id="CAR">心血管慢性疾病諮詢</option>
+<option id="CAR">心血管慢性疾病</option>
 <option id="WEL">健康減重</option>
 </select><br>
+</div>
+</div>
 <!-- 點擊預約時段彈跳視窗 -->
 <div class="modal fade" id="reserveDataDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -181,6 +173,7 @@
 <!-- Footer -->
 <jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
+<script type="text/javascript" src="/TeleHealth/js/showIcon.js"></script>
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>

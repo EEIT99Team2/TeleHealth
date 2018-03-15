@@ -13,8 +13,8 @@ E-Mail：hpw925@hotmail.com
 		var sPageStr = "";
 		var dCount = 0;
 		var oSource = $(this);
-		var sNoSelColor = "#CCCCCC";
-		var sSelColor = "black";
+		var sNoSelColor = "#AAAAAA";
+		var sSelColor = "#EE7700";
 		var sFontColor = "white";
 
  		change_page_content();
@@ -25,7 +25,7 @@ E-Mail：hpw925@hotmail.com
 			dCount = oSource.children().children().length - 1;
 
 			//顯示頁碼
-			sPageStr = "<table><tr><td style='height:30px;'><b>第</b></td>";
+			sPageStr = "<table><tr><td style='height:30px;'><p style='color:#FFAA33;font-size:20px'>第</p></td>";
 			
 			dPageIndex = 1;
 			
@@ -33,15 +33,15 @@ E-Mail：hpw925@hotmail.com
 			{
 				if (dNowIndex == dPageIndex)
 				{
-					sPageStr += "<td valign='top'><table style='width:20px;height:20px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sSelColor + ";background-color:" + sSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
+					sPageStr += "<td valign='top'><table style='font-size:20px;width:30px;height:30px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sSelColor + ";background-color:" + sSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
 				}
 				else
 				{
-					sPageStr += "<td valign='top'><table style='width:20px;height:20px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sNoSelColor + ";background-color:" + sNoSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
+					sPageStr += "<td valign='top'><table style='font-size:20px;width:30px;height:30px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sNoSelColor + ";background-color:" + sNoSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
 				}
 			}
 			
-			sPageStr += "<td><b>頁</b></td></tr></table>";
+			sPageStr += "<td><p style='font-size:20px;color:#FFAA33'>頁</p></td></tr></table>";
 			
 			oObj.html(sPageStr);
 			

@@ -23,14 +23,12 @@ public class QuestionService {
 		}
 	//選取員工頁面
 		public List<QuestionBean> loadEmp(String empId) {
-			 List<QuestionBean> list = QuestionDAO.selectresponseEmp(empId);
-			 System.out.println(list);
+			 List<QuestionBean> list = QuestionDAO.selectresponseEmp(empId);			
 			return list;	
 				}
 	//選取會員頁面
 		public List<QuestionBean> loadMem(String memId) {
-			 List<QuestionBean> list = QuestionDAO.selectresponseMem(memId);
-			 System.out.println(list);
+			 List<QuestionBean> list = QuestionDAO.selectresponseMem(memId);			 
 			return list;	
 			}			
 	//新增文章
