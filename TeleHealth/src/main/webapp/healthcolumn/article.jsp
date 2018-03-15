@@ -14,6 +14,13 @@
 <script src="../forCkeditor/ckfinder/ckfinder.js"></script>
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
+<style type="text/css">
+.contenttype{
+background-color: #CCEEFF;
+width: 500px;
+}
+
+</style>
 </head>
 <body>
    <jsp:include page="/fragment/nav2.jsp" />
@@ -102,26 +109,29 @@ $(document).ready(function() {
     $.getJSON('/TeleHealth/healthcolumn/QAcontent.controller', {title:titledecode}, function (data){               
     	var doc=$(document.createDocumentFragment());   	
     	var div=$('<div class="col-lg-10" ></div>');
-    	 $.each(data, function (i, data) {          	 
+    	 $.each(data, function (i, data) { 
+        	 console.log(data)         	 
         	 if(data[0]==null){
-        		 var cellauthor= $("<h6 class='mt-0'></h6>").text("會員:"+data[1]); 
-        		 var cellcontent=$("<p></p>").html(data[2]);
-        		 if (data[4]==null){
-        			 var celldate=$("<small></small>").text(data[3]);
+//         		 var memberimg=$("<img src='/TeleHealth/getimagebyid.controller?id='"+ />") 
+        		 var cellauthor= $("<h6 class='mt-0'></h6>").text("會員:"+data[1]);        		 
+        		 var cellcontent=$("<span></span>").html(data[4]);
+        		 if (data[6]==null){
+        			 var celldate=$("<small></small>").text(data[5]);
             	}else{
-                	var celldate=$("<small></small>").text(data[4]);
+                	var celldate=$("<small></small>").text(data[6]);
                 	}	
-          		 var row2=$("<div class='media-body' style='border-style:dashed'></div>").append([cellauthor,celldate,cellcontent]);
+          		 var row2=$("<div class='media-body contenttype' ></div>").append([cellauthor,celldate,cellcontent]);
           		doc.append(row2);          		        		         		       		      		
             	 }else{
-            	var cellauthor= $("<h5 class='mt-0'></h5>").text(data[0]);
-            	var cellcontent=$("<p></p>").html(data[2]);	         		
-            	if (data[4]==null){
-       			 var celldate=$("<small></small>").text(data[3]);
+            	var memberimg=$("<img src='/TeleHealth/getimagebyid.controller?' />") 	 
+            	var cellauthor= $("<h5 class='mt-0'></h5>").text(data[0]);            	
+            	var cellcontent=$("<p></p>").html(data[4]);	         		
+            	if (data[6]==null){
+       			 var celldate=$("<small></small>").text(data[5]);
            		}else{
-               	var celldate=$("<small></small>").text(data[4]);
+               	var celldate=$("<small></small>").text(data[6]);
                	}	
-         		var row2=$("<div class='media-body' style='border-style:dashed'></div>").append([cellauthor,celldate,cellcontent]); 
+         		var row2=$("<div class='media-body contenttype'></div>").append([cellauthor,celldate,cellcontent]); 
          		doc.append(row2);          	             	            	
                }    	
        	}); 	
@@ -158,7 +168,7 @@ $(document).ready(function() {
 			            	}else{
 			                	var celldate=$("<h6></h6>").text(data[4]);
 			                	}	
-			          		 var row2=$("<div class='media-body' style='border-style:dashed'></div>").append([cellauthor,celldate,cellcontent]);
+			          		 var row2=$("<div class='media-body' ></div>").append([cellauthor,celldate,cellcontent]);
 			          		doc.append(row2);          		        		         		       		      		
 			            	 }else{
 			            	var cellauthor= $("<h5 class='mt-0'></h5>").text(data[0]);
