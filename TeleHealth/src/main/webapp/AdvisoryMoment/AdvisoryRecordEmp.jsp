@@ -69,7 +69,7 @@
 </table>
 <!-- 未諮詢視窗 -->
 <div class="modal fade" id="UnTalkItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered  col-12" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="UnTalkTitle">諮詢資訊</h5>
@@ -97,9 +97,9 @@
           <span aria-hidden="true">&times;</span>
         </button>        
       </div>     
-      <div class="modal-bodyfb" id="modifyContent">        
+      <div class="modal-body" id="modifyContent">   
       	<form>
-     	<textarea class="form-control" id="contents" rows="10" cols="80"></textarea>       
+     		<textarea class="form-control" id="contents" rows="10" cols="80"></textarea>       
         </form>  
       </div>      
       <div class="modal-footer">
@@ -123,7 +123,11 @@
 </body>
 <script>
 $(document).ready(function(){
+	 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
+        {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},{ name: 'insert', groups: [ 'Image' ] },
+     ];
 	 CKEDITOR.replace('contents',{
+		width:450, height:400, toolbarGroups:tg,
  		filebrowserBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html',
  		filebrowserImageBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html?type=Images', 
  		filebrowserFlashBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html?type=Flash',
@@ -237,17 +241,16 @@ $("body").on("click","#UnTalkList tr",function(){
 	$("#UnTalkItem").modal("show");
 });
 
-//已諮詢
-$("body").on("click","#TalkList tr",function(){
-	var docFrag =$(document.createDocumentFragment());
-	$("#TalkItem .modal-body").empty();
-	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+TalkOne.reserveItem+"</span>"
-			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+TalkOne.advisoryTime+"</span>"
-			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+TalkOne.empName+"</span>"
-			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"	);		
-	$("#TalkItem .modal-body").append(docFrag);
-	$("#TalkItem").modal("show");
-});
+//已諮詢 (查看諮詢內容)
+// $("body").on("click","#TalkList tr",function(){
+// 	var docFrag =$(document.createDocumentFragment());
+// 	$("#TalkItem .modal-body").empty();
+// 	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+TalkedOne.reserveItem+"</span>"
+// 			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+TalkedOne.advisoryTime+"</span>"
+// 			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+TalkedOne.empName+"</span>");		
+// 	$("#TalkItem .modal-body").append(docFrag);
+// 	$("#TalkItem").modal("show");
+// });
 
 //修改視訊諮詢內容功能的function
 $('#TalkList').on('click','tr button:nth-child(1)',function(){
