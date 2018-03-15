@@ -82,7 +82,7 @@
 				  {width:400, height:200,toolbarGroups:tg}								 	
 		     );				
 
-			    loademp(empIdlogin)			
+			    loademp(empIdlogin);			
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})

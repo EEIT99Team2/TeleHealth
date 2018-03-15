@@ -173,7 +173,6 @@
 <!-- Footer -->
 <jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
-<script type="text/javascript" src="/TeleHealth/js/showIcon.js"></script>
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>

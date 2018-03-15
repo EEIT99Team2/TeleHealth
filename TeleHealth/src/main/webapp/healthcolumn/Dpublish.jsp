@@ -85,7 +85,7 @@ width:50em;
 	<script src="../js/bootstrap.min.js"></script>	
 	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
-	 var empIdlogin=$('empId').val();
+	 var empIdlogin=$('#empId').val();
 		$(document).ready(function() {			
 			$('#clean').on('click',function(){
 				CKEDITOR.instances.contenttext.setData(' ');
@@ -144,7 +144,7 @@ width:50em;
 		 				   loadProduct(empIdlogin);
 		 			   })		 			   
 	 			   }else{
-	 				  loadProduct(empIdlogin)
+	 				  loadProduct(empIdlogin);
 		 		 }
 	 			 
 			  })

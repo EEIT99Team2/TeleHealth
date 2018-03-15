@@ -81,7 +81,6 @@
         <!-- 回覆內容 -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="UnTalk">送出</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
       </div>
     </div>
@@ -136,22 +135,7 @@ $(document).ready(function(){
  		filebrowserFlashUploadUrl : '/TeleHealth/forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
  		});
  	console.log("ready!");
-	var empId =$("#empId").val();
-	var count = 0;
-	$.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
-		console.log(datas);
-		$.each(datas,function(index,data){
-			var status=data.status;
-			if(status=="N"){			
-				count++;
-			}
-		});
-		console.log("count="+count);
-		$('#advisoryNum').text(count);
-		if(count == 0) {
-			$('#advisoryNum').css("display", "none");
-		}
-	});
+// 	var empId =$("#empId").val();
 	var empName = $("#empName").val();
 	LoadData();
 	var DataPackage;
@@ -166,12 +150,13 @@ function LoadData(){
 	var dataSource;
 	var unCheckData = $("#UnCheckList");
 	var CheckData = $("#CheckList");
+	var now = moment(new Date()).format("YYYY-MM-DD HH:mm");
 	unCheckData.empty();
 	CheckData.empty();
 $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
 	console.log(datas);
 	$.each(datas,function(index,data){
-		var now = moment(new Date()).format("YYYY-MM-DD HH:mm");
+		
 		var advisoryTime = moment(data.advisoryTime).format("YYYY-MM-DD HH:mm");
 		ms = moment(advisoryTime).diff(now)/1000;
 		console.log(ms);
@@ -196,7 +181,7 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 			var col4 = $("<td>"+data.memName+"</td>");
 			var col5 = $("<td>"+advisoryTime+"</td>");
 			var col6 = $("<td>未完成</td>");
-			unTalkOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};			
+			unTalkOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode,"advisoryTime":data.advisoryTime,"memName":data.memName};			
 			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6]);
 		    docFrag2.append(allcol);		
 		}else{
@@ -231,14 +216,17 @@ $("body").on("click","#TalkingList tr",function(){
 
 //未諮詢 videoCodeError
 $("body").on("click","#UnTalkList tr",function(){
+	var nowCountUse = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+	var msCountUse = moment(unTalkOne.advisoryTime).diff(nowCountUse)/1000;
+	console.log("now"+nowCountUse+"ms"+unTalkOne.advisoryTime);
 	var docFrag =$(document.createDocumentFragment());
 	$("#UnTalkItem .modal-body").empty();
 	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+unTalkOne.advisoryTime+"</span>"
-			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+unTalkOne.empName+"</span>"
+			+"<br/><span style='font-size:1.3em'>諮詢對象:  "+unTalkOne.memName+"</span>"
 			+"<div id='getting-started'></div>");	
 	$("#UnTalkItem .modal-body").append(docFrag);
-	$("#getting-started").countdown({until:ms, format: 'DHMS'});	
+	$("#getting-started").countdown({until:msCountUse, format: 'DHMS'});	
 	$("#UnTalkItem").modal("show");
 });
 

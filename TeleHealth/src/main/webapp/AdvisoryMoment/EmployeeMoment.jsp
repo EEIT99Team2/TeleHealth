@@ -201,7 +201,6 @@
 	<!-- Footer -->
 	<jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
-<script type="text/javascript" src="/TeleHealth/js/showIcon.js"></script>
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/fullcalendar.min.js'/>"></script>
 <script src="<c:url value='/fullCalendar/calender.js'/>"></script>
@@ -222,22 +221,6 @@ $(document).ready(function() {
 	setTimeout(function(){
 	    $.LoadingOverlay("hide");
 	}, 2500);
-// 	var empId =$("#empId").val();
-// 	var count = 0;
-// 	$.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
-// 		console.log(datas);
-// 		$.each(datas,function(index,data){
-// 			var status=data.status;
-// 			if(status=="N"){			
-// 				count++;
-// 			}
-// 		});
-// 		console.log("count="+count);
-// 		$('#advisoryNum').text(count);
-// 		if(count == 0) {
-// 			$('#advisoryNum').css("display", "none");
-// 		}
-// 	});
 	var initialLocaleCode = 'zh';
 	var EmpId=$("#empId").val();
 	var account=$("#account").val();
