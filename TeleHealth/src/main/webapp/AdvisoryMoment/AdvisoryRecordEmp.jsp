@@ -11,17 +11,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.min.css" />
 <style>
 .txtWaring{color:red}
-
+.headStyle{font-size:22px;}
+.bodyStyle{font-size:18px;}
 </style>
 </head>
 <body>
-<jsp:include page="/fragment/navemp.jsp" />
+<jsp:include page="/fragment/nav2.jsp" />
 <script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 <script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 <div class='container'>
 <h2  class='container'>即將進行諮詢</h2>
 <table class="table  table-hover">
-  <thead>
+  <thead class="headStyle">
     <tr>
       <th scope="col">編號</th>
       <th scope="col">視訊代號</th>
@@ -31,13 +32,13 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody id="TalkingList">
+  <tbody id="TalkingList" class="bodyStyle">
 <!--      未處理申請 -->
   </tbody>
 </table>
 <h2  class='container'>未完成諮詢</h2>
 <table class="table  table-hover">
-  <thead>
+  <thead class="headStyle">
     <tr>
       <th scope="col">編號</th>
       <th scope="col">視訊代號</th>      
@@ -47,13 +48,13 @@
       <th scope="col">狀態</th>
     </tr>
   </thead>
-  <tbody id="UnTalkList">
+  <tbody id="UnTalkList" class="bodyStyle">
 <!--      未處理申請 -->
   </tbody>
 </table>
 <h2 class='container'>已完成諮詢</h2>
 <table class="table table-hover">
-  <thead>
+  <thead class="headStyle">
     <tr>
       <th scope="col">編號</th>
       <th scope="col">視訊代號</th>
@@ -63,13 +64,13 @@
       <th scope="col">狀態</th>
     </tr>
   </thead>
-  <tbody id="TalkList">
+  <tbody id="TalkList" class="bodyStyle">
 <!--      已處理申請 -->
   </tbody>
 </table>
 <!-- 未諮詢視窗 -->
 <div class="modal fade" id="UnTalkItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered  col-12" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="UnTalkTitle">諮詢資訊</h5>
@@ -81,7 +82,6 @@
         <!-- 回覆內容 -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="UnTalk">送出</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
       </div>
     </div>
@@ -97,9 +97,9 @@
           <span aria-hidden="true">&times;</span>
         </button>        
       </div>     
-      <div class="modal-bodyfb" id="modifyContent">        
+      <div class="modal-body" id="modifyContent">   
       	<form>
-     	<textarea class="form-control" id="contents" rows="10" cols="80"></textarea>       
+     		<textarea class="form-control" id="contents" rows="10" cols="80"></textarea>       
         </form>  
       </div>      
       <div class="modal-footer">
@@ -123,7 +123,11 @@
 </body>
 <script>
 $(document).ready(function(){
+	 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
+        {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},{ name: 'insert', groups: [ 'Image' ] },
+     ];
 	 CKEDITOR.replace('contents',{
+		width:450, height:400, toolbarGroups:tg,
  		filebrowserBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html',
  		filebrowserImageBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html?type=Images', 
  		filebrowserFlashBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html?type=Flash',
@@ -132,21 +136,7 @@ $(document).ready(function(){
  		filebrowserFlashUploadUrl : '/TeleHealth/forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
  		});
  	console.log("ready!");
-	var empId =$("#empId").val();
-	var count = 0;
-	$.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
-		console.log(datas);
-		$.each(datas,function(index,data){
-			var status=data.status;
-			if(status=="N"){			
-				count++;
-			}
-		});
-		$('#advisoryNum').text(count);
-		if(count == 0) {
-			$('#advisoryNum').css("display", "none");
-		}
-	});
+// 	var empId =$("#empId").val();
 	var empName = $("#empName").val();
 	LoadData();
 	var DataPackage;
@@ -161,17 +151,20 @@ function LoadData(){
 	var dataSource;
 	var unCheckData = $("#UnCheckList");
 	var CheckData = $("#CheckList");
+	var now = moment(new Date()).format("YYYY-MM-DD HH:mm");
 	unCheckData.empty();
 	CheckData.empty();
 $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},function(datas){
-	console.log(datas);
-	$.each(datas,function(index,data){
-		var now = moment(new Date()).format("YYYY-MM-DD HH:mm");
+	var talkCount=0;
+	var UntalkCount=0;
+	var talkedCount=0;
+	$.each(datas,function(index,data){		
 		var advisoryTime = moment(data.advisoryTime).format("YYYY-MM-DD HH:mm");
 		ms = moment(advisoryTime).diff(now)/1000;
 		console.log(ms);
-		var status=data.status;
-		if(status=="N" && ms<=900 && ms>0){			
+		var status=data.status;		
+		if(status=="N" && ms<=900 && ms>0){
+			talkCount++;			
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.videoCode+"</th>");
 			var col3 = $("<td>"+data.reserveItem+"</td>");
@@ -185,16 +178,18 @@ $.getJSON("<c:url value='/Advisory/empreserve.controller'/>",{"empId":empId},fun
 			var tr1 = $("<tr></tr>").append([col1,col2,col3,col4,col5, form1]);
 		    docFrag1.append(tr1);				
 		}else if(status=="N"){
+			UntalkCount++;
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.videoCode+"</th>");
 			var col3 = $("<td>"+data.reserveItem+"</td>");
 			var col4 = $("<td>"+data.memName+"</td>");
 			var col5 = $("<td>"+advisoryTime+"</td>");
 			var col6 = $("<td>未完成</td>");
-			unTalkOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode};			
+			unTalkOne={"reserveItem":data.reserveItem, "videoCode":data.videoCode,"advisoryTime":data.advisoryTime,"memName":data.memName};			
 			var allcol = $("<tr></tr>").append([col1,col2,col3,col4,col5,col6]);
 		    docFrag2.append(allcol);		
 		}else{
+			talkedCount++;
 			var col1 = $("<th scope='row'>"+(index+1)+"</th>");
 			var col2 = $("<td>"+data.videoCode+"</th>");
 			var col3 = $("<td>"+data.reserveItem+"</td>");
@@ -226,28 +221,30 @@ $("body").on("click","#TalkingList tr",function(){
 
 //未諮詢 videoCodeError
 $("body").on("click","#UnTalkList tr",function(){
+	var nowCountUse = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+	var msCountUse = moment(unTalkOne.advisoryTime).diff(nowCountUse)/1000;
+	console.log("now"+nowCountUse+"ms"+unTalkOne.advisoryTime);
 	var docFrag =$(document.createDocumentFragment());
 	$("#UnTalkItem .modal-body").empty();
 	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+unTalkOne.advisoryTime+"</span>"
-			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+unTalkOne.empName+"</span>"
-			+"<div id='getting-started'></div>");	
+			+"<br/><span style='font-size:1.3em'>諮詢對象:  "+unTalkOne.memName+"</span>"
+			+"<div id='getting-started' style='height:70px;margin-top:20px;'></div>");	
 	$("#UnTalkItem .modal-body").append(docFrag);
-	$("#getting-started").countdown({until:ms, format: 'DHMS'});	
+	$("#getting-started").countdown({until:msCountUse, format: 'DHMS'});	
 	$("#UnTalkItem").modal("show");
 });
 
-//已諮詢
-$("body").on("click","#TalkList tr",function(){
-	var docFrag =$(document.createDocumentFragment());
-	$("#TalkItem .modal-body").empty();
-	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+TalkOne.reserveItem+"</span>"
-			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+TalkOne.advisoryTime+"</span>"
-			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+TalkOne.empName+"</span>"
-			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"	);		
-	$("#TalkItem .modal-body").append(docFrag);
-	$("#TalkItem").modal("show");
-});
+//已諮詢 (查看諮詢內容)
+// $("body").on("click","#TalkList tr",function(){
+// 	var docFrag =$(document.createDocumentFragment());
+// 	$("#TalkItem .modal-body").empty();
+// 	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+TalkedOne.reserveItem+"</span>"
+// 			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+TalkedOne.advisoryTime+"</span>"
+// 			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+TalkedOne.empName+"</span>");		
+// 	$("#TalkItem .modal-body").append(docFrag);
+// 	$("#TalkItem").modal("show");
+// });
 
 //修改視訊諮詢內容功能的function
 $('#TalkList').on('click','tr button:nth-child(1)',function(){

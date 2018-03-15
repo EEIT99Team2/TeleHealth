@@ -180,7 +180,7 @@
 											<div
 												style="width: 150px; height: 150px; border: 0.5px black solid">
 												<img id="xx"
-													src="<c:url value='/getImage.controller?account=${LoginOK.account}' />"
+													src="<c:url value='/getimagebyid.controller?id=${LoginOK.account}' />"
 													style="max-width: 149px; max-height: 149px;" />
 											</div>
 									</tr>

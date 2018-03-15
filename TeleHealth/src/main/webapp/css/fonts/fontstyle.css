@@ -4,19 +4,10 @@
 }
 
 @font-face {
-    font-family: CJKtc_Light;
-    src: url(/TeleHealth/css/fonts/NotoSansCJKtc_Light.otf);
-}
-
-@font-face {
-    font-family: forTitle2;
-    src: url(/TeleHealth/css/fonts/wt028.ttf);
-}
-
-@font-face {
     font-family: forTitle1;
     src: url(/TeleHealth/css/fonts/wt009.ttf);
 }
+
 
 .container {
 	font-family: CJKtc_Bold;

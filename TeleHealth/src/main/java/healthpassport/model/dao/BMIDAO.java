@@ -1,5 +1,7 @@
 package healthpassport.model.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -39,4 +41,49 @@ public class BMIDAO {
 		BMIBean data = (BMIBean) query.uniqueResult();
 		return data;
 	}
+	//7天
+	String sevenday="select * from BMIRecords where memberid = ? and createTime between ? and ? order by createTime desc";
+	public List<BMIBean> sevenData(String memberid) {
+		NativeQuery query = this.getSession().createNativeQuery(sevenday);		
+		int days = 7;
+		Date date = new Date();
+		long res = (date.getTime()-(days*24*60*60*1000));			
+		java.util.Date dt = new Date(res);	 		
+		query.setParameter(1,memberid);
+		query.setParameter(2,dt);
+		query.setParameter(3,date);
+		query.addEntity(BMIBean.class);
+		List<BMIBean> data = (List<BMIBean>) query.list();
+		return data;
+	}		
+	//30天
+	String thirtyday="select * from BMIRecords where memberid = ? and createTime between ? and ? order by createTime desc";
+	public List<BMIBean> thirtyData(String memberid) {
+		NativeQuery query = this.getSession().createNativeQuery(sevenday);		
+		int days = 30;
+		Date date = new Date();
+		long res = (date.getTime()-(days*24*60*60*1000));			
+		java.util.Date dt = new Date(res);	 		
+		query.setParameter(1,memberid);
+		query.setParameter(2,dt);
+		query.setParameter(3,date);
+		query.addEntity(BMIBean.class);
+		List<BMIBean> data = (List<BMIBean>) query.list();
+		return data;
+	}
+	//180天
+		String thrmonthday="select * from BMIRecords where memberid = ? and createTime between ? and ? order by createTime desc";
+		public List<BMIBean> thrmonthData(String memberid) {
+			NativeQuery query = this.getSession().createNativeQuery(sevenday);		
+			int days = 180;
+			Date date = new Date();
+			long res = (date.getTime()-(days*24*60*60*1000));			
+			java.util.Date dt = new Date(res);	 		
+			query.setParameter(1,memberid);
+			query.setParameter(2,dt);
+			query.setParameter(3,date);
+			query.addEntity(BMIBean.class);
+			List<BMIBean> data = (List<BMIBean>) query.list();
+			return data;
+		}		
 }

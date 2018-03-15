@@ -18,10 +18,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import register.model.MemberBean;
 import register.model.RegisterService;
+import register.model.dao.MemberDAOHibernate;
 import util.GlobalService;
 import util.SystemUtils;
 
@@ -31,6 +33,9 @@ public class MemberDataController {
 	@Autowired
 	private RegisterService registerService =null;
 	
+	@Autowired
+	private MemberDAOHibernate memberDAO =null;
+
 	@RequestMapping(
 			path={"/Members02.controller"},
 			method={RequestMethod.GET, RequestMethod.POST}
@@ -156,7 +161,7 @@ public class MemberDataController {
 				}				
 				
 				if (errorMsg != null && !errorMsg.isEmpty()) {
-					return "memberdata.error";
+					return "ModifyData.error";
 				}else {
 
 					MemberBean member = (MemberBean)session.getAttribute("LoginOK");
@@ -182,10 +187,22 @@ public class MemberDataController {
 					member = registerService.Update(member);
 					}
 					if(member != null) {
-						return "register.success";
+						return "ModifyData.success";
 					}else {
-						return "login.error";
+						return "ModifyData.error";
 					}
 				}		
+	}
+	
+	@RequestMapping(path = { "/checkPoint.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String checkPoint(String memberId) {
+		String point;
+		if(memberId!= null && memberId.trim().length()!=0) {
+			MemberBean bean = memberDAO.selectById(memberId);
+			point =String.valueOf(bean.getPoint());			
+		}else {
+			point="查詢時發生錯誤";
+		}						
+		return	point;
 	}
 }

@@ -23,9 +23,9 @@ import util.GlobalService;
 public class LoginController {
 
 	@Autowired
-	private LoginService loginService = null;
+	private LoginService loginService;
 	@Autowired
-	private EmployeesService EmployeesService;
+	private EmployeesService employeesService;
 
 	@RequestMapping(path = { "/login.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public String method(String username, String pwd, Model model, String remember, HttpServletResponse response,
@@ -33,13 +33,12 @@ public class LoginController {
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("MsgMap", errorMsg);
 		boolean status = username.contains("@");
-		System.out.println(username);
 		if (status) {
 			if (username == null || username.trim().length() == 0) {
-				errorMsg.put("errorUsrName", "帳號欄位不能空白");
+				errorMsg.put("errorUserName", "帳號欄位不能空白");
 			}
 			if (pwd == null || pwd.trim().length() == 0) {
-				errorMsg.put("errorPsw", "密碼欄位不能空白");
+				errorMsg.put("errorPwd", "密碼欄位不能空白");
 			}
 			if (errorMsg != null && !errorMsg.isEmpty()) {
 				return "login.error";
@@ -48,26 +47,18 @@ public class LoginController {
 			Cookie cookiePassword = null;
 			Cookie cookieRememberMe = null;
 
-			// 呼叫model
-
-			// String pswGo =
-			// GlobalService.getMD5Endocing(GlobalService.encryptString(psw));
-			// pswGo = GlobalService.decryptString(key, stringToDecrypt)
-
 			String MD5pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
 			MemberBean bean = loginService.login(username, MD5pwd);
-			// String checkaccount = bean.getStatus();
 
 			if (bean == null) {
-				errorMsg.put("errorPsw", "帳號或密碼不正確");
+				errorMsg.put("errorPwd", "帳號或密碼不正確");
 				return "login.error";
 			} else {
 				String a = bean.getStatus();
 				if (a.equals("N")) {
-					errorMsg.put("errorPsw", "此帳號未開通");
+					errorMsg.put("errorPwd", "此帳號未開通");
 					return "login.error";
 				} else if (a.equals("Y")) {
-					System.out.println("帳號已開通");
 					session.setAttribute("LoginOK", bean);
 					if (remember != null) { // rm存放瀏覽器送來之RememberMe的選項
 						cookieUser = new Cookie("user", username);
@@ -104,10 +95,10 @@ public class LoginController {
 			return "login.error";
 		} else {
 			if (username == null || username.trim().length() == 0) {
-				errorMsg.put("errorUsrName", "帳號欄位不能空白");
+				errorMsg.put("errorUserName", "帳號欄位不能空白");
 			}
 			if (pwd == null || pwd.trim().length() == 0) {
-				errorMsg.put("errorPsw", "密碼欄位不能空白");
+				errorMsg.put("errorPwd", "密碼欄位不能空白");
 			}
 			if (errorMsg != null && !errorMsg.isEmpty()) {
 				return "login.error";
@@ -116,15 +107,14 @@ public class LoginController {
 			Cookie cookiePassword = null;
 			Cookie cookieRememberMe = null;
 			String MD5pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
-			EmployeesBean bean = EmployeesService.checkAccountEmp(username, MD5pwd);
-			System.out.println(bean);
+			EmployeesBean bean = employeesService.checkAccountEmp(username, MD5pwd);
 			if (bean == null) {
-				errorMsg.put("errorPsw", "帳號或密碼不正確");
+				errorMsg.put("errorPwd", "帳號或密碼不正確");
 				return "login.error";
 			} else {
 				String EmpStatus = bean.getEmpStatus();
 				if (EmpStatus.equals("N")) {
-					errorMsg.put("errorPsw", "帳號或密碼不正確");
+					errorMsg.put("errorPwd", "帳號或密碼不正確");
 					return "login.error";
 				} else if (EmpStatus.equals("E")) {
 					session.setAttribute("empLoginOK", bean);
