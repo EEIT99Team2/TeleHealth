@@ -112,8 +112,7 @@ width:50em;
 			   //讀取醫生發表
 			   function loadProduct(empId){
 			    $.getJSON('/TeleHealth/healthcolumn/publishcontent.controller',{empId:empId},function(datas){
-						console.log(datas);
-		    			var doc=$(document.createDocumentFragment());			    		
+						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
 			    	$.each(datas,function(i,product){			    		
@@ -137,14 +136,11 @@ width:50em;
 			    
 			     //刪除產品
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
-				   var check=confirm("你確定要刪除此筆資料?");
-				   console.log(check);
-	 			   var id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			   console.log(id);
+				   var check=confirm("你確定要刪除此筆資料?");				   
+	 			   var id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  
 	 			   if(check==true){
 	 				  $.post('/TeleHealth/healthcolumn/deletehealthcolumn.controller',{columnId:id},function(data){
-							console.log(data);
-		 				   alert("您已刪除所選的文章");
+						   alert("您已刪除所選的文章");
 		 				   loadProduct(empIdlogin);
 		 			   })		 			   
 	 			   }else{
@@ -157,10 +153,8 @@ width:50em;
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var id = $(this).parents('tr').find('td:nth-child(2)').text();
-	 			  console.log(id);
-	 			 $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller',{title:id},function(datas){
-						console.log(datas);
-		 				$.each(datas,function(i,content){	 				
+	 		   $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller',{title:id},function(datas){
+						$.each(datas,function(i,content){	 				
 	 					 CKEDITOR.instances.contenttext.setData(content[2]);	 					 	 					
 	 					 $("#heltitle").val(content[0]);
 		 				}) 					

@@ -73,8 +73,7 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
-	var empIdlogin=$('#empId').val();
-	  console.log(empIdlogin);	
+	var empIdlogin=$('#empId').val();	  
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
@@ -104,7 +103,6 @@
 				   var check=confirm("你確定要刪除此筆資料?");
 				   var Empname=$('#title').val();
 	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			   console.log(Id+"   "+Empname) 			  
 	 			   if(check==true){
 	 				  $.get('/TeleHealth/healthcolumn/deleteQAEmp.controller',{Id:Id,EmpId:Empname},function(data){
 		 				   alert("您已刪除所po的文");
@@ -120,10 +118,8 @@
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			  console.log(Id);
-	 			 $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){
-						console.log(datas);
-		 				$.each(datas,function(i,QA){	 				
+	 			  $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){
+						$.each(datas,function(i,QA){	 				
 	 					 CKEDITOR.instances.contenttext.setData(QA[5]); 
 	 					 $('#questionId').val(QA[0]);						
 		 				})	 
@@ -136,12 +132,10 @@
 		 //讀取員工發表
 			   function loademp(empId){
 				   $.getJSON('/TeleHealth/healthcolumn/QAEmpublish.controller',{empId:empId},function(datas){
-						console.log(datas);
-		    			var doc=$(document.createDocumentFragment());			    		
+						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
 			    	$.each(datas,function(i,Emp){	
-				    	console.log(Emp)		    		
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(Emp[0]);		    		
 						cell1.append(ID);
@@ -161,8 +155,7 @@
 			} 
 		
 		function postdata(){		
-			var questionId=$("#questionId").val();
-			console.log(questionId);
+			var questionId=$("#questionId").val();			
 			var contenttext=CKEDITOR.instances.contenttext.getData();
 			if(contenttext==null|| contenttext.length==0){
 	    		document.getElementById("reanswer").innerHTML=' ';    		

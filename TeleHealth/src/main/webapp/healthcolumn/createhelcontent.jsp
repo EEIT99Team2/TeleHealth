@@ -112,10 +112,8 @@
 
 			function UpladFile() {
 				var fileObj = $("#video").get(0).files[0]; // js 获取文件对象
-				var filename = $("#video").val();
-				console.info("文件：" + filename);
-				var title = $("#title").val();
-				console.log(title)
+				var filename = $("#video").val();				
+				var title = $("#title").val();				
 				var name = $("#name").val();
 				var type = $(":selected").val();
 				var content = CKEDITOR.instances.content.getData();
@@ -130,9 +128,7 @@
 				else if(filename!=null&&filename!=undefined &&filename!="" && type!="VID"){					
 					$('#erroeMsg').text("請選影音專區喔!!");
 					$("#batchUploadBtn").attr('disabled', false);
-				}else{			
-				
-				console.log(title + " " + name + " " + type + " " + content);
+				}else{				
 				var FileController = "/TeleHealth/healthcolumn/inshealthcolumn.controller"; // 接收上传文件的后台地址 
 				// FormData 对象
 				var form = new FormData();

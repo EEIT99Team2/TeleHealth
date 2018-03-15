@@ -59,12 +59,10 @@
 			   //讀取所有會員發表
 			   function loadall(){
 				   $.getJSON('/TeleHealth/healthcolumn/allmempublish.controller',{ },function(datas){
-						console.log(datas);
-		    			var doc=$(document.createDocumentFragment());			    		
+						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
-			    	$.each(datas,function(i,mem){	
-				    	console.log(mem)		    		
+			    	$.each(datas,function(i,mem){				    		    		
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<p> id="columnId" name="columnId"</p>').text(mem[0]);		    		
 						cell1.append(ID);
@@ -98,8 +96,7 @@
 	
 		})
 	function search(){
-		 var memname=$("#titlememname").val().trim();
-		 console.log(memname);
+		 var memname=$("#titlememname").val().trim();		 
 		 if(memname.length==0){
 				$("#erroeMsg").text("不能搜尋空白");
 				$('#productTable>tbody').empty();	  
@@ -118,8 +115,7 @@
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
-			    	$.each(datas,function(i,Mem){	
-				    	console.log(Mem)		    		
+			    	$.each(datas,function(i,Mem){				    	    		
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<p> id="columnId" name="columnId"</p>').text(Mem[0]);			    		
 						cell1.append(ID);
@@ -131,11 +127,9 @@
 			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger"><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"><i class="fas fa-edit"></i></button>');
 						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
 			    		doc.append(row);			    		
-			    	})
-					
+			    	})					
 			    	  tb.append(doc);
-			    }) 
-			      		
+			    }) 			      		
 			} 	
 		
 	</script>

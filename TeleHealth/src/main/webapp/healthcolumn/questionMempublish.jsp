@@ -73,7 +73,6 @@
 	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
 	  var memIdlogin=$('#memId').val();
-	  console.log(memIdlogin);		
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
@@ -152,8 +151,7 @@
 			      		
 			}
 		function postdata(){		
-		var questionId=$("#questionId").val();
-		console.log(questionId);
+		var questionId=$("#questionId").val();	
 		var contenttext=CKEDITOR.instances.contenttext.getData();
 		if(contenttext==null|| contenttext.length==0){
     		document.getElementById("reanswer").innerHTML=' ';    		

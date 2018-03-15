@@ -86,8 +86,7 @@ $(document).ready(function() {
 	var id = ary3[0];	   
     var titledecode= decodeURIComponent(id);   	  
     $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller', {title:titledecode}, function (data){		
-		 $.each(data, function (i, data) {
-			console.log(data)
+		 $.each(data, function (i, data) {			
 			if(data[5]!="VID"){  
         	var cell0=$("<hr>")      	     	          
             var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
@@ -112,8 +111,7 @@ $(document).ready(function() {
     $.getJSON('/TeleHealth/healthcolumn/QAcontent.controller', {title:titledecode}, function (data){               
     	var doc=$(document.createDocumentFragment());   	
     	var div=$('<div class="col-lg-10" ></div>');
-    	 $.each(data, function (i, data) { 
-        	 console.log(data)         	 
+    	 $.each(data, function (i, data) {         	          	 
         	 if(data[0]==null){
          		 var memberimg=$("<img src='/TeleHealth/getimagebyid.controller?id="+data[3] +"' class='imgsize'/>") 
         		 var cellauthor= $("<h6 class='mt-0'></h6>").text("會員:"+data[1]); 
@@ -143,8 +141,7 @@ $(document).ready(function() {
     	 $('#QAcontent').append(doc);               
      })
      function insert(){
-    	var content= CKEDITOR.instances.textt.getData()
-    	console.log(content)
+    	var content= CKEDITOR.instances.textt.getData()    	
     	if(content==null|| content.length==0){
     		document.getElementById("erroeMsg").innerHTML=' ';
     		document.getElementById("successMsg").innerHTML=' ';
