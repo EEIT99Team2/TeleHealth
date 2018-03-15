@@ -54,9 +54,21 @@ public class AnalysisController {
 			bean.setHeight(heightResult);
 			bean.setWeight(weightResult);
 			BMIBean result = bmiService.insert(bean,gender,age);
-			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			
+			HashMap<String, String> dataOne = new HashMap<String, String>();
+			Double returnheight = Math.floor(heightResult); //取整數
+			Double returnweight = Math.floor(weightResult); //取整數
+			String strheight = returnheight.toString();
+			String strweight = returnweight.toString(); 
+			String strbmi = bmiResult.toString(); 
+			String stresult = result.getResult();
+			String strtime = result.getCreateTime().toString();
+			dataOne.put("hei", strheight);
+			dataOne.put("wei", strweight);
+			dataOne.put("bmi", strbmi);
+			dataOne.put("bmiresult", stresult);
+			dataOne.put("time", strtime);
+
 //			String data = new Gson().toJson(datas);
 //			System.out.println(data);
 			return null;
