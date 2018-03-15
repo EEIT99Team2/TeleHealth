@@ -53,6 +53,29 @@ public class RegisterController {
 	}
 	
 	@RequestMapping(
+			path= {"/checkPassword.controller"},
+			method= {RequestMethod.GET, RequestMethod.POST},
+			produces ="application/json;charset=UTF-8"
+	)	
+	public @ResponseBody String checkPassword(String oldpwd,String memberId) {
+		MemberBean beans = registerService.selectById(memberId);
+		String Password = beans.getPwd();
+		System.out.println("Password="+Password);
+		String OldPassword = null;
+		if(oldpwd != null && oldpwd.trim().length()>0) {
+			OldPassword = GlobalService.getMD5Endocing(GlobalService.encryptString(oldpwd));			
+			System.out.println("OldPassword="+OldPassword);
+		}
+		if(Password.equals(OldPassword)) {
+			return new Gson().toJson("此密碼正確!");
+		}else{
+			return new Gson().toJson("密碼不正確!");
+		}	
+	}
+	
+	
+	
+	@RequestMapping(
 			path={"/register.controller"},
 			method={RequestMethod.GET, RequestMethod.POST}
 	)

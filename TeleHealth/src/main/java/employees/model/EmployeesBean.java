@@ -1,5 +1,7 @@
 package employees.model;
 
+import java.sql.Blob;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,6 +27,8 @@ public class EmployeesBean {
 	private java.util.Date	 createTime;
 	private java.util.Date	 modifiyTime;
 	private String career;
+	private Blob photo;
+	private String fileName;
 	
 	public String getEmpId() {
 		return empId;
@@ -97,6 +101,19 @@ public class EmployeesBean {
 	}
 	public void setCareer(String career) {
 		this.career = career;
+	}
+	
+	public Blob getPhoto() {
+		return photo;
+	}
+	public void setPhoto(Blob photo) {
+		this.photo = photo;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	@Override
 	public String toString() {

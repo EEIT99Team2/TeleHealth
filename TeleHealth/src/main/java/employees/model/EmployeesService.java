@@ -35,7 +35,7 @@ public class EmployeesService {
 	public EmployeesBean checkAccountEmp(String account,String MD5pwd) {
 		EmployeesBean result = employeesDAO.selectByAccount(account);
 		System.out.println(account+" " +MD5pwd);
-		if (result.getAccount()!=null) {			
+		if (result != null) {			
 			if(MD5pwd!=null && MD5pwd.length()!=0) {			
 				String temp = MD5pwd; //使用者輸入
 				EmployeesBean Emp = result;
@@ -49,6 +49,20 @@ public class EmployeesService {
 			}
 		}
 		return null;		
+	}
+	
+	public EmployeesBean selectById(String empId) {
+		if(empId != null && empId.trim().length() > 0) {
+			return employeesDAO.selectById(empId);
+		}
+		return null;
+	}
+	
+	public EmployeesBean selectByAccount(String account) {
+		if(account != null && account.trim().length() > 0) {
+			return employeesDAO.selectByAccount(account);
+		}
+		return null;
 	}
 	
 }

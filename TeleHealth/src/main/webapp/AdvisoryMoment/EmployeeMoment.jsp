@@ -15,7 +15,7 @@
 <style>
   #calendar {
     max-width: 1100px;
-    margin: 60px auto;
+    margin:0px auto;
     background-color: lightblue;
   }
   .fc-widget-header{
@@ -24,17 +24,7 @@
 	.fc-toolbar h2 {
 	font-family: CJKtc_Bold;
 	}
-	
-  .iBlock {display:inline-block;
-  		margin-left:280px;
-  		font-size:20px;}
-  .item1 {font-size:1em;
-		 margin-left:100px;}
-  .item2 {font-size:1em;
-		 margin-left:100px;}
-  .item3 {font-size:1em;
-		 padding-right:10px;
-		 }
+  .headFont {font-size:1.3em;}
   .columnHead{font-size:1em;}
   .momentColor {font-family: CJKtc_Bold;}
   .eventItem{text-align:center;
@@ -43,21 +33,27 @@
 </style>
 </head>
 <body>
-<jsp:include page="/fragment/navemp.jsp" />
-<div class="momentColor iBlock"><span style='color:#0080ff'>您的班表(無預約)</span><br/><span style='color:#d26900'>您的班表(有預約)</span><br/><span style='color:#bebebe'>未被預約班表</span><br/><span style='color:#ea0000'>已被預約班表</span></div>
-<div id='loading' class='container iBlock'>
-<span id="item1" class="item1 nav-item active">快速查詢:</span>
-<select id="year" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">年</span>
-<select id="month" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">月</span>
-<select id="date" class="headerChoose"><option>請選擇</option></select><span id="item1" class="headerChoose nav-item active">日</span>
-<button type="button" id="fastSearch" class="headerChoose">查詢</button>
-<span id="item2" class="item2">時段:</span><select id="chooseTime" class="headerChoose nav-item active">
+<jsp:include page="/fragment/nav2.jsp" />
+<div id='loading' class="container">
+<div class="row headFont">
+<div class="momentColor col-3"><span style='color:#0080ff'>您的班表(無預約)</span><br/><span style='color:#d26900'>您的班表(有預約)</span><br/><span style='color:#bebebe'>未被預約班表</span><br/><span style='color:#ea0000'>已被預約班表</span></div>
+<div class="col-6">
+<span>快速查詢:</span>
+<select id="year"><option>請選擇</option></select><span>年</span>
+<select id="month"><option>請選擇</option></select><span>月</span>
+<select id="date"><option>請選擇</option></select><span>日</span>
+<button type="button" id="fastSearch" class="btn btn-success">查詢</button>
+</div>
+<div class="col-3">
+<span>時段:</span>
+<select id="chooseTime">
 <option id="allday">全天</option>
 <option id="mor" SELECTED>上午</option>
 <option id="aft">下午</option>
 <option id="nig">晚上</option>
 </select>
-
+</div>
+</div>
 <!-- 未預約班表視窗 -->
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -225,7 +221,6 @@ $(document).ready(function() {
 	setTimeout(function(){
 	    $.LoadingOverlay("hide");
 	}, 2500);
-
 	var initialLocaleCode = 'zh';
 	var EmpId=$("#empId").val();
 	var account=$("#account").val();
@@ -475,6 +470,10 @@ $("#ReTakeOff").click(function takeoff(){
 
 
 });
+
+function rload(){
+	window.location.reload();
+}
 
 </script>
 </html>

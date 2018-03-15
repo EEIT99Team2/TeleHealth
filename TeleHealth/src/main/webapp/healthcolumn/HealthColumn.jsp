@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Document</title>
+<title>牽伴遠距健康諮詢平台</title>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <style type="text/css">
 .contentdescrip {
@@ -115,8 +115,7 @@
 			$("#title").tablepage($("#table_page"),3);});}
 						});
 		$('#title').on('click', '.heltitle', function() {
-			var title = ($(this).attr('name'));
-			console.log(title);
+			var title = ($(this).attr('name'));			
 			$.post('/TeleHealth/healthcolumn/countarticle.controller', {
 				title : title
 			}, function(data) {

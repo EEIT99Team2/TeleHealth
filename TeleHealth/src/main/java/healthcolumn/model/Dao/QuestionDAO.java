@@ -21,12 +21,9 @@ public class QuestionDAO {
 	//選擇文章所有回應的文
 	public List<QuestionBean>  selectresponse(String title) {
 		NativeQuery query=this.getSession().createNativeQuery
-				("select emp.empName,mem.memName, que.Content,que.createTime,que.modifyTime,que.QAtype \r\n" + 
-						"from question que\r\n" + 
-						"   join healthColumn hel on hel.title=que.quetitle  \r\n" + 
-						"  left outer  join employees emp on que.empId=emp.empId \r\n" + 
-						"  left outer  join members mem on que.memberId=mem.memberId\r\n" + 
-						" where hel.title=?");
+				("select DISTINCT emp.empName,mem.memName,emp.account as empaccount,mem.account as memaccount,que.Content,que.createTime,que.modifyTime,que.QAtype,que.Id"+
+						" from question que join healthColumn hel on hel.title=que.quetitle left outer  join employees emp"+
+						 " on que.empId=emp.empId left outer join members mem on que.memberId=mem.memberId where hel.title=?");
 		query.setParameter(1, title);
 		List<QuestionBean> data=(List<QuestionBean>)query.list();
 		return data;		
@@ -110,8 +107,7 @@ public class QuestionDAO {
 		public List<Object[]> selectMempublish()	{  
 			NativeQuery query=this.getSession().createNativeQuery
 		        ("select mem.memName,que.quetitle,que.advisoryCode,que.Content,que.createTime from question que join members mem on que.memberId=mem.memberId ");
-			List<Object[]> data=(List<Object[]>)query.list();
-			System.out.println(data);
+			List<Object[]> data=(List<Object[]>)query.list();			
 			return data;			
 		}
 		public List<Object[]> QAMemonepublish(String memname)

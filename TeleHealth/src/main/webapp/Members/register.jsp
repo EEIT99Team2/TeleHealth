@@ -19,14 +19,14 @@
 	<link href="//fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i,700" rel="stylesheet">
 </head>
 <body>
+
 	<div class="w3ls-banner">
 	<div class="heading">
-		<h1>Register Account</h1>
+<!-- 		<h1>Register Account</h1> -->
 	</div>
 		<div class="container">
 			<div class="heading">
-				<h2>Please Enter Basic Information</h2>
-				<p>Fill in the form below and submit your information</p>
+				<h2>歡迎成為牽伴的一份子</h2>
 			</div>
 			<div class="agile-form">
 				<form method="post" enctype="multipart/form-data"
@@ -92,7 +92,7 @@
 									<option value="M"> 男性 </option>
 									<option value="F"> 女性 </option>
 								</select>
-							<font color="red" size="-1">${MsgMap.errorGender}</font>
+							<font color="red" size="-1">${MsgMap.errorGender}</font>						
 							</div>
 							<span id="checkGender" display="inline-block"></span>
 						<li>
@@ -129,7 +129,7 @@
 							<div class="form-input dob">
 								<span class="form-sub-label">
 									<select name="day" class="day">
-										<option>&nbsp;</option>
+										<option>請選擇</option>
 										<option value="1"> 1 </option>
 										<option value="2"> 2 </option>
 										<option value="3"> 3 </option>
@@ -166,7 +166,7 @@
 								</span>
 								<span class="form-sub-label">
 									<select name="month">
-										<option>&nbsp;</option>
+										<option>請選擇</option>
 										<option value="1"> January </option>
 										<option value="2"> February </option>
 										<option value="3"> March </option>
@@ -183,7 +183,7 @@
 									<label class="form-sub-label1"> Month </label>
 								</span>
 								<span class="form-sub-label">
-									<input type="text" class="year" name="year"id="year" placeholder="yyyy" required>
+									<input type="text" class="year" name="year" id="year" placeholder="yyyy" required>
 									<label class="form-sub-label1"> Year </label>
 								</span>
 							</div>
@@ -463,7 +463,7 @@ $('#memHeight').blur(function(){
 
 		var pattern =/^[0-9]+(\.[0-9]{1,2})?$/;
 		flag = pattern.test(memHeight);
-		if(flag){
+		if(flag ){
 		checkMemHeight.html("<img src=images/yes.gif>"); 
 				}else{
 					checkMemHeight.html("<img src=images/error.png>"+"身高格式錯誤!");
@@ -480,7 +480,7 @@ $('#memWeight').blur(function(){
 
 		var pattern =/^[0-9]+(\.[0-9]{1,2})?$/;
 		flag = pattern.test(memWeight);
-		if(flag){
+		if(flag  && memWeight<250){
 			checkMemWeight.html("<img src=images/yes.gif>"); 
 				}else{
 					checkMemWeight.html("<img src=images/error.png>"+"體重格式錯誤!");
