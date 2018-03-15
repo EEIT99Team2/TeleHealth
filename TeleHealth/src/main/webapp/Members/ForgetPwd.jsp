@@ -11,32 +11,35 @@
 
 <div class="container">
 		<div style="text-align:center;"><h3 class="title">忘記密碼</h3></div>
+			<div style="text-align:center;"><p>請輸入會員登記電郵址，系統將發送密碼至您的電郵信箱
+</p></div>
 		<div class="row">
 			<div class="col-3"></div>
 				<div class="col-6">
 					<div class="from-group">
-						<form method="post" action='<c:url value="/ModifyPwd.controller" />' >
+						<form method="post" enctype="multipart/form-data" 
+						action="<c:url value="/ForgetPwd.controller"/>">
 							<div class="row">
-								<label for="oldpwd">請輸入原密碼：</label>
-								<input type="password" name="oldpwd" id="oldpwd" value="${param.oldpwd}" class="fieldWidth" style="width: 320px;">
-								<span id="checkOldpwd"></span>
+								<label for="oldpwd">會員註冊電郵：</label>
+								 <input name="account" type="text" id="account" value="${param.account}" class="fieldWidth" style="width: 320px;" required>
+								<font color="red" size="-1">${MsgMap.errorAccount}</font>  
+								<span id="checkAccount"></span>
 							</div>
 							<div class="row"><p> </p></div>
-							<div class="row">
-								<label for="Newpwd">請輸入新密碼：</label>
-								<input type="password" name="Newpwd" id="Newpwd" value="${param.Newpwd}" class="fieldWidth" style="width: 320px;">
-								<span id="checkNewpwd"></span>
-							</div>
-							<div class="row"><p> </p></div>
-							<div class="row">
-								<label for="pwdCheck">請輸入新密碼：</label>
-								<input type="password" name="pwdCheck" id="pwdCheck" value="${param.pwdCheck}" class="fieldWidth" style="width: 320px;">
-								<span id="passwordCheck"></span>
-							</div>
-							<div class="row"><p> </p></div>
-								<div style="text-align:center;">
-								<input class="btn btn-primary" type="submit"name="submitBtn" id="submitBtn" value="送出">
-								</div>
+							
+							
+					<div style="text-align:center;">		
+                          <button type="submit" class="btn-primary" style="background-color: #f58200; border: 1px solid #da7d00;
+                        font-size: 14px; color: #fff; text-shadow: 1px 1px 1px #666; padding: 5px 10px;
+                        border-radius: 4px; box-shadow: 1px 1px 3px #aaa; font-weight: bold; text-align: center;
+                        cursor: pointer;">確定</button>
+                          
+                        <a href="<c:url value='/home.jsp' />"><input type="button" class="btn-primary" value="回主頁" style="background-color: #f58200; border: 1px solid #da7d00;
+                        font-size: 14px; color: #fff; text-shadow: 1px 1px 1px #666; padding: 5px 10px;
+                        border-radius: 4px; box-shadow: 1px 1px 3px #aaa; font-weight: bold; text-align: center;
+                        cursor: pointer;"></button></a>
+                        </div>
+
 						</form>		
 					</div>
 				</div>

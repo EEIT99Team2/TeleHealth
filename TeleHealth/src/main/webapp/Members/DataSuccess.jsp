@@ -10,13 +10,13 @@
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
 	<c:set var="memberName" value="${LoginOK.memName}" />
-	<c:remove var="LoginOK" scope="session" />
+<%-- 	<c:remove var="LoginOK" scope="session" /> --%>
 		<div class="row"><p> </p></div>
 		<div class="row"><p> </p></div>
 		<div class="row"><p> </p></div>
 		<div class="row"><p> </p></div>
 		<div class="row"><p> </p></div>
-	<div style="text-align:center;"><h1>確認信已寄出！</h1></div>
+	<div style="text-align:center;"><h1>修改會員資料成功！</h1></div>
 		<div class="row"><p> </p></div>
 		<div class="row"><p> </p></div>
 	<div style="text-align:center;"><h4>(3秒後回首頁)<h4></div>

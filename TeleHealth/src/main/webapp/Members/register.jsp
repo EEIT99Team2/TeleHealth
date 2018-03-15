@@ -410,7 +410,9 @@ $('#phone').blur(function(){
 	var phone = $('#phone').val();
 	var checkPhone = $('#checkPhone');
 	if(phone!= null	&& phone.length>0){
-		var pattern =/[0-9]{2,3}-[0-9]{5,}/;
+// 		var pattern =/[0-9]{2,3}-[0-9]{5,}/;	
+		var pattern =/^0\d{1,3}-\d{7,8}$/ ; 
+		
 		flag = pattern.test(phone);	
 		if(flag){
 		checkPhone.html("<img src=images/yes.gif>"); 	
