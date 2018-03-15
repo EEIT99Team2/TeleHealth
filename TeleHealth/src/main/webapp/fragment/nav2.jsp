@@ -11,6 +11,9 @@
 <!-- w3 core CSS -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+<!-- 提醒視訊諮詢的小圖示用 -->
+<link href='/TeleHealth/css/advisory.css'  rel="stylesheet" type='text/css' >
+
 <!-- Custom fonts for this template -->
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
 	rel="stylesheet" type="text/css">
@@ -24,6 +27,7 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 	rel='stylesheet' type='text/css'>
+
 
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
@@ -122,7 +126,7 @@
                             </div>
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
                             <button type="submit" class="btn btn-success btn-block">登入</button>
-                            <button type="submit" class="btn btn-danger btn-block">取消</button>
+                            <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">取消</button>
                         </form>
 				</div>
 				<div class="modal-footer">
@@ -134,7 +138,6 @@
 					</p>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

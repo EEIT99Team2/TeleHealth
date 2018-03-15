@@ -21,6 +21,7 @@ import advisory.model.AdvisoryBean;
 import advisory.model.AdvisoryService;
 import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryMomentService;
+import employees.model.EmployeesService;
 import employees.model.dao.EmployeesDAO;
 
 @Controller
@@ -30,7 +31,7 @@ public class AdvisoryController {
 	@Autowired
 	private AdvisoryMomentService advisoryMomentService;
 	@Autowired
-	private EmployeesDAO employeesDAO;
+	private EmployeesService employeesService;
 	
 	//會員預約成功，新增預約記錄
 	@RequestMapping(path= {"/Advisory/reserveCheck.controller"},method= {RequestMethod.POST},produces="text/plain;charset=UTF-8")
@@ -80,7 +81,7 @@ public class AdvisoryController {
 			//會員給錢			
 			advisoryService.updateMemPoint(UserId);
 			//增加員工預約點擊數
-			employeesDAO.addResCount(empId);		
+			employeesService.addResCount(empId);		
 		}
 		return result+","+videoCode+",,"+sendTime;
 	}
@@ -112,7 +113,6 @@ public class AdvisoryController {
 			produces="application/json;charset=UTF-8"
 	)
 	public @ResponseBody String doctorinsert(String videoCode, String descrip){
-		System.out.println("hahahaahahaahahaha");
 		AdvisoryBean data = advisoryService.updateAdvisoryContent(videoCode, descrip);
 		if(data != null) {
 			return new Gson().toJson("insert.success");
@@ -120,6 +120,27 @@ public class AdvisoryController {
 			return new Gson().toJson("insert.error");
 		}
 	}
+	
+	//員工修改視訊諮詢內容前，先呼叫controller取出原內容
+	@RequestMapping(
+			path= {"/selectadvisory.controller"},
+			method= {RequestMethod.GET,RequestMethod.POST},
+			produces="application/json;charset=UTF-8"
+	)
+	public @ResponseBody String advisorySelectByCode(String videoCode){
+		AdvisoryBean bean =null;
+		if(videoCode!=null && videoCode.trim().length()>0) {
+			bean = advisoryService.select(videoCode.trim());
+		}
+		if(bean != null) {
+			Map<String, AdvisoryBean> data = new HashMap<>();
+			data.put("data", bean);
+			return new Gson().toJson(data);
+		}else {
+			return new Gson().toJson("insert.error");
+		}
+	}
+	
 	
 	//開始進行視訊
 	@RequestMapping(path= {"/Advisory/startadvisory.controller"}, method = {RequestMethod.GET,RequestMethod.POST})

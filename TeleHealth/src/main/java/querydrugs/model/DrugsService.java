@@ -110,7 +110,6 @@ public class DrugsService {
 			temp.put(marks, result.getMarks());
 			temp.put(pic, result.getPic());
 			data = new Gson().toJson(temp);
-			System.out.println("data=" + data);
 			return data;
 		}
 		return null;
