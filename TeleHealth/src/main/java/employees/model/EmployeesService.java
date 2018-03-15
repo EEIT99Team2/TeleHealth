@@ -58,4 +58,11 @@ public class EmployeesService {
 		return null;
 	}
 	
+	public EmployeesBean selectByAccount(String account) {
+		if(account != null && account.trim().length() > 0) {
+			return employeesDAO.selectByAccount(account);
+		}
+		return null;
+	}
+	
 }

@@ -73,9 +73,9 @@ public class GetImageController {
 				flag = "emp";
 			}
 			if(flag.equals("member")) {
-				member = loginService.selectById(queryId);
+				member = loginService.selectByAccount(queryId);
 			} else {
-				emp = employeesService.selectById(queryId);
+				emp = employeesService.selectByAccount(queryId);
 			}
 		}
 		HttpHeaders headers = new HttpHeaders();
