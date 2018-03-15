@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>牽伴遠距健康諮詢平台</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
@@ -18,9 +18,11 @@
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 </head>
 <body>
-<main role="main" class="container mt-2">
-<div class="row">     	
-	      <div class="card">
+<jsp:include page="/fragment/nav2.jsp" />
+<div class="container">
+<div class="row col-12">     	
+	      <div class="col-2"></div>
+	      <div class="card col-8">
 			<div class="card-header"><span>${LoginOK.memName}</span><input type="hidden" id="memId" value="${LoginOK.memberId}">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
@@ -42,7 +44,7 @@
 		    </div>
 		 </div>
      </div>	
-	</main>
+</div>
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="form" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -66,8 +68,7 @@
     	
     </div>
   </div>
-</div>
-	
+</div>	
 	<script src="../js/jquery-3.3.1.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/jquery-tablepage-1.0.js"></script>

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>牽伴遠距健康諮詢平台</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
@@ -16,11 +16,15 @@
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<style type="text/css">
+</style>
 </head>
 <body>
-<main role="main" class="container mt-2">
-<div class="row">     	
-	      <div class="card">
+<jsp:include page="/fragment/nav2.jsp" />
+<div class="container">
+<div class="row col-12">     	
+	      <div class="col-2"></div>
+	      <div class="card col-8">
 			<div class="card-header"><span>${empLoginOK.empName}</span><input type="hidden" id="empId" value="${empLoginOK.empId}">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
@@ -63,12 +67,12 @@
       	 <input type="reset" id="clean" value="清除"  >
        		<font id="reanswer" color="green" size="-1"></font><font id="reanswererror" color="red" size="-1"></font>
         </div>
-		</form>      
-    	</div>
+		 </form>      
+    	  </div>
+      </div>
     </div>
   </div>
-</div>
-	
+</div>	
 	<script src="../js/jquery-3.3.1.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/jquery-tablepage-1.0.js"></script>
@@ -144,7 +148,7 @@
 			    		article.append(celldata);			    		          	     	          
 			    		var cell4=$('<td></td>').html(Emp[5]);
 			    		var cell3=$('<td></td>').text(Emp[6]);	
-			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
+			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"><i class="fas fa-edit"></i></button>');
 						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
 			    		doc.append(row);			    		
 			    	})
