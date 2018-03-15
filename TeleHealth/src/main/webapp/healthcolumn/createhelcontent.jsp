@@ -19,26 +19,8 @@
 }
 </style>
 </head>
-<jsp:include page="/fragment/navemp.jsp" />
-<body>
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							CKEDITOR
-									.replace(
-											'content',
-											{
-												filebrowserBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html',
-												filebrowserImageBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html?type=Images',
-												filebrowserFlashBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html?type=Flash',
-												filebrowserUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files',
-												filebrowserImageUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images',
-												filebrowserFlashUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash'
-											});
-							console.log("ready!");
-						});
-	</script>
+<jsp:include page="/fragment/nav2.jsp" />
+<body>	
 	<div class="container">
 	<div class="row">
 		<div class="col-2"></div>
@@ -85,7 +67,21 @@
 		<div class="col-2"></div>
 	</div>
 </div>
-	<script>
+	<script>	
+	$(document).ready(function() {
+		CKEDITOR.replace('content',
+			{
+				filebrowserBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html',
+				filebrowserImageBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html?type=Images',
+				filebrowserFlashBrowseUrl : '../forCkeditor/ckfinder/ckfinder.html?type=Flash',
+		    	filebrowserUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files',
+				filebrowserImageUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images',
+				filebrowserFlashUploadUrl : '../forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash'
+			});
+						console.log("ready!");
+						
+			});
+		
 		$('#clean').on('click', function() {
 			CKEDITOR.instances.contenttext.setData(' ');
 		})
@@ -131,7 +127,7 @@
 					$('#erroeMsgcontent').text('文章不能為空')
 					$("#batchUploadBtn").attr('disabled', false);
 				}				
-				else if(filename!=" " && type!="VID"){					
+				else if(filename!=null&&filename!=undefined &&filename!="" && type!="VID"){					
 					$('#erroeMsg').text("請選影音專區喔!!");
 					$("#batchUploadBtn").attr('disabled', false);
 				}else{			
@@ -150,15 +146,15 @@
 				var xhr = new XMLHttpRequest();
 				xhr.open("post", FileController, true);
 				xhr.onload = function() {
-					alert("上傳完成");
+					alert("新增專欄成功");
 					$("#batchUploadBtn").attr('disabled', false);
 					$("#batchUploadBtn").val("上傳");
 					$("#progressBar").parent().removeClass("active");
-					$("#progressBar").parent().hide();
-					//$('#myModal').modal('hide');
-					$('#erroeMsgtitle').text('');
-					$('#erroeMsgtcontent').text('');
-					$('#erroeMsg').text("");
+					$("#progressBar").parent().hide();					
+					$('#erroeMsgtitle').empty();
+					$('#erroeMsgtcontent').empty();
+					$('#erroeMsg').empty();
+					window.location.reload();
 				};
 				xhr.upload.addEventListener("progress", progressFunction, false);
 				xhr.send(form);
@@ -177,6 +173,7 @@
 			}
 			;
 		})
+		
 	</script>
 	<jsp:include page="/fragment/footer.jsp" />
 </body>

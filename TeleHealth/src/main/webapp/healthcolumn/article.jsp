@@ -37,7 +37,7 @@ hieght:32px;
      <div class="col-lg-10" id='QAcontent'>                         
      </div>              
       <div class="col-lg-10" id='foot'> 
-           <c:if test="${not empty LoginOK}">
+           <c:if test="${not empty LoginOK || not empty empLoginOK}">
       <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"><h5>
       	<div class="form-group">
       		<form id="Msg" action="/TeleHealth/healthcolumn/insQA.controller" method="post" >
@@ -47,8 +47,7 @@ hieght:32px;
       		<textarea class="form-control" id="textt" name="textmem" rows="3"></textarea>
       		<input type="button" value="送出" onclick=insert()><input type='button' id='clean' value='清除'><font id="successMsg" color="green" size="-1"></font><font id="erroeMsg" color="red" size="-1"></font>
       		</form>      	
-      	</div>
-      
+      	</div>      
       </div>
      </c:if>
     </div>                                                                                                                 
@@ -103,7 +102,7 @@ $(document).ready(function() {
 	            var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
 	            var cell2= $("<p class='lead'></p>").text("by  "+data[1]);
 	            var cell3=$("<p></p>").text(data[3]);
-	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="http://localhost:8090/TeleHealth/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
+	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="https://localhost:8443/TeleHealth/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
 	            var cell4= $("<p class='lead'></p>").html(data[2]);                          
 	            var row = $(' <div class="col-lg-10" id="data"></div>').append([cell1,cell0,cell2,cell3,video,cell0,cell4]);
 	             $('#body').append(row);

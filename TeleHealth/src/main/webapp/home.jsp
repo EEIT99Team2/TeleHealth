@@ -87,8 +87,8 @@
 				<div class="w3-row-padding w3-grayscale" style="margin-top: 64px">
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor2.png "/>" alt="John"
-								style="width: 100%">
+							<img src="<c:url value="/images/doctor2.png"/>" alt="John"
+								style="width: 100%;background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>John Doe</h3>
 								<p class="w3-opacity">CEO & Founder</p>
@@ -99,7 +99,7 @@
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor1.png "/>" alt="Jane"
+							<img src="<c:url value="/images/doctor1.jpg"/>" alt="Jane"
 								style="width: 100%;background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>Anja Doe</h3>
@@ -111,7 +111,7 @@
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor3.png "/>" alt="Mike"
+							<img src="<c:url value="/images/doctor3.png"/>" alt="Mike"
 								style="width: 100%; background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>Mike Ross</h3>
@@ -123,7 +123,7 @@
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor4.png "/>" alt="Dan"
+							<img src="<c:url value="/images/doctor4.png"/>" alt="Dan"
 								style="width: 100%;background-color:#33CCFF;">
 							<div class="w3-container bg-light">
 								<h3>Dan Star</h3>
