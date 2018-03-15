@@ -57,8 +57,8 @@
 					href="<c:url value="/QueryDrugs/Drugs.jsp"/>">藥品查詢</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/AdvisoryMoment/AdvisoryMoment.jsp" />">諮詢預約</a></li>
-				<li class="nav-item"><a class="nav-link" 
-					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a></li>
+				<li class="nav-item"><div class="row showIcon"><a class="nav-link" id="advisoryIcon"
+					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>
 				<li class="nav-item"><a class="nav-link"
 					href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
 			</ul>
