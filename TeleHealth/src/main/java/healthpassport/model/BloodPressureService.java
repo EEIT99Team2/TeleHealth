@@ -76,7 +76,7 @@ public class BloodPressureService {
 		return result;
 	}
 	
-	public List<BloodPressureBean> selectMemberid(String memberid) {
+	public List<BloodPressureBean> selectMemberid(String memberid) {		
 		List<BloodPressureBean> result = bloodPressureDao.selectMemberId(memberid);
 		return result;
 	}

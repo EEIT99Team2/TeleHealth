@@ -69,7 +69,7 @@
 					href="<c:url value='/Members/Members.jsp'/>">會員專區</a></li>
 			</ul>
 		<div class="text-center">
-				<img style="width:40px;height:35px;" src="/TeleHealth/getImage.controller" >
+				<img style="width:40px;height:40px;" src="/TeleHealth/getImage.controller" >
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
 				<input type="hidden" value="${LoginOK.account}" id="account" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
@@ -170,10 +170,11 @@
 				</div>
 				<div class="modal-footer">
 					<p>
-						還不是會員?<a href="Members/register.jsp">註冊</a>
+						還不是會員?<a href="<c:url value="/Members/register.jsp"/>">註冊</a>
 					</p>
 					<p>
-						忘記 <a href="Members/ForgetPwd.jsp">密碼?</a>
+					
+						忘記 <a href="<c:url value="/Members/ForgetPwd.jsp"/>">密碼?</a>
 					</p>
 				</div>
 			</div>

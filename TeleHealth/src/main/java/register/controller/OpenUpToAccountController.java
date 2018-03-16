@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import register.model.MemberBean;
 import register.model.OpenUpToAccountService;
+import register.model.dao.MemberDAOHibernate;
 
 @Controller
 public class OpenUpToAccountController {
 
 	@Autowired
 	private OpenUpToAccountService openUpService=null;
+	
+	@Autowired
+	private MemberDAOHibernate memberDAO;
 
 	@RequestMapping(
 			path={"/openup.controller"},
@@ -22,12 +26,20 @@ public class OpenUpToAccountController {
 			)
 	public String method(String openup, HttpSession session){
 		System.out.println("hahahaahaha");
-		MemberBean member = openUpService.openUpToAccount(openup);
-		if(member != null) {
+		
+		MemberBean data = memberDAO.selectById(openup);
+		String status= data.getStatus();
+		if(status.equals("N")) {			
+			MemberBean member = openUpService.openUpToAccount(openup);
+			if(member != null) {
+				return "AccountSuccess.success";
+			} else {
+				return "login.error";
+			}
+		}else {
 			return "login.error";
-		} else {
-			return "register.error";
 		}
+		
 	}
 	
 }
