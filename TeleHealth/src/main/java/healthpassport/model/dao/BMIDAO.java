@@ -63,7 +63,7 @@ public class BMIDAO {
 		query.setParameter(2, startDate);
 		query.setParameter(3, endDate);
 		query.addEntity(BMIBean.class);
-		List<BMIBean> data = (List<BMIBean>) query.list();
+		List<BMIBean> data = (List<BMIBean>) query.list();		
 		return data;
 	}
 

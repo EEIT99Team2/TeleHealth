@@ -11,7 +11,6 @@ import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import healthpassport.model.BMIBean;
 import healthpassport.model.BloodPressureBean;
 
 @Repository
@@ -61,7 +60,7 @@ public class BloodPressureDAO {
 				query.setParameter(1, memberid);
 				query.setParameter(2, startDate);
 				query.setParameter(3, endDate);
-				query.addEntity(BMIBean.class);
+				query.addEntity(BloodPressureBean.class);
 				List<BloodPressureBean> data = (List<BloodPressureBean>) query.list();
 				return data;
 			}		
@@ -81,7 +80,7 @@ public class BloodPressureDAO {
 				query.setParameter(1, memberid);
 				query.setParameter(2, startDate);
 				query.setParameter(3, endDate);
-				query.addEntity(BMIBean.class);
+				query.addEntity(BloodPressureBean.class);
 				List<BloodPressureBean> data = (List<BloodPressureBean>) query.list();
 				return data;
 			}
