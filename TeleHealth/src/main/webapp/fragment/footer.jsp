@@ -62,7 +62,7 @@ $(document).ready(function(){
 if($("#memberId").val() != "" && $("#memberId").val() != null && $("#memberId").val()!= undefined) {
 	$(function(){
 	    var websocket;
-	    var clientName = $("#memberId").val();
+	    var clientName = $("#account").val().substring(0, $("#account").val().indexOf("@"));
 	    var chater = "930F2472-337E-4800-B774-EB0AAE703D2A";
 	    function connectServer() {
 			if ("WebSocket" in window) {
@@ -105,6 +105,7 @@ if($("#memberId").val() != "" && $("#memberId").val() != null && $("#memberId").
 	            if ($.trim(chater) != "") {
 	            	message = chater + "|" + message;
 	            }
+	            console.log("message====" + message);
 	            websocket.send(message);
 	        } else {
 	            alert("很抱歉，目前客服人員忙線，請您稍後再聯繫!");
