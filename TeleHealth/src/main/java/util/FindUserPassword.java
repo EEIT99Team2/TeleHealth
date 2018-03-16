@@ -66,9 +66,7 @@ public class FindUserPassword implements Filter {
 			session.setAttribute("rememberMe", rememberMe);
 			session.setAttribute("user", user);
 			session.setAttribute("password", password);
-			System.out.println("rememberMe=" + rememberMe);
-			System.out.println("user=" + user);
-			System.out.println("password=" + password);
+
 		}
 		chain.doFilter(request, response);
 	}

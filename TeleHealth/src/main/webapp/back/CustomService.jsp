@@ -11,7 +11,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>SB Admin - Start Bootstrap Template</title>
+<title>牽伴管理系統</title>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Bootstrap core CSS-->
@@ -328,13 +328,13 @@ background: #7bac10;
 		    var chater = "";
 		    function connectServer() {
 				if ("WebSocket" in window) {
-					websocket = new WebSocket("wss://192.168.21.76:8443/websocket/echo?name=" + clientName);
+					websocket = new WebSocket("wss://tzeing.asuscomm.com:443/websocket/echo?name=" + clientName);
 				} else if ("MozWebSocket" in window) {
 				    alert("MozWebSocket");
 				    websocket = new MozWebSocket("ws://echo");
 				} else {
 				    alert("SockJS");
-				    websocket = new SockJS("https://192.168.21.76:8443/websocket/sockjs/echo");
+				    websocket = new SockJS("https://tzeing.asuscomm.com:443/websocket/sockjs/echo");
 				}
 		    }
 		    //連線websocket

@@ -33,6 +33,9 @@ public class LoginController {
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("MsgMap", errorMsg);
 		boolean status = username.contains("@");
+		Cookie cookieUser = null;
+		Cookie cookiePassword = null;
+		Cookie cookieRememberMe = null;
 		if (status) {
 			if (username == null || username.trim().length() == 0) {
 				errorMsg.put("errorUserName", "帳號欄位不能空白");
@@ -43,9 +46,6 @@ public class LoginController {
 			if (errorMsg != null && !errorMsg.isEmpty()) {
 				return "login.error";
 			}
-			Cookie cookieUser = null;
-			Cookie cookiePassword = null;
-			Cookie cookieRememberMe = null;
 
 			String MD5pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
 			MemberBean bean = loginService.login(username, MD5pwd);
@@ -74,16 +74,16 @@ public class LoginController {
 					} else {
 						cookieUser = new Cookie("user", username);
 						cookieUser.setMaxAge(0); // MaxAge==0 表示要請瀏覽器刪除此Cookie
-						cookieUser.setPath("/TeleHealth/index.jsp");
+						cookieUser.setPath("/TeleHealth/home.jsp");
 						// String encodePassword =
 						// DatatypeConverter.printBase64Binary(password.getBytes());
 						String encodePassword = GlobalService.encryptString(pwd);
 						cookiePassword = new Cookie("password", encodePassword);
 						cookiePassword.setMaxAge(0);
-						cookiePassword.setPath("/TeleHealth/index.jsp");
+						cookiePassword.setPath("/TeleHealth/home.jsp");
 						cookieRememberMe = new Cookie("rememberMe", "false");
 						cookieRememberMe.setMaxAge(30 * 60 * 60);
-						cookieRememberMe.setPath("/TeleHealth/index.jsp");
+						cookieRememberMe.setPath("/TeleHealth/home.jsp");
 					}
 					response.addCookie(cookieUser);
 					response.addCookie(cookiePassword);
@@ -103,9 +103,7 @@ public class LoginController {
 			if (errorMsg != null && !errorMsg.isEmpty()) {
 				return "login.error";
 			}
-			Cookie cookieUser = null;
-			Cookie cookiePassword = null;
-			Cookie cookieRememberMe = null;
+
 			String MD5pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
 			EmployeesBean bean = employeesService.checkAccountEmp(username, MD5pwd);
 			if (bean == null) {
@@ -133,15 +131,13 @@ public class LoginController {
 						cookieUser = new Cookie("user", username);
 						cookieUser.setMaxAge(0); // MaxAge==0 表示要請瀏覽器刪除此Cookie
 						cookieUser.setPath("/TeleHealth/index.jsp");
-						// String encodePassword =
-						// DatatypeConverter.printBase64Binary(password.getBytes());
 						String encodePassword = GlobalService.encryptString(pwd);
 						cookiePassword = new Cookie("password", encodePassword);
 						cookiePassword.setMaxAge(0);
-						cookiePassword.setPath("/TeleHealth/index.jsp");
+						cookiePassword.setPath("/TeleHealth/home.jsp");
 						cookieRememberMe = new Cookie("rememberMe", "false");
 						cookieRememberMe.setMaxAge(30 * 60 * 60);
-						cookieRememberMe.setPath("/TeleHealth/index.jsp");
+						cookieRememberMe.setPath("/TeleHealth/home.jsp");
 					}
 					response.addCookie(cookieUser);
 					response.addCookie(cookiePassword);

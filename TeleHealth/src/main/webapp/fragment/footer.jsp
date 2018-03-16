@@ -16,28 +16,30 @@
 				</ul>
 			</div>
 			<div class="col-md-4"></div>
-			<div id="customerService" class="div_right_bottom" style="background: navajowhite;">
-				<div style="border-bottom: 1px red solid">
-					<span>線上諮詢</span>
-					<button id="setHide" class="btn btn-warning right_button" style="height: 20px">
-						<i class="fas fa-angle-down" style="margin-bottom: 8px"></i>
+			<c:if test="${not empty LoginOK}">
+				<div id="customerService" class="div_right_bottom" style="background: navajowhite;">
+					<div style="border-bottom: 1px red solid">
+						<span>線上諮詢</span>
+						<button id="setHide" class="btn btn-warning right_button" style="height: 20px">
+							<i class="fas fa-angle-down" style="margin-bottom: 8px"></i>
+						</button>
+					</div>
+					<div class="well myBox text-left" id="msg" style="background: navajowhite; height: 70%"></div>
+					<div class="row"
+						style="margin-left: 1px; background: navajowhite; width: 100%">
+						<textarea 
+							style="border: 1px red solid; width: 75%; margin-left: 5px"
+							cols="5" id="inputMsg"></textarea>
+						<button id="send" class="btn .btn-default"
+							style='width: 20%; margin-left: 3px;'>送出</button>
+					</div>
+				</div>
+				<div id="customerService2" class="hide_div_right_bottom">
+					<button id="setHide2" class="hide_right_button btn btn-warning " >
+						線上客服
 					</button>
 				</div>
-				<div class="well myBox text-left" id="msg" style="background: navajowhite; height: 70%"></div>
-				<div class="row"
-					style="margin-left: 1px; background: navajowhite; width: 100%">
-					<textarea 
-						style="border: 1px red solid; width: 75%; margin-left: 5px"
-						cols="5" id="inputMsg"></textarea>
-					<button id="send" class="btn .btn-default"
-						style='width: 20%; margin-left: 3px;'>送出</button>
-				</div>
-			</div>
-			<div id="customerService2" class="hide_div_right_bottom">
-				<button id="setHide2" class="hide_right_button btn btn-warning " >
-					線上客服
-				</button>
-			</div>
+			</c:if>
 		</div>
 	</div>
 </footer>
@@ -66,13 +68,13 @@ if($("#memberId").val() != "" && $("#memberId").val() != null && $("#memberId").
 	    var chater = "930F2472-337E-4800-B774-EB0AAE703D2A";
 	    function connectServer() {
 			if ("WebSocket" in window) {
-				websocket = new WebSocket("wss://192.168.21.76:8443/websocket/echo?name=" + clientName);
+				websocket = new WebSocket("wss://tzeing.asuscomm.com:443/websocket/echo?name=" + clientName);
 			} else if ("MozWebSocket" in window) {
 			    alert("MozWebSocket");
 			    websocket = new MozWebSocket("ws://echo");
 			} else {
 			    alert("SockJS");
-			    websocket = new SockJS("https://192.168.21.76:8443/websocket/sockjs/echo");
+			    websocket = new SockJS("https://tezing.asuscomm.com:443/websocket/sockjs/echo");
 			}
 	    }
 	    
