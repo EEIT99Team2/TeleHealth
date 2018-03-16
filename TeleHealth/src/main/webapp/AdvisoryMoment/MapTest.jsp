@@ -23,41 +23,57 @@
 <!-- Footer -->
 	<jsp:include page="/fragment/footer.jsp" />
 </body>
+
 <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 25.0329282, lng: 121.54358400000001},
-          zoom: 16
-        });
+		var map;
+		var infowindow;
+		function initMap() {
+		  var pyrmont = new google.maps.LatLng(25.0329282,121.54358400000001);
 
+		  map = new google.maps.Map(document.getElementById('map'), {
+		      center: pyrmont,
+		      zoom: 16
+		    });
 
-     // Create a <script> tag and set the USGS URL as the source.
-        var script = document.createElement('script');
-        // This example uses a local copy of the GeoJSON stored at
-        // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
-        script.src = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=25.0329282,121.54358400000001&rankby=distance&keyword=醫院&key=AIzaSyCmeQef569mlPIAOgcfxPzWbtr9KdtjHOI&callback=initMap';
-        document.getElementsByTagName('head')[0].appendChild(script);
-      }
+		  
+		  infowindow = new google.maps.InfoWindow();
+		  var service = new google.maps.places.PlacesService(map);
+	        service.nearbySearch({
+	          location: pyrmont,
+	          radius: 600,
+	          type: 'hospital'
+	        }, callback);
+	      }
 
-      // Loop through the results array and place a marker for each
-      // set of coordinates.
-      window.eqfeed_callback = function(results) {
-        for (var i = 0; i < results.length; i++) {
-          var coords = results.[i].geometry.coordinates;
-          var latLng = new google.maps.LatLng(coords[1],coords[0]);
-          var marker = new google.maps.Marker({
-            position: latLng,
-            map: map
-          });
-        }
+		function callback(results, status) {
+		  if (status == google.maps.places.PlacesServiceStatus.OK) {
+		    for (var i = 0; i < results.length; i++) {
+		      var place = results[i];		      
+		      createMarker(results[i]);
+		    }
+		  }
+		}
 
+		function createMarker(place) {
+			 var photos = place.photos;
+			  if (!photos) {
+			    return;
+			  }
+	        var placeLoc = place.geometry.location;
+	        var marker = new google.maps.Marker({
+	          map: map,
+	          position: place.geometry.location,
+	          title:place.name
+	        })
 
-
-
-
+	        google.maps.event.addListener(marker, 'click', function() {
+	          infowindow.setContent("<div><strong>" + place.name +"<br/>"+"<strong>"+place.vicinity+"</strong><br/><img src='"+photos[0].getUrl({'maxWidth': 150, 'maxHeight': 150}) +"'/></strong><br></div>");
+	          infowindow.open(map, this);
+	        });
+	      }
         
-      }
+      
     </script>
-    <script src="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=25.0329282,121.54358400000001&rankby=distance&keyword=醫院&key=AIzaSyCmeQef569mlPIAOgcfxPzWbtr9KdtjHOI&callback=initMap" async defer></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmeQef569mlPIAOgcfxPzWbtr9KdtjHOI&libraries=places&callback=initMap"></script>    
+<!--     <script src="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=25.0329282,121.54358400000001&rankby=distance&keyword=醫院&key=AIzaSyCmeQef569mlPIAOgcfxPzWbtr9KdtjHOI" async defer></script> -->
 </html>

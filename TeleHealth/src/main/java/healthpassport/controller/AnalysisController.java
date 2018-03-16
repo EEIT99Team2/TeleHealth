@@ -66,7 +66,6 @@ public class AnalysisController {
 			dataOne.put("bmi", strbmi);
 			dataOne.put("bmiresult", stresult);
 			dataOne.put("time", strtime);
-
 			String data = new Gson().toJson(dataOne);
 			System.out.println(data);
 			return data;
@@ -147,16 +146,16 @@ public class AnalysisController {
 			Integer systoleD = Integer.parseInt(systoleData);
 			Integer diastoleD = Integer.parseInt(diastoleData);
 			Integer heartBeatD = Integer.parseInt(heartBeatData);
-
 			BloodPressureBean bean = new BloodPressureBean();
 			bean.setMemberid(memberid);
 			bean.setMaxBloodPressure(systoleD);
 			bean.setMinBloodPressure(diastoleD);
 			bean.setHeartBeat(heartBeatD);
-			BloodPressureBean bpresult = bloodPressureService.insert(bean, gender, age);
-			String result = bpresult.getResult();
-			System.out.println(result);
-			return result;
+			BloodPressureBean bpresult = bloodPressureService.insert(bean,gender,age);			
+			String data = new Gson().toJson(bpresult);
+			System.out.println("JSON=" + data);
+			return data;
+
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return null;
@@ -219,6 +218,7 @@ public class AnalysisController {
 		System.out.println(data);
 		return data;
 	}
+
 
 	@RequestMapping(path = { "/healthpassport/queryBloodSugar.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
@@ -448,7 +448,7 @@ public class AnalysisController {
 	public @ResponseBody String bmiRecordsseven(String memberid) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<BMIBean> result = bmiService.selectMemberid(memberid);
+		List<BMIBean> result = bmiService.selectMemberidseven(memberid);
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String height = result.get(i).getHeight().toString();
