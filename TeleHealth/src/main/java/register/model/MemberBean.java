@@ -36,7 +36,6 @@ public class MemberBean {
 	private String fileName;
 	private Timestamp registerTime;
 	private Timestamp modifiyTime;
-
 	private String status;
 
 	public String getStatus() {
