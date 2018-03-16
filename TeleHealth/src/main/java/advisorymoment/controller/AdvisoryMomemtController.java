@@ -13,6 +13,8 @@ import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryMomentService;
 import employees.model.EmployeesBean;
 import employees.model.dao.EmployeesDAO;
+import expendRecord.model.ExpendRecordBean;
+import expendRecord.model.ExpendRecordService;
 
 @Controller
 public class AdvisoryMomemtController {
@@ -20,6 +22,8 @@ public class AdvisoryMomemtController {
 	private AdvisoryMomentService advisoryMomentService;
 	@Autowired
 	private EmployeesDAO employeesDAO;
+	@Autowired
+	private ExpendRecordService expendRecordService;
 	
 	//會員用代號搜尋
 	@RequestMapping(path = { "/AdvisoryMomemt/memberSelectByCode.controller" }, method = { RequestMethod.GET,
@@ -54,16 +58,22 @@ public class AdvisoryMomemtController {
 	@RequestMapping(path = { "/AdvisoryMomemt/memberCancelRes.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String memberCancelRes(String MomentId,String VideoCode,String UserId) {
-		String ReturnResult="預約取消失敗";
+		String ReturnResult="fail";
 		boolean DeleteResult=false;
 		boolean Refund=false;
+		boolean expendRecord=false;
 		if(MomentId!=null && MomentId.trim().length()!=0 && VideoCode!=null && VideoCode.trim().length()!=0) {
 			DeleteResult = advisoryMomentService.deleteMemReserve(VideoCode, MomentId);
 			//還錢
 			Refund =advisoryMomentService.updateMemPoint(UserId);
+			//更新消費紀錄
+			ExpendRecordBean bean =new ExpendRecordBean();
+			bean.setMemberId(UserId);
+			bean.setAdvisoryMomentId(MomentId);
+			expendRecord=expendRecordService.update(bean);
 		}
-		if(DeleteResult && Refund) {
-			ReturnResult="預約取消成功";
+		if(DeleteResult && Refund && expendRecord) {
+			ReturnResult="success";
 		}
 		return ReturnResult;
 	}

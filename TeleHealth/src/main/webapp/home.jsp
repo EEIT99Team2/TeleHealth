@@ -202,7 +202,7 @@
 		});
 
 		var errorMsg = $('#errorMsg').val();
-		if(errorMsg != "" && errorMsg != null && errorMsg != undefined) {
+		if(errorMsg != "" && errorMsg != null) {
 			 $(function(){
 		        $('#myModal').modal({
 		        show:true,
