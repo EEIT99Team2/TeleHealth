@@ -147,7 +147,11 @@ public class LoginController {
 					response.addCookie(cookiePassword);
 					response.addCookie(cookieRememberMe);
 
-					return "login.success";
+					if(username.indexOf("M")>-1) {
+						return "ManagerLogin.success";						
+					}else {						
+						return "login.success";
+					}
 				}
 			}
 			return "login.error";

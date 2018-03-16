@@ -26,7 +26,8 @@ import util.CustomMultipartResolver;
 				"employees.controller",
 				"healthpassport.controller",
 				"takeoffrecords.controller",
-				"querydrugs.controller"})
+				"querydrugs.controller",
+				"expendRecord.controller"})
 @EnableWebMvc
 public class SpringMVCJavaConfiguration implements WebMvcConfigurer {
 	@Autowired
