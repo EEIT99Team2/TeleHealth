@@ -72,5 +72,19 @@ public class DataAnalysisDAO {
 		DataAnalysisBean data = (DataAnalysisBean) query.uniqueResult();
 		return data;
 	}
+	//18歲以上BloobSugar or HeartBeat
+		String bsdata ="select * from dataanalysis where groupid =? and gender = ? and result=?";
+		public DataAnalysisBean BSdata(String gender) {
+			NativeQuery query = this.getSession().createNativeQuery(bsdata);
+			query.setParameter(1,"bloodSugar");
+			query.setParameter(2,gender);	
+			query.setParameter(3,"正常值");
+			query.addEntity(DataAnalysisBean.class);
+			DataAnalysisBean data = (DataAnalysisBean) query.uniqueResult();
+			System.out.println(data);
+			return data;
+		}
+	
+	
 	
 }
