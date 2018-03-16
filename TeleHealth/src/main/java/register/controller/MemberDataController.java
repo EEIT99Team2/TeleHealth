@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
 import register.model.MemberBean;
 import register.model.RegisterService;
 import register.model.dao.MemberDAOHibernate;
@@ -205,4 +207,10 @@ public class MemberDataController {
 		}						
 		return	point;
 	}
+	@RequestMapping(path = { "/Advisorymember.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String Advisorymember(String memberId) {	
+			MemberBean bean = memberDAO.selectById(memberId);		
+			return new Gson().toJson(bean);	
+	}
+	
 }

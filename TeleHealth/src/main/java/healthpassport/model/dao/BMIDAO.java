@@ -57,8 +57,7 @@ public class BMIDAO {
 		theCa.setTime(today);
 		theCa.add(theCa.DATE, -7);// 最后一个数字7可改，7天的意思
 		Date start = theCa.getTime();
-		String startDate = sdf.format(start);// 三十天之前日期	
-		System.out.println(startDate+"  "+endDate);
+		String startDate = sdf.format(start);// 三十天之前日期			
 		query.setParameter(1, memberid);
 		query.setParameter(2, startDate);
 		query.setParameter(3, endDate);
