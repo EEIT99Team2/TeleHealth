@@ -71,6 +71,7 @@
 		<div class="text-center">
 				<img style="width:40px;height:40px;" src="/TeleHealth/getImage.controller" >
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
+				<input type="hidden" value="${LoginOK.account}" id="account" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
 					<input type="submit" class="btn btn-sm btn-outline-secondary" 
 					id="myBtn1" value="登出" />

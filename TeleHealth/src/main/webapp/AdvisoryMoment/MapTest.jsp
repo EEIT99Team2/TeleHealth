@@ -67,7 +67,7 @@
 	        })
 
 	        google.maps.event.addListener(marker, 'click', function() {
-	          infowindow.setContent("<div><strong>" + place.name +"<br/>"+"<strong>"+place.vicinity+"</strong><br/><img src='"+photos[0].getUrl({'maxWidth': 150, 'maxHeight': 150}) +"'/></strong><br></div>");
+	          infowindow.setContent("<div class='container'><span>" + place.name +"</span><br/>"+"<span>"+place.vicinity+"</span><br/><img src='"+photos[0].getUrl({'maxWidth': 150, 'maxHeight': 150}) +"'/></div>");
 	          infowindow.open(map, this);
 	        });
 	      }
