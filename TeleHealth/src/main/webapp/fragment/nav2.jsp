@@ -69,7 +69,7 @@
 					href="<c:url value='/Members/Members.jsp'/>">會員專區</a></li>
 			</ul>
 		<div class="text-center">
-				<img style="width:40px;height:35px;" src="/TeleHealth/getImage.controller" >
+				<img style="width:40px;height:40px;" src="/TeleHealth/getImage.controller" >
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
 					<input type="submit" class="btn btn-sm btn-outline-secondary" 
