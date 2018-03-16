@@ -91,7 +91,7 @@ public class TakeoffDAO {
 	
 	//退款
 		public int updateMemPoint(String account) {
-			String hql="UPDATE MemberBean SET point=point+55 WHERE account=?";
+			String hql="UPDATE MemberBean SET point=point+7 WHERE account=?";
 			Query<MemberBean> query = this.getSession().createQuery(hql);
 			query.setParameter(0, account);
 			int result= query.executeUpdate();

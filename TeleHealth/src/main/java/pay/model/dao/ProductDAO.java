@@ -6,6 +6,12 @@ import java.util.*;
 import javax.naming.*;
 import javax.sql.*;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import healthpassport.model.BMIBean;
 import pay.model.*;
 
 public class ProductDAO {
@@ -71,6 +77,13 @@ public class ProductDAO {
 		return result;
 	}
 	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	public Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
 	// !!!
 	private static final String SELECT_BY_MEMBERID = "SELECT * FROM product WHERE memberId=? AND RtnCode=1";
 	public ProductBean select(String memberId) {

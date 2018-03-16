@@ -14,6 +14,12 @@
 <!-- 提醒視訊諮詢的小圖示用 -->
 <link href='/TeleHealth/css/advisory.css'  rel="stylesheet" type='text/css' >
 
+<!-- 引入字型 -->
+<link href='/TeleHealth/css/fonts/fontstyle.css'  rel="stylesheet" type='text/css' >
+
+<!-- 線上客服用 -->
+<link href='/TeleHealth/css/chat.css'  rel="stylesheet" type='text/css' >
+
 <!-- Custom fonts for this template -->
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
 	rel="stylesheet" type="text/css">
@@ -63,8 +69,9 @@
 					href="<c:url value='/Members/Members.jsp'/>">會員專區</a></li>
 			</ul>
 		<div class="text-center">
-				<img style="width:40px;height:35px;" src="/TeleHealth/getImage.controller" >
+				<img style="width:40px;height:40px;" src="/TeleHealth/getImage.controller" >
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
+				<input type="hidden" value="${LoginOK.account}" id="account" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
 					<input type="submit" class="btn btn-sm btn-outline-secondary" 
 					id="myBtn1" value="登出" />
@@ -156,17 +163,18 @@
                             
 <!--                             google 我不是機器人 -->
                           	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
-                          	
+                          	<input type="hidden" id="errorMsg" value="${MsgMap}">
                             <button type="submit" class="btn btn-success btn-block">登入</button>
                             <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">取消</button>
                         </form>
 				</div>
 				<div class="modal-footer">
 					<p>
-						還不是會員?<a href="Members/register.jsp">註冊</a>
+						還不是會員?<a href="<c:url value="/Members/register.jsp"/>">註冊</a>
 					</p>
 					<p>
-						忘記 <a href="Members/ForgetPwd.jsp">密碼?</a>
+					
+						忘記 <a href="<c:url value="/Members/ForgetPwd.jsp"/>">密碼?</a>
 					</p>
 				</div>
 			</div>

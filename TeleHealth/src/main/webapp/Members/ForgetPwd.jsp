@@ -34,7 +34,7 @@
                         border-radius: 4px; box-shadow: 1px 1px 3px #aaa; font-weight: bold; text-align: center;
                         cursor: pointer;">確定</button>
                           
-                        <a href="<c:url value='/home.jsp' />"><input type="button" class="btn-primary" value="回主頁" style="background-color: #f58200; border: 1px solid #da7d00;
+                        <a href="<c:url value="/home.jsp"/>"><input type="button" class="btn-primary" value="回主頁" style="background-color: #f58200; border: 1px solid #da7d00;
                         font-size: 14px; color: #fff; text-shadow: 1px 1px 1px #666; padding: 5px 10px;
                         border-radius: 4px; box-shadow: 1px 1px 3px #aaa; font-weight: bold; text-align: center;
                         cursor: pointer;"></button></a>

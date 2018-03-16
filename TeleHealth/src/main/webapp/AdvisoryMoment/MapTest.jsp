@@ -40,7 +40,7 @@
 		  var service = new google.maps.places.PlacesService(map);
 	        service.nearbySearch({
 	          location: pyrmont,
-	          radius: 500,
+	          radius: 600,
 	          type: 'hospital'
 	        }, callback);
 	      
@@ -55,12 +55,16 @@
 		}
 
 		function createMarker(place) {
+			 var photos = place.photos;
+			  if (!photos) {
+			    return;
+			  }
 	        var placeLoc = place.geometry.location;
 	        var marker = new google.maps.Marker({
 	          map: map,
 	          position: place.geometry.location,
 	          title:place.name
-	        });
+	        })
 
 	        var marker2 = new google.maps.Marker({
 		          map: map,
@@ -68,7 +72,7 @@
 		          title:"您的位置"
 		        });
 	        google.maps.event.addListener(marker, 'click', function() {
-	          infowindow.setContent('<div><strong>' + place.name + '</strong><br></div>');
+	          infowindow.setContent("<div class='container'><span>" + place.name +"</span><br/>"+"<span>"+place.vicinity+"</span><br/><img src='"+photos[0].getUrl({'maxWidth': 150, 'maxHeight': 150}) +"'/></div>");
 	          infowindow.open(map, this);
 	        });
 	      }
