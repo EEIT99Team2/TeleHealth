@@ -21,50 +21,7 @@ margin:0px auto;
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
-<main>
-	<ul
-		class="nav nav-tabs justify-content-center w3-padding-large w3-card "
-		id="myTab" role="tablist">
 
-		<li class="nav-item"><input type="button" class="nav-link active"
-			id="BOD" data-toggle="tab" role="tab" value="修改資料"
-			onclick="location.href='ModifyData.jsp'" /></li>
-		<li class="nav-item"><input type="button" class="nav-link active"
-			id="FOO" data-toggle="tab" role="tab" value="修改密碼"
-			onclick="location.href='ChangePwd.jsp'" /></li>
-			
-			<li class="nav-item"><input type="button" class="nav-link active"
-			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>
-		
-		<li class="nav-item"><input type="button" class="nav-link active"
-			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
-			onclick="location.href='Point.jsp'" /></li>
-		
-	</ul>
-	<div class="tab-content" id="myTabContent">
-		<div class="tab-pane fade show active" id="home" role="tabpanel"
-			aria-labelledby="home-tab">
-			<!-- Main Content -->
-			<div class="container">
-				<div class="row">
-					<table class="col-lg-4 col-md-10 mx-auto" id="title">
-						<tbody id="tbody">
-							<tr class="post-preview">
-							</tr>
-							<hr>
-						</tbody>
-					</table>
-				</div>
-				<div class="container">
-					<div class="row">
-						<span id='table_page' class='col-lg-2 col-md-10 mx-auto'></span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	</main>	
 				<div style="text-align:center;"><h3 class="title">會員管理</h3></div>
 <div class="point1">	
 									<table id='membersTable' width="100%"
@@ -73,6 +30,7 @@ margin:0px auto;
 										<tr>
 											<th scope="col">會員帳號</th>
 											<th scope="col">姓名</th>	
+											<th scope="col">註冊時間</th>
 											<th scope="col">性別</th>
 											<th scope="col">電話</th>
 											<th scope="col">行動電話</th>
@@ -80,7 +38,7 @@ margin:0px auto;
 											<th scope="col">地址</th>
 											<th scope="col">藥物過敏</th>
 											<th scope="col">過去病史</th>
-											<th scope="col">照片</th>
+<!-- 											<th scope="col">照片</th> -->
 										</tr>
 									</thead>
 									<tbody>
@@ -118,17 +76,19 @@ $(document).ready(function() {
      function membersTable(){
     	 $('#membersTable').dataTable().fnDestroy(); 
     	 $('#membersTable').DataTable({
-			    "ajax": '/TeleHealth/managermentmembers.controller?memberid='+memberid,
+			    "ajax": '/TeleHealth/checkMembers.controller?memberid='+memberid,
 			    "columns": [
-			        { "data": "TotalAmount" },
-			        { "data": "MerchantTradeDate" },
-			        { "data": "MerchantTradeDate" },
-			        { "data": "MerchantTradeDate" },
-			        { "data": "MerchantTradeDate" },
-			        { "data": "MerchantTradeDate" },
-			        { "data": "MerchantTradeDate" },
-			        { "data": "MerchantTradeDate" },
-			        
+			        { "data": "account" },
+			        { "data": "memName" },
+			        { "data": "registerTime" },
+			        { "data": "gender" },
+			        { "data": "phone" },
+			        { "data": "cellphone" },
+			        { "data": "birth" },
+			        { "data": "address" },
+			        { "data": "medicine" },
+			        { "data": "medicalHistory" },
+// 			        { "data": "photo" },			      
 			    ],
 			    "order": [[ 1, 'desc' ]],
 				"bProcessing": true,//顯示處理中的圖樣
@@ -147,17 +107,6 @@ $(document).ready(function() {
 				});
 			};	
 				    
-			$('#checkPoint').click(function(){
-				$.get("<c:url value='/checkPoint.controller'/>",{"memberId":memberId},function(result){
-					console.log("point="+result);
-					$("#myPointItem .modal-body").empty();
-					var docFrag = $(document.createDocumentFragment());
-					docFrag.append("<H3>您的餘額為:"+result+"點</H3>");
-					$("#myPointItem .modal-body").append(docFrag);
-					})
-					$("#myPointItem").modal("show");
-				
-			});
 })  
 
 

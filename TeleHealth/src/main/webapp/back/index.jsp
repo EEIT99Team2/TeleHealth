@@ -33,7 +33,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="memberManger">
-          <a class="nav-link" href="<c:url value='/healthcolumn/totalpublish.jsp'/>">
+          <a class="nav-link" id="checkMembers" href="<c:url value='/Members/ManagementMembers.jsp'/>">
             <i class="fas fa-child"></i>
             <span class="nav-link-text">會員管理</span>
           </a>

@@ -33,7 +33,7 @@ public class LoginController {
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("MsgMap", errorMsg);
 		boolean status = username.contains("@");
-		if (status) {
+		if (status){
 			if (username == null || username.trim().length() == 0) {
 				errorMsg.put("errorUserName", "帳號欄位不能空白");
 			}
