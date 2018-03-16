@@ -66,7 +66,7 @@
 				<li class="nav-item"><div class="row showIcon"><a class="nav-link" id="advisoryIcon"
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value='/Members/Members02.jsp'/>">會員專區</a></li>
+					href="<c:url value='/Members/Members.jsp'/>">會員專區</a></li>
 			</ul>
 		<div class="text-center">
 				<img style="width:40px;height:35px;" src="/TeleHealth/getImage.controller" >
@@ -169,10 +169,10 @@
 				</div>
 				<div class="modal-footer">
 					<p>
-						還不是會員? <a href="#">註冊</a>
+						還不是會員?<a href="Members/register.jsp">註冊</a>
 					</p>
 					<p>
-						忘記 <a href="#">密碼?</a>
+						忘記 <a href="Members/ForgetPwd.jsp">密碼?</a>
 					</p>
 				</div>
 			</div>

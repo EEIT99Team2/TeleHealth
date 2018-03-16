@@ -38,7 +38,7 @@ public class ModifyPwdController {
 
 		if (oldpwd == null || oldpwd.trim().length() == 0) {
 			errorMsg.put("errorOldPwd", "會員密碼欄位不能空白");
-			return "ModifyPwdController.error";
+			return "changePwd.error";
 		} else if (oldpwd != null && oldpwd.trim().length() > 0) {
 			//原先在session內的密碼
 			String Password = member.getPwd(); // LOGINOK取出的密碼
