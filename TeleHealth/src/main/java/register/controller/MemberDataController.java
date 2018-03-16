@@ -26,8 +26,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+
 import pay.model.ProductBean;
 import pay.model.dao.ProductDAO;
+
 import register.model.MemberBean;
 import register.model.RegisterService;
 import register.model.dao.MemberDAOHibernate;
@@ -235,5 +237,12 @@ public class MemberDataController {
 			System.out.println("JSON123=" + data);
 			return data;	
 		}
+
+	@RequestMapping(path = { "/Advisorymember.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String Advisorymember(String memberId) {	
+			MemberBean bean = memberDAO.selectById(memberId);		
+			return new Gson().toJson(bean);	
+	}
+
 	
 }

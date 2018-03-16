@@ -51,19 +51,21 @@ public class BMIDAO {
 		NativeQuery query = this.getSession().createNativeQuery(sevenday);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date today = new Date();
-		String endDate = sdf.format(today);// 当前日期
-		// 获取三十天前日期
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(today); 
+		c.add(Calendar.DATE, 1);
+		today = c.getTime();
+		String endDate = sdf.format(today);// 当前日期		
 		Calendar theCa = Calendar.getInstance();
-		theCa.setTime(today);
-		theCa.add(theCa.DATE, -7);// 最后一个数字7可改，7天的意思
+		theCa.setTime(today);		
+		theCa.add(theCa.DATE, -6);// 最后一个数字7可改，7天的意思
 		Date start = theCa.getTime();
-		String startDate = sdf.format(start);// 三十天之前日期	
-		System.out.println(startDate+"  "+endDate);
+		String startDate = sdf.format(start);// 三十天之前日期			
 		query.setParameter(1, memberid);
 		query.setParameter(2, startDate);
 		query.setParameter(3, endDate);
 		query.addEntity(BMIBean.class);
-		List<BMIBean> data = (List<BMIBean>) query.list();
+		List<BMIBean> data = (List<BMIBean>) query.list();		
 		return data;
 	}
 
@@ -74,11 +76,14 @@ public class BMIDAO {
 		NativeQuery query = this.getSession().createNativeQuery(sevenday);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date today = new Date();
-		String endDate = sdf.format(today);// 当前日期
-		// 获取三十天前日期
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(today); 
+		c.add(Calendar.DATE, 1);
+		today = c.getTime();
+		String endDate = sdf.format(today);// 当前日期		
 		Calendar theCa = Calendar.getInstance();
 		theCa.setTime(today);
-		theCa.add(theCa.DATE, -30);// 最后一个数字30可改，30天的意思
+		theCa.add(theCa.DATE, -29);// 最后一个数字30可改，30天的意思
 		Date start = theCa.getTime();
 		String startDate = sdf.format(start);// 三十天之前日期
 		System.out.println(startDate+"  "+endDate);
@@ -96,11 +101,14 @@ public class BMIDAO {
 		NativeQuery query = this.getSession().createNativeQuery(sevenday);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date today = new Date();
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(today); 
+		c.add(Calendar.DATE, 1);
+		today = c.getTime();
 		String endDate = sdf.format(today);// 当前日期
-		// 获取三十天前日期
 		Calendar theCa = Calendar.getInstance();
 		theCa.setTime(today);
-		theCa.add(theCa.DATE, -180);// 最后一个数字30可改，30天的意思
+		theCa.add(theCa.DATE, -179);// 最后一个数字30可改，30天的意思
 		Date start = theCa.getTime();
 		String startDate = sdf.format(start);// 三十天之前日期
 		System.out.println(startDate+"  "+endDate);

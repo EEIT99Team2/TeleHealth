@@ -21,4 +21,14 @@ public class DataAnalysisService {
 		List<DataAnalysisBean> result = dataanalysisDao.selectDataAll();
 		return result;
 	}
+//血壓,舒張壓
+	public DataAnalysisBean selectGroupId(String groupid,String gender,Integer age) {
+		DataAnalysisBean dataAnalysis = dataanalysisDao.selectGroupId(groupid, gender, age);
+		return  dataAnalysis;
+	}
+	public DataAnalysisBean selectdataBs(String gender) {
+		DataAnalysisBean dataanaly = dataanalysisDao.BSdata(gender);
+		return dataanaly;
+	}
+	 
 }

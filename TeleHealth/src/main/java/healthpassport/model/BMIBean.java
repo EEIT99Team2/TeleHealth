@@ -63,7 +63,7 @@ public class BMIBean {
 	@Override
 	public String toString() {
 		return "BMIBean [id=" + id + ", memberid=" + memberid + ", height=" + height + ", weight=" + weight + ", bmi="
-				+ bmi + ", result=" + result + "]";
+				+ bmi + ", result=" + result + ", createTime=" + createTime + "]";
 	}
 	
 }
