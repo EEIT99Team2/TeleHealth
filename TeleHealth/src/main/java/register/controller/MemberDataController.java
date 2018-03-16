@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -21,6 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
+import pay.model.ProductBean;
+import pay.model.dao.ProductDAO;
 import register.model.MemberBean;
 import register.model.RegisterService;
 import register.model.dao.MemberDAOHibernate;
@@ -205,4 +212,28 @@ public class MemberDataController {
 		}						
 		return	point;
 	}
+	
+	//丁丁
+		@RequestMapping(path = { "/point.controller" }, method = { RequestMethod.GET,
+				RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+		public @ResponseBody String pointRecords(String memberid) {
+			
+			LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+			List<Object[]> result =memberDAO.selectMemberId(memberid);
+			System.out.println("result="+result);
+			for (int i = 0; i < result.size(); i++) {
+			HashMap<String, String> dataOne = new HashMap<String, String>();
+			String MerchantTradeDate = result.get(i)[1].toString();
+			String TotalAmount = result.get(i)[2].toString();
+			dataOne.put("TotalAmount", TotalAmount);
+			dataOne.put("MerchantTradeDate", MerchantTradeDate);
+			datafinal.add(dataOne);
+			}
+			HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
+			datas.put("data", datafinal);
+			String data = new Gson().toJson(datas);
+			System.out.println("JSON123=" + data);
+			return data;	
+		}
+	
 }

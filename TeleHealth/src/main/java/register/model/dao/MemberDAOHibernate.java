@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import pay.model.ProductBean;
 import register.model.MemberBean;
 
 @Repository
@@ -28,6 +29,17 @@ public class MemberDAOHibernate {
 		List<MemberBean> list = this.getSession().createQuery(hql).setParameter(0, account).getResultList();
 		return list;
 	}
+	
+	 String memid = "SELECT * FROM product WHERE memberId=? AND RtnCode=1";
+		public List<Object[]> selectMemberId(String memberid) {
+			NativeQuery query = this.getSession().createNativeQuery(memid);
+			query.setParameter(1,memberid);
+			List<Object[]> data = (List<Object[]>) query.list();
+			return data;	
+		}
+	
+	
+	
 	
 	public MemberBean selectById(String memberId) {
 		MemberBean member = getSession().get(MemberBean.class, memberId);
