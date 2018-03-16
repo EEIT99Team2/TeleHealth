@@ -7,7 +7,7 @@
 <style>
 .point1 { 
 color:red; 
-background-color:#E8CCFF;
+background-color:#AAFFEE;
 width:600px;
 height:600px;
 border:3px #cccccc dashed;
@@ -33,9 +33,9 @@ margin:0px auto;
 			id="FOO" data-toggle="tab" role="tab" value="修改密碼"
 			onclick="location.href='ChangePwd.jsp'" /></li>
 			
-		<li class="nav-item"><input type="button" class="nav-link active"
+			<li class="nav-item"><input type="button" class="nav-link active"
 			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>
-			
+		
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
 			onclick="location.href='Point.jsp'" /></li>
@@ -79,6 +79,26 @@ margin:0px auto;
 									</tbody>
 		</table>
 	</div>
+	
+	<!-- 查詢餘額視窗 -->
+<div class="modal fade" id="myPointItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myPointTitle">餘額查詢</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="myPoint">我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
 <jsp:include page="/fragment/footer.jsp" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
@@ -110,20 +130,23 @@ $(document).ready(function() {
 			  	 	 }
 					}
 				});
-			};		    
-  });   
+			};	
+				    
+			$('#checkPoint').click(function(){
+				$.get("<c:url value='/checkPoint.controller'/>",{"memberId":memberId},function(result){
+					console.log("point="+result);
+					$("#myPointItem .modal-body").empty();
+					var docFrag = $(document.createDocumentFragment());
+					docFrag.append("<H3>您的餘額為:"+result+"點</H3>");
+					$("#myPointItem .modal-body").append(docFrag);
+					})
+					$("#myPointItem").modal("show");
+				
+			});
+})  
 
-$('#checkPoint').click(function(){
-	$.get("<c:url value='/checkPoint.controller'/>",{"memberId":memberId},function(result){
-		console.log("point="+result);
-		$("#myPointItem .modal-body").empty();
-		var docFrag = $(document.createDocumentFragment());
-		docFrag.append("<H3>您的餘額為:"+result+"點</H3>");
-		$("#myPointItem .modal-body").append(docFrag);
-		})
-		$("#myPointItem").modal("show");
-	
-});    
+
+
 </script>
 </body>
 </html>

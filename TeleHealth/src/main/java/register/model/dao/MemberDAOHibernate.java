@@ -42,7 +42,7 @@ public class MemberDAOHibernate {
 	
 	
 	public MemberBean selectById(String memberId) {
-		MemberBean member = getSession().get(MemberBean.class, memberId);
+		MemberBean member = this.getSession().get(MemberBean.class, memberId);
 		return member;
 	}
 	
