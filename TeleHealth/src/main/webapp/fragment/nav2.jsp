@@ -14,6 +14,12 @@
 <!-- 提醒視訊諮詢的小圖示用 -->
 <link href='/TeleHealth/css/advisory.css'  rel="stylesheet" type='text/css' >
 
+<!-- 引入字型 -->
+<link href='/TeleHealth/css/fonts/fontstyle.css'  rel="stylesheet" type='text/css' >
+
+<!-- 線上客服用 -->
+<link href='/TeleHealth/css/chat.css'  rel="stylesheet" type='text/css' >
+
 <!-- Custom fonts for this template -->
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
 	rel="stylesheet" type="text/css">
