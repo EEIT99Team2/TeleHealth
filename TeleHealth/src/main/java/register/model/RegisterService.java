@@ -21,6 +21,20 @@ public class RegisterService {
 		return result;
 	}
 	
+
+	@Transactional
+	public MemberBean selectById(String memberId) {
+		MemberBean result = null;
+		MemberBean members = memberDAO.selectById(memberId);
+		if(members!= null) {
+			result = members;
+		}
+		return result;
+	}
+	
+	
+	
+	
 	@Transactional(readOnly=true)
 	public MemberBean selectByAccount(String account) {
 		MemberBean result = null;
@@ -46,17 +60,21 @@ public class RegisterService {
 		return result;
 	}
 	
-	
-	
-	
-//	public MemberBean update(MemberBean bean) {
-//		MemberBean result = null;
+	public MemberBean Update(MemberBean bean) {
+		MemberBean result = null;
+		if(bean!=null) {
+			result = memberDAO.update(bean);
+		}
+		return result;
+	}
+
+//	public boolean update(MemberBean bean) {
+//		boolean result = false;
 //		if(bean!=null) {
-//			result = memberDAO.update(bean.getMemName(),bean.getPhone(),bean.getCellphone(),);
-//			String memName,String phone,
-//            String cellphone,String gender,java.util.Date birth,
-//            double memHeight, double memWeight, String bloodType,
-//            String address,String pwd,String medicine,Blob photo,String fileName,String medicalHistory,int cancelCount,int negCount,int point,int expendRecord,String account
+//			result = memberDAO.update(bean.getMemName(),bean.getPhone(),bean.getCellphone(),
+//			bean.getBirth(),bean.getMemHeight(),bean.getMemWeight(),bean.getBloodType(),
+//			bean.getAddress(),bean.getPwd(),bean.getMedicine(),bean.getPhoto(),bean.getFileName(),bean.getMedicalHistory(),bean.getAccount());
+//			return true;
 //		}
 //		return result;
 //	}

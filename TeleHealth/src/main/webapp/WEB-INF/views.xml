@@ -2,14 +2,129 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-	<bean id="register.error" class="org.springframework.web.servlet.view.InternalResourceView">
-		<property name="url" value="/register.jsp"></property>
+	
+	<bean id="ModifyData.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/Members/DataSuccess.jsp"></property>
 	</bean>
 	
-	<bean id="register.success" class="org.springframework.web.servlet.view.RedirectView">
-		<property name="contextRelative" value="true"></property>
-		<property name="url" value="/RegisterSuccess.jsp"></property>
+	<bean id="ModifyData.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/Members/ModifyData.jsp"></property>
 	</bean>
 
+	<bean id="changePwd.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/Members/ChangePwdOut.jsp"></property>
+	</bean>
+	
+	<bean id="changePwd.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/Members/ChangePwd.jsp"></property>
+	</bean>
+	
+	
+	<bean id="logout.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/home.jsp"></property>
+	</bean>
+	
+	<bean id="LoginOut.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/Members/LoginOut.jsp"></property>
+	</bean>
+	
+	<bean id="ModifyPwdController.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/Members/Members03.jsp"></property>
+	</bean>
+	
+	<bean id="memberdata.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/Members/Members02.jsp"></property>
+	</bean>
+
+	<bean id="register.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/Members/RegisterSuccess.jsp"></property>
+	</bean>
+
+	<bean id="register.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/Members/register.jsp"></property>
+	</bean>
+	
+	<bean id="login.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/home.jsp"></property>
+	</bean>
+	
+	<bean id="login.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/home.jsp"></property>
+	</bean>
+	
+	<bean id="forgetPwd.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/Members/ForgetSuccess.jsp"></property>
+	</bean>
+	
+	<bean id="forgetPwd.error" class="org.springframework.web.servlet.view.InternalResourceView">		
+		<property name="url" value="/Members/ForgetPwd.jsp"></property>
+	</bean>	
+
+	<bean id="form.error" class="org.springframework.web.servlet.view.InternalResourceView">
+	<property name="url" value="/healthcolumn/createhelcontent.jsp"></property>
+	</bean>
+	
+	<bean id="form.ok" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthcolumn/createhelcontent.jsp"></property>
+	</bean>
+
+	<bean id="register.do" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/register.controller"></property>
+	</bean>
+	
+	<bean id="deletecontentok" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthcolumn/Dpublish.jsp"></property>
+	</bean>
+	
+	<bean id="deletecontenterror" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthcolumn/Dpublish.jsp"></property>
+	</bean>
+	
+	<bean id="createcontentok" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthcolumn/healthcolumn.jsp"></property>
+	</bean><bean id="createerror" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthcolumn/healthcolumn.jsp"></property>
+	</bean>
+	
+	<bean id="bmi" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthpassport/HealthPassport.jsp"></property>
+	</bean>
+	
+	<bean id="bloodPressure" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthpassport/HealthPassport.jsp"></property>
+	</bean>
+	
+	<bean id="bloodSugar" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/healthpassport/HealthPassport.jsp"></property>
+	</bean>	
+	
+	<bean id="advisory.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/Advisory/Advisory.jsp"></property>
+	</bean>
+	
+	<bean id="empadvisory.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/Advisory/AdvisoryEmp.jsp"></property>
+	</bean>
+	
+	<bean id="advisory.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/AdvisoryMoment/AdvisoryRecord.jsp"></property>
+	</bean>
+	
+	<bean id="empadvisory.error" class="org.springframework.web.servlet.view.InternalResourceView">
+		<property name="url" value="/AdvisoryMoment/AdvisoryRecordEmp.jsp"></property>
+	</bean>
+	
+	<bean id="ManagerLogin.success" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="contextRelative" value="true"></property>
+		<property name="url" value="/back/index.jsp"></property>
+	</bean>
 </beans>

@@ -37,6 +37,16 @@ public class MemberBean {
 	private Timestamp registerTime;
 	private Timestamp modifiyTime;
 
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Timestamp getModifiyTime() {
 		return modifiyTime;
 	}
@@ -44,10 +54,15 @@ public class MemberBean {
 	public void setModifiyTime(Timestamp modifiyTime) {
 		this.modifiyTime = modifiyTime;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "MemberBean [memberId=" + memberId + ", account=" + account + ", memName=" + memName + "]";
+		return "MemberBean [memberId=" + memberId + ", account=" + account + ", memName=" + memName + ", phone=" + phone
+				+ ", cellphone=" + cellphone + ", gender=" + gender + ", birth=" + birth + ", memHeight=" + memHeight
+				+ ", memWeight=" + memWeight + ", bloodType=" + bloodType + ", address=" + address + ", pwd=" + pwd
+				+ ", medicine=" + medicine + ", cancelCount=" + cancelCount + ", photo=" + photo + ", point=" + point
+				+ ", expendRecord=" + expendRecord + ", medicalHistory=" + medicalHistory + ", fileName=" + fileName
+				+ ", registerTime=" + registerTime + ", modifiyTime=" + modifiyTime + "]";
 	}
 
 	public String getMemberId() {
@@ -209,8 +224,6 @@ public class MemberBean {
 	public void setRegisterTime(Timestamp registerTime) {
 		this.registerTime = registerTime;
 	}
-
-	
 
 }
 	

@@ -1,0 +1,63 @@
+.myBox {
+border: none;
+padding: 0px;
+font: 12px/20px;
+width: 100%;
+height: 100%;
+overflow: scroll;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+width: 12px;
+height: 12px;
+}
+
+::-webkit-scrollbar-track {
+box-shadow: inset 0 0 10px olivedrab;
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+border-radius: 10px;
+background: yellowgreen; 
+box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #7bac10;
+}
+
+.div_right_bottom {
+	width:300px;
+	height:300px;
+	padding:10px;
+	float:right;
+	position:fixed;
+	right:0px;
+	bottom:0px;
+	z-index:20;
+	border:2px solid #69c;
+	_position:absolute; /* position fixed for IE6 */
+}
+.right_button{
+	float:right;
+}
+
+.hide_div_right_bottom {
+	width:100px;
+	height:50px;
+	padding:10px;
+	float:right;
+	position:fixed;
+	right:0px;
+	bottom:0px;
+	margin-right : 10px;
+	margin-bottom : 10px;
+	z-index:15;
+	_position:absolute; /* position fixed for IE6 */
+}
+.hide_right_button{
+	width:100px;
+	height:50px;
+}
