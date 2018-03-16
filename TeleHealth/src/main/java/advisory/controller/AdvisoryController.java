@@ -23,6 +23,8 @@ import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryMomentService;
 import employees.model.EmployeesService;
 import employees.model.dao.EmployeesDAO;
+import expendRecord.model.ExpendRecordBean;
+import expendRecord.model.ExpendRecordService;
 
 @Controller
 public class AdvisoryController {
@@ -32,7 +34,8 @@ public class AdvisoryController {
 	private AdvisoryMomentService advisoryMomentService;
 	@Autowired
 	private EmployeesService employeesService;
-	
+	@Autowired
+	private ExpendRecordService expendRecordService;
 	//會員預約成功，新增預約記錄
 	@RequestMapping(path= {"/Advisory/reserveCheck.controller"},method= {RequestMethod.POST},produces="text/plain;charset=UTF-8")
 	public @ResponseBody String reserveCheck(String advisoryTime,String reserveItem,String reserveEmp,String empId,String UserId,String MomentId) throws ParseException {
@@ -80,6 +83,13 @@ public class AdvisoryController {
 			sendTime = sdfForCreate.format(createTime);
 			//會員給錢			
 			advisoryService.updateMemPoint(UserId);
+			//新增會員消費紀錄
+			ExpendRecordBean bean =new ExpendRecordBean();
+			bean.setMemberId(UserId);
+			bean.setModifytime(new Date());
+			bean.setRecord(5);
+			bean.setAdvisoryMomentId(MomentId);
+			expendRecordService.insert(bean);
 			//增加員工預約點擊數
 			employeesService.addResCount(empId);		
 		}

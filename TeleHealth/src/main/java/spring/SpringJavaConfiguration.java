@@ -22,6 +22,7 @@ import advisory.model.AdvisoryBean;
 import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryTypeBean;
 import employees.model.EmployeesBean;
+import expendRecord.model.ExpendRecordBean;
 import healthcolumn.model.HealthColumnBean;
 import healthcolumn.model.QuestionBean;
 import healthpassport.model.BMIBean;
@@ -43,6 +44,7 @@ import takeoffrecords.model.TakeoffBean;
 		"healthpassport.model",
 		"takeoffrecords.model",
 		"querydrugs.model",
+		"expendRecord.model",
 		"util"})
 @EnableTransactionManagement
 public class SpringJavaConfiguration {
@@ -66,7 +68,7 @@ public class SpringJavaConfiguration {
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
 
-		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,DrugBean.class,TakeoffBean.class);		
+		builder.addAnnotatedClasses(AdvisoryMomentBean.class,AdvisoryTypeBean.class,EmployeesBean.class,DataAnalysisBean.class,HealthColumnBean.class,QuestionBean.class,AdvisoryBean.class,BMIBean.class,BloodPressureBean.class,BloodSugarBean.class,MemberBean.class,DrugBean.class,TakeoffBean.class,ExpendRecordBean.class);		
 
 		return builder.buildSessionFactory();
 	}

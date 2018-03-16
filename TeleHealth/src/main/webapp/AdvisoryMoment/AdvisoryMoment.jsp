@@ -358,9 +358,12 @@ $(document).ready(function() {
 		var docFrag = $(document.createDocumentFragment());		
 		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode,"UserId":reservedData.UserId},function(result){
 			$("#cancelReserveItem").modal('hide');
-			$("#cancelCheckItem").modal('show');
+			if(result == "success"){
 			docFrag.append("<h3>"+result+"<img src='<c:url value="/images/yes.png"/> '/>"+"</h3>");
-			console.log("result="+result);
+				}else{
+			docFrag.append("<h3>"+result+"<img src='<c:url value="/images/error.png"/> '/>"+"</h3>");
+					}
+			$("#cancelCheckItem").modal('show');
 	  	$("#cancelCheckItem .modal-body").append(docFrag);
 			})
 		})
