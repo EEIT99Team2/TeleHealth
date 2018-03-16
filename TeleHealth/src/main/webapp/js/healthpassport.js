@@ -1,6 +1,6 @@
-function bmionemonth(){
+var memberid=$('#memberId').val();
 $("#bmiweek").on('click',function(){			
-	$.getJSON('/TeleHealth/healthpassport/bmirecordsseven.controller',{memberid:memberId},function(datas){
+	$.getJSON('/TeleHealth/healthpassport/bmirecordsseven.controller',{memberid:memberid},function(datas){
 		var datesbmi=[];
 		var datasbmi=[];
 		var datasmax=[];
@@ -95,15 +95,7 @@ $("#bmiweek").on('click',function(){
 
 		})
 });
-}
-function bmimonth(){
-$("#bmimonth").on('click',function(){
-	var height=$('#showHeight').text();
-	var weight=$('#showWeight').text();
-	var ok=$('#bmiResult').text();
-	var check=ok.split(" ");
-	var data=check[2].split("|");
-	var bmi=data[0];		
+$("#bmimonth").on('click',function(){			
 	$.getJSON('/TeleHealth/healthpassport/bmirecordsthirty.controller',{memberid:memberid},function(datas){		
 		var datesbmi=[];
 		var datasbmi=[];
@@ -197,8 +189,6 @@ $("#bmimonth").on('click',function(){
 
 		})
 });
-}
-function bmithreemonth(){
 $("#bmithreemonth").on('click',function(){		
 	$.getJSON('/TeleHealth/healthpassport/bmirecordsthreemon.controller',{memberid:memberid},function(datas){
 		var datesbmi=[];
@@ -290,7 +280,7 @@ $("#bmithreemonth").on('click',function(){
 				});
 		})
 });
-}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////				     
 // 血壓
 var bpdate=[];
@@ -307,7 +297,6 @@ var m = today.getMonth() - birthDate.getMonth();
 if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
     age--;
 }
-function bpweek(){
 $("#bpweek").on('click',function(){		
 	$.getJSON('/TeleHealth//healthpassport/bloodPressureRecordsseven.controller',{memberid:memberid,gender:gender,age:age},function(result){
 			$.each(result.data,function(index,value) {				
@@ -412,8 +401,6 @@ $("#bpweek").on('click',function(){
 
 	});	
 });
-}
-function bpmonth(){
 $("#bpmonth").on('click',function(){		
 	$.getJSON('/TeleHealth/healthpassport/bloodPressureRecordsseven.controller',{memberid:memberid,gender:gender,age:age},function(result){
 			$.each(result.data,function(index,value) {				
@@ -517,8 +504,6 @@ $("#bpmonth").on('click',function(){
 
 	});	
 });
-}
-function bpthreemonth(){
 $("#bpthreemonth").on('click',function(){		
 	$.getJSON('/TeleHealth/healthpassport/bloodPressureRecordsthreemon.controller',{memberid:memberid,gender:gender,age:age},function(result){
 			$.each(result.data,function(index,value) {				
@@ -621,14 +606,13 @@ $("#bpthreemonth").on('click',function(){
 
 	});	
 });
-}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 //血糖
 var bsdates=[];
 var bsdatas=[];
 var bsmaxdatas=[];
 var bsmindatas=[];
-function bsweek(){
 $("#bsweek").on('click',function(){		
 	$.getJSON('/TeleHealth/healthpassport/bloodSugarRecordsseven.controller',{memberid:memberid,gender:gender},function(result){		
 		console.log(result);
@@ -719,8 +703,6 @@ $("#bsweek").on('click',function(){
 	});
  		
 });
-}
-function bsmonth(){
 $("#bsmonth").on('click',function(){		
 	$.getJSON('/TeleHealth/healthpassport/bloodSugarRecordsthirty.controller',{memberid:memberid,gender:gender},function(result){		
 		console.log(result);
@@ -811,8 +793,6 @@ $("#bsmonth").on('click',function(){
 	});
  		
 });
-}
-function bsthreemonth(){
 $("#bsthreemonth").on('click',function(){		
 	$.getJSON('/TeleHealth/healthpassport/bloodSugarRecordsthreemon.controller',{memberid:memberid,gender:gender},function(result){		
 		console.log(result);
@@ -903,4 +883,3 @@ $("#bsthreemonth").on('click',function(){
 	});
  		
 });
-}

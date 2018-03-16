@@ -248,10 +248,10 @@ public class RegisterController {
 						errorMsg.put("errorPwd", "密碼欄位格式錯誤");
 					}																									
 				if(medicine ==null|| medicine.trim().length()==0) {
-					errorMsg.put("errorMedicine", "藥物過敏欄位不能空白");
+					medicine="無";
 				}	
 				if(medicalHistory ==null|| medicalHistory.trim().length()==0) {
-					errorMsg.put("errorMedicalHistory", "過去病史欄位不能空白");
+					medicalHistory="無";
 				}	
 				
 				Blob photo = null;

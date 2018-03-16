@@ -262,7 +262,7 @@
 						<li> 
 							<label class="form-label1">
 								藥物過敏
-								<span class="form-required"> * </span>
+					
 							</label>
 							<div class="form-input2">
 								<textarea rows="5" cols="20" name="medicine" value="${param.medicine}"></textarea>
@@ -273,7 +273,7 @@
 						<li> 
 							<label class="form-label1">
 								過去病史
-								<span class="form-required"> * </span>
+								
 							</label>
 							<div class="form-input2">
 								<textarea rows="5" cols="20" name="medicalHistory" value="${param.medicalHistory}"></textarea>
@@ -434,7 +434,7 @@ $('#cellphone').blur(function(){
 	if(cellphone!= null	&& cellphone.length>0){
 		var pattern = /[0-9]{10,}/;
 		flag = pattern.test(cellphone);	
-		if(flag){
+		if(flag && cellphone.length<11){
 			checkCellphone.html("<img src=images/yes.gif>"); 	
 		$('#submitBtn').prop("disabled", false);	
 			}else{
@@ -447,16 +447,22 @@ $('#cellphone').blur(function(){
 			}
 })
 
-// $('#year').blur(function(){
-// 	var year = $('#year').val();
-// 	var checkYear = $('#checkYear');
-// 	if(year!= null	&& year.length>0){
-// 		checkYear.html("<img src=images/yes.gif>"); 
-// 	}else{
-// 		checkYear.html("<img src=images/error.png>"+"不得為空白!");
-// 		}
+$('#year').blur(function(){
+	var year = $('#year').val();
+	var checkYear = $('#checkYear');
+	if(year!= null	&& year.length>0){
+		var pattern = /[0-9]{4,}/;
+		flag = pattern.test(year);	
+		if(flag && year.length<5){
+		checkYear.html("<img src=images/yes.gif>"); 
+			}else{
+			  checkYear.html("<img src=images/error.png>"+"格式錯誤!");
+				}
+	}else{
+		checkYear.html("<img src=images/error.png>"+"不得為空白!");
+		}
 	
-// })
+})
 
 $('#memHeight').blur(function(){
 	var memHeight = $('#memHeight').val();
@@ -465,7 +471,7 @@ $('#memHeight').blur(function(){
 
 		var pattern =/^[0-9]+(\.[0-9]{1,2})?$/;
 		flag = pattern.test(memHeight);
-		if(flag ){
+		if(flag && memHeight<300 &&memHeight>100){
 		checkMemHeight.html("<img src=images/yes.gif>"); 
 				}else{
 					checkMemHeight.html("<img src=images/error.png>"+"身高格式錯誤!");
@@ -482,7 +488,7 @@ $('#memWeight').blur(function(){
 
 		var pattern =/^[0-9]+(\.[0-9]{1,2})?$/;
 		flag = pattern.test(memWeight);
-		if(flag  && memWeight<250){
+		if(flag  && memWeight<250 && memWeight>20){
 			checkMemWeight.html("<img src=images/yes.gif>"); 
 				}else{
 					checkMemWeight.html("<img src=images/error.png>"+"體重格式錯誤!");
