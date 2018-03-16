@@ -889,7 +889,6 @@ function bsview(){
 	 }
 	});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 $("#bmiweek").on('click',function(){			
 	$.getJSON('/TeleHealth/healthpassport/bmirecordsseven.controller',{memberid:memberid},function(datas){
 		console.log(datas)
