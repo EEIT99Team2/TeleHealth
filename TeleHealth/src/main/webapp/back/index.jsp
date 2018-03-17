@@ -10,18 +10,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>後台管理</title>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <!-- Bootstrap core CSS-->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom fonts for this template-->
-  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <!-- Page level plugin CSS-->
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"	rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin.css" rel="stylesheet">
+  <link href="<c:url value='/css/sb-admin.min.css'/>" rel="stylesheet">
   <!-- w3 core CSS -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <!-- 引入字型 -->
-  <link href='/TeleHealth/css/fonts/fontstyle.css'  rel="stylesheet" type='text/css' >
+  <link href="<c:url value='/css/fonts/fontstyle.css'/>"  rel="stylesheet" type='text/css' >
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
   <style type="text/css">
@@ -41,18 +37,18 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="msgManger">
-          <div id="msgBtn" class="nav-link navFontSize">
-            <div class="col-4 rightNav"><i class="fas fa-comment-alt "></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav ">線上客服</span></div>
-          </div>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="memberManger">
+      	<li class="nav-item" data-toggle="tooltip" data-placement="right" title="memberManger">
           <div id="memBtn" class="nav-link navFontSize">
             <div class="col-4 rightNav"><i class="fas fa-users"></i></div>
             <div class="col-8 rightNav"><span class="nav-link-text rightNav">會員管理</span></div>
           </div>
         </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="msgManger">
+          <div id="msgBtn" class="nav-link navFontSize">
+            <div class="col-4 rightNav"><i class="fas fa-comment-alt "></i></div>
+            <div class="col-8 rightNav"><span class="nav-link-text rightNav ">線上客服</span></div>
+          </div>
+        </li>       
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="columnManger">
           <div id="colBtn" class="nav-link navFontSize">
             <div class="col-4 rightNav"><i class="fa fa-fw fa-table"></i></div>
@@ -62,13 +58,13 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="takeoffManger">
           <div id="empBtn" class="nav-link navFontSize">
             <div class="col-4 rightNav"><i class="fas fa-address-card"></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav">員工管理</span></div>
+            <div class="col-8 rightNav"><span class="nav-link-text rightNav">假勤管理</span></div>
           </div>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="takeoffManger">
           <div id="financialBtn" class="nav-link navFontSize">
-            <div class="col-4 rightNav"><i class="fas fa-address-card"></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav">財務報表</span></div>
+            <div class="col-4 rightNav"><i class="fas fa-chart-bar"></i></div>
+            <div class="col-8 rightNav"><span class="nav-link-text rightNav">儲值紀錄</span></div>
           </div>
         </li>
       </ul>
@@ -81,15 +77,14 @@
       </ul>
       <ul class="navbar-nav ml-auto">       
         <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>登出</a>
+          <a class="nav-link  navFontSize" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-sign-out-alt"></i>登出</a>
         </li>
       </ul>
     </div>
   </nav>
   <input type="hidden" value="${empLoginOK.empId}" id="empId" />
-    <div id="msgManger" class="content-wrapper" style="display:block"><jsp:include page="/back/CustomService.jsp" /></div>
-    <div id="memberManger" class="content-wrapper" style="display:none">222</div>
+    <div id="memberManger" class="content-wrapper" style="display:block">222</div>
+    <div id="msgManger" class="content-wrapper" style="display:none"><jsp:include page="/back/CustomService.jsp" /></div>
     <div id="columnManger" class="content-wrapper" style="display:none"><jsp:include page="/back/totalpublish.jsp" /></div>
     <div id="takeoffManger" class="content-wrapper" style="display:none"><jsp:include page="/back/takeoffSystem.jsp" /></div>
     <div id="financialManger" class="content-wrapper" style="display:none">555</div>
@@ -101,22 +96,13 @@
         </div>
       </div>
     </footer>
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fa fa-angle-up"></i>
-    </a>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+<!-----------------------------------------    Script檔   -------------------------------->
+    <script src="<c:url value='/js/bootstrap.bundle.min.js'/>"></script>
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Page level plugin JavaScript-->
-<!--     <script src="vendor/chart.js/Chart.min.js"></script> -->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="<c:url value='/js/jquery.easing.min.js'/>"></script>
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
-<!--     <script src="js/sb-admin-charts.min.js"></script> -->
+    <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
 
 <script type="text/javascript">
 $().ready(function(){

@@ -4,10 +4,7 @@
 <!-- Bootstrap core JavaScript -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Bootstrap core CSS -->
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	rel="stylesheet">
-
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"	rel="stylesheet">
 <!-- w3 core CSS -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
@@ -34,10 +31,9 @@
 <!-- <link -->
 <!-- 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' -->
 <!-- 	rel='stylesheet' type='text/css'> -->
-
-
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark" id="mainNavB">
 	<div class="container">
@@ -187,3 +183,4 @@
 </div>
 <!-- 提醒視訊諮詢的小圖示用 -->
 <script type="text/javascript" src="/TeleHealth/js/showIcon.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
