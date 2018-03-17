@@ -23,7 +23,9 @@
 <body>
 	<jsp:include page="/fragment/nav2.jsp" />
 	<div class="container">
-		<h2>健康數據指標</h2><input type="hidden" id="gender" value="${LoginOK.gender}"><input type="hidden" id="realage" value="${LoginOK.birth}">
+		<h2>健康數據指標</h2>
+		<input type="hidden" id="gender" value="${LoginOK.gender}"><input
+			type="hidden" id="realage" value="${LoginOK.birth}">
 		<div class="row">
 			<div class="col-1"></div>
 			<div class="col-6">
@@ -49,14 +51,9 @@
 							<h4 class="modal-title">BMI</h4>
 						</div>
 						<div class="modal-body">
-							<label for="insert_height" class="col-2">身高</label> <input
-								type="text" id="insert_height" name="height" class="col-4">公分<span
-								id="heiMsg"></span> <br> <label for="insert_weight"
-								class="col-2">體重</label> <input type="text" id="insert_weight"
-								name="weight" class="col-4">公斤 <span id="weiMsg"></span>
-							<br> <label for="height" class="col-2">BMI</label> <input
-								type="text" id="insert_bmi" name="bmi" class="col-4"
-								disabled="disabled">
+							<label for="insert_height" class="col-2">身高</label><input type="text" id="insert_height" name="height" class="col-4">公分<span	id="heiMsg"></span><br> 
+							<label for="insert_weight" class="col-2">體重</label><input type="text" id="insert_weight" name="weight" class="col-4">公斤<span id="weiMsg"></span><br> 
+							<label for="height" class="col-2">BMI</label><input type="text" id="insert_bmi" name="bmi" class="col-4" disabled="disabled">
 							<button type="button" id="calBMI" class="btn btn-info">計算BMI</button>
 						</div>
 						<div class="modal-footer">
@@ -112,8 +109,8 @@
 										class="btn btn-outline-primary">三個月</button>
 								</div>
 								<div id="mychart1div">
-								<!-- 圖表 -->
-								<canvas id="mychart1" height="200" width="400"></canvas>
+									<!-- 圖表 -->
+									<canvas id="mychart1" height="200" width="400"></canvas>
 								</div>
 								<hr>
 								<table id='bmiTable' width="100%"
@@ -130,8 +127,8 @@
 									<tbody>
 
 									</tbody>
-								</table>
-							</div>
+								</table><hr>
+							</div>	
 						</div>
 					</div>
 				</div>
@@ -168,13 +165,13 @@
 						</div>
 						<div class="modal-body">
 							<label for="insert_systole" class="col-2">收縮壓</label> <input
-								type="text" id="insert_systole" name="systole" class="col-4">mmHg(輸入格式範例:110)
+								type="text" id="insert_systole" name="systole" class="col-4">mmHg
 							<span id="systoleMsg"></span> <br> <label
 								for="insert_diastole" class="col-2">舒張壓</label> <input
-								type="text" id="insert_diastole" name="diastole" class="col-4">mmHg(輸入格式範例:80)
+								type="text" id="insert_diastole" name="diastole" class="col-4">mmHg
 							<span id="diastoleMsg"></span> <br> <label
 								for="insert_heartBeat" class="col-2">脈搏</label> <input
-								type="text" id="insert_heartBeat" name="heartBeat" class="col-4">次/分鐘(輸入格式範例:72)
+								type="text" id="insert_heartBeat" name="heartBeat" class="col-4">次/分鐘
 							<span id="heartBeatMsg"></span> <br>
 						</div>
 						<div class="modal-footer">
@@ -231,8 +228,8 @@
 										class="btn btn-outline-primary">三個月</button>
 								</div>
 								<div id="mychart2div">
-								<!-- 圖表 -->
-								<canvas id="mychart2" height="200" width="400"></canvas>
+									<!-- 圖表 -->
+									<canvas id="mychart2" height="200" width="400"></canvas>
 								</div>
 								<hr>
 								<table id='bpTable' width="100%"
@@ -287,7 +284,7 @@
 						<div class="modal-body">
 							<label for="insert_bloodsugar" class="col-2">血糖</label> <input
 								type="text" id="insert_bloodsugar" name="bloodsugar"
-								class="col-4">mg/dL(輸入格式範例:120) <span id="bloodsugarMsg"></span>
+								class="col-4">mg/dL<span id="bloodsugarMsg"></span>
 
 						</div>
 						<div class="modal-footer">
@@ -340,8 +337,8 @@
 									<button type="button" id='bsthreemonth'
 										class="btn btn-outline-primary">三個月</button>
 								</div>
-								<div id="mychart3div">								
-								<canvas id="mychart3" height="200" width="400"></canvas>
+								<div id="mychart3div">
+									<canvas id="mychart3" height="200" width="400"></canvas>
 								</div>
 								<hr>
 								<table id='bsTable' width="100%"
@@ -379,12 +376,44 @@
 	<!--  計算BMI -->
 	<script type="text/javascript">
 	var memberid=$('#memberId').val();
+	var gender=$("#gender").val();
+	var dateyear=$("#realage").val();
+	var today = new Date();
+	var birthDate = new Date(dateyear);
+	var age = today.getFullYear() - birthDate.getFullYear();
+	var m = today.getMonth() - birthDate.getMonth();
+	if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+	    age--;
+	}
+$('#insertBMI').click(function(){
+		$('#insert').prop("disabled", true);
+		$('#insert_height').val("");
+		$('#insert_weight').val("");
+		$('#insert_bmi').val("");
+		$('#heiMsg').empty();
+		$('#weiMsg').empty();
+});
+$('#insertBloodPressureRecords').click(function(){
+	$('#insertBP').prop("disabled", true);
+	$('#insert_systole').val("");
+	$('#insert_diastole').val("");
+	$('#insert_heartBeat').val("");
+	$('#systoleMsg').empty();
+	$('#diastoleMsg').empty();
+	$('#heartBeatMsg').empty();
+});
+$('#insertBloodSugar').click(function(){
+	$('#insertBS').prop("disabled", true);
+	$('#insert_bloodsugar').val("");				
+	$('#bloodsugarMsg').empty();
+});
+	
 		$(document).ready(function() {
-			var weight;
-			var height;
-			var BMI;					
-			$.getJSON("<c:url value='/healthpassport/bmitopRecord.controller'/>",{'memberid':memberid},function(oneData){
-	 			 			
+			 bmitableANDview();//呼叫BMI
+			 bpTableANDview();//血壓紀錄
+			 bstableANDview();//呼叫bs紀錄
+				
+			$.getJSON("<c:url value='/healthpassport/bmitopRecord.controller'/>",{'memberid':memberid,gender:gender,age:age},function(oneData){			
 	  		 	$('#showHeight').empty();
 	 	       	$('#showWeight').empty();
 	 	       	$('#showTime').empty();
@@ -401,9 +430,7 @@
 	    	       	$('#bmiResult').prepend('<h4><small>'+'BMI --> '+bmi+'\|'+result+'</small></h4>');
 	                })
 	           });
-			
-	 		$.getJSON("<c:url value='/healthpassport/bptopRecord.controller'/>",{'memberid':memberid},function(oneData){
-	 						
+	 		$.getJSON("<c:url value='/healthpassport/bptopRecord.controller'/>",{'memberid':memberid},function(oneData){		
 	            $.each(oneData,function(i,value){               
 	         	var sysbp = value[0].maxbp;   	       			
 	    		var diabp = value[0].minbp;
@@ -417,9 +444,7 @@
 	                })
 	           });
 	 		$.getJSON("<c:url value='/healthpassport/bstopRecord.controller'/>",{'memberid':memberid},function(data){
-	 					 			
 	 			$.each(data,function(i,value){
-	 			 	
 	 			$('#showBloodSugar').empty();
 		 	    $('#bsResult').empty();		 	    
 	         	$('#showBloodSugar').prepend(value[0].getbs);	    	      
@@ -429,6 +454,9 @@
 				$('#bloodsugarMsg').empty();		
 	 			})
 	           });
+	 		var weight;
+			var height;
+			var BMI;	
 			$('#calBMI').click(calBMI);
 			function calBMI() {
 			     try {
@@ -459,7 +487,7 @@
 			$('#insert_height').blur(function() {
 				var height = $.trim($('#insert_height').val());
 				if(isNaN(height) || height.length == 0 || height>280 ) {					
-					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>可能超出預期請輸入正確身高!</span>";
+					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確身高!</span>";
 					$('#insert').prop("disabled", true);
 				} else {
 					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
@@ -468,21 +496,20 @@
 			$('#insert_weight').blur(function() {
 				var weight = $.trim($('#insert_weight').val());
 				if(isNaN(weight) || weight.length == 0 || weight>240) {
-					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>可能超出預期請輸入正確體重!</span>";
+					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確體重!</span>";
 					$('#insert').prop("disabled", true);
 					} else {
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 				}
 			});
-			$('#insert').click(function(){				 
-				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'memberid':memberid,'height':height*100,'weight':weight, 'bmi': BMI}, function(data){
-	                	
+			$('#insert').click(function(){
+				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'memberid':memberid,'height':height*100,'weight':weight, 'bmi': BMI,gender:gender,age:age}, function(data){
 	                	$('#showHeight').empty();
 			 	       	$('#showWeight').empty();
 			 	       	$('#showTime').empty();
 			 	       	$('#bmiResult').empty()
-	                	$('#showHeight').prepend(data.hei);
-		    	       	$('#showWeight').prepend(data.wei);
+	                	$('#showHeight').prepend(Math.floor(data.hei));
+		    	       	$('#showWeight').prepend(Math.floor(data.wei));
 		    	       	$('#showTime').prepend(data.time);
 		    	       	$('#bmiResult').prepend('<h4><small>'+'BMI --> '+data.bmi+'\|'+data.bmiresult+'</small></h4>');
 		    	       	$('#insert_height').val("");
@@ -490,95 +517,10 @@
 						$('#insert_bmi').val("");
 						$('#heiMsg').empty();
 						$('#weiMsg').empty();												
-	             })	            
+	            	 bmitableANDview();//呼叫BMI
+	             });
 			});
-
-			$('#bmiselect').click(bmitable());
-			$('#miselect').click(bmiview());
-			
-//bmi載入會員記錄
-			function bmitable(){
-				$('#bmiTable').dataTable().fnDestroy(); 
-				$('#bmiTable').DataTable({
-				    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
-				    "columns": [
-				        { "data": "height" },
-				        { "data": "weight" },
-				        { "data": "bmi" },
-				        { "data": "bmiResult" },
-				        { "data": "createTime" }
-				    ],
-				    "order": [[ 4, 'desc' ]],
-					"bProcessing": true,//顯示處理中的圖樣
-					"oLanguage": {
-				    "sLengthMenu": " _MENU_ 筆/頁",
-				    "sZeroRecords": "找不到符合的資料。",
-				    "sInfo": "共 _MAX_ 筆",
-				    "sSearch": "搜尋",
-				    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
-				    "sInfoEmpty": "共 0 頁",
-				    "oPaginate": {
-				        "sPrevious": "«",
-				        "sNext": "»"
-				  	 	 }
-						}
-					});
-			};	
-
-	//bmi圖表
-	var dates=[];
-    var datas=[];
- function bmiview(){
-		$.getJSON('/TeleHealth/healthpassport/bmirecords.controller',{memberid:memberid},function(result){
-			$.each(result.data,function(index,value) {
-				var date = moment(value.createTime).format('MM/DD HH:mm');
-				dates.push(date);
-				var bmiresult = value.bmi;
-				datas.push(bmiresult);
-			});
-			var ctx = $("#mychart1")
-			var myChart = new Chart(ctx, {
-			    type: 'line',
-			    data: {
-			        labels: dates,
-			        datasets: [{
-			            label: '2018',
-			            data: datas,
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0.2)',
-			                'rgba(54, 162, 235, 0.2)',
-			                'rgba(255, 206, 86, 0.2)',
-			                'rgba(75, 192, 192, 0.2)',
-			                'rgba(153, 102, 255, 0.2)',
-			                'rgba(255, 159, 64, 0.2)'
-			            ],
-			            order:[dates,'desc'],
-			            order:[datas,'desc'],
-			            borderColor: [
-			                'rgba(255,99,132,1)',
-			                'rgba(54, 162, 235, 1)',
-			                'rgba(255, 206, 86, 1)',
-			                'rgba(75, 192, 192, 1)',
-			                'rgba(153, 102, 255, 1)',
-			                'rgba(255, 159, 64, 1)'
-			            ],
-			            borderWidth: 1
-			        }]
-			    },
-			    options: {
-			        scales: {
-			            yAxes: [{
-			                ticks: {
-			                   beginAtZero:true
-			                }
-			            }]
-			        }
-			    }
-			});
-		});
-			
- 	 }
-<!-- 血壓 -->
+//血壓
 			var systole;
 			var diastole;
 			var heartBeat;
@@ -591,7 +533,6 @@
 				if(isNaN(systole) || systole.length == 0 || !re.test(systole) || systole>250) {
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確血壓!</span>";
 					a=1;
-
 				} else{
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 					a=0;
@@ -632,15 +573,12 @@
 					$('#insertBP').prop("disabled", false);
 				}
 			});
-			
-			
 			$('#insertBP').click(function(){
 				if(systole==null || diastole==null || heartBeat==null){
 					alert("三個欄位都要輸入")
 					$('#insertBP').prop("disabled", true);
 				}else{
-				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'memberid':memberid,'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat}, function(data){
-					 
+				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'memberid':memberid,'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat,gender:gender,age:age}, function(data){
 					 	$('#showBloodPressure').empty();
 				       	$('#showHeartBeat').empty();
 				       	$('#showbpTime').empty();
@@ -655,17 +593,120 @@
 	                	$('#systoleMsg').empty();
 	                	$('#diastoleMsg').empty();
 	                	$('#heartBeatMsg').empty();
-	                	
-	             });                
-	         }
+						 bpTableANDview();//呼叫血壓紀錄
+	             });
+			   }
 			});
-			$('#bpselect').click(bpTable());
-			$('#bpselect').click(bpview());			
-//血壓載入會員記錄
-			function bpTable(){
+//血糖
+			var bloodsugar;
+			var re = /^[0-9]+$/;
+			$('#insert_bloodsugar').blur(function() {
+				 bloodsugar = $.trim($('#insert_bloodsugar').val());
+				if(isNaN(bloodsugar) || bloodsugar.length == 0 || !re.test(bloodsugar) || bloodsugar>200) {
+					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入數字!</span>";
+					$('#insertBS').prop("disabled", true);
+				} else {
+					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					$('#insertBS').prop("disabled", false);
+				}
+			});
+			
+			$('#insertBS').click(function(){
+				 $.get("<c:url value='/healthpassport/queryBloodSugar.controller' />",{'memberid':memberid,'bloodsugar':bloodsugar,gender:gender,age:age}, function(data){
+	              $('#showBloodSugar').empty();
+		 	      $('#bsResult').empty();		 	    
+		 	      $('#showbsTime').empty();
+                	$('#showBloodSugar').prepend(data.bloodSugar);	    	      
+	    	       	$('#showbsTime').prepend(data.createTime);
+	    	       	$('#bsResult').prepend('<h4><small>'+'BloodSugar --> '+data.bloodSugar+'\|'+data.result+'</small></h4>');
+	    	       	$('#insert_bloodsugar').val("");				
+					$('#bloodsugarMsg').empty(); 
+	            		 bstableANDview();//呼叫bs紀錄
+	             })	             
+	 			});	
+});
+//ready結束
+//////////////////////////////////////function開始////////////////////////////////////////////////////
+
+//bmi載入會員記錄
+		function bmitableANDview(){
+			$('#bmiTable').dataTable().fnDestroy(); 
+			$('#bmiTable').DataTable({
+			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
+			    "columns": [
+			        { "data": "height" },
+			        { "data": "weight" },
+			        { "data": "bmi" },
+			        { "data": "bmiResult" },
+			        { "data": "createTime" }
+			    ],
+			    "order": [[ 4, 'desc' ]],
+				"bProcessing": true,//顯示處理中的圖樣
+				"oLanguage": {
+			    "sLengthMenu": " _MENU_ 筆/頁",
+			    "sZeroRecords": "找不到符合的資料。",
+			    "sInfo": "共 _MAX_ 筆",
+			    "sSearch": "搜尋",
+			    "sInfoFiltered": " - 找到 _TOTAL_ 筆 資料",
+			    "sInfoEmpty": "共 0 頁",
+			    "oPaginate": {
+			        "sPrevious": "«",
+			        "sNext": "»"
+			  	 	 }
+					}
+				});
+//圖表
+	var dates=[];
+    var datas=[];
+    var datasmax=[];
+	var datasmin=[];
+ $.getJSON('/TeleHealth/healthpassport/bmirecords.controller',{memberid:memberid},function(result){
+	$.each(result.data,function(index,value) {
+		var date = moment(value.createTime).format('MM/DD HH:mm');
+		dates.push(date);
+		var bmiresult = value.bmi;
+		datas.push(bmiresult);
+		var checkmax=24;
+		var checkmin=18.5;
+		datasmax.push(checkmax);
+		datasmin.push(checkmin);
+	});       
+    var tempData1 = {
+      labels : dates,
+      datasets : [{
+          label: "您的BMI",
+            data: datas,
+            backgroundColor: "rgba(75,192,192,0)",
+            borderColor: "#32cd32",
+            fill: true,
+            lineTension: 0.1,
+            borderJoinStyle: 'miter'
+        },{label: '以下過輕',
+			data: datasmin,
+			backgroundColor:'rgba(255, 99, 132, 0)',
+			borderColor:'#0000cd',
+			borderWidth: 1},
+          {label: '以上過重',
+	        data: datasmax,
+	        backgroundColor:'rgba(54, 162, 235, 0)',
+	        borderColor: '#ff0000',
+	        borderWidth: 1} ]
+    };
+    var ctx = $("#mychart1")                 
+    var myLineChart = new Chart(ctx, {
+        type: 'line', 
+        data: tempData1,
+        options: {
+            maintainAspectRatio: true
+        }
+    });
+ });
+};
+/////////////////////////////////////////////血壓載入會員記錄/////////////////////////////////////////////////
+			function bpTableANDview(){
 				$('#bpTable').dataTable().fnDestroy(); 
 				$('#bpTable').DataTable({
-				    "ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid,
+				    "ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 				    "columns": [
 				        { "data": "systole"},
 				        { "data": "diastole"},
@@ -688,129 +729,77 @@
 				  	 	 }
 						}
 					});
-			};	
-
-//血壓圖表
-	var bpdate=[];
-    var sysdatas=[];
-    var diadatas=[];
-    var heartBeatdatas=[];
-	 function bpview(){
-		$.getJSON('/TeleHealth/healthpassport/bloodPressureRecords.controller',{memberid:memberid},function(result){
-			$.each(result.data,function(index,value) {				
-				var date = moment(value.createTime).format('MM/DD HH:mm');				
-				bpdate.push(date);
-				var systoleresult = value.systole;
-				sysdatas.push(systoleresult);
-				var diastoleresult = value.diastole;
-				diadatas.push(diastoleresult);
-				var heartBeatresult = value.heartBeat;
-				heartBeatdatas.push(heartBeatresult);				
-			});
-			var ctx = $("#mychart2")
-			var myChart = new Chart(ctx, {
-			    type: 'line',
-			    data: {
-			        labels: bpdate,
-			        datasets: [{
-			            label: '收縮壓',
-			            data: sysdatas,
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0.2)',
-			                'rgba(153, 102, 255, 0.2)',
-			                'rgba(255, 159, 64, 0.2)'
-			            ],
-			            order:[dates,'desc'],
-
-			            borderColor: [
-			                'rgba(255,99,132,1)',
-			                'rgba(153, 102, 255, 1)',
-			                'rgba(255, 159, 64, 1)'
-			            ],
-			            borderWidth: 1
-			        },{
-			        	label: '舒張壓',
-			            data: diadatas,
-			            backgroundColor: [
-			                'rgba(255, 159, 64, 0.2)'
-			            ],
-			            borderColor: [
-			                'rgba(255, 159, 64, 1)'
-			            ],
-			            borderWidth: 1
-			         },{
-				        	label: '脈搏',
-				            data: heartBeatdatas,
-				            backgroundColor: [
-				            	'rgba(54, 162, 235, 0.2)',
-				                'rgba(255, 206, 86, 0.2)',
-				                'rgba(75, 192, 192, 0.2)'
-				            ],
-				            borderColor: [
-				            	'rgba(54, 162, 235, 0.2)',
-				                'rgba(255, 206, 86, 0.2)',
-				                'rgba(75, 192, 192, 0.2)'
-				            ],
-				            borderWidth: 1
-				     },{	
-				        type:'line',
-				        label:'標準值',
-				        data:[10, 20, 30]				        
-				      }]
-			    },
-			    options: {
-			        scales: {
-			            yAxes: [{
-			                ticks: {
-			                   beginAtZero:true
-			                }
-			            }]
-			        }
-			    }
-			});
-
-		});
-			
-	 }
-
-
-	<!--  血糖 -->
-		$('#bsrecords').click(bstable());
-		$('#bsrecords').click(bsview());
-
-			var bloodsugar;
-			var re = /^[0-9]+$/;
-			$('#insert_bloodsugar').blur(function() {
-				 bloodsugar = $.trim($('#insert_bloodsugar').val());
-				if(isNaN(bloodsugar) || bloodsugar.length == 0 || !re.test(bloodsugar) || bloodsugar>200) {
-					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入數字!</span>";
-					$('#insertBS').prop("disabled", true);
-				} else {
-					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
-					$('#insertBS').prop("disabled", false);
-				}
-			});
-			
-			$('#insertBS').click(function(){
-				 $.get("<c:url value='/healthpassport/queryBloodSugar.controller' />",{'memberid':memberid,'bloodsugar':bloodsugar}, function(data){
-	               
-	                $('#showBloodSugar').empty();
-		 	       	$('#bsResult').empty();		 	    
-                	$('#showBloodSugar').prepend(data.bloodSugar);	    	      
-	    	       	$('#showbsTime').prepend(data.createTime);
-	    	       	$('#bsResult').prepend('<h4><small>'+'BloodSugar --> '+data.bloodSugar+'\|'+data.result+'</small></h4>');
-	    	       	$('#insert_bloodsugar').val("");				
-					$('#bloodsugarMsg').empty(); 
-					               
-	             })	             
-	             bsview();
-	 			});	
-			
-//bs載入會員記錄
-			function bstable(){
+var bpdate=[];
+var sysdatas=[];
+var diadatas=[];
+var heartBeatdatas=[];
+var sysMeandatas=[];
+var diaMeandatas=[];
+	$.getJSON('/TeleHealth/healthpassport/bloodPressureRecords.controller',{memberid:memberid,gender:gender,age:age},function(result){
+		$.each(result.data,function(index,value) {
+			var date = moment(value.createTime).format('MM/DD HH:mm');
+			bpdate.push(date);
+			var systoleresult = value.systole;
+			sysdatas.push(systoleresult);
+			var diastoleresult = value.diastole;
+			diadatas.push(diastoleresult);
+			var heartBeatresult = value.heartBeat;
+			heartBeatdatas.push(heartBeatresult);
+			var systoleMean = ((parseInt(value.systolecheckmax)+parseInt(value.systolecheckmin))/2);			
+			sysMeandatas.push(systoleMean);			
+			var diastoleMean = ((parseInt(value.diastolecheckmax)+parseInt(value.diastolecheckmin))/2);
+			diaMeandatas.push(diastoleMean);
+		});  
+        var tempData2 = {
+          labels : bpdate,
+          datasets : [{
+              label: "您的收縮壓值",
+              data: sysdatas,
+              backgroundColor: "rgba(75,192,192,0)",
+              borderColor: "#0000cd",
+              fill: true,
+              lineTension: 0.1,
+              borderJoinStyle: 'miter'
+          },{ label: "您的舒張壓值",
+              data:diadatas,
+              backgroundColor: "rgba(75,192,192,0)",
+              borderColor: "#d2691e",
+              fill: true,
+              lineTension: 0.1,
+              borderJoinStyle: 'miter'
+             },{label: "收縮壓標準值",
+         	    data:sysMeandatas,
+                 backgroundColor:'rgba(54, 162, 235, 0)',
+     	         borderColor: '#228b22',
+                 fill: true,
+                 lineTension: 0.1,
+                 borderJoinStyle: 'miter'
+             },{
+            	 label: "舒張壓標準值",
+                 data: diaMeandatas,
+                 backgroundColor:'rgba(54, 162, 235, 0)',
+     	         borderColor: '#c71585',
+                 fill: true,
+                 lineTension: 0.1,
+                 borderJoinStyle: 'miter'
+             }
+          ]
+        };
+        var ctx = $("#mychart2")
+        var myLineChart = new Chart(ctx, {
+            type: 'line', 
+            data: tempData2,
+            options: {
+                maintainAspectRatio: true,
+            }
+        });
+	});	
+  };
+/////////////////////////////////////////////bs載入會員記錄//////////////////////////////////////////////
+			function bstableANDview(){
 				$('#bsTable').dataTable().fnDestroy(); 
 				$('#bsTable').DataTable({
-				    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid,
+				    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 				    "columns": [				        
 				        { "data": "bloodSugar" },
 				        { "data": "bsResult" },
@@ -831,49 +820,49 @@
 				  	 	 }
 						}
 					});
-			};	
+				
 	//bs圖表
 	var bsdates=[];
 	var bsdatas=[];
-function bsview(){	
-		$.getJSON('/TeleHealth/healthpassport/bloodSugarRecords.controller',{memberid:memberid},function(result){
-			
+	var bsmaxdatas=[];
+	var bsmindatas=[];
+		$.getJSON('/TeleHealth/healthpassport/bloodSugarRecords.controller',{memberid:memberid,gender:gender,age:age},function(result){
 			$.each(result.data,function(index,value) {
-				
 				var date = moment(value.createTime).format('MM/DD HH:mm');
 				bsdates.push(date);
 				var bloodSugar = value.bloodSugar;
 				bsdatas.push(bloodSugar);
+				var bloodSugarmax = value.bloodSugarmax;
+				bsmaxdatas.push(bloodSugarmax);
+				var bloodSugarmin = value.bloodSugarmin;
+				bsmindatas.push(bloodSugarmin);
 			});			
-		});
 	  var ctx = $("#mychart3")
 	  var myChart = new Chart(ctx, {
 	    type: 'line',
 	    data: {
 	        labels: bsdates,
 	        datasets: [{
-	            label: '2018',
+	            label: '您的血糖值',
 	            data: bsdatas,
-	            backgroundColor: [
-	                'rgba(255, 99, 132, 0.2)',
-	                'rgba(54, 162, 235, 0.2)',
-	                'rgba(255, 206, 86, 0.2)',
-	                'rgba(75, 192, 192, 0.2)',
-	                'rgba(153, 102, 255, 0.2)',
-	                'rgba(255, 159, 64, 0.2)'
-	            ],
-	            order:[dates,'desc'],
-	            order:[datas,'desc'],
-	            borderColor: [
-	                'rgba(255,99,132,1)',
-	                'rgba(54, 162, 235, 1)',
-	                'rgba(255, 206, 86, 1)',
-	                'rgba(75, 192, 192, 1)',
-	                'rgba(153, 102, 255, 1)',
-	                'rgba(255, 159, 64, 1)'
-	            ],
-	            borderWidth: 1
-	        }]
+	            backgroundColor:"rgba(75,192,192,0)",
+	            borderColor:"#ae00ae",
+	            fill: true,
+	            lineTension: 0.1,
+	            borderJoinStyle: 'miter'
+	        },{	
+	        	label: '血糖標準最高',
+	            data: bsmaxdatas,
+	            backgroundColor:'rgba(54, 162, 235, 0)',
+	            borderColor:'#ff0000',
+	            borderWidth: 1				        
+	      },{	
+	        	label: '血糖標準最低',
+	            data: bsmindatas,
+	            backgroundColor:'rgba(54, 162, 235, 0)',			                
+	            borderColor:'#00ff00',
+	            borderWidth: 1				        
+	      }]
 	    },
 	    options: {
 	        scales: {
@@ -885,10 +874,10 @@ function bsview(){
 	        }
 	    }
 	});	
-	 }
-	});
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$("#bmiweek").on('click',function(){			
+});
+};
+////////////////////////////////////////(7天,1個月,3個月)/////////////////////////////////////////////////
+$("#bmiweek").on('click',function(){
 	$.getJSON('/TeleHealth/healthpassport/bmirecordsseven.controller',{memberid:memberid},function(datas){
 		console.log(datas)
 		var datesbmi=[];
@@ -906,6 +895,7 @@ $("#bmiweek").on('click',function(){
 				datasmin.push(checkmin);				
 			});
 			$('#mychart1').remove(); 
+			$('#mychart1div').empty();
 			$('#mychart1div').append('<canvas id="mychart1" height="200" width="400"></canvas>');
 			var ctx = $("#mychart1")								
 			var myChart = new Chart(ctx, {
@@ -915,36 +905,24 @@ $("#bmiweek").on('click',function(){
 			        datasets: [{
 			            label: '一星期測量圖',
 			            data: datasbmi,
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0)',			             
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',
 			            order:[datesbmi,'desc'],
 			            order:[datasbmi,'desc'],
-			            borderColor: [
-			                '#32cd32',
-			             
-			            ],
+			            borderColor:'#32cd32',
 			            borderWidth: 1
-			        },{label: '以下過輕',
+			       	 },{
+				       	label: '以下過輕',
 			            data: datasmin,
-			            backgroundColor: [
-			            	'rgba(255, 99, 132, 0)',
-			                		                
-			            ],
-			            borderColor: [
-			                '#0000cd'
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',
+			           	borderColor:'#0000cd',			        
 			            borderWidth: 1
-				        },{label: '以上過重',
-				            data: datasmax,
-				            backgroundColor: [
-				            	'rgba(54, 162, 235, 0)',				              
-				            ],
-				            borderColor: [
-				            	'#ff0000',
-				               
-				            ],
-				            borderWidth: 1}]
+				       },{
+					       label: '以上過重',
+				           data: datasmax,
+				            backgroundColor: 'rgba(54, 162, 235, 0)',				              
+				            borderColor:'#c71585',
+				            borderWidth: 1}
+			            ]
 			    },
 			    options: {
 			        scales: {
@@ -1008,6 +986,7 @@ $("#bmimonth").on('click',function(){
 				datasmin.push(checkmin);				
 			});
 			$('#mychart1').remove(); 
+			$('#mychart1div').empty();
 			$('#mychart1div').append('<canvas id="mychart1" height="200" width="400"></canvas>');
 			var ctx = $("#mychart1")								
 			var myChart = new Chart(ctx, {
@@ -1017,35 +996,24 @@ $("#bmimonth").on('click',function(){
 			        datasets: [{
 			            label: '一星期測量圖',
 			            data: datasbmi,
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0)',
-			               
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',
 			            order:[datesbmi,'desc'],
 			            order:[datasbmi,'desc'],
-			            borderColor: [
-			                '#32cd32',			              
-			            ],
+			            borderColor:'#32cd32',
 			            borderWidth: 1
-			        },{label: '以下過輕',
+			        },{
+				        label: '以下過輕',
 			            data: datasmin,
-			            backgroundColor: [
-			            	'rgba(255, 99, 132, 0)',
-			                			                
-			            ],
-			            borderColor: [
-			                '#0000cd'
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',
+			            borderColor:'#0000cd',
 			            borderWidth: 1
-				        },{label: '以上過重',
+				        },{
+					        label: '以上過重',
 				            data: datasmax,
-				            backgroundColor: [
-				            	'rgba(54, 162, 235, 0)',				                
-				            ],
-				            borderColor: [
-				            	'#ff0000',				                
-				            ],
-				            borderWidth: 1}]
+				            backgroundColor:'rgba(54, 162, 235, 0)',	
+				            borderColor:'#ff0000',				                
+				            borderWidth: 1}
+			            ]
 			    },
 			    options: {
 			        scales: {
@@ -1102,6 +1070,7 @@ $("#bmithreemonth").on('click',function(){
 				datasmin.push(checkmin);				
 			});
 			$('#mychart1').remove(); 
+			$('#mychart1div').empty();
 			$('#mychart1div').append('<canvas id="mychart1" height="200" width="400"></canvas>');
 			var ctx = $("#mychart1")								
 			var myChart = new Chart(ctx, {
@@ -1111,33 +1080,22 @@ $("#bmithreemonth").on('click',function(){
 			        datasets: [{
 			            label: '一星期測量圖',
 			            data: datasbmi,
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0)',			              
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',	
 			            order:[datesbmi,'desc'],
 			            order:[datasbmi,'desc'],
-			            borderColor: [
-			                '#32cd32',			               
-			            ],
+			            borderColor:'#32cd32',	
 			            borderWidth: 1
 			        },{label: '以下過輕',
 			            data: datasmin,
-			            backgroundColor: [
-			            	'rgba(255, 99, 132, 0)',			                			                
-			            ],
-			            borderColor: [
-			                '#0000cd'
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',			                			                
+			            borderColor: '#0000cd',
 			            borderWidth: 1
 				        },{label: '以上過重',
-				            data: datasmax,
-				            backgroundColor: [
-				            	'rgba(54, 162, 235, 0)',				                
-				            ],
-				            borderColor: [
-				            	'#ff0000',				              
-				            ],
-				            borderWidth: 1}]
+				           data: datasmax,
+				           backgroundColor:'rgba(54, 162, 235, 0)',	
+				           borderColor: '#ff0000',		
+				           borderWidth: 1}
+			            ]
 			    },
 			    options: {
 			        scales: {
@@ -1151,7 +1109,7 @@ $("#bmithreemonth").on('click',function(){
 			});
 			$('#bmiTable').dataTable().fnDestroy(); 
 			$('#bmiTable').DataTable({
-			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
+			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 			    "columns": [
 			        { "data": "height" },
 			        { "data": "weight" },
@@ -1183,15 +1141,6 @@ var sysdatas=[];
 var diadatas=[];
 var sysMeandatas=[];
 var diaMeandatas=[];
-var gender=$("#gender").val();
-var dateyear=$("#realage").val();
-var today = new Date();
-var birthDate = new Date(dateyear);
-var age = today.getFullYear() - birthDate.getFullYear();
-var m = today.getMonth() - birthDate.getMonth();
-if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-}
 $("#bpweek").on('click',function(){		
 	$.getJSON('/TeleHealth//healthpassport/bloodPressureRecordsseven.controller',{memberid:memberid,gender:gender,age:age},function(result){
 			$.each(result.data,function(index,value) {				
@@ -1206,7 +1155,8 @@ $("#bpweek").on('click',function(){
 			var diastoleMean = ((parseInt(value.diastolecheckmax)+parseInt(value.diastolecheckmin))/2);
 			diaMeandatas.push(diastoleMean);						
 		});
-		$('#mychart2').remove(); 
+		$('#mychart2').remove();
+		$('#mychart2div').empty(); 
 		$('#mychart2div').append('<canvas id="mychart2" height="200" width="400"></canvas>');
 		var ctx = $("#mychart2")
 		var myChart = new Chart(ctx, {
@@ -1214,48 +1164,30 @@ $("#bpweek").on('click',function(){
 		    data: {
 		        labels: bpdate,
 		        datasets: [{
-		            label: '收縮壓',
+		            label: '您的收縮壓值',
 		            data: sysdatas,
-		            backgroundColor: [
-			            'rgba(255, 99, 132, 0)',		               
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',	
 		            order:[bpdate,'desc'],
-
-		            borderColor: [		           
-		                '#0000cd'
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{
-		        	label: '舒張壓',
+		        	label: '您的舒張壓值',
 		            data: diadatas,
-		            backgroundColor: [
-		                'rgba(255, 159, 64,0)'
-		            ],
-		            borderColor: [
-		                '#d2691e'
-		            ],
+		            backgroundColor:'rgba(255, 159, 64,0)',
+		            borderColor:'#d2691e',
 		            borderWidth: 1
 		         },{
-			        	label: '收縮壓平均標準',
-			            data: sysMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [                
-			                '#228b22'
-			            ],
-			            borderWidth: 1
+			        label: '收縮壓平均標準',
+			        data: sysMeandatas,
+			        backgroundColor: 'rgba(54, 162, 235, 0)',
+			        borderColor:'#228b22',
+			        borderWidth: 1
 			     },{	
-
-			        	label: '舒張壓平均標準',
-			            data: diaMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [
-				            '#c71585',			                
-			            ],
-			            borderWidth: 1				        
+		        	label: '舒張壓平均標準',
+			        data: diaMeandatas,
+			        backgroundColor: 'rgba(54, 162, 235, 0)',	
+			        borderColor:'#c71585',
+			        borderWidth: 1				        
 			      }]
 		    },
 		    options: {
@@ -1270,7 +1202,7 @@ $("#bpweek").on('click',function(){
 		});
 	$('#bpTable').dataTable().fnDestroy(); 
 	$('#bpTable').DataTable({
-		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid,
+		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		 "columns": [
 		        { "data": "systole"},
 		        { "data": "diastole"},
@@ -1310,7 +1242,8 @@ $("#bpmonth").on('click',function(){
 			var diastoleMean = ((parseInt(value.diastolecheckmax)+parseInt(value.diastolecheckmin))/2);
 			diaMeandatas.push(diastoleMean);						
 		});
-		$('#mychart2').remove(); 
+		$('#mychart2').remove();
+		$('#mychart2div').empty(); 
 		$('#mychart2div').append('<canvas id="mychart2" height="200" width="400"></canvas>');
 		var ctx = $("#mychart2")
 		var myChart = new Chart(ctx, {
@@ -1318,46 +1251,29 @@ $("#bpmonth").on('click',function(){
 		    data: {
 		        labels: bpdate,
 		        datasets: [{
-		            label: '收縮壓',
+		            label: '您的收縮壓值',
 		            data: sysdatas,
-		            backgroundColor: [
-			            'rgba(255, 99, 132, 0)',		               
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',		               
 		            order:[bpdate,'desc'],
-		            borderColor: [		           
-		                '#0000cd'
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{
-		        	label: '舒張壓',
+		        	label: '您的舒張壓值',
 		            data: diadatas,
-		            backgroundColor: [
-		                'rgba(255, 159, 64,0)'
-		            ],
-		            borderColor: [
-		                '#d2691e'
-		            ],
+		            backgroundColor:'rgba(255, 159, 64,0)',
+		            borderColor:'#d2691e',
 		            borderWidth: 1
 		         },{
 			        	label: '收縮壓平均標準',
 			            data: sysMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [                
-			                '#228b22'
-			            ],
+			            backgroundColor:'rgba(54, 162, 235, 0)',
+			            borderColor:'#228b22',
 			            borderWidth: 1
 			     },{	
-
 			        	label: '舒張壓平均標準',
 			            data: diaMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [
-				            '#c71585',			                
-			            ],
+			            backgroundColor:'rgba(54, 162, 235, 0)',
+			            borderColor: '#c71585',
 			            borderWidth: 1				        
 			      }]
 		    },
@@ -1373,7 +1289,7 @@ $("#bpmonth").on('click',function(){
 		});
 	$('#bpTable').dataTable().fnDestroy(); 
 	$('#bpTable').DataTable({
-		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid,
+		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		 "columns": [
 		        { "data": "systole"},
 		        { "data": "diastole"},
@@ -1414,6 +1330,7 @@ $("#bpthreemonth").on('click',function(){
 			diaMeandatas.push(diastoleMean);						
 		});
 		$('#mychart2').remove(); 
+		$('#mychart2div').empty();
 		$('#mychart2div').append('<canvas id="mychart2" height="200" width="400"></canvas>');
 		var ctx = $("#mychart2")
 		var myChart = new Chart(ctx, {
@@ -1421,45 +1338,29 @@ $("#bpthreemonth").on('click',function(){
 		    data: {
 		        labels: bpdate,
 		        datasets: [{
-		            label: '收縮壓',
+		            label: '您的收縮壓值',
 		            data: sysdatas,
-		            backgroundColor: [
-			            'rgba(255, 99, 132, 0)',		               
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',
 		            order:[bpdate,'desc'],
-		            borderColor: [		           
-		                '#0000cd'
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{
-		        	label: '舒張壓',
+		        	label: '您的舒張壓值',
 		            data: diadatas,
-		            backgroundColor: [
-		                'rgba(255, 159, 64,0)'
-		            ],
-		            borderColor: [
-		                '#d2691e'
-		            ],
+		            backgroundColor:'rgba(255, 159, 64,0)',
+		            borderColor:'#d2691e',
 		            borderWidth: 1
 		         },{
 			        	label: '收縮壓平均標準',
 			            data: sysMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [                
-			                '#228b22'
-			            ],
+			            backgroundColor:'rgba(54, 162, 235, 0)',			                
+			            borderColor:'#228b22',
 			            borderWidth: 1
 			     },{	
 			        	label: '舒張壓平均標準',
 			            data: diaMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [
-				            '#c71585',			                
-			            ],
+			            backgroundColor:'rgba(54, 162, 235, 0)',
+			            borderColor:'#c71585',
 			            borderWidth: 1				        
 			      }]
 		    },
@@ -1475,7 +1376,7 @@ $("#bpthreemonth").on('click',function(){
 		});
 	$('#bpTable').dataTable().fnDestroy(); 
 	$('#bpTable').DataTable({
-		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid,
+		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		 "columns": [
 		        { "data": "systole"},
 		        { "data": "diastole"},
@@ -1520,7 +1421,8 @@ $("#bsweek").on('click',function(){
 			var bloodSugarmin = value.bloodSugarmin;
 			bsmindatas.push(bloodSugarmin);
 		});
-		$('#mychart3').remove(); 
+		$('#mychart3').remove();
+		$('#mychart3div').empty(); 
 		$('#mychart3div').append('<canvas id="mychart3" height="200" width="400"></canvas>');
 		 var ctx = $("#mychart3")
 		  var myChart = new Chart(ctx, {
@@ -1530,34 +1432,22 @@ $("#bsweek").on('click',function(){
 		        datasets: [{
 		            label: '一星期',
 		            data: bsdatas,
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0)',		                
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',		                
 		            order:[bsdates,'desc'],
 		            order:[bsdatas,'desc'],
-		            borderColor: [
-		                '#0000cd',		                
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{	
 		        	label: '血糖標準最高',
 		            data: bsmaxdatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#ff0000',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',
+		            borderColor:'#ff0000',	
 		            borderWidth: 1				        
 		      },{	
 		        	label: '血糖標準最低',
 		            data: bsmindatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#00ff00',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',	
+		            borderColor:'#00ff00',	
 		            borderWidth: 1				        
 		      }]
 		    },
@@ -1573,7 +1463,7 @@ $("#bsweek").on('click',function(){
 		});
 		$('#bsTable').dataTable().fnDestroy(); 
 		$('#bsTable').DataTable({
-		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid,
+		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		    "columns": [				        
 		        { "data": "bloodSugar" },
 		        { "data": "bsResult" },
@@ -1611,6 +1501,7 @@ $("#bsmonth").on('click',function(){
 			bsmindatas.push(bloodSugarmin);
 		});
 		$('#mychart3').remove(); 
+		$('#mychart3div').empty();
 		$('#mychart3div').append('<canvas id="mychart3" height="200" width="400"></canvas>');
 		 var ctx = $("#mychart3")
 		  var myChart = new Chart(ctx, {
@@ -1620,34 +1511,22 @@ $("#bsmonth").on('click',function(){
 		        datasets: [{
 		            label: '一個月',
 		            data: bsdatas,
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0)',		                
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',	
 		            order:[bsdates,'desc'],
 		            order:[bsdatas,'desc'],
-		            borderColor: [
-		                '#0000cd',		                
-		            ],
+		            borderColor:'#0000cd',	
 		            borderWidth: 1
 		        },{	
 		        	label: '血糖標準最高',
 		            data: bsmaxdatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#ff0000',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',
+		            borderColor:'#ff0000',
 		            borderWidth: 1				        
 		      },{	
 		        	label: '血糖標準最低',
 		            data: bsmindatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#00ff00',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',			                
+		            borderColor:'#00ff00',
 		            borderWidth: 1				        
 		      }]
 		    },
@@ -1663,7 +1542,7 @@ $("#bsmonth").on('click',function(){
 		});
 		$('#bsTable').dataTable().fnDestroy(); 
 		$('#bsTable').DataTable({
-		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid,
+		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		    "columns": [				        
 		        { "data": "bloodSugar" },
 		        { "data": "bsResult" },
@@ -1701,6 +1580,7 @@ $("#bsthreemonth").on('click',function(){
 			bsmindatas.push(bloodSugarmin);
 		});
 		$('#mychart3').remove(); 
+		$('#mychart3div').empty();
 		$('#mychart3div').append('<canvas id="mychart3" height="200" width="400"></canvas>');
 		 var ctx = $("#mychart3")
 		  var myChart = new Chart(ctx, {
@@ -1710,34 +1590,22 @@ $("#bsthreemonth").on('click',function(){
 		        datasets: [{
 		            label: '三個月',
 		            data: bsdatas,
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0)',		                
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',
 		            order:[bsdates,'desc'],
 		            order:[bsdatas,'desc'],
-		            borderColor: [
-		                '#0000cd',		                
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{	
 		        	label: '血糖標準最高',
 		            data: bsmaxdatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#ff0000',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',			                
+		            borderColor:'#ff0000',
 		            borderWidth: 1				        
 		      },{	
 		        	label: '血糖標準最低',
 		            data: bsmindatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#00ff00',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',			                
+		            borderColor:'#00ff00',
 		            borderWidth: 1				        
 		      }]
 		    },
@@ -1753,7 +1621,7 @@ $("#bsthreemonth").on('click',function(){
 		});
 		$('#bsTable').dataTable().fnDestroy(); 
 		$('#bsTable').DataTable({
-		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid,
+		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		    "columns": [				        
 		        { "data": "bloodSugar" },
 		        { "data": "bsResult" },
@@ -1774,12 +1642,8 @@ $("#bsthreemonth").on('click',function(){
 		  	 	 }
 				}
 			});					
+		});	
 	});
- 		
-});
-
-
-	</script>
-
+</script>
 </body>
 </html>
