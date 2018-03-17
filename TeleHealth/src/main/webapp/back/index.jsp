@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>SB Admin - Start Bootstrap Template</title>
+  <title>後台管理</title>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -88,10 +88,10 @@
     </div>
   </nav>
   <input type="hidden" value="${empLoginOK.empId}" id="empId" />
-    <div id="msgManger" class="content-wrapper" style="display:block">111</div>
+    <div id="msgManger" class="content-wrapper" style="display:block"><jsp:include page="/back/CustomService.jsp" /></div>
     <div id="memberManger" class="content-wrapper" style="display:none">222</div>
-    <div id="columnManger" class="content-wrapper" style="display:none">333</div>
-    <div id="takeoffManger" class="content-wrapper" style="display:none"><jsp:include page="/AdvisoryMoment/takeoffSystem.jsp" /></div>
+    <div id="columnManger" class="content-wrapper" style="display:none"><jsp:include page="/back/totalpublish.jsp" /></div>
+    <div id="takeoffManger" class="content-wrapper" style="display:none"><jsp:include page="/back/takeoffSystem.jsp" /></div>
     <div id="financialManger" class="content-wrapper" style="display:none">555</div>
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -105,8 +105,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>
     </a>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
