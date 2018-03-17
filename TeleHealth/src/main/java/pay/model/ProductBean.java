@@ -13,21 +13,18 @@ public class ProductBean {
 
 	@Override
 	public String toString() {
-		return "ProductBean [MerchantTradeNo=" + MerchantTradeNo + ", MerchantTradeDate=" + MerchantTradeDate
-				+ ", TotalAmount=" + TotalAmount + ", TradeDesc=" + TradeDesc + ", ItemName=" + ItemName + ", RtnCode="
-				+ RtnCode + ", TradeNo=" + TradeNo + ", PaymentDate=" + PaymentDate + "]";
+		return "ProductBean [memberId=" + memberId + ", MerchantTradeNo=" + MerchantTradeNo + ", MerchantTradeDate="
+				+ MerchantTradeDate + ", TotalAmount=" + TotalAmount + ", TradeDesc=" + TradeDesc + ", ItemName="
+				+ ItemName + ", RtnCode=" + RtnCode + ", TradeNo=" + TradeNo + ", PaymentDate=" + PaymentDate + "]";
 	}
-	
 
 	public String getMemberId() {
 		return memberId;
 	}
 
-
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-
 
 	public String getMerchantTradeNo() {
 		return MerchantTradeNo;

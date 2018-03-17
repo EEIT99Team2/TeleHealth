@@ -23,11 +23,18 @@
 			id="FOO" data-toggle="tab" role="tab" value="修改密碼"
 			onclick="location.href='ChangePwd.jsp'" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
-			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>
-		
+			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>		
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
 			onclick="location.href='Point.jsp'" /></li>
+			
+			<li class="nav-item"><input type="button" class="nav-link active"
+			id="FOO" data-toggle="tab" role="tab" value="儲值點數"
+			onclick="location.href='<c:url value='/pay/pay.jsp'/>'" /></li>
+						
+		<li class="nav-item"><input type="button" class="nav-link active"
+		id="FOO" data-toggle="tab" role="tab" value="我的留言"
+		onclick="location.href='questionMempublish.jsp'" /></li>
 		
 	</ul>
 	<div class="tab-content" id="myTabContent">
@@ -57,7 +64,7 @@
 
 <div class="container">
 		<div style="text-align:center;"><h3 class="title">修改密碼</h3></div>
-					<div style="text-align:center;"><p>請輸入舊的會員密碼及希望更改的新密碼</p></div>
+					<div style="text-align:center;"><p>請輸入原會員密碼及希望更改的新密碼</p></div>
 		
 		<div class="row">
 			<div class="col-3"></div>

@@ -7,9 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>藥品查詢</title>
 <style>
-	.btn {
-		width:100px;
-	}
+ 	.formBtn { 
+ 		width:100px; 
+ 	} 
 	.form-group {
 		font-size: 18px;
 	}
@@ -180,10 +180,10 @@
 							<div class="col-4"></div>
 							<div class="col-8 row">
 								<div class="col-3">
-									<button type="button" class="btn btn-primary" id="queryBtn">確認查詢</button>
+									<button type="button" class="btn btn-primary formBtn" id="queryBtn">確認查詢</button>
 								</div>
 								<div class="col-3">
-									<button type="reset" class="btn btn-danger">清除</button>
+									<button type="reset" class="btn btn-danger formBtn">清除</button>
 								</div>
 							</div>
 						</div>
@@ -264,6 +264,8 @@
 				var marks = $('input[name="marks"]:checked' , '#drugForm').val();
 				var color = $('input[name="color"]:checked' , '#drugForm').val();
 				var formulation = $('input[name="formulation"]:checked' , '#drugForm').val();
+
+				$('#membersTable').dataTable().fnDestroy(); 
 		        $('#table1').DataTable({
 			        "ajax": "/TeleHealth/querydrugs.controller?licenseNum=" +licenseNum + 
 			        		"&chineseName=" + chineseName + "&englishName=" + englishName + 

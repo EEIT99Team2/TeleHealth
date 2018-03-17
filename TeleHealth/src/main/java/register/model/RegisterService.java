@@ -21,6 +21,7 @@ public class RegisterService {
 		return result;
 	}
 	
+
 	@Transactional
 	public MemberBean selectById(String memberId) {
 		MemberBean result = null;

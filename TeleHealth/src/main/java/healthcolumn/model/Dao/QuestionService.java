@@ -76,5 +76,10 @@ public class QuestionService {
 		List<Object[]> list = QuestionDAO.QAMemonepublish(memname);		
 		return list;
 	}
+	// 刪除一位會員po文
+		public boolean QAMemdelonepublish(String Id) {
+			boolean list = QuestionDAO.deleteMemone(Id);		
+			return list;
+		}
 
 }

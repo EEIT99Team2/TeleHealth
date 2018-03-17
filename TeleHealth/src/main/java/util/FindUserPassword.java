@@ -38,7 +38,11 @@ public class FindUserPassword implements Filter {
 			String user = "";
 			String password = "";
 			String rememberMe = "false";
-
+			
+			session.removeAttribute("rememberMe");
+			session.removeAttribute("user");
+			session.removeAttribute("password");
+			
 			Cookie[] cookies = req.getCookies();
 			if (cookies != null) {
 				for (int i = 0; i < cookies.length; i++) {
@@ -66,9 +70,7 @@ public class FindUserPassword implements Filter {
 			session.setAttribute("rememberMe", rememberMe);
 			session.setAttribute("user", user);
 			session.setAttribute("password", password);
-			System.out.println("rememberMe=" + rememberMe);
-			System.out.println("user=" + user);
-			System.out.println("password=" + password);
+
 		}
 		chain.doFilter(request, response);
 	}

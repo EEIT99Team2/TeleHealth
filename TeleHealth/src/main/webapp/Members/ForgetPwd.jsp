@@ -11,7 +11,7 @@
 
 <div class="container">
 		<div style="text-align:center;"><h3 class="title">忘記密碼</h3></div>
-			<div style="text-align:center;"><p>請輸入會員登記電郵址，系統將發送密碼至您的電郵信箱
+			<div style="text-align:center;"><p>請輸入會員登記E-Mail，系統將發送密碼至您的E-Mail
 </p></div>
 		<div class="row">
 			<div class="col-3"></div>
@@ -20,7 +20,7 @@
 						<form method="post" enctype="multipart/form-data" 
 						action="<c:url value="/ForgetPwd.controller"/>">
 							<div class="row">
-								<label for="oldpwd">會員註冊電郵：</label>
+								<label for="oldpwd">會員註冊E-Mail：</label>
 								 <input name="account" type="text" id="account" value="${param.account}" class="fieldWidth" style="width: 320px;" required>
 								<font color="red" size="-1">${MsgMap.errorAccount}</font>  
 								<span id="checkAccount"></span>

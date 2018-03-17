@@ -41,10 +41,8 @@
                        <tbody>                       
                        </tbody>                                           
                    </table>
-                   
-				<!-- 每頁不同的內容到這裡結束 -->
-			    </div>
-			      <span id='table_page'></span>		
+                    <span id='table_page'></span>		  
+			    </div>			     
 		    </div>
 		 </div>
      </div>	
@@ -73,9 +71,7 @@
     </div>
   </div>
 </div>	
-	<script src="../js/jquery-3.3.1.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/jquery-tablepage-1.0.js"></script>
+	<script src="<c:url value='/js/jquery-tablepage-1.0.js'/>"></script>
 	<script>
 	var empIdlogin=$('#empId').val();	  
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},

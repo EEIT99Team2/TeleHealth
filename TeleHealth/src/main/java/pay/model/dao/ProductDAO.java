@@ -28,7 +28,6 @@ public class ProductDAO {
 	}
 
 	private static final String SELECT_MAX = "SELECT MAX(MerchantTradeNo) FROM product";
-	
 	public String selectMax() {
 		String result = null;
 		try (Connection conn = dataSource.getConnection();
@@ -44,7 +43,6 @@ public class ProductDAO {
 	}
 	
 	private static final String SELECT_BY_MerchantTradeNo = "SELECT * FROM product WHERE MerchantTradeNo=?";
-
 	public ProductBean selectTradeNo(String MerchantTradeNo) {
 		ProductBean result = null;
 		ResultSet rset = null;
@@ -115,8 +113,8 @@ public class ProductDAO {
 		return result;
 	}
 	
-	private static final String SELECT_ALL = "SELECT * FROM product";
-	
+	// !!!
+	private static final String SELECT_ALL = "SELECT * FROM product WHERE RtnCode = 1";
 	public List<ProductBean> select() {
 		List<ProductBean> result = null;
 		try (Connection conn = dataSource.getConnection();
@@ -130,6 +128,7 @@ public class ProductDAO {
 				bean.setTotalAmount(rset.getString(3));
 				bean.setTradeDesc(rset.getString(4));
 				bean.setItemName(rset.getString(5));
+				bean.setMemberId(rset.getString("memberId"));
 				result.add(bean);
 			}
 		} catch (SQLException e) {
@@ -164,7 +163,6 @@ public class ProductDAO {
 	}
 	
 	private static final String UPDATE = "UPDATE product SET RtnCode=?, Tradeno=?, PaymentDate=? WHERE MerchantTradeNo=?";
-	
 	public ProductBean update (int RtnCode, String TradeNo, String PaymentDate, String MerchantTradeNo) {
 		ProductBean result = null;
 		try (Connection conn = dataSource.getConnection();
@@ -184,7 +182,6 @@ public class ProductDAO {
 	}
 	
 	private static final String DELETE = "DELETE FROM product WHERE MerchantTradeNo=?";
-	
 	public boolean delete (String MerchantTradeNo) {
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(DELETE);) {
@@ -198,4 +195,5 @@ public class ProductDAO {
 		}
 		return false;
 	}
+	
 }

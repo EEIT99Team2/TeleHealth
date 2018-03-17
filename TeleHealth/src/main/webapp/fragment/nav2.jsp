@@ -4,10 +4,7 @@
 <!-- Bootstrap core JavaScript -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Bootstrap core CSS -->
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	rel="stylesheet">
-
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"	rel="stylesheet">
 <!-- w3 core CSS -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
@@ -34,10 +31,9 @@
 <!-- <link -->
 <!-- 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' -->
 <!-- 	rel='stylesheet' type='text/css'> -->
-
-
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark" id="mainNavB">
 	<div class="container">
@@ -66,7 +62,7 @@
 				<li class="nav-item"><div class="row showIcon"><a class="nav-link" id="advisoryIcon"
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value='/Members/Members.jsp'/>">會員專區</a></li>
+					href="<c:url value='/pay/pay.jsp'/>">會員專區</a></li>
 			</ul>
 		<div class="text-center">
 				<img style="width:40px;height:40px;" src="/TeleHealth/getImage.controller" >
@@ -146,18 +142,23 @@
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="username"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${param.username}">
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${sessionScope.user}">
                                 <font color="red" size="-1">${MsgMap.errorUserName}</font>                              
                             </div>
                             <div class="form-group">
                                 <label for="pwd">
                                     <span class="fa fa-eye"></span> 密碼</label>
-                                <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password">
+                                <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password" value="${sessionScope.password}">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPwd}</font>
+                            
                             <div class="checkbox" id="rememberMe">
                                 <label>
-                                    <input type="checkbox" value="" checked /> 記住我
+                                     <input type="checkbox" name="remember" 
+                                    	<c:if test='${sessionScope.rememberMe==true}'>
+						                	checked='checked'
+						               	</c:if> 
+                                   	 value="true" /> 記住我
                                 </label>
                             </div>
                             
@@ -173,7 +174,6 @@
 						還不是會員?<a href="<c:url value="/Members/register.jsp"/>">註冊</a>
 					</p>
 					<p>
-					
 						忘記 <a href="<c:url value="/Members/ForgetPwd.jsp"/>">密碼?</a>
 					</p>
 				</div>
@@ -183,3 +183,4 @@
 </div>
 <!-- 提醒視訊諮詢的小圖示用 -->
 <script type="text/javascript" src="/TeleHealth/js/showIcon.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

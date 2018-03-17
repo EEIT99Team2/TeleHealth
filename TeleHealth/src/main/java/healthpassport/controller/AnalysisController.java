@@ -1,23 +1,16 @@
 package healthpassport.controller;
 
-import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.google.gson.Gson;
-
 import healthpassport.model.BMIBean;
 import healthpassport.model.BMIService;
 import healthpassport.model.BloodPressureBean;
@@ -37,24 +30,22 @@ public class AnalysisController {
 	private BloodSugarService BloodSugarService;
 	@Autowired
 	private DataAnalysisService DataAnalysisService;
-	private Integer age = 19;
-	private String gender = "M";
-
 	// BMI
 	@RequestMapping(path = { "/healthpassport/querybmi.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	// String gender,String age
-	public @ResponseBody String queryBMI(String memberid, String height, String weight, String bmi, Model model) {
+	public @ResponseBody String queryBMI(String memberid, String height, String weight, String bmi,String gender,String age, Model model) {
 		try {
 			Double heightResult = Double.parseDouble(height);
 			Double weightResult = Double.parseDouble(weight);
 			Double bmiResult = Double.parseDouble(bmi);
+			Integer Age =Integer.parseInt(age);
 			BMIBean bean = new BMIBean();
 			bean.setMemberid(memberid);
 			bean.setBmi(bmiResult);
 			bean.setHeight(heightResult);
 			bean.setWeight(weightResult);
-			BMIBean result = bmiService.insert(bean, gender, age);
+			BMIBean result = bmiService.insert(bean, gender, Age);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			Double returnheight = Math.floor(heightResult); // 取整數
@@ -142,18 +133,19 @@ public class AnalysisController {
 	@RequestMapping(path = { "/healthpassport/queryBloodPressure.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public @ResponseBody String queryBloodPressure(String memberid, String systoleData, String diastoleData,
-			String heartBeatData, Model model) {
+			String heartBeatData,String gender,String age,Model model) {
 		try {
 			// client傳進值
 			Integer systoleD = Integer.parseInt(systoleData);
 			Integer diastoleD = Integer.parseInt(diastoleData);
 			Integer heartBeatD = Integer.parseInt(heartBeatData);
+			Integer Age =Integer.parseInt(age);
 			BloodPressureBean bean = new BloodPressureBean();
 			bean.setMemberid(memberid);
 			bean.setMaxBloodPressure(systoleD);
 			bean.setMinBloodPressure(diastoleD);
 			bean.setHeartBeat(heartBeatD);
-			BloodPressureBean bpresult = bloodPressureService.insert(bean,gender,age);			
+			BloodPressureBean bpresult = bloodPressureService.insert(bean,gender,Age);			
 			String data = new Gson().toJson(bpresult);
 			System.out.println("JSON=" + data);
 			return data;
@@ -167,13 +159,19 @@ public class AnalysisController {
 	// 查詢血壓紀錄
 	@RequestMapping(path = { "/healthpassport/bloodPressureRecords.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String bpRecords(String memberid) {
-
+	public @ResponseBody String bpRecords(String memberid,String gender,String age) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<BloodPressureBean> result = bloodPressureService.selectMemberid(memberid);
+		Integer ageint = Integer.parseInt(age);
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
+			DataAnalysisBean Diastole = DataAnalysisService.selectGroupId("BloodPressureDiastole", gender, ageint);//標準數值
+			DataAnalysisBean Systole = DataAnalysisService.selectGroupId("BloodPressureSystole", gender, ageint);
+			dataOne.put("diastolecheckmax", String.valueOf(Diastole.getMaxvalue()));
+			dataOne.put("diastolecheckmin",String.valueOf(Diastole.getMinvalue()));
+			dataOne.put("systolecheckmin",String.valueOf(Systole.getMinvalue()));
+			dataOne.put("systolecheckmax",String.valueOf(Systole.getMaxvalue()));
 			String systole = result.get(i).getMaxBloodPressure().toString();
 			String diastole = result.get(i).getMinBloodPressure().toString();
 			String heartBeat = result.get(i).getHeartBeat().toString();
@@ -224,14 +222,16 @@ public class AnalysisController {
 
 	@RequestMapping(path = { "/healthpassport/queryBloodSugar.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String queryBloodSugar(String memberid, String bloodsugar, Model model) {
+	public @ResponseBody String queryBloodSugar(String memberid, String bloodsugar,
+					String gender,String age,Model model) {
 		// clinet端值
 		try {
 			Integer bSugar = Integer.parseInt(bloodsugar);
+			Integer Age =Integer.parseInt(age);
 			BloodSugarBean bean = new BloodSugarBean();
 			bean.setMemberId(memberid);
 			bean.setBloodSugar(bSugar);
-			BloodSugarBean result = BloodSugarService.insert(bean, gender, age);
+			BloodSugarBean result = BloodSugarService.insert(bean, gender, Age);
 			String bloodsugarresult = new Gson().toJson(result);
 			return bloodsugarresult;
 		} catch (NumberFormatException e) {
@@ -242,12 +242,15 @@ public class AnalysisController {
 
 	@RequestMapping(path = { "/healthpassport/bloodSugarRecords.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String bsRecords(String memberid) {
+	public @ResponseBody String bsRecords(String memberid,String gender,String age) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<BloodSugarBean> result = BloodSugarService.selectMemberid(memberid);
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
+			DataAnalysisBean Bsdata = DataAnalysisService.selectdataBs(gender);
+			dataOne.put("bloodSugarmin", String.valueOf(Bsdata.getMinvalue()));
+			dataOne.put("bloodSugarmax", String.valueOf(Bsdata.getMaxvalue()));
 			String bloodSugar = result.get(i).getBloodSugar().toString();
 			String bsResult = result.get(i).getResult();
 			String createTime = sdf.format(result.get(i).getCreateTime());

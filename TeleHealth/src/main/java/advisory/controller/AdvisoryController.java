@@ -22,9 +22,10 @@ import advisory.model.AdvisoryService;
 import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryMomentService;
 import employees.model.EmployeesService;
-import employees.model.dao.EmployeesDAO;
 import expendRecord.model.ExpendRecordBean;
 import expendRecord.model.ExpendRecordService;
+import register.model.LoginService;
+import register.model.MemberBean;
 
 @Controller
 public class AdvisoryController {
@@ -34,6 +35,8 @@ public class AdvisoryController {
 	private AdvisoryMomentService advisoryMomentService;
 	@Autowired
 	private EmployeesService employeesService;
+	@Autowired
+	private LoginService loginService;	
 	@Autowired
 	private ExpendRecordService expendRecordService;
 	//會員預約成功，新增預約記錄
@@ -172,9 +175,14 @@ public class AdvisoryController {
 		}
 		AdvisoryBean checkBean = advisoryService.select(videoCode);
 		if(checkBean!=null && checkBean.getStatus().equals("N")) {
+			MemberBean talkMember = loginService.selectById(checkBean.getMemberId());
 			session.setAttribute("reserveItem", reserveItemIn);
 			session.setAttribute("videoCode", videoCodeIn);
 			session.setAttribute("advisory", checkBean);
+			if(session.getAttribute("talkMember") != null) {
+				session.removeAttribute("talkMember");
+			}
+			session.setAttribute("talkMember", talkMember);
 			if(session.getAttribute("empLoginOK") != null) {
 				return "empadvisory.success";
 			} else {
