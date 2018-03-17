@@ -1,44 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>牽伴遠距健康諮詢平台</title>
-
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 </head>
 <body>
-<jsp:include page="/fragment/header.jsp"/>
-<main role="main" class="container mt-2">
-<div class="row">     	
-	      <div class="card">
-			<div class="card-header">所有會員發布文章  <input type="text" id="titlememname" placeholder="會員名稱" ><input type="button" value="搜尋" id="search" onclick="search()"><font id="erroeMsg" color="red" size="-1">${searcherrors.error}</font>
+	<main role="main" class="container mt-2">
+	<div class="row">
+		<div class="card">
+			<div class="card-header">
+				所有會員發布文章 <input type="text" id="titlememname" placeholder="會員名稱"><input
+					type="button" value="搜尋" id="search" onclick="search()"><font
+					id="erroeMsg" color="red" size="-1">${searcherrors.error}</font>
 				<div class="card-body">
-				<!-- 每頁不同的內容從這裡開始 -->
-				   <table id="productTable" class="table table-bordered">
-                       <thead>
-                          <tr>
-                          	 <th>會員名稱</th>
-                          	 <th>文章標題:</th>                             
-                             <th>日期</th>
-                             <th>留言內容</th>                             
-                             <th>管理</th>
-                          </tr>
-                       </thead>
-                       <tbody>                       
-                       </tbody>                                           
-                   </table>
-                   
-				<!-- 每頁不同的內容到這裡結束 -->
-			    </div>
-		    </div>
-		 </div>
-     </div>	
+					<!-- 每頁不同的內容從這裡開始 -->
+					<table id="productTable" class="table table-bordered">
+						<thead>
+							<tr>
+								<th>會員名稱</th>
+								<th>文章標題:</th>
+								<th>日期</th>
+								<th>留言內容</th>
+								<th>管理</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 	</main>
-	<script src="../js/jquery-3.3.1.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
 	<script>
 	$(document).ready(function() {
 			loadall();
