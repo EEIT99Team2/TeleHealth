@@ -21,6 +21,7 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
   <style type="text/css">
+  .allFontStyle{font-family:CJKtc_Bold;}
   .navFontSize{font-size:20px;
   				font-family:CJKtc_Bold;}
   .rightNav{display:inline;}
@@ -64,13 +65,13 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="financialManger">
           <div id="financialBtn" class="nav-link navFontSize">
             <div class="col-4 rightNav"><i class="fas fa-chart-bar"></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav">儲值紀錄</span></div>
+            <div class="col-8 rightNav"><span class="nav-link-text rightNav">營收統計</span></div>
           </div>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="financialManger2">
           <div id="financialBtn2" class="nav-link navFontSize">
-            <div class="col-4 rightNav"><i class="fas fa-chart-bar"></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav">儲值紀錄2</span></div>
+            <div class="col-4 rightNav"><i class="fas fa-credit-card"></i></div>
+            <div class="col-8 rightNav"><span class="nav-link-text rightNav">交易紀錄</span></div>
           </div>
         </li>
       </ul>
@@ -89,7 +90,7 @@
     </div>
   </nav>
   <input type="hidden" value="${empLoginOK.empId}" id="empId" />
-    <div id="memberManger" class="content-wrapper" style="display:block">222</div>
+    <div id="memberManger" class="content-wrapper" style="display:block"><jsp:include page="/back/ManagementMembers.jsp" /></div>
     <div id="msgManger" class="content-wrapper" style="display:none"><jsp:include page="/back/CustomService.jsp" /></div>
     <div id="columnManger" class="content-wrapper" style="display:none"><jsp:include page="/back/totalpublish.jsp" /></div>
     <div id="takeoffManger" class="content-wrapper" style="display:none"><jsp:include page="/back/takeoffSystem.jsp" /></div>

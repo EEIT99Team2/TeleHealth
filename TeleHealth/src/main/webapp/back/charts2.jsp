@@ -68,7 +68,7 @@ function requestData() {
             var series = chart.series[0].setData(point);
 
             // call it again after one second
-            setTimeout(requestData, 1000);    
+//             setTimeout(requestData, 1000);    
         },
         cache: false
     });
