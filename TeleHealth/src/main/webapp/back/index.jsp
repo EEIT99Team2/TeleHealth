@@ -61,10 +61,16 @@
             <div class="col-8 rightNav"><span class="nav-link-text rightNav">假勤管理</span></div>
           </div>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="takeoffManger">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="financialManger">
           <div id="financialBtn" class="nav-link navFontSize">
             <div class="col-4 rightNav"><i class="fas fa-chart-bar"></i></div>
             <div class="col-8 rightNav"><span class="nav-link-text rightNav">儲值紀錄</span></div>
+          </div>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="financialManger2">
+          <div id="financialBtn2" class="nav-link navFontSize">
+            <div class="col-4 rightNav"><i class="fas fa-chart-bar"></i></div>
+            <div class="col-8 rightNav"><span class="nav-link-text rightNav">儲值紀錄2</span></div>
           </div>
         </li>
       </ul>
@@ -88,6 +94,7 @@
     <div id="columnManger" class="content-wrapper" style="display:none"><jsp:include page="/back/totalpublish.jsp" /></div>
     <div id="takeoffManger" class="content-wrapper" style="display:none"><jsp:include page="/back/takeoffSystem.jsp" /></div>
     <div id="financialManger" class="content-wrapper" style="display:none">555</div>
+    <div id="financialManger2" class="content-wrapper" style="display:none">666</div>
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
       <div class="container">
@@ -112,6 +119,7 @@ $().ready(function(){
 			$("#columnManger").css("display","none");
 			$("#takeoffManger").css("display","none");
 			$("#financialManger").css("display","none");
+			$("#financialManger2").css("display","none");
 			$("#msgManger").css("display","block");
 		})
 	//會員管理
@@ -120,6 +128,7 @@ $().ready(function(){
 			$("#takeoffManger").css("display","none");
 			$("#msgManger").css("display","none");
 			$("#financialManger").css("display","none");
+			$("#financialManger2").css("display","none");
 			$("#memberManger").css("display","block");
 		})
 	//專欄管理
@@ -128,6 +137,7 @@ $().ready(function(){
 			$("#takeoffManger").css("display","none");
 			$("#msgManger").css("display","none");
 			$("#financialManger").css("display","none");
+			$("#financialManger2").css("display","none");
 			$("#columnManger").css("display","block");
 		})
 	//員工管理
@@ -136,6 +146,7 @@ $().ready(function(){
 			$("#columnManger").css("display","none");
 			$("#msgManger").css("display","none");
 			$("#financialManger").css("display","none");
+			$("#financialManger2").css("display","none");
 			$("#takeoffManger").css("display","block");
 		})
 	//財務報表
@@ -144,7 +155,17 @@ $().ready(function(){
 			$("#columnManger").css("display","none");
 			$("#msgManger").css("display","none");
 			$("#takeoffManger").css("display","none");
+			$("#financialManger2").css("display","none");
 			$("#financialManger").css("display","block");
+		})
+	//財務報表2
+	$("#financialBtn2").click(function(){
+			$("#memberManger").css("display","none");
+			$("#columnManger").css("display","none");
+			$("#msgManger").css("display","none");
+			$("#takeoffManger").css("display","none");
+			$("#financialManger").css("display","none");
+			$("#financialManger2").css("display","block");
 		})
 	
 })
