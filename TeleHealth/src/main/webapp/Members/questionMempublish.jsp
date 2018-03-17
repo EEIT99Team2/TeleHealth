@@ -152,7 +152,7 @@
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(Mem[0]);		    		
 						cell1.append(ID);
-						var celldata=$("<a href='article.jsp?title="+Mem[8]+"&advisoryCode="+Mem[4]+"'"+"target='_blank'></a>").text("文章內容");
+						var celldata=$("<a href='/TeleHealth/healthcolumn/article.jsp?title="+Mem[8]+"&advisoryCode="+Mem[4]+"'"+"target='_blank'></a>").text("文章內容");
 			    		var article=$("<td></td>")
 			    		article.append(celldata);			    		          	     	          
 			    		var cell4=$('<td></td>').html(Mem[5]);
