@@ -25,17 +25,6 @@ public class ProductBean {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	
-
-	public String getMemberId() {
-		return memberId;
-	}
-
-
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
-
 
 	public String getMerchantTradeNo() {
 		return MerchantTradeNo;
