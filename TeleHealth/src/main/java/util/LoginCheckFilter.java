@@ -27,7 +27,7 @@ import register.model.MemberBean;
 				@WebInitParam(name = "mustLogin2", value = "/healthpassport/*"),
 				@WebInitParam(name = "mustLogin3", value = "/back/*"),
 				@WebInitParam(name = "mustLogin4", value = "/pay/*"),
-				@WebInitParam(name = "mustLogin5", value = "/Members/*")
+//				@WebInitParam(name = "mustLogin5", value = "/Members/*")
 		})
 public class LoginCheckFilter implements Filter {
 	Collection<String> url = new ArrayList<String>();
