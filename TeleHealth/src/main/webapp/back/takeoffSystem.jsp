@@ -5,6 +5,7 @@
 .txtWaring{color:red}
 .headStyle{font-size:22px;}
 .bodyStyle{font-size:18px;}
+.allFontStyle{font-family: CJKtc_Bold;}
 </style>
 <div class='container'>
 <h2  class='container'>未處理申請</h2>
@@ -44,7 +45,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title container" id="responseTitle">假單明細</h5>
+        <h5 class="modal-title allFontStyle" id="responseTitle">假單明細</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -60,11 +61,11 @@
   </div>
 </div>
 <!-- 回覆結果視窗 -->
-<div class="modal fade" id="resultItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade allFontStyle" id="resultItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="resultTitle">核准結果</h5>
+        <h5 class="modal-title allFontStyle" id="resultTitle">核准結果</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

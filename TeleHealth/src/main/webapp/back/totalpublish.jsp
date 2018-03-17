@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<main role="main" class="container mt-2">
 	<div class="row">
 		<div class="card">
@@ -98,9 +97,10 @@
 	  function loadmember(memname){
 		  		$('#productTable>tbody').empty();	  
 				   $.getJSON('/TeleHealth/healthcolumn/QAMemonepublish.controller',{memname:memname},function(datas){
-						if(datas="wrong"){
+						if(datas=="wrong"){
 							$("#erroeMsg").text("查無此人!!");
-						}
+						}else{
+							$("#erroeMsg").text("");
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
@@ -118,6 +118,7 @@
 			    		doc.append(row);			    		
 			    	})					
 			    	  tb.append(doc);
+							}
 			    }) 			      		
 			} 	
 		
