@@ -156,7 +156,8 @@ public class Questioncontroller {
 		@RequestMapping(path = {"/healthcolumn/QAMemonepublish.controller" },produces = "text/html;charset=UTF-8", method = {
 				RequestMethod.GET, RequestMethod.POST })
 		public @ResponseBody String QAMemonepublish(String memname,Model model)
-			{					
+			{		
+				
 				List<Object[]> allmempublish = QuestionService.QAMemonepublish(memname);
 				if(allmempublish.size()==0) {					
 					Gson gson = new Gson();
