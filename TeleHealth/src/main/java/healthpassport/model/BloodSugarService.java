@@ -24,9 +24,7 @@ public class BloodSugarService {
 		//DB傳值
 		DataAnalysisBean bSugarData = dataAnalysisDao.Up18HBandBS(groupid ,gender, age, cbSugarDouble);
 		Double DataMinBS = bSugarData.getMinvalue();
-		
 		Double DataMaxBS = bSugarData.getMaxvalue();
-		
 		String DataResult = bSugarData.getResult();
 		if(DataResult ==null && cbSugarDouble<DataMinBS) {
 			DataResult = "血糖低於正常值";

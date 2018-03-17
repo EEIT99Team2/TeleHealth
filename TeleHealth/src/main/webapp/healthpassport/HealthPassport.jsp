@@ -51,14 +51,9 @@
 							<h4 class="modal-title">BMI</h4>
 						</div>
 						<div class="modal-body">
-							<label for="insert_height" class="col-2">身高</label> <input
-								type="text" id="insert_height" name="height" class="col-4">公分<span
-								id="heiMsg"></span> <br> <label for="insert_weight"
-								class="col-2">體重</label> <input type="text" id="insert_weight"
-								name="weight" class="col-4">公斤 <span id="weiMsg"></span>
-							<br> <label for="height" class="col-2">BMI</label> <input
-								type="text" id="insert_bmi" name="bmi" class="col-4"
-								disabled="disabled">
+							<label for="insert_height" class="col-2">身高</label><input type="text" id="insert_height" name="height" class="col-4">公分<span	id="heiMsg"></span><br> 
+							<label for="insert_weight" class="col-2">體重</label><input type="text" id="insert_weight" name="weight" class="col-4">公斤<span id="weiMsg"></span><br> 
+							<label for="height" class="col-2">BMI</label><input type="text" id="insert_bmi" name="bmi" class="col-4" disabled="disabled">
 							<button type="button" id="calBMI" class="btn btn-info">計算BMI</button>
 						</div>
 						<div class="modal-footer">
@@ -170,13 +165,13 @@
 						</div>
 						<div class="modal-body">
 							<label for="insert_systole" class="col-2">收縮壓</label> <input
-								type="text" id="insert_systole" name="systole" class="col-4">mmHg(輸入格式範例:110)
+								type="text" id="insert_systole" name="systole" class="col-4">mmHg
 							<span id="systoleMsg"></span> <br> <label
 								for="insert_diastole" class="col-2">舒張壓</label> <input
-								type="text" id="insert_diastole" name="diastole" class="col-4">mmHg(輸入格式範例:80)
+								type="text" id="insert_diastole" name="diastole" class="col-4">mmHg
 							<span id="diastoleMsg"></span> <br> <label
 								for="insert_heartBeat" class="col-2">脈搏</label> <input
-								type="text" id="insert_heartBeat" name="heartBeat" class="col-4">次/分鐘(輸入格式範例:72)
+								type="text" id="insert_heartBeat" name="heartBeat" class="col-4">次/分鐘
 							<span id="heartBeatMsg"></span> <br>
 						</div>
 						<div class="modal-footer">
@@ -289,7 +284,7 @@
 						<div class="modal-body">
 							<label for="insert_bloodsugar" class="col-2">血糖</label> <input
 								type="text" id="insert_bloodsugar" name="bloodsugar"
-								class="col-4">mg/dL(輸入格式範例:120) <span id="bloodsugarMsg"></span>
+								class="col-4">mg/dL<span id="bloodsugarMsg"></span>
 
 						</div>
 						<div class="modal-footer">
@@ -390,19 +385,34 @@
 	if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
 	    age--;
 	}
+$('#insertBMI').click(function(){
+		$('#insert').prop("disabled", true);
+		$('#insert_height').val("");
+		$('#insert_weight').val("");
+		$('#insert_bmi').val("");
+		$('#heiMsg').empty();
+		$('#weiMsg').empty();
+});
+$('#insertBloodPressureRecords').click(function(){
+	$('#insertBP').prop("disabled", true);
+	$('#insert_systole').val("");
+	$('#insert_diastole').val("");
+	$('#insert_heartBeat').val("");
+	$('#systoleMsg').empty();
+	$('#diastoleMsg').empty();
+	$('#heartBeatMsg').empty();
+});
+$('#insertBloodSugar').click(function(){
+	$('#insertBS').prop("disabled", true);
+	$('#insert_bloodsugar').val("");				
+	$('#bloodsugarMsg').empty();
+});
+	
 		$(document).ready(function() {
 			 bmitableANDview();//呼叫BMI
 			 bpTableANDview();//血壓紀錄
 			 bstableANDview();//呼叫bs紀錄
-				$('#insertBMI').click(function(){
-					$('#insert').prop("disabled", true);
-				});
-				$('#insertBloodPressureRecords').click(function(){
-					$('#insertBP').prop("disabled", true);
-				});
-				$('#insertBloodSugar').click(function(){
-					$('#insertBS').prop("disabled", true);
-				});
+				
 			$.getJSON("<c:url value='/healthpassport/bmitopRecord.controller'/>",{'memberid':memberid,gender:gender,age:age},function(oneData){			
 	  		 	$('#showHeight').empty();
 	 	       	$('#showWeight').empty();
@@ -523,7 +533,6 @@
 				if(isNaN(systole) || systole.length == 0 || !re.test(systole) || systole>250) {
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確血壓!</span>";
 					a=1;
-
 				} else{
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 					a=0;
@@ -1100,7 +1109,7 @@ $("#bmithreemonth").on('click',function(){
 			});
 			$('#bmiTable').dataTable().fnDestroy(); 
 			$('#bmiTable').DataTable({
-			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid,
+			    "ajax": '/TeleHealth/healthpassport/bmirecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 			    "columns": [
 			        { "data": "height" },
 			        { "data": "weight" },
@@ -1193,7 +1202,7 @@ $("#bpweek").on('click',function(){
 		});
 	$('#bpTable').dataTable().fnDestroy(); 
 	$('#bpTable').DataTable({
-		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid,
+		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		 "columns": [
 		        { "data": "systole"},
 		        { "data": "diastole"},
@@ -1280,7 +1289,7 @@ $("#bpmonth").on('click',function(){
 		});
 	$('#bpTable').dataTable().fnDestroy(); 
 	$('#bpTable').DataTable({
-		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid,
+		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		 "columns": [
 		        { "data": "systole"},
 		        { "data": "diastole"},
@@ -1367,7 +1376,7 @@ $("#bpthreemonth").on('click',function(){
 		});
 	$('#bpTable').dataTable().fnDestroy(); 
 	$('#bpTable').DataTable({
-		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid,
+		"ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		 "columns": [
 		        { "data": "systole"},
 		        { "data": "diastole"},
@@ -1454,7 +1463,7 @@ $("#bsweek").on('click',function(){
 		});
 		$('#bsTable').dataTable().fnDestroy(); 
 		$('#bsTable').DataTable({
-		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid,
+		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		    "columns": [				        
 		        { "data": "bloodSugar" },
 		        { "data": "bsResult" },
@@ -1533,7 +1542,7 @@ $("#bsmonth").on('click',function(){
 		});
 		$('#bsTable').dataTable().fnDestroy(); 
 		$('#bsTable').DataTable({
-		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid,
+		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		    "columns": [				        
 		        { "data": "bloodSugar" },
 		        { "data": "bsResult" },
@@ -1612,7 +1621,7 @@ $("#bsthreemonth").on('click',function(){
 		});
 		$('#bsTable').dataTable().fnDestroy(); 
 		$('#bsTable').DataTable({
-		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid,
+		    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 		    "columns": [				        
 		        { "data": "bloodSugar" },
 		        { "data": "bsResult" },
