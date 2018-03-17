@@ -187,10 +187,16 @@ $("body").on("click","#UnTalkList tr",function(){
 	var UnCheckms = moment(unTalkOne.advisoryTime).diff(UnCheckNow)/1000;
 	var docFrag =$(document.createDocumentFragment());
 	$("#UnTalkItem .modal-body").empty();
-	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
+	if(UnCheckms<0){
+		docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
+				+"<br/><span style='font-size:1.3em'>諮詢時段:  "+unTalkOne.advisoryTime+"</span>"
+				+"<br/><span style='font-size:1.3em'>諮詢人員:  "+unTalkOne.empName+"</span></div>");	
+		}else{
+		docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+unTalkOne.advisoryTime+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+unTalkOne.empName+"</span>"
 			+"<div id='getting-started' style='height:70px;margin-top:20px;'></div>");	
+			}
 	$("#UnTalkItem .modal-body").append(docFrag);
 	$("#getting-started").countdown({until:UnCheckms, format: 'DHMS'});	
 	$("#UnTalkItem").modal("show");
