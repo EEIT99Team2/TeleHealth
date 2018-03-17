@@ -26,6 +26,5 @@ public class Progress {
 	    public String toString() {
 	        return "Progress [bytesRead=" + bytesRead + ", contentLength=" + contentLength + ", items=" + items + "]";
 	    }
-
 	
 }
