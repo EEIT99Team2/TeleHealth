@@ -159,13 +159,19 @@ public class AnalysisController {
 	// 查詢血壓紀錄
 	@RequestMapping(path = { "/healthpassport/bloodPressureRecords.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String bpRecords(String memberid) {
-
+	public @ResponseBody String bpRecords(String memberid,String gender,String age) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<BloodPressureBean> result = bloodPressureService.selectMemberid(memberid);
+		Integer ageint = Integer.parseInt(age);
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
+			DataAnalysisBean Diastole = DataAnalysisService.selectGroupId("BloodPressureDiastole", gender, ageint);//標準數值
+			DataAnalysisBean Systole = DataAnalysisService.selectGroupId("BloodPressureSystole", gender, ageint);
+			dataOne.put("diastolecheckmax", String.valueOf(Diastole.getMaxvalue()));
+			dataOne.put("diastolecheckmin",String.valueOf(Diastole.getMinvalue()));
+			dataOne.put("systolecheckmin",String.valueOf(Systole.getMinvalue()));
+			dataOne.put("systolecheckmax",String.valueOf(Systole.getMaxvalue()));
 			String systole = result.get(i).getMaxBloodPressure().toString();
 			String diastole = result.get(i).getMinBloodPressure().toString();
 			String heartBeat = result.get(i).getHeartBeat().toString();
@@ -236,12 +242,15 @@ public class AnalysisController {
 
 	@RequestMapping(path = { "/healthpassport/bloodSugarRecords.controller" }, method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public @ResponseBody String bsRecords(String memberid) {
+	public @ResponseBody String bsRecords(String memberid,String gender,String age) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<BloodSugarBean> result = BloodSugarService.selectMemberid(memberid);
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
+			DataAnalysisBean Bsdata = DataAnalysisService.selectdataBs(gender);
+			dataOne.put("bloodSugarmin", String.valueOf(Bsdata.getMinvalue()));
+			dataOne.put("bloodSugarmax", String.valueOf(Bsdata.getMaxvalue()));
 			String bloodSugar = result.get(i).getBloodSugar().toString();
 			String bsResult = result.get(i).getResult();
 			String createTime = sdf.format(result.get(i).getCreateTime());

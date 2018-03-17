@@ -132,8 +132,8 @@
 									<tbody>
 
 									</tbody>
-								</table>
-							</div>
+								</table><hr>
+							</div>	
 						</div>
 					</div>
 				</div>
@@ -649,48 +649,46 @@
 //圖表
 	var dates=[];
     var datas=[];
+    var datasmax=[];
+	var datasmin=[];
  $.getJSON('/TeleHealth/healthpassport/bmirecords.controller',{memberid:memberid},function(result){
 	$.each(result.data,function(index,value) {
 		var date = moment(value.createTime).format('MM/DD HH:mm');
 		dates.push(date);
 		var bmiresult = value.bmi;
 		datas.push(bmiresult);
+		var checkmax=24;
+		var checkmin=18.5;
+		datasmax.push(checkmax);
+		datasmin.push(checkmin);
 	});       
     var tempData1 = {
       labels : dates,
       datasets : [{
-          label: "BMI",
+          label: "您的BMI",
+            data: datas,
+            backgroundColor: "rgba(75,192,192,0)",
+            borderColor: "#32cd32",
             fill: true,
             lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,0)",
-            borderColor: "rgba(75,192,192,1)",
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-            pointHoverBorderColor: "rgba(220,220,220,1)",
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: datas,
-            spanGaps: false,
-      },{
-			
-//    	      	 飄準值
-			
-          }]
+            borderJoinStyle: 'miter'
+        },{label: '以下過輕',
+			data: datasmin,
+			backgroundColor:'rgba(255, 99, 132, 0)',
+			borderColor:'#0000cd',
+			borderWidth: 1},
+          {label: '以上過重',
+	        data: datasmax,
+	        backgroundColor:'rgba(54, 162, 235, 0)',
+	        borderColor: '#ff0000',
+	        borderWidth: 1} ]
     };
     var ctx = $("#mychart1")                 
     var myLineChart = new Chart(ctx, {
         type: 'line', 
         data: tempData1,
         options: {
-            maintainAspectRatio: true,
+            maintainAspectRatio: true
         }
     });
  });
@@ -699,7 +697,7 @@
 			function bpTableANDview(){
 				$('#bpTable').dataTable().fnDestroy(); 
 				$('#bpTable').DataTable({
-				    "ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid,
+				    "ajax": '/TeleHealth/healthpassport/bloodPressureRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 				    "columns": [
 				        { "data": "systole"},
 				        { "data": "diastole"},
@@ -726,7 +724,9 @@ var bpdate=[];
 var sysdatas=[];
 var diadatas=[];
 var heartBeatdatas=[];
-	$.getJSON('/TeleHealth/healthpassport/bloodPressureRecords.controller',{memberid:memberid},function(result){
+var sysMeandatas=[];
+var diaMeandatas=[];
+	$.getJSON('/TeleHealth/healthpassport/bloodPressureRecords.controller',{memberid:memberid,gender:gender,age:age},function(result){
 		$.each(result.data,function(index,value) {
 			var date = moment(value.createTime).format('MM/DD HH:mm');
 			bpdate.push(date);
@@ -735,36 +735,45 @@ var heartBeatdatas=[];
 			var diastoleresult = value.diastole;
 			diadatas.push(diastoleresult);
 			var heartBeatresult = value.heartBeat;
-			heartBeatdatas.push(heartBeatresult);				
+			heartBeatdatas.push(heartBeatresult);
+			var systoleMean = ((parseInt(value.systolecheckmax)+parseInt(value.systolecheckmin))/2);			
+			sysMeandatas.push(systoleMean);			
+			var diastoleMean = ((parseInt(value.diastolecheckmax)+parseInt(value.diastolecheckmin))/2);
+			diaMeandatas.push(diastoleMean);
 		});  
         var tempData2 = {
           labels : bpdate,
           datasets : [{
-              label: "收縮壓",
-                fill: true,
-                lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0)",
-                borderColor: "rgba(75,192,192,1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba(75,192,192,1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data: sysdatas,
-                spanGaps: false,
-          },{
-        	  label: "舒張壓",
-
-
-              }
+              label: "您的收縮壓值",
+              data: sysdatas,
+              backgroundColor: "rgba(75,192,192,0)",
+              borderColor: "#0000cd",
+              fill: true,
+              lineTension: 0.1,
+              borderJoinStyle: 'miter'
+          },{ label: "您的舒張壓值",
+              data:diadatas,
+              backgroundColor: "rgba(75,192,192,0)",
+              borderColor: "#d2691e",
+              fill: true,
+              lineTension: 0.1,
+              borderJoinStyle: 'miter'
+             },{label: "收縮壓標準值",
+         	    data:sysMeandatas,
+                 backgroundColor:'rgba(54, 162, 235, 0)',
+     	         borderColor: '#228b22',
+                 fill: true,
+                 lineTension: 0.1,
+                 borderJoinStyle: 'miter'
+             },{
+            	 label: "舒張壓標準值",
+                 data: diaMeandatas,
+                 backgroundColor:'rgba(54, 162, 235, 0)',
+     	         borderColor: '#c71585',
+                 fill: true,
+                 lineTension: 0.1,
+                 borderJoinStyle: 'miter'
+             }
           ]
         };
         var ctx = $("#mychart2")
@@ -781,7 +790,7 @@ var heartBeatdatas=[];
 			function bstableANDview(){
 				$('#bsTable').dataTable().fnDestroy(); 
 				$('#bsTable').DataTable({
-				    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid,
+				    "ajax": '/TeleHealth/healthpassport/bloodSugarRecords.controller?memberid='+memberid+"&gender="+gender+"&age="+age,
 				    "columns": [				        
 				        { "data": "bloodSugar" },
 				        { "data": "bsResult" },
@@ -806,12 +815,18 @@ var heartBeatdatas=[];
 	//bs圖表
 	var bsdates=[];
 	var bsdatas=[];
-		$.getJSON('/TeleHealth/healthpassport/bloodSugarRecords.controller',{memberid:memberid},function(result){
+	var bsmaxdatas=[];
+	var bsmindatas=[];
+		$.getJSON('/TeleHealth/healthpassport/bloodSugarRecords.controller',{memberid:memberid,gender:gender,age:age},function(result){
 			$.each(result.data,function(index,value) {
 				var date = moment(value.createTime).format('MM/DD HH:mm');
 				bsdates.push(date);
 				var bloodSugar = value.bloodSugar;
 				bsdatas.push(bloodSugar);
+				var bloodSugarmax = value.bloodSugarmax;
+				bsmaxdatas.push(bloodSugarmax);
+				var bloodSugarmin = value.bloodSugarmin;
+				bsmindatas.push(bloodSugarmin);
 			});			
 	  var ctx = $("#mychart3")
 	  var myChart = new Chart(ctx, {
@@ -819,27 +834,26 @@ var heartBeatdatas=[];
 	    data: {
 	        labels: bsdates,
 	        datasets: [{
-	            label: '2018',
+	            label: '您的血糖值',
 	            data: bsdatas,
-	            backgroundColor: [
-	                'rgba(255, 99, 132, 0)',
-	                'rgba(54, 162, 235, 0)',
-	                'rgba(255, 206, 86, 0)',
-	                'rgba(75, 192, 192, 0)',
-	                'rgba(153, 102, 255, 0)',
-	                'rgba(255, 159, 64, 0)'
-	            ],
-	            order:[bsdates,'desc'],
-	            borderColor: [
-	                'rgba(255,99,132,1)',
-	                'rgba(54, 162, 235, 1)',
-	                'rgba(255, 206, 86, 1)',
-	                'rgba(75, 192, 192, 1)',
-	                'rgba(153, 102, 255, 1)',
-	                'rgba(255, 159, 64, 1)'
-	            ],
-	            borderWidth: 1
-	        }]
+	            backgroundColor:"rgba(75,192,192,0)",
+	            borderColor:"#ae00ae",
+	            fill: true,
+	            lineTension: 0.1,
+	            borderJoinStyle: 'miter'
+	        },{	
+	        	label: '血糖標準最高',
+	            data: bsmaxdatas,
+	            backgroundColor:'rgba(54, 162, 235, 0)',
+	            borderColor:'#ff0000',
+	            borderWidth: 1				        
+	      },{	
+	        	label: '血糖標準最低',
+	            data: bsmindatas,
+	            backgroundColor:'rgba(54, 162, 235, 0)',			                
+	            borderColor:'#00ff00',
+	            borderWidth: 1				        
+	      }]
 	    },
 	    options: {
 	        scales: {
@@ -882,36 +896,24 @@ $("#bmiweek").on('click',function(){
 			        datasets: [{
 			            label: '一星期測量圖',
 			            data: datasbmi,
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0)',			             
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',
 			            order:[datesbmi,'desc'],
 			            order:[datasbmi,'desc'],
-			            borderColor: [
-			                '#32cd32',
-			             
-			            ],
+			            borderColor:'#32cd32',
 			            borderWidth: 1
-			        },{label: '以下過輕',
+			       	 },{
+				       	label: '以下過輕',
 			            data: datasmin,
-			            backgroundColor: [
-			            	'rgba(255, 99, 132, 0)',
-			                		                
-			            ],
-			            borderColor: [
-			                '#0000cd'
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',
+			           	borderColor:'#0000cd',			        
 			            borderWidth: 1
-				        },{label: '以上過重',
-				            data: datasmax,
-				            backgroundColor: [
-				            	'rgba(54, 162, 235, 0)',				              
-				            ],
-				            borderColor: [
-				            	'#ff0000',
-				               
-				            ],
-				            borderWidth: 1}]
+				       },{
+					       label: '以上過重',
+				           data: datasmax,
+				            backgroundColor: 'rgba(54, 162, 235, 0)',				              
+				            borderColor:'#c71585',
+				            borderWidth: 1}
+			            ]
 			    },
 			    options: {
 			        scales: {
@@ -985,35 +987,24 @@ $("#bmimonth").on('click',function(){
 			        datasets: [{
 			            label: '一星期測量圖',
 			            data: datasbmi,
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0)',
-			               
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',
 			            order:[datesbmi,'desc'],
 			            order:[datasbmi,'desc'],
-			            borderColor: [
-			                '#32cd32',			              
-			            ],
+			            borderColor:'#32cd32',
 			            borderWidth: 1
-			        },{label: '以下過輕',
+			        },{
+				        label: '以下過輕',
 			            data: datasmin,
-			            backgroundColor: [
-			            	'rgba(255, 99, 132, 0)',
-			                			                
-			            ],
-			            borderColor: [
-			                '#0000cd'
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',
+			            borderColor:'#0000cd',
 			            borderWidth: 1
-				        },{label: '以上過重',
+				        },{
+					        label: '以上過重',
 				            data: datasmax,
-				            backgroundColor: [
-				            	'rgba(54, 162, 235, 0)',				                
-				            ],
-				            borderColor: [
-				            	'#ff0000',				                
-				            ],
-				            borderWidth: 1}]
+				            backgroundColor:'rgba(54, 162, 235, 0)',	
+				            borderColor:'#ff0000',				                
+				            borderWidth: 1}
+			            ]
 			    },
 			    options: {
 			        scales: {
@@ -1080,33 +1071,22 @@ $("#bmithreemonth").on('click',function(){
 			        datasets: [{
 			            label: '一星期測量圖',
 			            data: datasbmi,
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0)',			              
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',	
 			            order:[datesbmi,'desc'],
 			            order:[datasbmi,'desc'],
-			            borderColor: [
-			                '#32cd32',			               
-			            ],
+			            borderColor:'#32cd32',	
 			            borderWidth: 1
 			        },{label: '以下過輕',
 			            data: datasmin,
-			            backgroundColor: [
-			            	'rgba(255, 99, 132, 0)',			                			                
-			            ],
-			            borderColor: [
-			                '#0000cd'
-			            ],
+			            backgroundColor:'rgba(255, 99, 132, 0)',			                			                
+			            borderColor: '#0000cd',
 			            borderWidth: 1
 				        },{label: '以上過重',
-				            data: datasmax,
-				            backgroundColor: [
-				            	'rgba(54, 162, 235, 0)',				                
-				            ],
-				            borderColor: [
-				            	'#ff0000',				              
-				            ],
-				            borderWidth: 1}]
+				           data: datasmax,
+				           backgroundColor:'rgba(54, 162, 235, 0)',	
+				           borderColor: '#ff0000',		
+				           borderWidth: 1}
+			            ]
 			    },
 			    options: {
 			        scales: {
@@ -1175,48 +1155,30 @@ $("#bpweek").on('click',function(){
 		    data: {
 		        labels: bpdate,
 		        datasets: [{
-		            label: '收縮壓',
+		            label: '您的收縮壓值',
 		            data: sysdatas,
-		            backgroundColor: [
-			            'rgba(255, 99, 132, 0)',		               
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',	
 		            order:[bpdate,'desc'],
-
-		            borderColor: [		           
-		                '#0000cd'
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{
-		        	label: '舒張壓',
+		        	label: '您的舒張壓值',
 		            data: diadatas,
-		            backgroundColor: [
-		                'rgba(255, 159, 64,0)'
-		            ],
-		            borderColor: [
-		                '#d2691e'
-		            ],
+		            backgroundColor:'rgba(255, 159, 64,0)',
+		            borderColor:'#d2691e',
 		            borderWidth: 1
 		         },{
-			        	label: '收縮壓平均標準',
-			            data: sysMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [                
-			                '#228b22'
-			            ],
-			            borderWidth: 1
+			        label: '收縮壓平均標準',
+			        data: sysMeandatas,
+			        backgroundColor: 'rgba(54, 162, 235, 0)',
+			        borderColor:'#228b22',
+			        borderWidth: 1
 			     },{	
-
-			        	label: '舒張壓平均標準',
-			            data: diaMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [
-				            '#c71585',			                
-			            ],
-			            borderWidth: 1				        
+		        	label: '舒張壓平均標準',
+			        data: diaMeandatas,
+			        backgroundColor: 'rgba(54, 162, 235, 0)',	
+			        borderColor:'#c71585',
+			        borderWidth: 1				        
 			      }]
 		    },
 		    options: {
@@ -1280,46 +1242,29 @@ $("#bpmonth").on('click',function(){
 		    data: {
 		        labels: bpdate,
 		        datasets: [{
-		            label: '收縮壓',
+		            label: '您的收縮壓值',
 		            data: sysdatas,
-		            backgroundColor: [
-			            'rgba(255, 99, 132, 0)',		               
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',		               
 		            order:[bpdate,'desc'],
-		            borderColor: [		           
-		                '#0000cd'
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{
-		        	label: '舒張壓',
+		        	label: '您的舒張壓值',
 		            data: diadatas,
-		            backgroundColor: [
-		                'rgba(255, 159, 64,0)'
-		            ],
-		            borderColor: [
-		                '#d2691e'
-		            ],
+		            backgroundColor:'rgba(255, 159, 64,0)',
+		            borderColor:'#d2691e',
 		            borderWidth: 1
 		         },{
 			        	label: '收縮壓平均標準',
 			            data: sysMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [                
-			                '#228b22'
-			            ],
+			            backgroundColor:'rgba(54, 162, 235, 0)',
+			            borderColor:'#228b22',
 			            borderWidth: 1
 			     },{	
-
 			        	label: '舒張壓平均標準',
 			            data: diaMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [
-				            '#c71585',			                
-			            ],
+			            backgroundColor:'rgba(54, 162, 235, 0)',
+			            borderColor: '#c71585',
 			            borderWidth: 1				        
 			      }]
 		    },
@@ -1384,45 +1329,29 @@ $("#bpthreemonth").on('click',function(){
 		    data: {
 		        labels: bpdate,
 		        datasets: [{
-		            label: '收縮壓',
+		            label: '您的收縮壓值',
 		            data: sysdatas,
-		            backgroundColor: [
-			            'rgba(255, 99, 132, 0)',		               
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',
 		            order:[bpdate,'desc'],
-		            borderColor: [		           
-		                '#0000cd'
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{
-		        	label: '舒張壓',
+		        	label: '您的舒張壓值',
 		            data: diadatas,
-		            backgroundColor: [
-		                'rgba(255, 159, 64,0)'
-		            ],
-		            borderColor: [
-		                '#d2691e'
-		            ],
+		            backgroundColor:'rgba(255, 159, 64,0)',
+		            borderColor:'#d2691e',
 		            borderWidth: 1
 		         },{
 			        	label: '收縮壓平均標準',
 			            data: sysMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [                
-			                '#228b22'
-			            ],
+			            backgroundColor:'rgba(54, 162, 235, 0)',			                
+			            borderColor:'#228b22',
 			            borderWidth: 1
 			     },{	
 			        	label: '舒張壓平均標準',
 			            data: diaMeandatas,
-			            backgroundColor: [
-			            	'rgba(54, 162, 235, 0)',			                
-			            ],
-			            borderColor: [
-				            '#c71585',			                
-			            ],
+			            backgroundColor:'rgba(54, 162, 235, 0)',
+			            borderColor:'#c71585',
 			            borderWidth: 1				        
 			      }]
 		    },
@@ -1494,34 +1423,22 @@ $("#bsweek").on('click',function(){
 		        datasets: [{
 		            label: '一星期',
 		            data: bsdatas,
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0)',		                
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',		                
 		            order:[bsdates,'desc'],
 		            order:[bsdatas,'desc'],
-		            borderColor: [
-		                '#0000cd',		                
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{	
 		        	label: '血糖標準最高',
 		            data: bsmaxdatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#ff0000',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',
+		            borderColor:'#ff0000',	
 		            borderWidth: 1				        
 		      },{	
 		        	label: '血糖標準最低',
 		            data: bsmindatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#00ff00',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',	
+		            borderColor:'#00ff00',	
 		            borderWidth: 1				        
 		      }]
 		    },
@@ -1585,34 +1502,22 @@ $("#bsmonth").on('click',function(){
 		        datasets: [{
 		            label: '一個月',
 		            data: bsdatas,
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0)',		                
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',	
 		            order:[bsdates,'desc'],
 		            order:[bsdatas,'desc'],
-		            borderColor: [
-		                '#0000cd',		                
-		            ],
+		            borderColor:'#0000cd',	
 		            borderWidth: 1
 		        },{	
 		        	label: '血糖標準最高',
 		            data: bsmaxdatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#ff0000',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',
+		            borderColor:'#ff0000',
 		            borderWidth: 1				        
 		      },{	
 		        	label: '血糖標準最低',
 		            data: bsmindatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#00ff00',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',			                
+		            borderColor:'#00ff00',
 		            borderWidth: 1				        
 		      }]
 		    },
@@ -1676,34 +1581,22 @@ $("#bsthreemonth").on('click',function(){
 		        datasets: [{
 		            label: '三個月',
 		            data: bsdatas,
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0)',		                
-		            ],
+		            backgroundColor:'rgba(255, 99, 132, 0)',
 		            order:[bsdates,'desc'],
 		            order:[bsdatas,'desc'],
-		            borderColor: [
-		                '#0000cd',		                
-		            ],
+		            borderColor:'#0000cd',
 		            borderWidth: 1
 		        },{	
 		        	label: '血糖標準最高',
 		            data: bsmaxdatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#ff0000',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',			                
+		            borderColor:'#ff0000',
 		            borderWidth: 1				        
 		      },{	
 		        	label: '血糖標準最低',
 		            data: bsmindatas,
-		            backgroundColor: [
-		            	'rgba(54, 162, 235, 0)',			                
-		            ],
-		            borderColor: [
-			            '#00ff00',		                
-		            ],
+		            backgroundColor:'rgba(54, 162, 235, 0)',			                
+		            borderColor:'#00ff00',
 		            borderWidth: 1				        
 		      }]
 		    },
