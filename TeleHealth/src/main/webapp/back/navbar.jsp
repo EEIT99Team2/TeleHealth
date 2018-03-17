@@ -17,6 +17,7 @@
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -241,6 +242,7 @@
       <div style="height: 1000px;"></div>
     </div>
     <!-- /.container-fluid-->
+    
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
       <div class="container">
