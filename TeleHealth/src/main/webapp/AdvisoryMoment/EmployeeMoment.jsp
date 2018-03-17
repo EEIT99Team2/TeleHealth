@@ -303,7 +303,7 @@ $(document).ready(function() {
       allDaySlot:false,
 //       dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
       firstDay:1,
-      slotDuration:'00:15:00',
+      slotDuration:'00:05:00',
       slotLabelFormat:'hh:mm',
       defaultTimedEventDuration:"00:15",
       minTime:"08:00",
