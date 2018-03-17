@@ -22,11 +22,13 @@
 						<tbody>
 						</tbody>
 					</table>
+					 <span id='table_page'></span>	
 				</div>
 			</div>
 		</div>
 	</div>
 	</main>
+	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
 	$(document).ready(function() {
 			loadall();
@@ -64,6 +66,7 @@
 			    		doc.append(row);			    		
 			    	})
 			    	  tb.append(doc);
+			    	$("#productTable").tablepage($("#table_page"), 5); 
 			    }) 
 			      		
 			} 
