@@ -253,7 +253,6 @@ $('#TalkList').on('click','tr button:nth-child(1)',function(){
 	 $.getJSON('/TeleHealth/selectadvisory.controller',{"videoCode":modifyVideo},function(data){
 				console.log(data);				
 				CKEDITOR.instances.contents.setData(data.data.descrip);				
-						 					 	 					
 			}); 					
  	 });
 });
