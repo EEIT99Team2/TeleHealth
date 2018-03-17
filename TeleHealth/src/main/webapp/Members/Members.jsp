@@ -31,7 +31,9 @@
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
 			onclick="location.href='Point.jsp'" /></li>
-		
+		<li class="nav-item"><input type="button" class="nav-link active"
+			id="FOO" data-toggle="tab" role="tab" value="我的留言"
+			onclick="location.href='questionMempublish.jsp'" /></li>
 	</ul>
 	<div class="tab-content" id="myTabContent">
 		<div class="tab-pane fade show active" id="home" role="tabpanel"

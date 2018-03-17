@@ -8,11 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>牽伴遠距健康諮詢平台</title>
-<script src="../forCkeditor/ckeditor/ckeditor.js"></script>
-<script src="../forCkeditor/ckfinder/ckfinder.js"></script>
-<link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
-<link rel="stylesheet" type="text/css"
-	href="/TeleHealth/css/fonts/fontstyle.css" />
+<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js'/>"></script>
+<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js'/>"></script>
+<link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
 <style type="text/css">
 .createtext {
 	margin: 0px auto;

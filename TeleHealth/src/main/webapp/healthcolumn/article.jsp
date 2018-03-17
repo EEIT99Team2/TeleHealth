@@ -6,14 +6,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>牽伴遠距健康諮詢平台</title>
-<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="../forCkeditor/ckeditor/ckeditor.js"></script>
-<script src="../forCkeditor/ckfinder/ckfinder.js"></script>
-<link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
-<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 <style type="text/css">
 .contenttype{
 background-color: #CCEEFF;
@@ -23,11 +18,15 @@ width: 500px;
 width:32px;
 hieght:32px; 
 }
-
+c:
 </style>
 </head>
 <body>
-   <jsp:include page="/fragment/nav2.jsp" />
+    <jsp:include page="/fragment/nav2.jsp" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js'/>"></script>
+	<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js'/>"></script>
+
      <main>
     <!-- Page Content -->
     <div class="container">
@@ -56,9 +55,6 @@ hieght:32px;
  <jsp:include page="/fragment/footer.jsp" />
    
 <script type="text/javascript">
-function check(){	
-}
-
 $(document).ready(function() {     
 	 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
          {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},

@@ -152,11 +152,12 @@ public class Questioncontroller {
 					String dataLoad = gson.toJson(allmempublish);					
 					return dataLoad;			 
 				}
-		//選修全部文章
+		//選修全部一位文章
 		@RequestMapping(path = {"/healthcolumn/QAMemonepublish.controller" },produces = "text/html;charset=UTF-8", method = {
 				RequestMethod.GET, RequestMethod.POST })
 		public @ResponseBody String QAMemonepublish(String memname,Model model)
-			{					
+			{		
+				
 				List<Object[]> allmempublish = QuestionService.QAMemonepublish(memname);
 				if(allmempublish.size()==0) {					
 					Gson gson = new Gson();
@@ -167,4 +168,21 @@ public class Questioncontroller {
 				String dataLoad = gson.toJson(allmempublish);				
 				return dataLoad;			 
 			}	
+		@RequestMapping(path = {
+		"/healthcolumn/deleteQAmemonepublish.controller" }, produces = "text/html;charset=UTF-8", method = {
+				RequestMethod.GET, RequestMethod.POST })
+		public @ResponseBody String deleteQAmemonepublish(String Id)
+		{		
+				
+			boolean allmempublish = QuestionService.QAMemdelonepublish(Id);
+			if(allmempublish) {					
+				Gson gson = new Gson();
+				String dataLoad = gson.toJson("OK");
+				return dataLoad ;
+			}else {					
+			Gson gson = new Gson();
+			String dataLoad = gson.toJson("刪除失敗");				
+			return dataLoad;
+			}
+		}	
 }
