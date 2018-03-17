@@ -16,13 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import employees.model.EmployeesBean;
 import register.model.MemberBean;
 
 @WebFilter(
 		urlPatterns = { "/*" }, 
 		initParams = { 
-//				@WebInitParam(name = "mustLogin1", value = "/AdvisoryMoment/*"),
-//				@WebInitParam(name = "mustLogin2", value = "/healthpassport/*")
+				@WebInitParam(name = "mustLogin1", value = "/AdvisoryMoment/*"),
+				@WebInitParam(name = "mustLogin2", value = "/healthpassport/*"),
+				@WebInitParam(name = "mustLogin3", value = "/back/*"),
+				@WebInitParam(name = "mustLogin4", value = "/pay/*"),
+				@WebInitParam(name = "mustLogin5", value = "/Members/*")
 		})
 public class LoginCheckFilter implements Filter {
 	Collection<String> url = new ArrayList<String>();
@@ -62,7 +66,7 @@ public class LoginCheckFilter implements Filter {
 					if ( ! isRequestedSessionIdValid ) {
 						session.setAttribute("timeOut", "使用逾時，請重新登入");
 					}
-					resp.sendRedirect(contextPath + "/index.jsp");
+					resp.sendRedirect(contextPath + "/home.jsp");
 					return;
 				}
 			} else {   //不需要登入，直接去執行他要執行的程式
@@ -74,8 +78,14 @@ public class LoginCheckFilter implements Filter {
 	}
 	private boolean checkLogin(HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		MemberBean loginToken = (MemberBean) session.getAttribute("LoginOK");
-		if (loginToken == null) {
+		MemberBean loginToken = null;
+		EmployeesBean empLoginToken = null;
+		if(session.getAttribute("LoginOK") != null) {
+			loginToken = (MemberBean)session.getAttribute("LoginOK");
+		} else if (session.getAttribute("empLoginOK") != null) {
+			empLoginToken = (EmployeesBean)session.getAttribute("empLoginOK");
+		}
+		if (loginToken == null && empLoginToken == null) {
 			return false;
 		} else {
 			return true;

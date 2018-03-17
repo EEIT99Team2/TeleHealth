@@ -1,19 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>請假系統</title>
-<style>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+  <style>
 .txtWaring{color:red}
 .headStyle{font-size:22px;}
 .bodyStyle{font-size:18px;}
+.allFontStyle{font-family: CJKtc_Bold;}
 </style>
-</head>
-<body>
-<jsp:include page="/fragment/nav2.jsp" />
 <div class='container'>
 <h2  class='container'>未處理申請</h2>
 <table class="table  table-hover">
@@ -52,7 +45,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="responseTitle">假單明細</h5>
+        <h5 class="modal-title allFontStyle" id="responseTitle">假單明細</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -68,11 +61,11 @@
   </div>
 </div>
 <!-- 回覆結果視窗 -->
-<div class="modal fade" id="resultItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade allFontStyle" id="resultItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="resultTitle">核准結果</h5>
+        <h5 class="modal-title allFontStyle" id="resultTitle">核准結果</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -87,11 +80,7 @@
   </div>
 </div>
 </div>
-<!-- Footer -->
-	<jsp:include page="/fragment/footer.jsp" />
-</body>
-<!--=======================載入script檔跟程式==========================-->
-<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
@@ -249,8 +238,7 @@ function out(){
 }
 
 $("#resultCheck").click(function(){
-	window.location.reload();
+	LoadData();
 });
 })
 </script>
-</html>

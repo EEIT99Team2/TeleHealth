@@ -6,8 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>視訊諮詢記錄</title>
-<!-- Bootstrap core CSS -->
-<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.min.css" />
 <style>
 .txtWaring{color:red}
@@ -105,7 +103,6 @@
 <jsp:include page="/fragment/footer.jsp" />
 <!--=======================載入script檔跟程式==========================-->
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.plugin.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -190,10 +187,16 @@ $("body").on("click","#UnTalkList tr",function(){
 	var UnCheckms = moment(unTalkOne.advisoryTime).diff(UnCheckNow)/1000;
 	var docFrag =$(document.createDocumentFragment());
 	$("#UnTalkItem .modal-body").empty();
-	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
+	if(UnCheckms<0){
+		docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
+				+"<br/><span style='font-size:1.3em'>諮詢時段:  "+unTalkOne.advisoryTime+"</span>"
+				+"<br/><span style='font-size:1.3em'>諮詢人員:  "+unTalkOne.empName+"</span></div>");	
+		}else{
+		docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+unTalkOne.advisoryTime+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢人員:  "+unTalkOne.empName+"</span>"
 			+"<div id='getting-started' style='height:70px;margin-top:20px;'></div>");	
+			}
 	$("#UnTalkItem .modal-body").append(docFrag);
 	$("#getting-started").countdown({until:UnCheckms, format: 'DHMS'});	
 	$("#UnTalkItem").modal("show");

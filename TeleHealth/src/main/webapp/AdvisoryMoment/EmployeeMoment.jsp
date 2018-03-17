@@ -10,8 +10,6 @@
 <link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
 <link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
 <link href="<c:url value='/fullCalendar/materialFullCalendar.css'/>" rel="stylesheet" type="text/css"/>
-<!-- Bootstrap core CSS -->
-<link href="<c:url value='/css/fonts/fontstyle.css" rel="stylesheet'/>" type="text/css"/>
 <style>
   #calendar {
     max-width: 1100px;
@@ -303,7 +301,7 @@ $(document).ready(function() {
       allDaySlot:false,
 //       dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
       firstDay:1,
-      slotDuration:'00:15:00',
+      slotDuration:'00:05:00',
       slotLabelFormat:'hh:mm',
       defaultTimedEventDuration:"00:15",
       minTime:"08:00",
