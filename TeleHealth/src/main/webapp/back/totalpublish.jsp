@@ -13,6 +13,7 @@
 						<thead>
 							<tr>
 								<th>會員名稱</th>
+								<th>文章編號</th>
 								<th>文章標題:</th>
 								<th>日期</th>
 								<th>留言內容</th>
@@ -22,11 +23,13 @@
 						<tbody>
 						</tbody>
 					</table>
+					 <span id='table_page'></span>	
 				</div>
 			</div>
 		</div>
 	</div>
 	</main>
+	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
 	$(document).ready(function() {
 			loadall();
@@ -46,12 +49,13 @@
 			   })
 			   //讀取所有會員發表
 			   function loadall(){
-				   $.getJSON('/TeleHealth/healthcolumn/allmempublish.controller',{ },function(datas){
+				   $.getJSON('/TeleHealth/healthcolumn/allmempublish.controller',{ },function(datas){					 
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
 			    	$.each(datas,function(i,mem){				    		    		
-				    	var cell1=$('<td></td>')
+				    	var cell1=$('<td></td>');
+				    	var titleID=$('<td id="titleId"></td>').text(mem[5]);
 				    	var ID=$('<p> id="columnId" name="columnId"</p>').text(mem[0]);		    		
 						cell1.append(ID);
 						var celldata=$("<p></p>").text(mem[1]);
@@ -59,24 +63,30 @@
 			    		article.append(celldata);			    		          	     	          
 			    		var cell4=$('<td></td>').html(mem[3]);
 			    		var cell3=$('<td></td>').text(mem[4]);	
-			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"><i class="fas fa-edit"></i></button>');
-						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
+			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button>');
+						var row=$('<tr></tr>').append([cell1,titleID,article, cell3, cell4,cell5]);
 			    		doc.append(row);			    		
 			    	})
 			    	  tb.append(doc);
+			    	$("#productTable").tablepage($("#table_page"), 5); 
 			    }) 
 			      		
 			} 
 			     //刪除會員發表
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
 				   var check=confirm("你確定要刪除此筆資料?");
-				   var title = $(this).parents('tr').find('td:nth-child(2)').text();					  
+				   var title = $(this).parents('tr').find('td:nth-child(2)').text();				   					  
 	 			   var Id = $(this).parents('tr').find('td:nth-child(4)').text();	 			  			  
 	 			   if(check==true){
-	 				  $.get('/TeleHealth/healthcolumn/deleteQAEmp.controller',{Id:Id,title:title},function(data){
-		 				   alert("您已刪除所po的文");
-		 				  loadall()
-		 			   })		 			   
+	 				  $.getJSON('/TeleHealth/healthcolumn/deleteQAmemonepublish.controller',{Id:title},function(data){
+						if(data=="OK"){
+		 				  alert("您已刪除所po的文");
+		 				  loadall();
+						}else{
+							alert("刪除失敗!!");
+							loadall();
+							}
+			 			   })		 			   
 	 			   }else{
 	 				  loadall();
 		 		 }	 			 
@@ -106,6 +116,7 @@
 	 			        tb.empty();
 			    	$.each(datas,function(i,Mem){				    	    		
 				    	var cell1=$('<td></td>')
+				    	var titleID=$('<td id="titleId"></td>').text(mem[5]);
 				    	var ID=$('<p> id="columnId" name="columnId"</p>').text(Mem[0]);			    		
 						cell1.append(ID);
 						var celldata=$("<p></p>").text(Mem[1]);
@@ -114,7 +125,7 @@
 			    		var cell4=$('<td></td>').html(Mem[3]);
 			    		var cell3=$('<td></td>').text(Mem[4]);	
 			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger"><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"><i class="fas fa-edit"></i></button>');
-						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
+						var row=$('<tr></tr>').append([cell1,titleID,article, cell3, cell4,cell5]);
 			    		doc.append(row);			    		
 			    	})					
 			    	  tb.append(doc);

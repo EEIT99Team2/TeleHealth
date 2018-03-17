@@ -169,13 +169,11 @@ dd{font-size:20px;}
 <script type="text/javascript">
 	$(document).ready(function() {
 		$.getJSON('/TeleHealth/healthcolumn/hotcontentimg.controller',{}, function(data) {
-				console.log(data);
 				$('.carousel-inner').empty();
 				$.each(data, function(i, data) {
 					var img = data.content;
 					var imgsrc = img.split(" ");
-					var imgurl = imgsrc[2].split("=");
-					console.log(imgurl[1]);
+					var imgurl = imgsrc[2].split("=");					
 					var doc = $(document.createDocumentFragment());
 					var num = ["first","secound","third","fourth","fifth" ];
 					if (i == 0) {
@@ -190,8 +188,7 @@ dd{font-size:20px;}
 						article.append(img);
 						var heldata = divfirst.append(article);
 						$('.carousel-inner').append(heldata);
-					} else {
-						console.log(data)
+					} else {						
 						var article = $("<a class='heltitle' name="
 								+ data.title
 								+ " href='healthcolumn/article.jsp?title="

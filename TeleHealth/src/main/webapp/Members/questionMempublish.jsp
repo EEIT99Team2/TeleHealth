@@ -8,7 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>牽伴遠距健康諮詢平台</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
@@ -153,7 +152,7 @@
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(Mem[0]);		    		
 						cell1.append(ID);
-						var celldata=$("<a href='article.jsp?title="+Mem[8]+"&advisoryCode="+Mem[4]+"'"+"target='_blank'></a>").text("文章內容");
+						var celldata=$("<a href='/TeleHealth/healthcolumn/article.jsp?title="+Mem[8]+"&advisoryCode="+Mem[4]+"'"+"target='_blank'></a>").text("文章內容");
 			    		var article=$("<td></td>")
 			    		article.append(celldata);			    		          	     	          
 			    		var cell4=$('<td></td>').html(Mem[5]);

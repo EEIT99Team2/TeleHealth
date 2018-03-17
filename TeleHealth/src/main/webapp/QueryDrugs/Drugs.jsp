@@ -264,6 +264,8 @@
 				var marks = $('input[name="marks"]:checked' , '#drugForm').val();
 				var color = $('input[name="color"]:checked' , '#drugForm').val();
 				var formulation = $('input[name="formulation"]:checked' , '#drugForm').val();
+
+				$('#membersTable').dataTable().fnDestroy(); 
 		        $('#table1').DataTable({
 			        "ajax": "/TeleHealth/querydrugs.controller?licenseNum=" +licenseNum + 
 			        		"&chineseName=" + chineseName + "&englishName=" + englishName + 

@@ -106,7 +106,7 @@ public class QuestionDAO {
 		//選全會員po文
 		public List<Object[]> selectMempublish()	{  
 			NativeQuery query=this.getSession().createNativeQuery
-		        ("select mem.memName,que.quetitle,que.advisoryCode,que.Content,que.createTime from question que join members mem on que.memberId=mem.memberId ");
+		        ("select mem.memName,que.quetitle,que.advisoryCode,que.Content,que.createTime,que.Id from question que join members mem on que.memberId=mem.memberId ");
 			List<Object[]> data=(List<Object[]>)query.list();			
 			return data;			
 		}
@@ -118,5 +118,16 @@ public class QuestionDAO {
 			List<Object[]> data=(List<Object[]>)query.list();			
 			return data;			
 		}
+		//刪除所有會員文中會員po文章
+		public boolean deleteMemone(String Id) {
+					NativeQuery query=this.getSession().createNativeQuery
+							("  delete  from question where id=?");			 
+					query.setParameter(1,Id);				
+					int result = query.executeUpdate();
+					if(result!=0) {				
+						return true;
+					}
+					return false;
+				}
 		
 }

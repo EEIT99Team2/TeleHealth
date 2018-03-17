@@ -5,14 +5,14 @@
 <html>
 <head>
 <style>
-.point1 { 
-color:red; 
-background-color:#AAFFEE;
+/* .point1 {  */
+/* color:red;  */
+/* background-color:#AAFFEE; */
 /* width:600px; */
 /* height:600px; */
-border:3px #cccccc dashed;
-margin:0px auto;
-}
+/* border:3px #cccccc dashed; */
+/* margin:0px auto; */
+/* } */
 
 </style>
 
@@ -24,7 +24,7 @@ margin:0px auto;
 
 				<div style="text-align:center;"><h3 class="title">會員管理</h3></div>
 <div class="point1">	
-									<table id='membersTable' width="100%"
+								<table id='membersTable' width="100%"
 									class="table table-bordered table-striped table-hover ">
 									<thead class="table-dark">
 										<tr>
@@ -38,6 +38,8 @@ margin:0px auto;
 											<th scope="col">地址</th>
 											<th scope="col">藥物過敏</th>
 											<th scope="col">過去病史</th>
+											<th scope="col">狀態</th>
+											<th scope="col">管理</th>
 <!-- 											<th scope="col">照片</th> -->
 										</tr>
 									</thead>
@@ -46,7 +48,7 @@ margin:0px auto;
 		</table>
 	</div>
 	
-<!-- 	<!-- 查詢餘額視窗 --> -->
+<!-- 查詢餘額視窗 --> 
 <!-- <div class="modal fade" id="myPointItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
 <!--   <div class="modal-dialog modal-dialog-centered" role="document"> -->
 <!--     <div class="modal-content"> -->
@@ -71,12 +73,11 @@ margin:0px auto;
 					
 <script type="text/javascript">
 $(document).ready(function() {
-	var memberid = $("#memberId").val();
+	
 	membersTable();
      function membersTable(){
-    	 $('#membersTable').dataTable().fnDestroy(); 
     	 $('#membersTable').DataTable({
-			    "ajax": '/TeleHealth/checkMembers.controller?memberid='+memberid,
+			    "ajax": '/TeleHealth/checkMembers.controller',
 			    "columns": [
 			        { "data": "account" },
 			        { "data": "memName" },
@@ -87,8 +88,21 @@ $(document).ready(function() {
 			        { "data": "birth" },
 			        { "data": "address" },
 			        { "data": "medicine" },
-			        { "data": "medicalHistory" },
-// 			        { "data": "photo" },			      
+			        { "data": "medicalHistory" },			    
+			        { "data": "status" },
+			        { "data": "status",
+			        	  "orderable": false,
+			              "width": "60px",
+			              "render": function(data,type,row,meta) {
+				              if(data=='停權') {
+				            	  return data = "<button onclick=''>復權</button>";
+						      } else if(data=='正常') {
+						    	  return data = "<button>停權</button>";
+							  } else {
+								  return data = "未開通";
+							  }				           
+					}}	
+			     		  
 			    ],
 			    "order": [[ 1, 'desc' ]],
 				"bProcessing": true,//顯示處理中的圖樣
@@ -104,12 +118,19 @@ $(document).ready(function() {
 			        "sNext": "»"
 			  	 	 }
 					}
-				});
-			};	
-				    
-})  
-
-
+				});		
+			
+			};
+		
+		   $('#membersTable>tbody').on('click','tr button:nth-child(1)',function(){
+ 			   var account = $(this).parents('tr').find('td:nth-child(1)').text();
+ 			   $.get("<c:url value='/checkstatus.controller'/>",{"account": account},function(data){
+ 				  $('#membersTable').dataTable().fnDestroy(); 
+					membersTable();
+ 			   })
+		   })
+		  
+});
 
 </script>
 </body>

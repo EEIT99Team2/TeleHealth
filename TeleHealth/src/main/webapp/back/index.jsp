@@ -93,8 +93,8 @@
     <div id="msgManger" class="content-wrapper" style="display:none"><jsp:include page="/back/CustomService.jsp" /></div>
     <div id="columnManger" class="content-wrapper" style="display:none"><jsp:include page="/back/totalpublish.jsp" /></div>
     <div id="takeoffManger" class="content-wrapper" style="display:none"><jsp:include page="/back/takeoffSystem.jsp" /></div>
-    <div id="financialManger" class="content-wrapper" style="display:none">555</div>
-    <div id="financialManger2" class="content-wrapper" style="display:none">666</div>
+    <div id="financialManger" class="content-wrapper" style="display:none"><jsp:include page="/back/charts2.jsp" /></div>
+    <div id="financialManger2" class="content-wrapper" style="display:none"><jsp:include page="/back/charts3.jsp" /></div>
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
       <div class="container">

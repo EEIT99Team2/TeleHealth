@@ -10,10 +10,7 @@
 <title>牽伴遠距健康諮詢平台</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-<script src="../forCkeditor/ckeditor/ckeditor.js"></script>
-<script src="../forCkeditor/ckfinder/ckfinder.js"></script>
-<link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
+<link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 <style type="text/css">
@@ -25,6 +22,8 @@ width:50em;
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
+<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js'/>"></script>
+<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js'/>"></script>
 <div class="container">
 <div class="row col-12">     	
 	      <div class="col-2"></div>
@@ -80,10 +79,7 @@ width:50em;
     </div>
   </div>
 </div>
-	
-	<script src="../js/jquery-3.3.1.min.js"></script>	
-	<script src="../js/bootstrap.min.js"></script>	
-	<script src="../js/jquery-tablepage-1.0.js"></script>
+<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
 	 var empIdlogin=$('#empId').val();
 		$(document).ready(function() {			
