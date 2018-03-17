@@ -24,7 +24,11 @@
   .allFontStyle{font-family:CJKtc_Bold;}
   .navFontSize{font-size:20px;
   				font-family:CJKtc_Bold;}
-  .rightNav{display:inline;}
+  .rightNavIcon{display:inline;
+  			}
+  .rightNavWord{display:inline;
+  			margin-right:20px;}
+  
   </style>
 </head>
 
@@ -40,38 +44,38 @@
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
       	<li class="nav-item" data-toggle="tooltip" data-placement="right" title="memberManger">
           <div id="memBtn" class="nav-link navFontSize">
-            <div class="col-4 rightNav"><i class="fas fa-users"></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav">會員管理</span></div>
+            <div class="rightNavIcon"><i class="fas fa-users fa-fw"></i></div>
+            <div class="rightNavWord"><span class="nav-link-text">會員管理</span></div>
           </div>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="msgManger">
           <div id="msgBtn" class="nav-link navFontSize">
-            <div class="col-4 rightNav"><i class="fas fa-comment-alt "></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav ">線上客服</span></div>
+            <div class="rightNavIcon"><i class="fas fa-comment-alt fa-fw"></i></div>
+            <div class="rightNavWord"><span class="nav-link-text">線上客服</span></div>
           </div>
         </li>       
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="columnManger">
           <div id="colBtn" class="nav-link navFontSize">
-            <div class="col-4 rightNav"><i class="fa fa-fw fa-table"></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav">專欄管理</span></div>
+            <div class="rightNavIcon"><i class="fa fa-fw fa-table fa-fw"></i></div>
+            <div class="rightNavWord"><span class="nav-link-text">專欄管理</span></div>
           </div>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="takeoffManger">
           <div id="empBtn" class="nav-link navFontSize">
-            <div class="col-4 rightNav"><i class="fas fa-address-card"></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav">假勤管理</span></div>
+            <div class="rightNavIcon"><i class="fas fa-address-card fa-fw"></i></div>
+            <div class="rightNavWord"><span class="nav-link-text">假勤管理</span></div>
           </div>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="financialManger">
           <div id="financialBtn" class="nav-link navFontSize">
-            <div class="col-4 rightNav"><i class="fas fa-chart-bar"></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav">營收統計</span></div>
+            <div class="rightNavIcon"><i class="fas fa-chart-bar fa-fw"></i></div>
+            <div class="rightNavWord"><span class="nav-link-text">營收統計</span></div>
           </div>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="financialManger2">
           <div id="financialBtn2" class="nav-link navFontSize">
-            <div class="col-4 rightNav"><i class="fas fa-credit-card"></i></div>
-            <div class="col-8 rightNav"><span class="nav-link-text rightNav">交易紀錄</span></div>
+            <div class="rightNavIcon"><i class="fas fa-credit-card fa-fw"></i></div>
+            <div class="rightNavWord"><span class="nav-link-text">交易紀錄</span></div>
           </div>
         </li>
       </ul>

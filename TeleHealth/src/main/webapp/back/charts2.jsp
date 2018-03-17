@@ -10,7 +10,7 @@
             <div class="card-header">
               <i class="fa fa-bar-chart"></i> 每月收入概況圖</div>
             <div class="card-body">
-              <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto">
+              <div id="container" style="min-width: 310px; height: 700px; margin: 0 auto">
               </div>
             </div>
 <!--             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
