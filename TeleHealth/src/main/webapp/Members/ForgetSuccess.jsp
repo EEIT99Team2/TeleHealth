@@ -15,7 +15,7 @@
 		<div class="row"><p> </p></div>
 		<div class="row"><p> </p></div>
 		<div class="row"><p> </p></div>
-	<div style="text-align:center;"><h1>已發送新密碼至您的信箱，<p>請您前往信箱查看，謝謝！</h1></div>
+	<div style="text-align:center;"><h1>已發送新密碼至您的E-Mail，<p>請您前往E-Mail查看，謝謝！</h1></div>
 		<div class="row"><p> </p></div>
 		<div class="row"><p> </p></div>
 	<div style="text-align:center;"><h4>(7秒後回首頁)<h4></div>
