@@ -71,6 +71,7 @@
 		<div class="text-center">
 				<img style="width:40px;height:40px;" src="/TeleHealth/getImage.controller" >
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
+				<input type="hidden" value="${LoginOK.account}" id="account" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
 					<input type="submit" class="btn btn-sm btn-outline-secondary" 
 					id="myBtn1" value="登出" />
@@ -145,18 +146,23 @@
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="username"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${param.username}">
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${sessionScope.user}${param.username}">
                                 <font color="red" size="-1">${MsgMap.errorUserName}</font>                              
                             </div>
                             <div class="form-group">
                                 <label for="pwd">
                                     <span class="fa fa-eye"></span> 密碼</label>
-                                <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password">
+                                <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password" value="${sessionScope.password}">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPwd}</font>
+                            
                             <div class="checkbox" id="rememberMe">
                                 <label>
-                                    <input type="checkbox" value="" checked /> 記住我
+                                     <input type="checkbox" name="remember" 
+                                    	<c:if test='${sessionScope.rememberMe==true}'>
+						                	checked='checked'
+						               	</c:if> 
+                                   	 value="true" /> 記住我
                                 </label>
                             </div>
                             
@@ -172,7 +178,6 @@
 						還不是會員?<a href="<c:url value="/Members/register.jsp"/>">註冊</a>
 					</p>
 					<p>
-					
 						忘記 <a href="<c:url value="/Members/ForgetPwd.jsp"/>">密碼?</a>
 					</p>
 				</div>

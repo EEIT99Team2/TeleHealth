@@ -1,6 +1,7 @@
 package register.model.dao;
 
 import java.sql.Blob;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -37,6 +38,13 @@ public class MemberDAOHibernate {
 			List<Object[]> data = (List<Object[]>) query.list();
 			return data;	
 		}
+		
+		 String memid1 = "SELECT * FROM members";
+			public List<Object[]> selectFromMember(String memberid) {
+				NativeQuery query = this.getSession().createNativeQuery(memid1);
+				List<Object[]> data = (List<Object[]>) query.list();
+				return data;	
+			}
 	
 	
 	

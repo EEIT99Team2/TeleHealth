@@ -26,7 +26,7 @@ import com.google.gson.GsonBuilder;
 
 import healthcolumn.model.HealthColumnBean;
 import healthcolumn.model.Dao.HealthService;
-import utils.GlobalService;
+import util.GlobalService;
 
 @Controller
 public class Healthcontroller {

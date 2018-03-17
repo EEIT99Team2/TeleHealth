@@ -237,6 +237,60 @@ public class MemberDataController {
 			System.out.println("JSON123=" + data);
 			return data;	
 		}
+		
+		//會員管理
+		@RequestMapping(path = { "/checkMembers.controller" }, method = { RequestMethod.GET,
+				RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+		public @ResponseBody String MgMembers(String memberid) {
+			LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+			List<MemberBean> bean = memberDAO.selectAll();
+			
+	
+			for (int i = 0; i < bean.size(); i++) {	
+				HashMap<String, String> dataOne = new HashMap<String, String>();
+				String account = bean.get(i).getAccount().toString();
+				String memName = bean.get(i).getMemName().toString();
+				String registerTime = bean.get(i).getRegisterTime().toString();
+				String gender = bean.get(i).getGender().toString();
+				String phone = bean.get(i).getPhone().toString();
+				String cellphone = bean.get(i).getCellphone().toString();
+				String birth = bean.get(i).getBirth().toString();
+				String address = bean.get(i).getAddress().toString();	
+				
+				 String medicine =  bean.get(i).getMedicine() != null ? bean.get(i).getMedicine(): null;
+				 if(medicine==null) {
+					 medicine="無";
+				 }
+//				 String medicine = bean.get(i).getMedicine().toString();	
+				
+				 
+				 String medicalHistory =  bean.get(i).getMedicalHistory() != null ? bean.get(i).getMedicalHistory(): null;
+
+//				String medicalHistory=  bean.get(i).getMedicalHistory().toString();
+				if(medicalHistory==null) {
+					medicalHistory="無";
+				}
+//				String photo = bean.get(i).getPhoto().toString();		       
+				dataOne.put("account", account);
+				dataOne.put("memName", memName);
+				dataOne.put("registerTime", registerTime);
+				dataOne.put("gender", gender);
+				dataOne.put("phone", phone);
+				dataOne.put("cellphone", cellphone);
+				dataOne.put("birth", birth);
+				dataOne.put("address", address);
+				dataOne.put("medicine", medicine);
+				dataOne.put("medicalHistory", medicalHistory);
+//				dataOne.put("photo", photo);
+				datafinal.add(dataOne);			
+			}
+			HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
+			datas.put("data", datafinal);
+			String data = new Gson().toJson(datas);
+			System.out.println("JSON5566=" + data);
+			return data;	
+	
+		}
 
 	@RequestMapping(path = { "/Advisorymember.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String Advisorymember(String memberId) {	
