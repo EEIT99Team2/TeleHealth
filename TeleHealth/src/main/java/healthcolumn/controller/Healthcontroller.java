@@ -118,7 +118,7 @@ public class Healthcontroller {
 					in = file.getInputStream();
 					//上傳檔案路徑 
 					//新增檔案位置
-					File filepath = new File("C:\\_TeleHealth\\apache-tomcat-8.5.24\\webapps\\TeleHealth\\video\\" + fileName);
+					File filepath = new File("/share/CACHEDEV2_DATA/.qpkg/Tomcat8/tomcat8/webapps/TeleHealth/video/" + fileName);
 					//將上傳檔案儲存到一個目標檔案當中 
 					if (!filepath.getParentFile().exists()) { 
 						filepath.getParentFile().mkdirs(); 
@@ -172,7 +172,7 @@ public class Healthcontroller {
 					in = file.getInputStream();
 					//上傳檔案路徑 
 					//新增檔案位置
-					File filepath = new File("c:/videos/" + fileName);
+					File filepath = new File("/share/CACHEDEV2_DATA/.qpkg/Tomcat8/tomcat8/webapps/TeleHealth/video/" + fileName);
 					//將上傳檔案儲存到一個目標檔案當中 
 					if (!filepath.getParentFile().exists()) { 
 						filepath.getParentFile().mkdirs(); 
