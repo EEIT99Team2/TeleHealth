@@ -6,8 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>請假系統</title>
-<!-- Bootstrap core CSS -->
-<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <style>
 .txtWaring{color:red}
 .headStyle{font-size:22px;}

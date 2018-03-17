@@ -10,8 +10,6 @@
 <link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
 <link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
 <link href="<c:url value='/fullCalendar/materialFullCalendar.css'/>" rel="stylesheet" type="text/css"/>
-<!-- Bootstrap core CSS -->
-<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
 <style>
 
   #calendar { 
@@ -177,7 +175,6 @@
 <script type="text/javascript" src="<c:url value='/fullCalendar/zh-tw.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/fullCalendar/calender.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 <script>
 $(document).ready(function() {

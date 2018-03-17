@@ -10,8 +10,6 @@
 <link href="<c:url value='/fullCalendar/fullcalendar.min.css'/>" rel="stylesheet"/>
 <link href="<c:url value='/fullCalendar/fullcalendar.print.min.css'/>" rel="stylesheet"  media='print' />
 <link href="<c:url value='/fullCalendar/materialFullCalendar.css'/>" rel="stylesheet" type="text/css"/>
-<!-- Bootstrap core CSS -->
-<link href="<c:url value='/css/fonts/fontstyle.css" rel="stylesheet'/>" type="text/css"/>
 <style>
   #calendar {
     max-width: 1100px;
