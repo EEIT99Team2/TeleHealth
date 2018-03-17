@@ -38,7 +38,7 @@ public class ModifyPwdController {
 
 		if (oldpwd == null || oldpwd.trim().length() == 0) {
 			errorMsg.put("errorOldPwd", "會員密碼欄位不能空白");
-			return "ModifyPwdController.error";
+			return "changePwd.error";
 		} else if (oldpwd != null && oldpwd.trim().length() > 0) {
 			//原先在session內的密碼
 			String Password = member.getPwd(); // LOGINOK取出的密碼
@@ -46,7 +46,6 @@ public class ModifyPwdController {
 			oldpwd = GlobalService.getMD5Endocing(GlobalService.encryptString(oldpwd));
 			if (!oldpwd.equals(Password)) {
 				errorMsg.put("errorOldPwd", "輸入的舊密碼與原先不相符!");
-				return "ModifyPwdController.error";
 			}
 		}
 		if (pwdCheck == null || pwdCheck.trim().length() == 0) {
@@ -62,10 +61,10 @@ public class ModifyPwdController {
 					Boolean flag = loginService.UpdatePasword(member, Newpwd);
 					if (flag) {
 						System.out.println("新密碼修改完成");
-						return "forgetPwd.success";
+						return "changePwd.success";
 					} else {
 						System.out.println("修改失敗");
-						// return "ModifyPwdController.error";
+						return "changePwd.error";
 					}
 				} else {
 					errorMsg.put("errorPwdCheck", "與上面輸入值不符合");
@@ -76,9 +75,9 @@ public class ModifyPwdController {
 		}
 
 		if (errorMsg != null && !errorMsg.isEmpty()) {
-			return "ModifyPwdController.error";
+			return "changePwd.success";
 		} else {
-			return "register.success";
+			return "changePwd.error";
 		}
 
 	}

@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -18,10 +21,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.Gson;
+
+
+import pay.model.ProductBean;
+import pay.model.dao.ProductDAO;
 
 import register.model.MemberBean;
 import register.model.RegisterService;
+import register.model.dao.MemberDAOHibernate;
 import util.GlobalService;
 import util.SystemUtils;
 
@@ -31,6 +42,9 @@ public class MemberDataController {
 	@Autowired
 	private RegisterService registerService =null;
 	
+	@Autowired
+	private MemberDAOHibernate memberDAO =null;
+
 	@RequestMapping(
 			path={"/Members02.controller"},
 			method={RequestMethod.GET, RequestMethod.POST}
@@ -156,7 +170,7 @@ public class MemberDataController {
 				}				
 				
 				if (errorMsg != null && !errorMsg.isEmpty()) {
-					return "memberdata.error";
+					return "ModifyData.error";
 				}else {
 
 					MemberBean member = (MemberBean)session.getAttribute("LoginOK");
@@ -182,10 +196,107 @@ public class MemberDataController {
 					member = registerService.Update(member);
 					}
 					if(member != null) {
-						return "register.success";
+						return "ModifyData.success";
 					}else {
-						return "login.error";
+						return "ModifyData.error";
 					}
 				}		
 	}
+	
+	@RequestMapping(path = { "/checkPoint.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String checkPoint(String memberId) {
+		String point;
+		if(memberId!= null && memberId.trim().length()!=0) {
+			MemberBean bean = memberDAO.selectById(memberId);
+			point =String.valueOf(bean.getPoint());			
+		}else {
+			point="查詢時發生錯誤";
+		}						
+		return	point;
+	}
+	
+	//丁丁
+		@RequestMapping(path = { "/point.controller" }, method = { RequestMethod.GET,
+				RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+		public @ResponseBody String pointRecords(String memberid) {
+			
+			LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+			List<Object[]> result =memberDAO.selectMemberId(memberid);
+			System.out.println("result="+result);
+			for (int i = 0; i < result.size(); i++) {
+			HashMap<String, String> dataOne = new HashMap<String, String>();
+			String MerchantTradeDate = result.get(i)[1].toString();
+			String TotalAmount = result.get(i)[2].toString();
+			dataOne.put("TotalAmount", TotalAmount);
+			dataOne.put("MerchantTradeDate", MerchantTradeDate);
+			datafinal.add(dataOne);
+			}
+			HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
+			datas.put("data", datafinal);
+			String data = new Gson().toJson(datas);
+			System.out.println("JSON123=" + data);
+			return data;	
+		}
+		
+		//會員管理
+		@RequestMapping(path = { "/checkMembers.controller" }, method = { RequestMethod.GET,
+				RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+		public @ResponseBody String MgMembers(String memberid) {
+			LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
+			List<MemberBean> bean = memberDAO.selectAll();
+			
+	
+			for (int i = 0; i < bean.size(); i++) {	
+				HashMap<String, String> dataOne = new HashMap<String, String>();
+				String account = bean.get(i).getAccount().toString();
+				String memName = bean.get(i).getMemName().toString();
+				String registerTime = bean.get(i).getRegisterTime().toString();
+				String gender = bean.get(i).getGender().toString();
+				String phone = bean.get(i).getPhone().toString();
+				String cellphone = bean.get(i).getCellphone().toString();
+				String birth = bean.get(i).getBirth().toString();
+				String address = bean.get(i).getAddress().toString();	
+				
+				 String medicine =  bean.get(i).getMedicine() != null ? bean.get(i).getMedicine(): null;
+				 if(medicine==null) {
+					 medicine="無";
+				 }
+//				 String medicine = bean.get(i).getMedicine().toString();	
+				
+				 
+				 String medicalHistory =  bean.get(i).getMedicalHistory() != null ? bean.get(i).getMedicalHistory(): null;
+
+//				String medicalHistory=  bean.get(i).getMedicalHistory().toString();
+				if(medicalHistory==null) {
+					medicalHistory="無";
+				}
+//				String photo = bean.get(i).getPhoto().toString();		       
+				dataOne.put("account", account);
+				dataOne.put("memName", memName);
+				dataOne.put("registerTime", registerTime);
+				dataOne.put("gender", gender);
+				dataOne.put("phone", phone);
+				dataOne.put("cellphone", cellphone);
+				dataOne.put("birth", birth);
+				dataOne.put("address", address);
+				dataOne.put("medicine", medicine);
+				dataOne.put("medicalHistory", medicalHistory);
+//				dataOne.put("photo", photo);
+				datafinal.add(dataOne);			
+			}
+			HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
+			datas.put("data", datafinal);
+			String data = new Gson().toJson(datas);
+			System.out.println("JSON5566=" + data);
+			return data;	
+	
+		}
+
+	@RequestMapping(path = { "/Advisorymember.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody String Advisorymember(String memberId) {	
+			MemberBean bean = memberDAO.selectById(memberId);		
+			return new Gson().toJson(bean);	
+	}
+
+	
 }

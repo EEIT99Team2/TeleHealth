@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,29 @@ public class RegisterController {
 		}
 		return new Gson().toJson("此帳號已被註冊，請重新輸入!");
 	}
+	
+	@RequestMapping(
+			path= {"/checkPassword.controller"},
+			method= {RequestMethod.GET, RequestMethod.POST},
+			produces ="application/json;charset=UTF-8"
+	)	
+	public @ResponseBody String checkPassword(String oldpwd,String memberId) {
+		MemberBean beans = registerService.selectById(memberId);
+		String Password = beans.getPwd();
+		System.out.println("Password="+Password);
+		String OldPassword = null;
+		if(oldpwd != null && oldpwd.trim().length()>0) {
+			OldPassword = GlobalService.getMD5Endocing(GlobalService.encryptString(oldpwd));			
+			System.out.println("OldPassword="+OldPassword);
+		}
+		if(Password.equals(OldPassword)) {
+			return new Gson().toJson("此密碼正確!");
+		}else{
+			return new Gson().toJson("密碼不正確!");
+		}	
+	}
+	
+	
 	
 	@RequestMapping(
 			path={"/register.controller"},
@@ -224,10 +248,10 @@ public class RegisterController {
 						errorMsg.put("errorPwd", "密碼欄位格式錯誤");
 					}																									
 				if(medicine ==null|| medicine.trim().length()==0) {
-					errorMsg.put("errorMedicine", "藥物過敏欄位不能空白");
+					medicine="無";
 				}	
 				if(medicalHistory ==null|| medicalHistory.trim().length()==0) {
-					errorMsg.put("errorMedicalHistory", "過去病史欄位不能空白");
+					medicalHistory="無";
 				}	
 				
 				Blob photo = null;

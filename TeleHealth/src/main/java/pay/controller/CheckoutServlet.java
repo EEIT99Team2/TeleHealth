@@ -8,7 +8,17 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+
+import healthpassport.model.BMIBean;
 import pay.model.*;
+import pay.model.dao.ProductDAO;
+import register.model.RegisterService;
 
 @WebServlet("/checkout.do")
 public class CheckoutServlet extends HttpServlet {

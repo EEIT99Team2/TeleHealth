@@ -107,8 +107,7 @@ public class QuestionDAO {
 		public List<Object[]> selectMempublish()	{  
 			NativeQuery query=this.getSession().createNativeQuery
 		        ("select mem.memName,que.quetitle,que.advisoryCode,que.Content,que.createTime from question que join members mem on que.memberId=mem.memberId ");
-			List<Object[]> data=(List<Object[]>)query.list();
-			System.out.println(data);
+			List<Object[]> data=(List<Object[]>)query.list();			
 			return data;			
 		}
 		public List<Object[]> QAMemonepublish(String memname)

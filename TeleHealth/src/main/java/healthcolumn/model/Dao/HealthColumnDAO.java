@@ -33,8 +33,7 @@ public class HealthColumnDAO  {
 		NativeQuery query=this.getSession().createNativeQuery("select * from healthColumn where advisoryCode=?");
 		query.setParameter(1, advisoryCode);
 		query.addEntity(HealthColumnBean.class);
-		List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();
-		System.out.println(data);
+		List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();		
 		return data;
 	}
 	//選點擊的文章	

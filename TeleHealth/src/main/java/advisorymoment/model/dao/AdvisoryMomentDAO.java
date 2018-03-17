@@ -122,7 +122,7 @@ public class AdvisoryMomentDAO {
 	
 	//會員取消預約還款
 		public int updateMemPoint(String UserId) {
-			String hql="UPDATE MemberBean SET point=point+50 WHERE memberId=?";
+			String hql="UPDATE MemberBean SET point=point+5 WHERE memberId=?";
 			Query<MemberBean> query = this.getSession().createQuery(hql);
 			query.setParameter(0, UserId);
 			int result= query.executeUpdate();

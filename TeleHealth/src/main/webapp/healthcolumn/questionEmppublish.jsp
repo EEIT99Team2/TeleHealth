@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>牽伴遠距健康諮詢平台</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
@@ -16,11 +16,15 @@
 <link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<style type="text/css">
+</style>
 </head>
 <body>
-<main role="main" class="container mt-2">
-<div class="row">     	
-	      <div class="card">
+<jsp:include page="/fragment/nav2.jsp" />
+<div class="container">
+<div class="row col-12">     	
+	      <div class="col-2"></div>
+	      <div class="card col-8">
 			<div class="card-header"><span>${empLoginOK.empName}</span><input type="hidden" id="empId" value="${empLoginOK.empId}">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
@@ -63,18 +67,17 @@
       	 <input type="reset" id="clean" value="清除"  >
        		<font id="reanswer" color="green" size="-1"></font><font id="reanswererror" color="red" size="-1"></font>
         </div>
-		</form>      
-    	</div>
+		 </form>      
+    	  </div>
+      </div>
     </div>
   </div>
-</div>
-	
+</div>	
 	<script src="../js/jquery-3.3.1.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
-	var empIdlogin=$('#empId').val();
-	  console.log(empIdlogin);	
+	var empIdlogin=$('#empId').val();	  
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
@@ -83,7 +86,7 @@
 				  {width:400, height:200,toolbarGroups:tg}								 	
 		     );				
 
-			    loademp(empIdlogin)			
+			    loademp(empIdlogin);			
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
 				})
@@ -104,7 +107,6 @@
 				   var check=confirm("你確定要刪除此筆資料?");
 				   var Empname=$('#title').val();
 	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			   console.log(Id+"   "+Empname) 			  
 	 			   if(check==true){
 	 				  $.get('/TeleHealth/healthcolumn/deleteQAEmp.controller',{Id:Id,EmpId:Empname},function(data){
 		 				   alert("您已刪除所po的文");
@@ -120,10 +122,8 @@
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();
-	 			  console.log(Id);
-	 			 $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){
-						console.log(datas);
-		 				$.each(datas,function(i,QA){	 				
+	 			  $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){
+						$.each(datas,function(i,QA){	 				
 	 					 CKEDITOR.instances.contenttext.setData(QA[5]); 
 	 					 $('#questionId').val(QA[0]);						
 		 				})	 
@@ -136,12 +136,10 @@
 		 //讀取員工發表
 			   function loademp(empId){
 				   $.getJSON('/TeleHealth/healthcolumn/QAEmpublish.controller',{empId:empId},function(datas){
-						console.log(datas);
-		    			var doc=$(document.createDocumentFragment());			    		
+						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
 			    	$.each(datas,function(i,Emp){	
-				    	console.log(Emp)		    		
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(Emp[0]);		    		
 						cell1.append(ID);
@@ -150,7 +148,7 @@
 			    		article.append(celldata);			    		          	     	          
 			    		var cell4=$('<td></td>').html(Emp[5]);
 			    		var cell3=$('<td></td>').text(Emp[6]);	
-			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"	><i class="fas fa-edit"></i></button>');
+			    		var cell5 = $('<td></td>').html('<button class="btn btn-danger" ><i class="fas fa-trash-alt" ></i></button> <button class="btn btn-info"><i class="fas fa-edit"></i></button>');
 						var row=$('<tr></tr>').append([cell1,article, cell3, cell4,cell5]);
 			    		doc.append(row);			    		
 			    	})
@@ -161,8 +159,7 @@
 			} 
 		
 		function postdata(){		
-			var questionId=$("#questionId").val();
-			console.log(questionId);
+			var questionId=$("#questionId").val();			
 			var contenttext=CKEDITOR.instances.contenttext.getData();
 			if(contenttext==null|| contenttext.length==0){
 	    		document.getElementById("reanswer").innerHTML=' ';    		

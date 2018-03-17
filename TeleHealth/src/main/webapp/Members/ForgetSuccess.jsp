@@ -7,17 +7,25 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>已發送新密碼至您的信箱，請您前往信箱查看，謝謝！</h1>
-	
- <BR> 
-	${member.mid} <hr>
-	${member.password} <hr>
-	${member.Email} <hr>
-	${member.Name} <hr>
-	${member.address} <hr>
-	${member.Tel} <hr>
+<jsp:include page="/fragment/nav2.jsp" />
 
-	<input type="button" value="回主頁" onclick="location.href='../index.jsp'">
+<%-- 	<c:remove var="LoginOK" scope="session" /> --%>
+		<div class="row"><p> </p></div>
+		<div class="row"><p> </p></div>
+		<div class="row"><p> </p></div>
+		<div class="row"><p> </p></div>
+		<div class="row"><p> </p></div>
+	<div style="text-align:center;"><h1>已發送新密碼至您的信箱，<p>請您前往信箱查看，謝謝！</h1></div>
+		<div class="row"><p> </p></div>
+		<div class="row"><p> </p></div>
+	<div style="text-align:center;"><h4>(7秒後回首頁)<h4></div>
+		<div class="row"><p> </p></div>
+		<div class="row"><p> </p></div>
+	<div style="text-align:center;"><input type="submit" class="btn btn-primary" name="submitBtn" id="submitBtn"value="回主頁" onclick="location.href='../home.jsp'" ></div>
+<jsp:include page="/fragment/footer.jsp" />
 
+<Script Language="JavaScript">
+setTimeout("location.href='../home.jsp'",7000);
+</Script> 
 </body>
 </html>

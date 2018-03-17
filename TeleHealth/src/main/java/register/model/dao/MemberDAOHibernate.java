@@ -1,6 +1,7 @@
 package register.model.dao;
 
 import java.sql.Blob;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -9,10 +10,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import pay.model.ProductBean;
 import register.model.MemberBean;
 
 @Repository
+@Transactional
 public class MemberDAOHibernate {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -27,8 +31,26 @@ public class MemberDAOHibernate {
 		return list;
 	}
 	
+	 String memid = "SELECT * FROM product WHERE memberId=? AND RtnCode=1";
+		public List<Object[]> selectMemberId(String memberid) {
+			NativeQuery query = this.getSession().createNativeQuery(memid);
+			query.setParameter(1,memberid);
+			List<Object[]> data = (List<Object[]>) query.list();
+			return data;	
+		}
+		
+		 String memid1 = "SELECT * FROM members";
+			public List<Object[]> selectFromMember(String memberid) {
+				NativeQuery query = this.getSession().createNativeQuery(memid1);
+				List<Object[]> data = (List<Object[]>) query.list();
+				return data;	
+			}
+	
+	
+	
+	
 	public MemberBean selectById(String memberId) {
-		MemberBean member = getSession().get(MemberBean.class, memberId);
+		MemberBean member = this.getSession().get(MemberBean.class, memberId);
 		return member;
 	}
 	

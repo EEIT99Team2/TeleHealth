@@ -6,18 +6,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>請假系統</title>
-<!-- Bootstrap core CSS -->
-<link href="<c:url value='/css/fonts/fontstyle.css'/>" rel="stylesheet" type="text/css"/>
-
 <style>
 .txtWaring{color:red}
+.headStyle{font-size:22px;}
+.bodyStyle{font-size:18px;}
 </style>
 </head>
 <body>
+<jsp:include page="/fragment/nav2.jsp" />
 <div class='container'>
 <h2  class='container'>未處理申請</h2>
 <table class="table  table-hover">
-  <thead>
+  <thead class="headStyle">
     <tr>
       <th scope="col">編號</th>
       <th scope="col">申請人</th>
@@ -26,13 +26,13 @@
       <th scope="col">預約狀態</th>
     </tr>
   </thead>
-  <tbody id="UnCheckList">
+  <tbody id="UnCheckList" class="bodyStyle">
 <!--      未處理申請 -->
   </tbody>
 </table>
 <h2 class='container'>已處理申請</h2>
 <table class="table table-hover">
-  <thead>
+  <thead class="headStyle">
     <tr>
       <th scope="col">編號</th>
       <th scope="col">申請人</th>
@@ -42,13 +42,13 @@
       <th scope="col">回覆時間</th>
     </tr>
   </thead>
-  <tbody id="CheckList">
+  <tbody id="CheckList" class="bodyStyle">
 <!--      已處理申請 -->
   </tbody>
 </table>
 
 <!-- 管理員回覆視窗 -->
-<div class="modal fade" id="responseItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade bodyStyle" id="responseItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -87,6 +87,9 @@
   </div>
 </div>
 </div>
+<!-- Footer -->
+	<jsp:include page="/fragment/footer.jsp" />
+</body>
 <!--=======================載入script檔跟程式==========================-->
 <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -250,5 +253,4 @@ $("#resultCheck").click(function(){
 });
 })
 </script>
-</body>
 </html>
