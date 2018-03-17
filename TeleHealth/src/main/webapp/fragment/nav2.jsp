@@ -146,7 +146,7 @@
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="username"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${sessionScope.user}${param.username}">
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${sessionScope.user}">
                                 <font color="red" size="-1">${MsgMap.errorUserName}</font>                              
                             </div>
                             <div class="form-group">
