@@ -7,7 +7,7 @@
 <style>
 .point1 { 
 color:red; 
-background-color:#AAFFEE;
+background-color:#FFDDAA;
 width:600px;
 height:600px;
 border:3px #cccccc dashed;
