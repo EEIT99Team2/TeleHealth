@@ -27,6 +27,10 @@
 			onclick="location.href='ChangePwd.jsp'" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="CHR" data-toggle="tab" role="tab" value="點數查詢" /></li>
+			
+		<li class="nav-item"><input type="button" class="nav-link active"
+			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
+			onclick="location.href='Point.jsp'" /></li>
 		
 	</ul>
 	<div class="tab-content" id="myTabContent">

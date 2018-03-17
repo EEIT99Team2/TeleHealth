@@ -44,15 +44,12 @@ video {
 
 <body>
 	<jsp:include page="/fragment/nav2.jsp" />
-	
+
 	<input type="hidden" id="roomName"
-		value="${sessionScope.advisory.videoCode}" />	
-	<input type="hidden" id="memberId"
-		value="${sessionScope.advisory.memberId}E231B9D2-0685-4C7F-A601-6A9E0A41D14B" />
-	<input type="hidden" id="gender"
-		value="M" />
-	<input type="hidden" id="realage"
-		value="1986-01-01" />
+		value="${sessionScope.advisory.videoCode}" />
+	<input type="hidden" id="memberId" value="${sessionScope.advisory.memberId}E231B9D2-0685-4C7F-A601-6A9E0A41D14B" />
+	<input type="hidden" id="gender" value="M" />
+	<input type="hidden" id="realage" value="1986-01-01" />
 	<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 	<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 	<div class="container">
@@ -84,9 +81,9 @@ video {
 					<li class="nav-item"><a class="nav-link" id="contact-tab"
 						data-toggle="tab" href="#contact" role="tab"
 						aria-controls="contact" aria-selected="false">血壓</a></li>
-					<li class="nav-item"><a class="nav-link" id="contact-tab"
-					data-toggle="tab" href="#contact" role="tab"
-					aria-controls="contact" aria-selected="false">血糖</a></li>
+					<li class="nav-item"><a class="nav-link" id="contact1-tab"
+						data-toggle="tab" href="#contact1" role="tab"
+						aria-controls="contact" aria-selected="false">血糖</a></li>
 				</ul>
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade show active" id="home" role="tabpanel"
@@ -115,54 +112,123 @@ video {
 						<div class="container">
 							<div class="row">
 								<div class="col-12 text-center">
-<!-- 									<div class="collapse container" id="collapseExample"> -->
-										<div class="card card-body table-responsive">
-											<div>
-												<button type="button" id='bmiweek'
-													class="btn btn-outline-primary">一星期</button>
-												<button type="button" id='bmimonth'
-													class="btn btn-outline-primary">一個月</button>
-												<button type="button" id='bmithreemonth'
-													class="btn btn-outline-primary">三個月</button>
-											</div>
-											<div id="mychart1div">
-												<!-- 圖表 -->
-												<canvas id="mychart1" height="200" width="400"></canvas>
-											</div>
-											<hr>
-											<table id='bmiTable' width="100%"
-												class="table table-bordered table-striped table-hover ">
-												<thead class="table-dark">
-													<tr>
-														<th scope="col">身高</th>
-														<th scope="col">體重</th>
-														<th scope="col">BMI</th>
-														<th scope="col">結果</th>
-														<th scope="col">輸入時間</th>
-													</tr>
-												</thead>
-												<tbody>
-
-												</tbody>
-											</table>
+									<div class="card card-body table-responsive">
+										<div>
+											<button type="button" id='bmiweek'
+												class="btn btn-outline-primary">一星期</button>
+											<button type="button" id='bmimonth'
+												class="btn btn-outline-primary">一個月</button>
+											<button type="button" id='bmithreemonth'
+												class="btn btn-outline-primary">三個月</button>
 										</div>
+										<div id="mychart1div">
+											<!-- 圖表 -->
+											<canvas id="mychart1" height="200" width="400"></canvas>
+										</div>
+										<hr>
+										<table id='bmiTable' width="100%"
+											class="table table-bordered table-striped table-hover ">
+											<thead class="table-dark">
+												<tr>
+													<th scope="col">身高</th>
+													<th scope="col">體重</th>
+													<th scope="col">BMI</th>
+													<th scope="col">結果</th>
+													<th scope="col">輸入時間</th>
+												</tr>
+											</thead>
+											<tbody>
+
+											</tbody>
+										</table>
 									</div>
-<!-- 								</div> -->
+								</div>
 							</div>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="contact" role="tabpanel"
-						aria-labelledby="contact-tab">...</div>
+						aria-labelledby="contact-tab">
+						<div class="row">
+							<div class="col-12 text-center">
+								<div class="card card-body">
+									<div>
+										<button type="button" id='bpweek'
+											class="btn btn-outline-primary">一星期</button>
+										<button type="button" id='bpmonth'
+											class="btn btn-outline-primary">一個月</button>
+										<button type="button" id='bpthreemonth'
+											class="btn btn-outline-primary">三個月</button>
+									</div>
+									<div id="mychart2div">
+										<!-- 圖表 -->
+										<canvas id="mychart2" height="200" width="400"></canvas>
+									</div>
+									<hr>
+									<table id='bpTable' width="100%"
+										class="table table-bordered table-striped table-hover ">
+										<thead class="table-dark">
+											<tr>
+												<th scope="col">收縮壓</th>
+												<th scope="col">舒張壓</th>
+												<th scope="col">脈搏</th>
+												<th scope="col">結果</th>
+												<th scope="col">輸入時間</th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="contact1" role="tabpanel"
+						aria-labelledby="contact-tab">
+						<div class="row">
+							<div class="col-12 text-center">
+								<div class="card card-body">
+									<div>
+										<button type="button" id='bsweek'
+											class="btn btn-outline-primary">一星期</button>
+										<button type="button" id='bsmonth'
+											class="btn btn-outline-primary">一個月</button>
+										<button type="button" id='bsthreemonth'
+											class="btn btn-outline-primary">三個月</button>
+									</div>
+									<div id="mychart3div">
+										<canvas id="mychart3" height="200" width="400"></canvas>
+									</div>
+									<hr>
+									<table id='bsTable' width="100%"
+										class="table table-bordered table-striped table-hover ">
+										<thead class="table-dark">
+											<tr>
+												<th scope="col">血糖值</th>
+												<th scope="col">結果</th>
+												<th scope="col">輸入時間</th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
-	<jsp:include page="/fragment/footer.jsp" />
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script	src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>	
+<script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
 <script src="<c:url value='/js/healthpassport.js' />"></script>
-<script type="text/javascript">
-		
-	   $(document).ready(function() {
-		   bmionemonth();
+<script type="text/javascript">				
+	   $(document).ready(function() {		   
 		    CKEDITOR.replace('contents',{
 		    		filebrowserBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html',
 		    		filebrowserImageBrowseUrl : '/TeleHealth/forCkeditor/ckfinder/ckfinder.html?type=Images', 
@@ -172,6 +238,7 @@ video {
 		    		filebrowserFlashUploadUrl : '/TeleHealth/forCkeditor/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash' 	
 		    });
 		    console.log("ready!");
+		   ///改 
 // 		    var memberId=$('#memberId').val();
 // 			$.getJSON("<c:url value='/Advisorymember.controller'/>",{memberId:memberId},function(data){
 // 					$('#gender').val(data.gender);
