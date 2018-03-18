@@ -37,7 +37,7 @@ public class LoginController {
 		Cookie cookieUser = null;
 		Cookie cookiePassword = null;
 		Cookie cookieRememberMe = null;
-		
+
 		if (status) {
 			if (username == null || username.trim().length() == 0) {
 				errorMsg.put("errorUserName", "帳號欄位不能空白");
@@ -145,9 +145,9 @@ public class LoginController {
 					response.addCookie(cookiePassword);
 					response.addCookie(cookieRememberMe);
 
-					if(username.indexOf("M")>-1) {
-						return "ManagerLogin.success";						
-					}else {						
+					if (username.indexOf("M") > -1) {
+						return "ManagerLogin.success";
+					} else {
 						return "login.success";
 					}
 				}
@@ -155,8 +155,7 @@ public class LoginController {
 			return "login.error";
 		}
 	}
-	
-	
+
 	@RequestMapping(path = { "/logout.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public String logout(HttpSession session) {
 		if (session.getAttribute("LoginOK") != null) {

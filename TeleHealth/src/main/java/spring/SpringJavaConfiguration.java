@@ -64,7 +64,7 @@ public class SpringJavaConfiguration {
 		LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(dataSource());
 		Properties props = new Properties();
 		props.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
-		props.setProperty("hibernate.show_sql", "true");
+		props.setProperty("hibernate.show_sql", "false");
 		builder.addProperties(props);
 		//此處加入相關的Bean  例如MemberBean.class等，中間用"逗號,"隔開
 

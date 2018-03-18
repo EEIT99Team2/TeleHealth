@@ -86,7 +86,6 @@ public class BMIDAO {
 		theCa.add(theCa.DATE, -29);// 最后一个数字30可改，30天的意思
 		Date start = theCa.getTime();
 		String startDate = sdf.format(start);// 三十天之前日期
-		System.out.println(startDate+"  "+endDate);
 		query.setParameter(1, memberid);
 		query.setParameter(2, startDate);
 		query.setParameter(3, endDate);
@@ -111,7 +110,6 @@ public class BMIDAO {
 		theCa.add(theCa.DATE, -179);// 最后一个数字30可改，30天的意思
 		Date start = theCa.getTime();
 		String startDate = sdf.format(start);// 三十天之前日期
-		System.out.println(startDate+"  "+endDate);
 		query.setParameter(1, memberid);
 		query.setParameter(2, startDate);
 		query.setParameter(3, endDate);

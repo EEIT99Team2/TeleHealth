@@ -48,11 +48,11 @@
 
 	<bean id="register.success" class="org.springframework.web.servlet.view.RedirectView">
 		<property name="contextRelative" value="true"></property>
-		<property name="url" value="/Members/RegisterSuccess.jsp"></property>
+		<property name="url" value="/register/RegisterSuccess.jsp"></property>
 	</bean>
 
 	<bean id="register.error" class="org.springframework.web.servlet.view.InternalResourceView">
-		<property name="url" value="/Members/register.jsp"></property>
+		<property name="url" value="/register/register.jsp"></property>
 	</bean>
 	
 	<bean id="login.error" class="org.springframework.web.servlet.view.InternalResourceView">
@@ -66,11 +66,11 @@
 	
 	<bean id="forgetPwd.success" class="org.springframework.web.servlet.view.RedirectView">
 		<property name="contextRelative" value="true"></property>
-		<property name="url" value="/Members/ForgetSuccess.jsp"></property>
+		<property name="url" value="/register/ForgetSuccess.jsp"></property>
 	</bean>
 	
 	<bean id="forgetPwd.error" class="org.springframework.web.servlet.view.InternalResourceView">		
-		<property name="url" value="/Members/ForgetPwd.jsp"></property>
+		<property name="url" value="/register/ForgetPwd.jsp"></property>
 	</bean>	
 
 	<bean id="form.error" class="org.springframework.web.servlet.view.InternalResourceView">
