@@ -50,7 +50,7 @@ width:50em;
      </div>	
 </div>
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="form" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" id="updatestyle" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="updatestyle" role="document">
     <div class="modal-content" >
       <div class="modal-header">
         <h5 class="modal-title" id="UnReserveItemTitle"></h5>
@@ -85,7 +85,7 @@ width:50em;
 			 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
 		          {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},{ name: 'insert', groups: [ 'Image' ] },
 		          ];				
-			 CKEDITOR.replace('contenttext',{width:450, height:500,toolbarGroups:tg});		
+			 CKEDITOR.replace('contenttext',{width:700, height:500,toolbarGroups:tg});		
  			 loadProduct(empIdlogin);
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
