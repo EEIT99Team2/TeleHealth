@@ -143,6 +143,7 @@ width:50em;
 			    
 			    //修改文章
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
+	 			  $("#reanswer").text(""); 
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var id = $(this).parents('tr').find('td:nth-child(2)').text();
 	 		   $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller',{title:id},function(datas){

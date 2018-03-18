@@ -14,25 +14,25 @@
 	
 	<link rel="stylesheet" href="<c:url value="/css/register.css"/>">
 	<link rel="stylesheet" href="<c:url value="/css/register.css"/>">
-	
+	<link href="<c:url value="/css/fonts/fontstyle.css"/>" rel="stylesheet" type="text/css"/>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"	rel="stylesheet">
 	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
-	rel="stylesheet" type="text/css">
-	
-
-	<link rel="stylesheet" href="<c:url value="/css/register.css"/>">
+	rel="stylesheet" type="text/css">	
 	<!-- google fonts  -->
 	<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i,700" rel="stylesheet">
 </head>
+<style>
+.fontStyle{font-family:CJKtc_Bold;}
+</style>
 <body>
 
 	<div class="w3ls-banner">
 	<div class="heading">
 <!-- 		<h1>Register Account</h1> -->
 	</div>
-		<div class="container">
+		<div class="container fontStyle">
 			<div class="heading">
 				<h2>歡迎成為牽伴的一份子</h2>
 			</div>
