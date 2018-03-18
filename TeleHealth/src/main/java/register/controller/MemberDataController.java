@@ -243,7 +243,7 @@ public class MemberDataController {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String account = bean.get(i).getAccount().toString();
 			String memName = bean.get(i).getMemName().toString();
-			String registerTime = bean.get(i).getRegisterTime().toString();
+			String registerTime = bean.get(i).getRegisterTime().toString().substring(0,16);
 			String gender = bean.get(i).getGender().toString();
 			if (gender.equals("M")) {
 				gender = "男";
@@ -253,7 +253,7 @@ public class MemberDataController {
 			}
 			String phone = bean.get(i).getPhone().toString();
 			String cellphone = bean.get(i).getCellphone().toString();
-			String birth = bean.get(i).getBirth().toString();
+			String birth = bean.get(i).getBirth().toString().substring(0,10);
 			String address = bean.get(i).getAddress().toString();
 
 			String status = bean.get(i).getStatus().toString();

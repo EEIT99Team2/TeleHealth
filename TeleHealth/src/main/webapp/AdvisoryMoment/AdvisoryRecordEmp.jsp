@@ -226,10 +226,16 @@ $("body").on("click","#UnTalkList tr",function(){
 	console.log("now"+nowCountUse+"ms"+unTalkOne.advisoryTime);
 	var docFrag =$(document.createDocumentFragment());
 	$("#UnTalkItem .modal-body").empty();
+	if(msCountUse<0){
+		docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
+				+"<br/><span style='font-size:1.3em'>諮詢時段:  "+unTalkOne.advisoryTime+"</span>"
+				+"<br/><span style='font-size:1.3em'>諮詢對象:  "+unTalkOne.memName+"</span></div>");	
+		}else{
 	docFrag.append("<span style='font-size:1.3em'>諮詢項目:  "+unTalkOne.reserveItem+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢時段:  "+unTalkOne.advisoryTime+"</span>"
 			+"<br/><span style='font-size:1.3em'>諮詢對象:  "+unTalkOne.memName+"</span>"
 			+"<div id='getting-started' style='height:70px;margin-top:20px;'></div>");	
+			}
 	$("#UnTalkItem .modal-body").append(docFrag);
 	$("#getting-started").countdown({until:msCountUse, format: 'DHMS'});	
 	$("#UnTalkItem").modal("show");

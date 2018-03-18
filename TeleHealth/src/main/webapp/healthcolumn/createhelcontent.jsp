@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>牽伴遠距健康諮詢平台</title>
+<title>新增文章</title>
 <script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js'/>"></script>
 <script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js'/>"></script>
 <link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">

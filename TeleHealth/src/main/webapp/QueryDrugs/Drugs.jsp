@@ -232,8 +232,8 @@
 	</div>
 	
 	<!-- 顯示藥品詳細資 -->
-	<div class="modal fade" id="showdrug" role="dialog" >
-	  <div class="modal-dialog">
+	<div class="modal fade bd-example-modal-lg" id="showdrug" role="dialog" >
+	  <div class="modal-dialog modal-lg">
 	    <div class="modal-header">
 	    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	        	 <span aria-hidden="true">&times;</span>
@@ -365,6 +365,21 @@
 				})
 				$("#showdrug").modal("show");
 			});
+			//綁定動態產生tr滑鼠滑過變色
+			$("body").on("mouseover","tr",function(){
+				$("tbody tr").mouseover(over).mouseout(out);
+			});
+
+			$("tbody tr").mouseover(over).mouseout(out);
+
+			function over(){
+				$(this).removeClass("Default");
+				$(this).addClass("table-success");
+			}
+			function out(){
+				$(this).removeClass("table-success");
+				$(this).addClass("Default");
+			}
 		});
 	</script>
 
