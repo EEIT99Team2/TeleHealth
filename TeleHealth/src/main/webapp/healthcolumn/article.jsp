@@ -166,7 +166,7 @@ $(document).ready(function() {
 			            	}else{
 			                	var celldate=$("<h6></h6>").text(data[4]);
 			                	}	
-			          		 var row2=$("div class='media-body' ></div>").append([cellauthor,celldate,cellcontent]);
+			          		 var row2=$("<div class='media-body' ></div>").append([cellauthor,celldate,cellcontent]);
 			          		doc.append(row2);          		        		         		       		      		
 			            	 }else{
 			            	var cellauthor= $("<h6 class='mt-0'></h6>").text("牽絆:"+data[0]);
