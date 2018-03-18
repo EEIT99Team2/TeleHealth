@@ -15,31 +15,27 @@ import register.model.dao.MemberDAOHibernate;
 public class OpenUpToAccountController {
 
 	@Autowired
-	private OpenUpToAccountService openUpService=null;
-	
+	private OpenUpToAccountService openUpService = null;
+
 	@Autowired
 	private MemberDAOHibernate memberDAO;
 
-	@RequestMapping(
-			path={"/openup.controller"},
-			method={RequestMethod.GET, RequestMethod.POST}
-			)
-	public String method(String openup, HttpSession session){
-		System.out.println("hahahaahaha");
-		
+	@RequestMapping(path = { "/openup.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public String method(String openup, HttpSession session) {
+
 		MemberBean data = memberDAO.selectById(openup);
-		String status= data.getStatus();
-		if(status.equals("N")) {			
+		String status = data.getStatus();
+		if (status.equals("N")) {
 			MemberBean member = openUpService.openUpToAccount(openup);
-			if(member != null) {
+			if (member != null) {
 				return "AccountSuccess.success";
 			} else {
 				return "login.error";
 			}
-		}else {
+		} else {
 			return "login.error";
 		}
-		
+
 	}
-	
+
 }
