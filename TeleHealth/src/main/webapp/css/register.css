@@ -61,7 +61,7 @@ a:focus, a:hover {
 /*-- //Reset-Code --*/
 
 .w3ls-banner {
-    background: url(../images/banner9.jpg) no-repeat;
+    background: url(/TeleHealth/images/banner9.jpg) no-repeat;
 	background-size: cover;
     min-height: 100vh;
     color: white;
@@ -103,6 +103,10 @@ label.form-label {
 .form-input {
     display: inline-block;
     width: 69%;
+}
+.form-input5566 {
+    display: inline-block;
+    width: 60%;
 }
 .form-input11 {
     display: inline-block;
