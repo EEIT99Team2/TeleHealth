@@ -14,6 +14,10 @@
 background-color: #CCEEFF;
 width: 500px;
 }
+.contenttypedoctor{
+background-color: #FFAA33;
+width: 500px;
+}
 .imgsize{
 width:32px;
 hieght:32px; 
@@ -35,9 +39,9 @@ c:
      </div>
      <div class="col-lg-10" id='QAcontent'>                         
      </div>              
-      <div class="col-lg-10" id='foot'> 
            <c:if test="${not empty LoginOK || not empty empLoginOK}">
-      <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"><h5>
+      <div class="col-lg-10" id='foot'> 
+      <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"></h5>
       	<div class="form-group">
       		<form id="Msg" action="/TeleHealth/healthcolumn/insQA.controller" method="post" >
       		<input type="hidden" id="advisorycode" name="advisorycode" >
@@ -118,7 +122,7 @@ $(document).ready(function() {
             	}else{
                 	var celldate=$("<small></small>").text(data[6]);
                 	}	
-          		 var row2=$("<div class='media-body contenttype' ></div>").append([cellauthor,celldate,cellcontent]);
+          		 var row2=$("<div class='media-body contenttypedoctor' ></div>").append([cellauthor,celldate,cellcontent]);
           		doc.append(row2);          		        		         		       		      		
             	 }else{
             	var empimg=$("<img src='/TeleHealth/getimagebyid.controller?id="+data[2] +"' class='imgsize'/>")
@@ -166,7 +170,7 @@ $(document).ready(function() {
 			            	}else{
 			                	var celldate=$("<h6></h6>").text(data[4]);
 			                	}	
-			          		 var row2=$("<div class='media-body' ></div>").append([cellauthor,celldate,cellcontent]);
+			          		 var row2=$("<div class='media-body contenttype' ></div>").append([cellauthor,celldate,cellcontent]);
 			          		doc.append(row2);          		        		         		       		      		
 			            	 }else{
 			            	var cellauthor= $("<h6 class='mt-0'></h6>").text("牽絆:"+data[0]);
@@ -176,7 +180,7 @@ $(document).ready(function() {
 			           		}else{
 			               	var celldate=$("<h6></h6>").text(data[4]);
 			               	}	
-			         		var row2=$("<div class='media-body' style='border-style:dashed'></div>").append([cellauthor,celldate,cellcontent]); 
+			         		var row2=$("<div class='media-body contenttypedoctor' style='border-style:dashed'></div>").append([cellauthor,celldate,cellcontent]); 
 			         		doc.append(row2);          	             	            	
 			               }    	
 			       	}); 	

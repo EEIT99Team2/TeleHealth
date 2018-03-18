@@ -218,7 +218,7 @@ $(document).ready(function() {
 	$.LoadingOverlaySetup({
 	    color : "rgba(255,255,255, 1)",
 	});
-	$.LoadingOverlay("show");
+// 	$.LoadingOverlay("show");
 	setTimeout(function(){
 	    $.LoadingOverlay("hide");
 	}, 2500);

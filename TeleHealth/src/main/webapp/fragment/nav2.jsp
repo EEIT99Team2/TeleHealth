@@ -63,10 +63,10 @@
 				<li class="nav-item"><div class="row showIcon"><a class="nav-link" id="advisoryIcon"
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value='/pay/pay.jsp'/>">會員專區</a></li>
+					href="<c:url value='/Members/ModifyData.jsp'/>">會員專區</a></li>
 			</ul>
 		<div class="text-center">
-				<img style="width:40px;height:40px;" src="/TeleHealth/getImage.controller" >
+				<img style="width:40px;height:40px;" src="<c:url value='/getImage.controller'/>" >
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
 				<input type="hidden" value="${LoginOK.account}" id="account" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">

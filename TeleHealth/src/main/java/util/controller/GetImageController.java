@@ -33,6 +33,7 @@ public class GetImageController {
 		EmployeesBean emp = null;
 		if (session.getAttribute("LoginOK") != null) {
 			member = (MemberBean) session.getAttribute("LoginOK");
+			System.out.println("fileName=="+member.getAccount());
 		} else if(session.getAttribute("empLoginOK") != null) {
 			emp = (EmployeesBean) session.getAttribute("empLoginOK");
 		}
