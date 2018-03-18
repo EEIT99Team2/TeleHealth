@@ -1,5 +1,9 @@
 package util.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 
@@ -18,6 +22,7 @@ import employees.model.EmployeesBean;
 import employees.model.EmployeesService;
 import register.model.LoginService;
 import register.model.MemberBean;
+import util.SystemUtils;
 
 //本Controller用於將網頁顯示資料庫的圖片用src路徑
 @Controller
@@ -46,6 +51,16 @@ public class GetImageController {
 			} else if (emp != null && emp.getPhoto() != null) {
 				blob = emp.getPhoto();
 				media = util.SystemUtils.BlobToByte(blob);
+			} else {
+				FileInputStream in = null;
+				try {
+					File file = new File("e:/專題/doctor1.jpg");
+					in = new FileInputStream(file);
+					blob = util.SystemUtils.fileToBlob(in, file.length());
+					media = util.SystemUtils.BlobToByte(blob);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -86,6 +101,16 @@ public class GetImageController {
 			} else if (emp != null && emp.getPhoto() != null) {
 				blob = emp.getPhoto();
 				media = util.SystemUtils.BlobToByte(blob);
+			} else {
+				FileInputStream in = null;
+				try {
+					File file = new File("e:/專題/doctor1.jpg");
+					in = new FileInputStream(file);
+					blob = util.SystemUtils.fileToBlob(in, file.length());
+					media = util.SystemUtils.BlobToByte(blob);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
