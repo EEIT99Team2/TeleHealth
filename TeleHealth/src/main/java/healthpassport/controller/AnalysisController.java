@@ -61,7 +61,6 @@ public class AnalysisController {
 			dataOne.put("bmiresult", stresult);
 			dataOne.put("time", strtime);
 			String data = new Gson().toJson(dataOne);
-			System.out.println(data);
 			return data;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -92,7 +91,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 
@@ -125,7 +123,6 @@ public class AnalysisController {
 		datafinal.add(dataOne);
 		datas.put("topbmi", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println(data);
 		return data;
 	}
 
@@ -147,7 +144,6 @@ public class AnalysisController {
 			bean.setHeartBeat(heartBeatD);
 			BloodPressureBean bpresult = bloodPressureService.insert(bean,gender,Age);			
 			String data = new Gson().toJson(bpresult);
-			System.out.println("JSON=" + data);
 			return data;
 
 		} catch (NumberFormatException e) {
@@ -187,7 +183,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 
@@ -215,7 +210,6 @@ public class AnalysisController {
 		datafinal.add(dataOne);
 		datas.put("topbp", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println(data);
 		return data;
 	}
 
@@ -262,7 +256,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 
@@ -285,7 +278,6 @@ public class AnalysisController {
 		datafinal.add(dataOne);
 		datas.put("topbs", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println(data);
 		return data;
 	}
 
@@ -312,7 +304,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 
@@ -339,7 +330,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 
@@ -366,7 +356,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 
@@ -401,7 +390,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 
@@ -437,7 +425,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 
@@ -473,7 +460,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 	//7bmi
@@ -500,7 +486,6 @@ public class AnalysisController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 	//30bmi
@@ -527,7 +512,6 @@ public class AnalysisController {
 			HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 			datas.put("data", datafinal);
 			String data = new Gson().toJson(datas);
-			System.out.println("JSON=" + data);
 			return data;
 		}//180bmi
 		@RequestMapping(path = { "/healthpassport/bmirecordsthreemon.controller" }, method = { RequestMethod.GET,
@@ -553,7 +537,6 @@ public class AnalysisController {
 			HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 			datas.put("data", datafinal);
 			String data = new Gson().toJson(datas);
-			System.out.println("JSON=" + data);
 			return data;
 		}
 }
