@@ -19,6 +19,8 @@ margin-bottom:50px;}
 dt{font-size:30px;
 	padding-bottom:15px;}
 dd{font-size:20px;}
+.introduction{
+height:250px}
 </style>
 </head>
 
@@ -101,49 +103,45 @@ dd{font-size:20px;}
 				<div class="w3-row-padding w3-grayscale" style="margin-top: 64px">
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor2.png"/>" alt="John"
+							<img src="<c:url value="/images/doctor1.jpg"/>" alt="John"
 								style="width: 100%;background-color:#33CCFF;">
-							<div class="w3-container bg-light">
-								<h3>John Doe</h3>
-								<p class="w3-opacity">CEO & Founder</p>
-								<p>Phasellus eget enim eu lectus faucibus vestibulum.
-									Suspendisse sodales pellentesque elementum.</p>
+							<div class="w3-container bg-light introduction">
+								<h3>Dr.Doe</h3>
+								<p class="w3-opacity">醫師</p>
+								<p>專長:高血壓、一般醫學、臨床藥理學、臨床試驗</p>
 							</div>
 						</div>
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor1.jpg"/>" alt="Jane"
+							<img src="<c:url value="/images/doctor2	.png"/>" alt="Jane"
 								style="width: 100%;background-color:#33CCFF;">
-							<div class="w3-container bg-light">
-								<h3>Anja Doe</h3>
-								<p class="w3-opacity">Art Director</p>
-								<p>Phasellus eget enim eu lectus faucibus vestibulum.
-									Suspendisse sodales pellentesque elementum.</p>
+							<div class="w3-container bg-light introduction">
+								<h3>Dr.Wu</h3>
+								<p class="w3-opacity">營養師</p>
+								<p>減重營養、慢性病營養、雲端營養服務、營養教育</p>
 							</div>
 						</div>
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
-							<img src="<c:url value="/images/doctor3.png"/>" alt="Mike"
+							<img src="<c:url value="/images/doctor3.jpg"/>" alt="Mike"
 								style="width: 100%; background-color:#33CCFF;">
-							<div class="w3-container bg-light">
-								<h3>Mike Ross</h3>
-								<p class="w3-opacity">Web Designer</p>
-								<p>Phasellus eget enim eu lectus faucibus vestibulum.
-									Suspendisse sodales pellentesque elementum.</p>
+							<div class="w3-container bg-light introduction">
+								<h3>Dr.Ross</h3>
+								<p class="w3-opacity">護理師</p>
+								<p>腫瘤護理、安寧緩和、醫療護理、慢性病護理及健康行為研究</p>
 							</div>
 						</div>
 					</div>
 					<div class="w3-col l3 m6 w3-margin-bottom">
 						<div class="w3-card">
 							<img src="<c:url value="/images/doctor4.png"/>" alt="Dan"
-								style="width: 100%;background-color:#33CCFF;">
-							<div class="w3-container bg-light">
-								<h3>Dan Star</h3>
-								<p class="w3-opacity">Designer</p>
-								<p>Phasellus eget enim eu lectus faucibus vestibulum.
-									Suspendisse sodales pellentesque elementum.</p>
+								style="width: 100%;background-color:#FFFFFF;">
+							<div class="w3-container bg-light introduction">
+								<h3>Dr.Lu</h3>
+								<p class="w3-opacity">物理治療師</p>
+								<p>骨骼肌肉神經病變、肩頸酸痛及腰部疼痛關節疼痛、中風(頭部外傷)、發展遲緩</p>
 							</div>
 						</div>
 					</div>
