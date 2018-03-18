@@ -28,9 +28,10 @@
 	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
 	rel='stylesheet' type='text/css'>
 <!-- 	google 我不是機器人 -->
-<!-- <link -->
-<!-- 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' -->
-<!-- 	rel='stylesheet' type='text/css'> -->
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css'>
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
 
@@ -145,7 +146,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="pwd">
-                                    <span class="fa fa-eye"></span> 密碼</label>
+                                    <span class="fa fa-eye"></span> 密碼</label>                  
                                 <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password" value="${sessionScope.password}">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPwd}</font>
