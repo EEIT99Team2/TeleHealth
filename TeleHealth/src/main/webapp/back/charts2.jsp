@@ -7,7 +7,7 @@
   
           <!-- Bar Chart Card-->
           <div class="card mb-3">
-            <div class="card-header">
+            <div class="card-header navFontSize">
               <i class="fa fa-bar-chart"></i> 每月收入概況圖</div>
             <div class="card-body">
               <div id="container" style="min-width: 310px; height: 700px; margin: 0 auto">
@@ -29,7 +29,7 @@ $(document).ready(function() {
         },
 
 	    title: {
-	        text: '每月收入概況圖'
+	        text: '每月收入概況圖',
 	    },
 	
 	    subtitle: {

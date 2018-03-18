@@ -22,11 +22,10 @@
   <style type="text/css">
   .allFontStyle{font-family:CJKtc_Bold;}
   .navFontSize{font-size:20px;font-family:CJKtc_Bold;}
-  .rightNavIcon{display:inline;
-  			}
-  .rightNavWord{display:inline;
-  			margin-right:20px;}
+  .rightNavIcon{display:inline;}
+  .rightNavWord{display:inline;margin-right:20px;}
   .columnUse{font-size:19px;font-family:CJKtc_Bold;}
+  tspan {font-size:20px;font-family:CJKtc_Bold;}
   </style>
 </head>
 
@@ -84,10 +83,12 @@
           </a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">       
-        <li class="nav-item">
-          <a class="nav-link  navFontSize" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-sign-out-alt"></i>登出</a>
-        </li>
+      <ul class="navbar-nav ml-auto">   
+	      <li class="nav-item">
+			  <form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
+			  	<button type="submit" id="myBtn1" class="btn btn-secondary allFontStyle"><i class="fas fa-sign-out-alt"></i>登出</button>
+			  </form>
+	      </li>   
       </ul>
     </div>
   </nav>
