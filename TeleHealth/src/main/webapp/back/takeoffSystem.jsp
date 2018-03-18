@@ -223,7 +223,7 @@ $("#responseCheck").click(function(){
 
 //綁定動態產生tr滑鼠滑過變色
 $("body").on("mouseover","tr",function(){
-	$("tbody tr").mouseover(over).mouseout(out);	
+	$("tbody tr").mouseover(over).mouseout(out);
 });
 
 $("tbody tr").mouseover(over).mouseout(out);
