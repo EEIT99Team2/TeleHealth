@@ -27,20 +27,19 @@ public class ModifyPwdController {
 
 	@RequestMapping(path = { "/ModifyPwd.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public String method(String oldpwd, String Newpwd, String pwdCheck, Model model, HttpSession session) {
-		System.out.println("oldpwd=" + oldpwd + ",Newpwd=" + Newpwd + ",pwdCheck=" + pwdCheck);
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("MsgMap", errorMsg);
 		MemberBean member = (MemberBean) session.getAttribute("LoginOK");
 		if (member == null) {
 			return "login.error";
-		} 
+		}
 		String memberId = member.getMemberId();
 
 		if (oldpwd == null || oldpwd.trim().length() == 0) {
 			errorMsg.put("errorOldPwd", "會員密碼欄位不能空白");
 			return "changePwd.error";
 		} else if (oldpwd != null && oldpwd.trim().length() > 0) {
-			//原先在session內的密碼
+			// 原先在session內的密碼
 			String Password = member.getPwd(); // LOGINOK取出的密碼
 			// 會員輸入的舊密碼加密
 			oldpwd = GlobalService.getMD5Endocing(GlobalService.encryptString(oldpwd));
@@ -55,15 +54,11 @@ public class ModifyPwdController {
 			errorMsg.put("errorNewpwd", "新的會員密碼欄位不能空白");
 		} else {
 			if (Newpwd.matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$")) {
-				System.out.println("新的會員密碼格式正確");
 				if (pwdCheck.equals(Newpwd)) {
-					System.out.println("====新的密碼===" + Newpwd);
 					Boolean flag = loginService.UpdatePasword(member, Newpwd);
 					if (flag) {
-						System.out.println("新密碼修改完成");
 						return "changePwd.success";
 					} else {
-						System.out.println("修改失敗");
 						return "changePwd.error";
 					}
 				} else {

@@ -71,10 +71,7 @@ public class MemberDAOHibernate {
 					updateMember.setMemName(bean.getMemName());
 				}
 				if (bean.getPwd() != null && bean.getPwd().trim().length() > 0) {
-					System.out.println("Update Password=" + bean.getPwd().toString());
-					System.out.println("OLD Password=" + updateMember.getPwd());
 					updateMember.setPwd(bean.getPwd());
-					System.out.println("NEW Password=" + updateMember.getPwd());
 				}
 				if (bean.getMemHeight() != null && bean.getMemHeight() > 0) {
 					updateMember.setMemHeight(bean.getMemHeight());
@@ -101,7 +98,6 @@ public class MemberDAOHibernate {
 					updateMember.setPhone(bean.getPhone());
 				}
 				if (bean.getStatus() != null && bean.getStatus().trim().length() > 0) {
-					System.out.println("xxxxxxxxxxxxx=" + bean.getStatus());
 					updateMember.setStatus(bean.getStatus());
 				}
 				if (bean.getPhoto() != null && bean.getFileName() != null) {
@@ -109,7 +105,6 @@ public class MemberDAOHibernate {
 					updateMember.setPhoto(bean.getPhoto());
 				}
 				updateMember.setModifiyTime(new Timestamp(System.currentTimeMillis()));
-				System.out.println("updateMember.status=" + updateMember.getStatus());
 				return updateMember;
 			}
 		}

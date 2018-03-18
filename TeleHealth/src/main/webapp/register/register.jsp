@@ -11,9 +11,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- stylesheets -->
-	<link rel="stylesheet" href="css/font-awesome.css">
-	<link rel="stylesheet" href="css/style.css">
+	
+	<link rel="stylesheet" href="<c:url value="/css/register.css"/>">
+	<link rel="stylesheet" href="<c:url value="/css/register.css"/>">
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"	rel="stylesheet">
+	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
+	rel="stylesheet" type="text/css">
+	
+
+	<link rel="stylesheet" href="<c:url value="/css/register.css"/>">
 	<!-- google fonts  -->
 	<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i,700" rel="stylesheet">
@@ -282,32 +290,19 @@
 						</li>
 						
 						
-						<li class="last-type"> 
-							<label class="form-label1">
-								您如何得知本平台的內容或活動訊息(可複選):							
-							</label>
-							<div class="form-input2">
-								<input type="checkbox" name="test1" ><label class="type-of-test">網站推介</label>
-								<input type="checkbox" name="test2" ><label class="type-of-test">報章介紹</label>
-								<input type="checkbox" name="test3" ><label class="type-of-test">商業電郵通知</label>
-								<input type="checkbox" name="test4" ><label class="type-of-test">雜誌介紹</label>
-								<input type="checkbox" name="test5" ><label class="type-of-test">博客 / Blogs</label>
-								<input type="checkbox" name="test6" ><label class="type-of-test">網路搜尋器</label>
-							</div>
-						</li>
+			
 					</ul>
 					<input type="submit" name="submitBtn" id="submitBtn" value="送出" >
 				</form>	
 			</div>
 		</div>
 		<div class="copyright">
-			<p>© 2018 牽伴健康諮詢平台 | Design by <a href="<c:url value="../home.jsp"/>">TeleHealth</a></p> 
+			<p>© 2018 牽伴健康諮詢平台 | Design by<a href="<c:url value="/home.jsp"/>">TeleHealth</a></p> 
 		</div>
 	</div>
 	
 <!-- 	JavaScript -->
-<!-- ====================載入JQuery========================= -->
-<script src="<c:url value='/fullCalendar/jquery-3.3.1.min.js'/>"></script>	
+	
 <script type="text/javascript">
 $('#account').blur(function(){
 	var account = $('#account').val();
@@ -322,17 +317,17 @@ $('#account').blur(function(){
 			flag = pattern.test(account);
 			if(flag){
 				$('#submitBtn').prop("disabled", false);
-				checkAccountMsg.html("<img src=images/yes.gif>"); 
+				checkAccountMsg.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 
 				}else{
-					checkAccountMsg.html("<img src=images/error.png>"+"格式錯誤!");
+					checkAccountMsg.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"格式錯誤!");
 					$('#submitBtn').prop("disabled", true);
 					}
 		} else {
-			checkAccountMsg.html("<img src=images/error.png>"+"已經被註冊過!");
+			checkAccountMsg.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"已經被註冊過!");
 			$('#submitBtn').prop("disabled", true);
 		}				
 		}else{
-			checkAccountMsg.html("<img src=images/error.png>"+"不得為空白!");
+			checkAccountMsg.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 			$('#submitBtn').prop("disabled", true);
 			}	
 	})
@@ -349,13 +344,13 @@ var checkPwdResult = $('#checkPwdResult');
 		flag = pattern.test(pwd);	
 		if(pattern.test(pwd)&&pattern2.test(pwd)){
 			$('#submitBtn').prop("disabled", false);
-			checkPwdResult.html("<img src=images/yes.gif>"); 
+			checkPwdResult.html("<img width='20px' src='<c:url value='/images/yes.png'/>'>"); 
 			}else{
-				checkPwdResult.html("<img src=images/error.png>"+"格式錯誤!");
+				checkPwdResult.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"格式錯誤!");
 				$('#submitBtn').prop("disabled", true);
 				}
 		}else{
-			checkPwdResult.html("<img src=images/error.png>"+"不得為空白!");
+			checkPwdResult.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 			}
 })
 
@@ -365,14 +360,14 @@ $('#pwdCheck').blur(function(){
 	var pwd = $('#pwd').val();
 	if(pwdCheck!=null&&pwdCheck.length>0){
 		if(pwdCheck==pwd){
-			checkPwdCheckResult.html("<img src=images/yes.gif>"); 
+			checkPwdCheckResult.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 
 			$('#submitBtn').prop("disabled", false);
 			}else{
-				checkPwdCheckResult.html("<img src=images/error.png>"+"與密碼不相符!");
+				checkPwdCheckResult.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"與密碼不相符!");
 				$('#submitBtn').prop("disabled", true);
 				}
 		}else{
-			checkPwdCheckResult.html("<img src=images/error.png>"+"不得為空白!");
+			checkPwdCheckResult.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 			}
 })
 
@@ -383,14 +378,14 @@ $('#memName').blur(function(){
 		var pattern =/^[\u4e00-\u9fa5]+$/i;
 		flag = pattern.test(memName);	
 		if(flag){
-			checkMemName.html("<img src=images/yes.gif>"); 
+			checkMemName.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 
 			$('#submitBtn').prop("disabled", false);
 			}else{
-				checkMemName.html("<img src=images/error.png>"+"姓名格式錯誤!");
+				checkMemName.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"姓名格式錯誤!");
 				$('#submitBtn').prop("disabled", true);
 				}	
 	}else{
-		checkMemName.html("<img src=images/error.png>"+"不得為空白!");
+		checkMemName.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 		$('#submitBtn').prop("disabled", true);
 		}
 
@@ -400,9 +395,9 @@ $('#gender').blur(function(){
 	var gender = $('#gender').val();
 	var checkGender = $('#checkGender');
 	if(gender!==""){
-		checkGender.html("<img src=images/yes.gif>"); 
+		checkGender.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 
 		}else{
-			checkGender.html("<img src=images/error.png>"+"不得為空白!");
+			checkGender.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 			}
 })
 
@@ -415,15 +410,15 @@ $('#phone').blur(function(){
 		
 		flag = pattern.test(phone);	
 		if(flag){
-		checkPhone.html("<img src=images/yes.gif>"); 	
+		checkPhone.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 	
 		$('#submitBtn').prop("disabled", false);	
 			}else{
-			checkPhone.html("<img src=images/error.png>"+"電話格式錯誤!");
+			checkPhone.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"電話格式錯誤!");
 			$('#submitBtn').prop("disabled", true);
 				}
 
 		}else{
-			checkPhone.html("<img src=images/error.png>"+"不得為空白!");
+			checkPhone.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 			}
 })
 
@@ -435,15 +430,15 @@ $('#cellphone').blur(function(){
 		var pattern = /[0-9]{10,}/;
 		flag = pattern.test(cellphone);	
 		if(flag && cellphone.length<11){
-			checkCellphone.html("<img src=images/yes.gif>"); 	
+			checkCellphone.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 	
 		$('#submitBtn').prop("disabled", false);	
 			}else{
-				checkCellphone.html("<img src=images/error.png>"+"電話格式錯誤!");
+				checkCellphone.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"電話格式錯誤!");
 			$('#submitBtn').prop("disabled", true);
 				}
 
 		}else{
-			checkCellphone.html("<img src=images/error.png>"+"不得為空白!");
+			checkCellphone.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 			}
 })
 
@@ -454,12 +449,12 @@ $('#year').blur(function(){
 		var pattern = /[0-9]{4,}/;
 		flag = pattern.test(year);	
 		if(flag && year.length<5){
-		checkYear.html("<img src=images/yes.gif>"); 
+		checkYear.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 
 			}else{
-			  checkYear.html("<img src=images/error.png>"+"格式錯誤!");
+			  checkYear.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"格式錯誤!");
 				}
 	}else{
-		checkYear.html("<img src=images/error.png>"+"不得為空白!");
+		checkYear.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 		}
 	
 })
@@ -472,12 +467,12 @@ $('#memHeight').blur(function(){
 		var pattern =/^[0-9]+(\.[0-9]{1,2})?$/;
 		flag = pattern.test(memHeight);
 		if(flag && memHeight<300 &&memHeight>100){
-		checkMemHeight.html("<img src=images/yes.gif>"); 
+		checkMemHeight.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 
 				}else{
-					checkMemHeight.html("<img src=images/error.png>"+"身高格式錯誤!");
+					checkMemHeight.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"身高格式錯誤!");
 					}		
 	}else{
-		checkMemHeight.html("<img src=images/error.png>"+"不得為空白!");
+		checkMemHeight.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 		}
 })
 
@@ -489,12 +484,12 @@ $('#memWeight').blur(function(){
 		var pattern =/^[0-9]+(\.[0-9]{1,2})?$/;
 		flag = pattern.test(memWeight);
 		if(flag  && memWeight<250 && memWeight>20){
-			checkMemWeight.html("<img src=images/yes.gif>"); 
+			checkMemWeight.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 
 				}else{
-					checkMemWeight.html("<img src=images/error.png>"+"體重格式錯誤!");
+					checkMemWeight.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"體重格式錯誤!");
 					}		
 	}else{
-		checkMemWeight.html("<img src=images/error.png>"+"不得為空白!");
+		checkMemWeight.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 		}
 })
 
@@ -502,9 +497,9 @@ $('#bloodType').blur(function(){
 	var bloodType = $('#bloodType').val();
 	var checkBloodType = $('#checkBloodType');
 	if(bloodType!==""){
-		checkBloodType.html("<img src=images/yes.gif>"); 
+		checkBloodType.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 
 		}else{
-			checkBloodType.html("<img src=images/error.png>"+"不得為空白!");
+			checkBloodType.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 			}
 })
 
@@ -512,9 +507,9 @@ $('#address').blur(function(){
 	var address = $('#address').val();
 	var checkAddress = $('#checkAddress');
 	if(address!= null	&& address.length>0){
-		checkAddress.html("<img src=images/yes.gif>"); 
+		checkAddress.html("<img width='20px' src='<c:url value='/images/yes.png'/>'/>"); 
 	}else{
-		checkAddress.html("<img src=images/error.png>"+"不得為空白!");
+		checkAddress.html("<img width='20px' src='<c:url value='/images/error.png'/>'>"+"不得為空白!");
 		}
 })
 </script>
