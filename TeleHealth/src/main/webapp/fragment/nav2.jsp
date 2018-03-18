@@ -66,11 +66,11 @@
 					href="<c:url value='/Members/ModifyData.jsp'/>">會員專區</a></li>
 			</ul>
 		<div class="text-center">
-				<img style="width:40px;height:40px;" src="<c:url value='/getImage.controller'/>" >
+				<img style="width:65px;height:65px;border-radius:20px;" src="<c:url value='/getImage.controller'/>" >
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
 				<input type="hidden" value="${LoginOK.account}" id="account" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
-					<button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fas fa-sign-out-alt"></i> 登出</button>
+					<button type="submit" class="btn btn-outline-secondary"><i class="fas fa-sign-out-alt"></i> 登出</button>
 				</form>
 		</div>
 			</c:when>
@@ -95,12 +95,11 @@
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>				
 			</ul>
 		<div class="text-center">
-				<span>
-					<c:out value="${empLoginOK.empName},你好!!" />
-				</span>
+				<img style="width:65px;height:65px;border-radius:20px;" src="<c:url value='/getImage.controller'/>" >
 				<input type="hidden" value="${empLoginOK.empId}" id="empId" />
+				<input type="hidden" value="${empLoginOK.empName}" id="empName" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
-					<button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fas fa-sign-out-alt"></i> 登出</button>
+					<button type="submit" class="btn btn-outline-secondary"><i class="fas fa-sign-out-alt"></i> 登出</button>
 				</form>
 		</div>
 			</c:when>
