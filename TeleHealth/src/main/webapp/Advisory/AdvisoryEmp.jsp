@@ -47,9 +47,9 @@ video {
 
 	<input type="hidden" id="roomName"
 		value="${sessionScope.advisory.videoCode}" />
-	<input type="hidden" id="memberId" value="${sessionScope.advisory.memberId}E231B9D2-0685-4C7F-A601-6A9E0A41D14B" />
-	<input type="hidden" id="gender" value="M" />
-	<input type="hidden" id="realage" value="1986-01-01" />
+	<input type="hidden" id="memberId" value="${sessionScope.advisory.memberId}" />
+	<input type="hidden" id="gender" value="${sessionScope.talkMember.gender}" />
+	<input type="hidden" id="birth" value="${sessionScope.talkMember.birth}" />
 	<script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js' />"></script>
 	<script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js' />"></script>
 	<div class="container">
@@ -221,6 +221,7 @@ video {
 			</div>
 		</div>
 	</div>
+	
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
@@ -239,11 +240,11 @@ video {
 		    });
 		    console.log("ready!");
 		   ///改 
-// 		    var memberId=$('#memberId').val();
-// 			$.getJSON("<c:url value='/Advisorymember.controller'/>",{memberId:memberId},function(data){
-// 					$('#gender').val(data.gender);
-// 					$('#realage').val(data.birth);
-// 				});
+		    var memberId=$('#memberId').val();
+			$.getJSON("<c:url value='/Advisorymember.controller'/>",{memberId:memberId},function(data){
+					$('#gender').val(data.gender);
+					$('#birth').val(data.birth);
+				});
 		    });
 	    
 	   	$('#sendContent').click(insert);
