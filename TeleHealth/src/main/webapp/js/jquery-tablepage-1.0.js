@@ -70,10 +70,11 @@ E-Mail：hpw925@hotmail.com
 				$(this).click( function () {
 				
 					dNowIndex = $(this).find("tr").text();
-					
+					$('html, body').scrollTop(0);
 					if (dNowIndex > 0)
 					{
 						change_page_content();
+						$('html, body').scrollTop(0);
 					}
 				});
 			});

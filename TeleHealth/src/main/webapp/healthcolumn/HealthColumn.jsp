@@ -38,7 +38,7 @@
 			<!-- Main Content -->
 			<div class="container">
 				<div class="row">
-					<table class="col-lg-4 col-md-10 mx-auto" id="title">
+					<table class="col-lg-6 col-md-10 mx-auto" id="title">
 					<thead>
 					<tr>
 					<th></th>
@@ -50,8 +50,10 @@
 						</tbody>
 					</table>
 				</div>				
-			<span id='table_page' class='col-lg-2 col-md-10 mx-auto'></span>
-					
+				<div class="container">
+					<div class="row">
+						<span id='table_page' class='col-lg-2 col-md-10 mx-auto'></span>
+					</div>						
 				</div>
 			</div>
 		</div>
@@ -126,13 +128,7 @@
 			var title = ($(this).attr('name'));			
 			$.post('/TeleHealth/healthcolumn/countarticle.controller', {title : title}, function(data) {
 			});
-		})
-// 		$('#table_page').on('click','#page th',function(){
-// 			$('th').click(function(){
-// 				alert("ans");
-// 				})			
-// 		$('html,body').animate({scrollTop: $("body").offset().top}, 0);
-// 		})	
+		})	
 	</script>
 	<jsp:include page="/fragment/footer.jsp" />
 </body>
