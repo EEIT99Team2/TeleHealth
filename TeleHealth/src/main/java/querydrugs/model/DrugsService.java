@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 
-import querydrugs.model.dao.DrugsDAO;
+import querydrugs.model.dao.DrugsDAOHibernate;
 
 @Service
 public class DrugsService {
 	@Autowired
-	private DrugsDAO drugsDAO;
+	private DrugsDAOHibernate drugsDAO;
 	
 	private String licenseNum = "licenseNum";
 	private String effectiveDate = "effectiveDate";
