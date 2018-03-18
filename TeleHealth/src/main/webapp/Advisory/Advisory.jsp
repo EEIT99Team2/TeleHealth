@@ -88,7 +88,7 @@ video {
     </div>
   </div>
 </div>
-	<jsp:include page="/fragment/footer.jsp"/>
+<%-- 	<jsp:include page="/fragment/footer.jsp"/> --%>
 	<script src="<c:url value='/js/client.js' />"></script>
 </body>
 <script>
