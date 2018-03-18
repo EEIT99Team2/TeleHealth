@@ -115,6 +115,7 @@ $("#starCheck").click(function(){
 			}
 		})
 	$("#starUse").modal("hide");
+	window.location.href="/TeleHealth/AdvisoryMoment/AdvisoryRecord.jsp'/>";
 })
 
 

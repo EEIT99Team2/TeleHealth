@@ -210,22 +210,22 @@ public class AdvisoryController {
 	//開始進行視訊
 		@RequestMapping(path= {"/Advisory/setsatisfy.controller"}, method = {RequestMethod.GET,RequestMethod.POST})
 		public @ResponseBody String setSatisfy(String videoCode, String satisfy, Model model, HttpSession session) {
-			Integer staisfyValue = null;
+			Integer satisfyValue = null;
 			if(videoCode != null && videoCode.trim().length()>0) {
 				if(satisfy != null && satisfy.trim().length()>0) {
 					try {
-						staisfyValue = Integer.parseInt(satisfy);
-						if(staisfyValue < 1) {
-							staisfyValue = 5;
-						}
+						satisfyValue = Integer.parseInt(satisfy);
 					} catch(Exception e) {
 						System.out.println("評分非數字");
 					}
-					staisfyValue = 5;
-					return "success";
+					if(satisfyValue < 1) {
+						satisfyValue = 5;
+					}
+					if(advisoryService.updateSatisfy(videoCode, satisfyValue) != null) {
+						return "success";
+					}
 				}
 			}
 			return "error";
 		}
-	
 }
