@@ -486,7 +486,7 @@ $('#insertBloodSugar').click(function(){
 
 			$('#insert_height').blur(function() {
 				var height = $.trim($('#insert_height').val());
-				if(isNaN(height) || height.length == 0 || height>280 ) {					
+				if(isNaN(height) || height.length == 0 || height>250 ) {					
 					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確身高!</span>";
 					$('#insert').prop("disabled", true);
 				} else {
@@ -495,7 +495,7 @@ $('#insertBloodSugar').click(function(){
 			});
 			$('#insert_weight').blur(function() {
 				var weight = $.trim($('#insert_weight').val());
-				if(isNaN(weight) || weight.length == 0 || weight>240) {
+				if(isNaN(weight) || weight.length == 0 || weight>220) {
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確體重!</span>";
 					$('#insert').prop("disabled", true);
 					} else {
@@ -516,7 +516,7 @@ $('#insertBloodSugar').click(function(){
 						$('#insert_weight').val("");
 						$('#insert_bmi').val("");
 						$('#heiMsg').empty();
-						$('#weiMsg').empty();												
+						$('#weiMsg').empty();	
 	            	 bmitableANDview();//呼叫BMI
 	             });
 			});
@@ -546,7 +546,7 @@ $('#insertBloodSugar').click(function(){
 			$('#insert_diastole').blur(function() {
 				 diastole = $.trim($('#insert_diastole').val());
 				if(isNaN(diastole) || diastole.length == 0 || !re.test(diastole) || diastole>200) {
-					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					b=1;
 				} else {
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
@@ -561,7 +561,7 @@ $('#insertBloodSugar').click(function(){
 			$('#insert_heartBeat').blur(function() {
 				 heartBeat = $.trim($('#insert_heartBeat').val());
 				if(isNaN(heartBeat) || heartBeat.length == 0 || !re.test(heartBeat) || heartBeat>250) {
-					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數字!</span>";
+					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					c=1;
 				} else {
 					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
@@ -602,10 +602,13 @@ $('#insertBloodSugar').click(function(){
 			var re = /^[0-9]+$/;
 			$('#insert_bloodsugar').blur(function() {
 				 bloodsugar = $.trim($('#insert_bloodsugar').val());
-				if(isNaN(bloodsugar) || bloodsugar.length == 0 || !re.test(bloodsugar) || bloodsugar>200) {
-					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入數字!</span>";
+				if(isNaN(bloodsugar) || bloodsugar.length == 0 || !re.test(bloodsugar) || bloodsugar>300) {
+					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					$('#insertBS').prop("disabled", true);
-				} else {
+				}else if(bloodsugar>200 && bloodsugar<300){
+					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' /><span>請盡快就醫!</span>";
+					$('#insertBS').prop("disabled", false);
+				}else if(bloodsugar<=200){
 					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 					$('#insertBS').prop("disabled", false);
 				}
@@ -621,7 +624,7 @@ $('#insertBloodSugar').click(function(){
 	    	       	$('#bsResult').prepend('<h4><small>'+'BloodSugar --> '+data.bloodSugar+'\|'+data.result+'</small></h4>');
 	    	       	$('#insert_bloodsugar').val("");				
 					$('#bloodsugarMsg').empty(); 
-	            		 bstableANDview();//呼叫bs紀錄
+	            	bstableANDview();//呼叫bs紀錄
 	             })	             
 	 			});	
 });
@@ -660,6 +663,7 @@ $('#insertBloodSugar').click(function(){
     var datas=[];
     var datasmax=[];
 	var datasmin=[];
+	
  $.getJSON('/TeleHealth/healthpassport/bmirecords.controller',{memberid:memberid},function(result){
 	$.each(result.data,function(index,value) {
 		var date = moment(value.createTime).format('MM/DD HH:mm');
@@ -692,6 +696,9 @@ $('#insertBloodSugar').click(function(){
 	        borderColor: '#ff0000',
 	        borderWidth: 1} ]
     };
+    $('#mychart1').remove(); 
+	$('#mychart1div').empty();
+	$('#mychart1div').append('<canvas id="mychart1" height="200" width="400"></canvas>');
     var ctx = $("#mychart1")                 
     var myLineChart = new Chart(ctx, {
         type: 'line', 
@@ -785,6 +792,9 @@ var diaMeandatas=[];
              }
           ]
         };
+        $('#mychart2').remove(); 
+		$('#mychart2div').empty();
+		$('#mychart2div').append('<canvas id="mychart2" height="200" width="400"></canvas>');
         var ctx = $("#mychart2")
         var myLineChart = new Chart(ctx, {
             type: 'line', 
@@ -836,7 +846,10 @@ var diaMeandatas=[];
 				bsmaxdatas.push(bloodSugarmax);
 				var bloodSugarmin = value.bloodSugarmin;
 				bsmindatas.push(bloodSugarmin);
-			});			
+			});
+	  $('#mychart3').remove(); 
+	  $('#mychart3div').empty();
+	  $('#mychart3div').append('<canvas id="mychart3" height="200" width="400"></canvas>');
 	  var ctx = $("#mychart3")
 	  var myChart = new Chart(ctx, {
 	    type: 'line',
@@ -879,7 +892,6 @@ var diaMeandatas=[];
 ////////////////////////////////////////(7天,1個月,3個月)/////////////////////////////////////////////////
 $("#bmiweek").on('click',function(){
 	$.getJSON('/TeleHealth/healthpassport/bmirecordsseven.controller',{memberid:memberid},function(datas){
-		console.log(datas)
 		var datesbmi=[];
 		var datasbmi=[];
 		var datasmax=[];
@@ -894,7 +906,7 @@ $("#bmiweek").on('click',function(){
 				datasmax.push(checkmax);
 				datasmin.push(checkmin);				
 			});
-			$('#mychart1').remove(); 
+			$('#mychart1').remove();
 			$('#mychart1div').empty();
 			$('#mychart1div').append('<canvas id="mychart1" height="200" width="400"></canvas>');
 			var ctx = $("#mychart1")								
@@ -1410,7 +1422,6 @@ var bsmaxdatas=[];
 var bsmindatas=[];
 $("#bsweek").on('click',function(){		
 	$.getJSON('/TeleHealth/healthpassport/bloodSugarRecordsseven.controller',{memberid:memberid,gender:gender},function(result){		
-		console.log(result);
 		$.each(result.data,function(index,value) {			
 			var date = moment(value.createTime).format('MM/DD HH:mm');
 			bsdates.push(date);
@@ -1489,7 +1500,6 @@ $("#bsweek").on('click',function(){
 });
 $("#bsmonth").on('click',function(){		
 	$.getJSON('/TeleHealth/healthpassport/bloodSugarRecordsthirty.controller',{memberid:memberid,gender:gender},function(result){		
-		console.log(result);
 		$.each(result.data,function(index,value) {			
 			var date = moment(value.createTime).format('MM/DD HH:mm');
 			bsdates.push(date);
@@ -1568,7 +1578,6 @@ $("#bsmonth").on('click',function(){
 });
 $("#bsthreemonth").on('click',function(){		
 	$.getJSON('/TeleHealth/healthpassport/bloodSugarRecordsthreemon.controller',{memberid:memberid,gender:gender},function(result){		
-		console.log(result);
 		$.each(result.data,function(index,value) {			
 			var date = moment(value.createTime).format('MM/DD HH:mm');
 			bsdates.push(date);
