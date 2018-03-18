@@ -26,7 +26,6 @@ public class TakeoffController {
 	@RequestMapping(path= {"/AdvisoryMoment/takeoff.controller"},method={RequestMethod.GET,RequestMethod.POST},produces= {"text/plain;charset=UTF-8"})
 	public @ResponseBody String takeoffCheck(String MomentId,String EmpId,String TakeoffItem,String TakeoffReason) {
 		String result = null;
-		System.out.println(MomentId+";"+EmpId+";"+TakeoffItem+";"+TakeoffReason);
 		if(TakeoffItem!=null && TakeoffItem.trim().length()!=0 &&TakeoffReason!=null && TakeoffReason.trim().length()!=0 ) {
 			boolean insertResult= takeoffService.takeoffApplication(MomentId, EmpId, TakeoffItem, TakeoffReason);
 			if(insertResult) {

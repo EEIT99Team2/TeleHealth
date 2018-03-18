@@ -129,7 +129,6 @@ function LoadData(){
 	unCheckData.empty();
 	CheckData.empty();
 $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memberId},function(datas){
-	console.log(datas);
 	var talkCount=0;
 	var UntalkCount=0;
 	var talkedCount=0;
@@ -175,9 +174,6 @@ $.getJSON("<c:url value='/Advisory/memberReserve.controller'/>",{"memberId":memb
 	$("#TalkingList").append(docFrag1);
 	$("#UnTalkList").append(docFrag2);
 	$("#TalkList").append(docFrag3);
-	console.log(TalkingOne);
-	console.log(unTalkOne);
-	console.log(TalkedOne);
 })
 }
 

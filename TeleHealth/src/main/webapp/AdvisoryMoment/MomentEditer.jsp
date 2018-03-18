@@ -106,9 +106,7 @@ function LoadData(){
 	unCheckData.empty();
 	CheckData.empty();
 $.getJSON("<c:url value='/AdvisoryMoment/takeoffData.controller'/>",{},function(datas){
-	console.log(datas);
 	$.each(datas,function(index,data){
-		console.log(data);
 		var momStatus=data.momStatus;
 		var reResult=data.reResult;
 		if(momStatus=="Y" && reResult=="null"){			
@@ -221,7 +219,6 @@ $("#responseCheck").click(function(){
 	}else{
 		$(".txtWaring").remove();
 		$("#responseCheck").attr("data-dismiss","modal");
-	console.log(DataPackage.takeoffId+";"+DataPackage.empId+";"+DataPackage.videoCode+";"+DataPackage.MomentId+";"+apResult+";"+note);
 	$.post("<c:url value='/AdvisoryMoment/approveTakeoff.controller'/>",{"takeoffId":DataPackage.takeoffId,"empId":DataPackage.empId,"empName":DataPackage.empName,"MomentId":DataPackage.MomentId,"calendar":DataPackage.calendar,"videoCode":DataPackage.videoCode,"apResult":apResult,"reason":note},function(result){
 		docFrag.append("<h4>"+result+"</h4>");
 		$("#resultItem .modal-body").append(docFrag);

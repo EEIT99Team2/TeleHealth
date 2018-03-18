@@ -291,7 +291,6 @@ $(document).ready(function() {
 					  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>");
 			  	$("#reserveDataDetail .modal-body").append(docFrag);
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId};
-				console.log("events="+reserveData);
 			  }else if(events.backgroundColor=="#00db00"){
 				  reservedData={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId,"VideoCode":VideoCode};
 				  $('#checkResult').modal('show');
@@ -315,12 +314,10 @@ $(document).ready(function() {
 		var choosemonth = "-"+$("#month :selected").val();
 		var choosedate = "-"+$("#date :selected").val();
 		var checkDate =moment(chooseyear+choosemonth+choosedate,"YYYY-MM-DD");
-		console.log(chooseyear+choosemonth+choosedate);
 		$("#calendar").fullCalendar('gotoDate',checkDate);
 		})
 	$("#reserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());
-		console.log("reserveData checking=="+reserveData);
 			$.post("<c:url value='/Advisory/reserveCheck.controller'/>",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
 				"reserveEmp":reserveData.reserveEmp,"empId":reserveData.empId,"UserId":reserveData.UserId,"MomentId":reserveData.MomentId},function(result){			
 				var splitCode1=result.indexOf(",");
@@ -340,7 +337,6 @@ $(document).ready(function() {
 		window.location.reload();
 		})
 	$("#checkResultDone").click(function(){
-		console.log("reserveData beforeReload=="+reserveData);
 		$("#checkResult").modal('hide');
 		})
 	$("#cancelReserve").click(function(){

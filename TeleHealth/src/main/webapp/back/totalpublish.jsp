@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 	<main role="main" class="container mt-2">
 	<div class="row">
-	<div class="col-2"></div>
-		<div class="card" style="margin-top:80px;">
+	<div class="col-1"></div>
+		<div class="card columnUse col-10" style="margin-top:80px;">
 			<div class="card-header">
 				所有會員發布文章 <input type="text" id="titlememname" placeholder="會員名稱"><input
-					type="button" value="搜尋" id="search" onclick="search()"><font
+					type="button" class="btn btn-primary" value="搜尋" id="search" onclick="search()"><font
 					id="erroeMsg" color="red" size="-1">${searcherrors.error}</font>
 				<div class="card-body">
 					<!-- 每頁不同的內容從這裡開始 -->
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-2"></div>
+		<div class="col-1"></div>
 	</div>
 	</main>
 	<script src="../js/jquery-tablepage-1.0.js"></script>

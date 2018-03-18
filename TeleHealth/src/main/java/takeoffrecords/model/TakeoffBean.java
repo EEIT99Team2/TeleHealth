@@ -77,12 +77,5 @@ public class TakeoffBean {
 	public void setApprovedTime(java.util.Date approvedTime) {
 		this.approvedTime = approvedTime;
 	}
-	@Override
-	public String toString() {
-		return "TakeoffBean [id=" + id + ", advisoryMomentId=" + advisoryMomentId + ", empId=" + empId
-				+ ", applicationTime=" + applicationTime + ", applicationReason=" + applicationReason
-				+ ", rejectReason=" + rejectReason + ", approvedResult=" + approvedResult + ", approvedTime="
-				+ approvedTime + "]";
-	}
 
 }

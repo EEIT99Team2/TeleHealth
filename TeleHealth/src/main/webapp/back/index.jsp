@@ -5,7 +5,6 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>後台管理</title>
@@ -22,13 +21,12 @@
   <script src="<c:url value='/fullCalendar/moment.min.js'/>"></script>
   <style type="text/css">
   .allFontStyle{font-family:CJKtc_Bold;}
-  .navFontSize{font-size:20px;
-  				font-family:CJKtc_Bold;}
+  .navFontSize{font-size:20px;font-family:CJKtc_Bold;}
   .rightNavIcon{display:inline;
   			}
   .rightNavWord{display:inline;
   			margin-right:20px;}
-  
+  .columnUse{font-size:19px;font-family:CJKtc_Bold;}
   </style>
 </head>
 
@@ -95,7 +93,7 @@
   </nav>
   <input type="hidden" value="${empLoginOK.empId}" id="empId" />
     <div id="memberManger" class="content-wrapper" style="display:block"><jsp:include page="/back/ManagementMembers.jsp" /></div>
-    <div id="msgManger" class="content-wrapper" style="display:none"><jsp:include page="/back/CustomService.jsp" /></div>
+    <div id="msgManger" class="content-wrapper" style="background-color:#fff4c1;display:none"><jsp:include page="/back/CustomService.jsp" /></div>
     <div id="columnManger" class="content-wrapper" style="display:none"><jsp:include page="/back/totalpublish.jsp" /></div>
     <div id="takeoffManger" class="content-wrapper" style="display:none"><jsp:include page="/back/takeoffSystem.jsp" /></div>
     <div id="financialManger" class="content-wrapper" style="display:none"><jsp:include page="/back/charts2.jsp" /></div>

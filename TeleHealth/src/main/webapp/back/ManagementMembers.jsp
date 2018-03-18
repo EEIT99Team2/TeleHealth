@@ -8,18 +8,18 @@
 									class="allFontStyle table table-bordered table-striped table-hover ">
 									<thead class="table-dark">
 										<tr>
-											<th scope="col">會員帳號</th>
-											<th scope="col">姓名</th>	
-											<th scope="col">註冊時間</th>
-											<th scope="col">性別</th>
-											<th scope="col">電話</th>
-											<th scope="col">行動電話</th>
-											<th scope="col">生日</th>
-											<th scope="col">地址</th>
-											<th scope="col">藥物過敏</th>
-											<th scope="col">過去病史</th>
-											<th scope="col">狀態</th>
-											<th scope="col">管理</th>
+											<th scope="col" width=120px>會員帳號</th>
+											<th scope="col" width=100px>姓名</th>	
+											<th scope="col" width=150px>註冊時間</th>
+											<th scope="col" width=80px>性別</th>
+											<th scope="col" width=120px>電話</th>
+											<th scope="col" width=120px>行動電話</th>
+											<th scope="col" width=120px>生日</th>
+											<th scope="col" width=250px>地址</th>
+											<th scope="col" width=150px>藥物過敏</th>
+											<th scope="col" width=150px>過去病史</th>
+											<th scope="col" width=80px>狀態</th>
+											<th scope="col" width=80px>管理</th>
 <!-- 											<th scope="col">照片</th> -->
 										</tr>
 									</thead>
@@ -39,17 +39,17 @@ $(document).ready(function() {
     	 $('#membersTable').DataTable({
 			    "ajax": '/TeleHealth/checkMembers.controller',
 			    "columns": [
-			        { "data": "account" ,"width": "120px"},
-			        { "data": "memName" ,"width": "100px"},
-			        { "data": "registerTime" ,"width": "150px"},
-			        { "data": "gender" ,"width": "80px"},
-			        { "data": "phone" ,"width": "120px"},
-			        { "data": "cellphone" ,"width": "120px"},
-			        { "data": "birth" ,"width": "120px"},
-			        { "data": "address" ,"width": "250px"},
-			        { "data": "medicine" ,"width": "150px"},
-			        { "data": "medicalHistory" ,"width": "150px"},			    
-			        { "data": "status" ,"width": "80px"},
+			        { "data": "account"},
+			        { "data": "memName"},
+			        { "data": "registerTime"},
+			        { "data": "gender"},
+			        { "data": "phone"},
+			        { "data": "cellphone"},
+			        { "data": "birth"},
+			        { "data": "address"},
+			        { "data": "medicine"},
+			        { "data": "medicalHistory"},			    
+			        { "data": "status"},
 			        { "data": "status",
 			        	  "orderable": false,
 			              "width": "80px",
@@ -64,6 +64,7 @@ $(document).ready(function() {
 					}}	
 			     		  
 			    ],
+			    "autoWidth":false,
 			    "order": [[ 1, 'desc' ]],
 				"bProcessing": true,//顯示處理中的圖樣
 				"oLanguage": {

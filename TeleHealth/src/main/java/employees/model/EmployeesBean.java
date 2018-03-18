@@ -115,13 +115,5 @@ public class EmployeesBean {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	@Override
-	public String toString() {
-		return "EmployeesBean [empId=" + empId + ", account=" + account + ", pwd=" + pwd + ", empName=" + empName
-				+ ", advisoryCode=" + advisoryCode + ", email=" + email + ", empStatus=" + empStatus + ", takeOff="
-				+ takeOff + ", reserveCount=" + reserveCount + ", createTime=" + createTime + ", modifiyTime="
-				+ modifiyTime + ", career=" + career + "]";
-	}
-	
 	
 }

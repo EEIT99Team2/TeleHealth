@@ -22,7 +22,6 @@ public class TakeoffDAO {
 	private SessionFactory sessionFactory;
 
 	public Session getSession() {
-		System.out.println("session=" + sessionFactory);
 		return sessionFactory.getCurrentSession();
 	}
 	

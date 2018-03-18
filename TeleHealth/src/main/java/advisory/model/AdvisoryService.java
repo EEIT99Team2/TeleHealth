@@ -68,7 +68,6 @@ public class AdvisoryService {
 			}
 		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON=" + data);
 		return data;
 	};
 	
@@ -115,7 +114,6 @@ public class AdvisoryService {
 			}
 		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON=" + data);
 		return data;
 	};
 		

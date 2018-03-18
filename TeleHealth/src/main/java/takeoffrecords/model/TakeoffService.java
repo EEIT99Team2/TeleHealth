@@ -62,7 +62,6 @@ public class TakeoffService {
 		List<Object[]> takeoffData = takeoffDao.selectAll();
 		String takeoffId, MomentId, empId, empName, career, apType, apTime, apReason, status, videoCode,reResult,reTime,reReason,momStatus,calendar;
 		if (takeoffData.size() != 0) {
-			System.out.println("請假數"+takeoffData.size());
 			for (int i = 0; i < takeoffData.size(); i++) {
 				HashMap<String, String> dataOne = new HashMap<String, String>();
 				takeoffId = takeoffData.get(i)[0].toString();
@@ -111,7 +110,6 @@ public class TakeoffService {
 			}
 		}
 		String data = new Gson().toJson(dataFinal);
-		System.out.println("JSON" + data);
 		return data;
 	}
 

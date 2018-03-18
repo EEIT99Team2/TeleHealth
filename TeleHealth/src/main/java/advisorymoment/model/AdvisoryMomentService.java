@@ -78,7 +78,6 @@ public class AdvisoryMomentService {
 			datafinal.add(dataOne);
 		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 		
@@ -135,7 +134,6 @@ public class AdvisoryMomentService {
 			datafinal.add(dataOne);
 		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 	
@@ -233,7 +231,6 @@ public class AdvisoryMomentService {
 			datafinal.add(dataOne);
 		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 	
@@ -309,7 +306,6 @@ public class AdvisoryMomentService {
 			datafinal.add(dataOne);
 		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON=" + data);
 		return data;
 	}
 	
@@ -325,7 +321,6 @@ public class AdvisoryMomentService {
 		List<Object[]> result = null;
 		if(AdvisoryCode!=null) {
 			result = advisoryMomentDAO.select(AdvisoryCode);
-			System.out.println("Service="+result);
 		}		
 		return result;
 	};
@@ -418,10 +413,8 @@ public class AdvisoryMomentService {
 		public boolean deleteMemReserve(String VideoCode,String MomentId) {			
 			boolean DeleteResult =false;
 			boolean FinalResult =false;
-			System.out.println("VideoCode="+VideoCode);
 			if (VideoCode != null && VideoCode.trim().length()!=0) {
 				List<Object[]> selectAD = this.selectByMemVCode(VideoCode);
-				System.out.println("有搜到"+selectAD);
 				if(selectAD!=null && selectAD.size()!=0) {				
 					DeleteResult =advisoryMomentDAO.deleteMemReserve(VideoCode);
 					if(DeleteResult) {
@@ -433,11 +426,4 @@ public class AdvisoryMomentService {
 		}
 	
 
-//	public boolean delete(String MomentId) {
-//		boolean result = false;
-//		if(MomentId!=null&&MomentId.trim().length()!=0) {
-//			result = advisoryMomentDAO.delete(MomentId);
-//		}
-//		return result;
-//	}
 }

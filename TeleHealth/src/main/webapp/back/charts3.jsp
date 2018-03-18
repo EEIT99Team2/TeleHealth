@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
       <!-- Records -->
-          <div class="card mb-3 container">
+          <div class="card mb-3 container columnUse">
             <div class="card-header">
               <i class="fa fa-bar-chart"></i> 交易紀錄</div>
             <div class="card-body">
@@ -10,12 +10,12 @@
                 <table id="myTable" class="table">
                 	<thead>
                 		<tr>
-                			<th>MerchantTradeNo</th>
-                			<th>MerchantTradeDate</th>
-                			<th>TotalAmount</th>
-                			<th>TradeDesc</th>
-                			<th>ItemName</th>
-                			<th>memberId</th>
+                			<th>編號</th>
+                			<th>交易日期</th>
+                			<th>總金額</th>
+                			<th>交易描述</th>
+                			<th>點數</th>
+                			<th>會員ID</th>
                 		</tr>
                 	</thead>
                 	<tbody id="myBody"></tbody>
