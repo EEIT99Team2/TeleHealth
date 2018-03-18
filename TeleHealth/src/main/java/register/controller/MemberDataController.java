@@ -35,7 +35,7 @@ public class MemberDataController {
 
 	@Autowired
 	private RegisterService registerService = null;
-	
+
 	@Autowired
 	private MemberDAOHibernate memberDAO = null;
 
@@ -52,7 +52,6 @@ public class MemberDataController {
 			errorMsg.put("errormemName", "姓名欄位不能空白");
 		} else if (memName != null && memName.trim().length() > 1 && memName.trim().length() < 8) {
 			if (memName.matches("[\\u4e00-\\u9fa5]+")) {
-				System.out.println("姓名欄位格式正確");
 			} else {
 				errorMsg.put("errormemName", "姓名欄位必須為中文");
 			}
@@ -96,7 +95,6 @@ public class MemberDataController {
 		if (bloodType == null || bloodType.trim().length() == 0) {
 			errorMsg.put("errorBloodType", "血型欄位不能空白");
 		}
-		System.out.println("bloodType=" + bloodType);
 
 		if (address == null || address.trim().length() == 0) {
 			errorMsg.put("errorAddr", "地址欄位不能空白");
@@ -106,7 +104,6 @@ public class MemberDataController {
 			errorMsg.put("errorPhone", "電話欄位不能空白");
 		} else if (phone != null) {
 			if (phone.matches("0\\d{1,2}-(\\d{6,8})")) {
-				System.out.println("電話欄位格式正確");
 			} else {
 				errorMsg.put("errorPhone", "電話欄位格式錯誤");
 			}
@@ -116,7 +113,6 @@ public class MemberDataController {
 			errorMsg.put("errorCellphone", "行動電話欄位不能空白");
 		} else if (cellphone != null && cellphone.trim().length() > 10) {
 			if (cellphone.matches("[0-9]{4}\\-[0-9]{3}\\-[0-9]{3}")) {
-				System.out.println("行動電話欄位格式正確");
 			} else {
 				errorMsg.put("errorCellphone", "行動電話欄位格式錯誤");
 			}
@@ -152,7 +148,6 @@ public class MemberDataController {
 
 			MemberBean member = (MemberBean) session.getAttribute("LoginOK");
 			if (member == null) {
-				System.out.println("沒抓到session");
 				return "login.error";
 			} else {
 
@@ -216,7 +211,6 @@ public class MemberDataController {
 
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		List<Object[]> result = memberDAO.selectMemberId(memberid);
-		System.out.println("result=" + result);
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String MerchantTradeDate = result.get(i)[1].toString();
@@ -228,7 +222,6 @@ public class MemberDataController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON123=" + data);
 		return data;
 	}
 
@@ -243,7 +236,7 @@ public class MemberDataController {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 			String account = bean.get(i).getAccount().toString();
 			String memName = bean.get(i).getMemName().toString();
-			String registerTime = bean.get(i).getRegisterTime().toString().substring(0,16);
+			String registerTime = bean.get(i).getRegisterTime().toString().substring(0, 16);
 			String gender = bean.get(i).getGender().toString();
 			if (gender.equals("M")) {
 				gender = "男";
@@ -253,7 +246,7 @@ public class MemberDataController {
 			}
 			String phone = bean.get(i).getPhone().toString();
 			String cellphone = bean.get(i).getCellphone().toString();
-			String birth = bean.get(i).getBirth().toString().substring(0,10);
+			String birth = bean.get(i).getBirth().toString().substring(0, 10);
 			String address = bean.get(i).getAddress().toString();
 
 			String status = bean.get(i).getStatus().toString();
@@ -295,7 +288,6 @@ public class MemberDataController {
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
 		String data = new Gson().toJson(datas);
-		System.out.println("JSON5566=" + data);
 		return data;
 
 	}

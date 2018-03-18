@@ -104,6 +104,19 @@
 			//     	}
 			//     };
 		});
+
+		$('#checkPoint').click(function(){
+			$.get("<c:url value='/checkPoint.controller'/>",{"memberId":memberId},function(result){
+				console.log("point="+result);
+				$("#myPointItem .modal-body").empty();
+				var docFrag = $(document.createDocumentFragment());
+				docFrag.append("<H3>您的餘額為:"+result+"點</H3>");
+				$("#myPointItem .modal-body").append(docFrag);
+				})
+				$("#myPointItem").modal("show");
+			
+		});
+				
 	</script>
 	<form action="../checkout.do" method="POST">
 		<div class="container">
@@ -210,6 +223,27 @@
 			</div>
 		</div>
 	</form>
+	
+	<!-- 查詢餘額視窗 -->
+		<div class="modal fade" id="myPointItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="myPointTitle">餘額查詢</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <!-- 跳出視窗的內容 -->
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" data-dismiss="modal" id="myPoint">我知道了</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
 	<jsp:include page="/fragment/footer.jsp" />
 </body>
 </html>

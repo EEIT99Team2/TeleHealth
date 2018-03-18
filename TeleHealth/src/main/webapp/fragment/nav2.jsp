@@ -171,10 +171,10 @@
 				</div>
 				<div class="modal-footer">
 					<p>
-						還不是會員?<a href="<c:url value="/Members/register.jsp"/>">註冊</a>
+						還不是會員?<a href="<c:url value="/register/register.jsp"/>">註冊</a>
 					</p>
 					<p>
-						忘記 <a href="<c:url value="/Members/ForgetPwd.jsp"/>">密碼?</a>
+						忘記 <a href="<c:url value="/register/ForgetPwd.jsp"/>">密碼?</a>
 					</p>
 				</div>
 			</div>
