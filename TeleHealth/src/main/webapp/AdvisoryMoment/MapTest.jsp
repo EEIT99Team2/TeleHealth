@@ -43,7 +43,7 @@
 	          radius: 600,
 	          type: 'hospital'
 	        }, callback);
-	      }
+	      
 
 		function callback(results, status) {
 		  if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -66,12 +66,17 @@
 	          title:place.name
 	        })
 
+	        var marker2 = new google.maps.Marker({
+		          map: map,
+		          position: pyrmont,
+		          title:"您的位置"
+		        });
 	        google.maps.event.addListener(marker, 'click', function() {
 	          infowindow.setContent("<div class='container'><span>" + place.name +"</span><br/>"+"<span>"+place.vicinity+"</span><br/><img src='"+photos[0].getUrl({'maxWidth': 150, 'maxHeight': 150}) +"'/></div>");
 	          infowindow.open(map, this);
 	        });
 	      }
-        
+		}
       
     </script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmeQef569mlPIAOgcfxPzWbtr9KdtjHOI&libraries=places&callback=initMap"></script>    

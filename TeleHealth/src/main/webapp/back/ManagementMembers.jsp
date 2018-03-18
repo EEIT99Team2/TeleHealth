@@ -1,31 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<style>
-/* .point1 {  */
-/* color:red;  */
-/* background-color:#AAFFEE; */
-/* width:600px; */
-/* height:600px; */
-/* border:3px #cccccc dashed; */
-/* margin:0px auto; */
-/* } */
-
-</style>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<jsp:include page="/fragment/nav2.jsp" />
-
-				<div style="text-align:center;"><h3 class="title">會員管理</h3></div>
-<div class="point1">	
-								<table id='membersTable' width="100%"
-									class="table table-bordered table-striped table-hover ">
+<!-- <div class="container"> -->
+				<div style="font-family:CJKtc_Bold;text-align:center;"><h3 class="title allFontStyle">會員管理</h3></div>
+					<div class="point1 allFontStyle">	
+								<table id='membersTable'
+									class="allFontStyle table table-bordered table-striped table-hover ">
 									<thead class="table-dark">
 										<tr>
 											<th scope="col">會員帳號</th>
@@ -47,27 +27,7 @@
 									</tbody>
 		</table>
 	</div>
-	
-<!-- 查詢餘額視窗 --> 
-<!-- <div class="modal fade" id="myPointItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
-<!--   <div class="modal-dialog modal-dialog-centered" role="document"> -->
-<!--     <div class="modal-content"> -->
-<!--       <div class="modal-header"> -->
-<!--         <h5 class="modal-title" id="myPointTitle">餘額查詢</h5> -->
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
-<!--       </div> -->
-<!--       <div class="modal-body"> -->
-<!--         跳出視窗的內容 -->
-<!--       </div> -->
-<!--       <div class="modal-footer"> -->
-<!--         <button type="button" class="btn btn-primary" data-dismiss="modal" id="myPoint">我知道了</button> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
 <!-- </div> -->
-<jsp:include page="/fragment/footer.jsp" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
 					
@@ -79,25 +39,25 @@ $(document).ready(function() {
     	 $('#membersTable').DataTable({
 			    "ajax": '/TeleHealth/checkMembers.controller',
 			    "columns": [
-			        { "data": "account" },
-			        { "data": "memName" },
-			        { "data": "registerTime" },
-			        { "data": "gender" },
-			        { "data": "phone" },
-			        { "data": "cellphone" },
-			        { "data": "birth" },
-			        { "data": "address" },
-			        { "data": "medicine" },
-			        { "data": "medicalHistory" },			    
-			        { "data": "status" },
+			        { "data": "account" ,"width": "120px"},
+			        { "data": "memName" ,"width": "80px"},
+			        { "data": "registerTime" ,"width": "150px"},
+			        { "data": "gender" ,"width": "80px"},
+			        { "data": "phone" ,"width": "120px"},
+			        { "data": "cellphone" ,"width": "120px"},
+			        { "data": "birth" ,"width": "120px"},
+			        { "data": "address" ,"width": "250px"},
+			        { "data": "medicine" ,"width": "150px"},
+			        { "data": "medicalHistory" ,"width": "150px"},			    
+			        { "data": "status" ,"width": "80px"},
 			        { "data": "status",
 			        	  "orderable": false,
-			              "width": "60px",
+			              "width": "80px",
 			              "render": function(data,type,row,meta) {
 				              if(data=='停權') {
-				            	  return data = "<button onclick=''>復權</button>";
+				            	  return data = "<button class='btn btn-success' onclick=''>復權</button>";
 						      } else if(data=='正常') {
-						    	  return data = "<button>停權</button>";
+						    	  return data = "<button class='btn btn-danger'>停權</button>";
 							  } else {
 								  return data = "未開通";
 							  }				           
@@ -133,5 +93,3 @@ $(document).ready(function() {
 });
 
 </script>
-</body>
-</html>

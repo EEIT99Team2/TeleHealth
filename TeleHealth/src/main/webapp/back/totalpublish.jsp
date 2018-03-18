@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 	<main role="main" class="container mt-2">
 	<div class="row">
-		<div class="card">
+	<div class="col-2"></div>
+		<div class="card" style="margin-top:80px;">
 			<div class="card-header">
 				所有會員發布文章 <input type="text" id="titlememname" placeholder="會員名稱"><input
 					type="button" value="搜尋" id="search" onclick="search()"><font
@@ -27,6 +28,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-2"></div>
 	</div>
 	</main>
 	<script src="../js/jquery-tablepage-1.0.js"></script>

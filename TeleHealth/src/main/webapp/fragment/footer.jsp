@@ -50,7 +50,9 @@ $(document).ready(function(){
     $("#myBtn").click(function(){
         $("#myModal").modal();
     });
+    $('#customerService').toggle(0);
     $('#customerService2').toggle(1000);
+    $('#customerService').toggle(1000);
 	$('#setHide2').on("click",function() {
 		$('#customerService').toggle(1000);
 		$('#customerService2').toggle(1000);
