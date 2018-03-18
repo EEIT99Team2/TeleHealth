@@ -75,11 +75,11 @@ video {
         </button>
       </div>
       <div class="modal-body">
-        <img id="imgstar1" class="in" src="<c:url value='img/star.jpg'/>">
-        <img id="imgstar2" class="in" src="<c:url value='img/star.jpg'/>">
-        <img id="imgstar3" class="in" src="<c:url value='img/star.jpg'/>">
-        <img id="imgstar4" class="in" src="<c:url value='img/star.jpg'/>">
-        <img id="imgstar5" class="in" src="<c:url value='img/star.jpg'/>">
+        <img id="imgstar1" class="in" src="<c:url value='/images/star.jpg'/>">
+        <img id="imgstar2" class="in" src="<c:url value='/images/star.jpg'/>">
+        <img id="imgstar3" class="in" src="<c:url value='/images/star.jpg'/>">
+        <img id="imgstar4" class="in" src="<c:url value='/images/star.jpg'/>">
+        <img id="imgstar5" class="in" src="<c:url value='/images/star.jpg'/>">
         <div id="words" class="clickchange"></div>
       </div>
       <div class="modal-footer">
@@ -107,10 +107,12 @@ $("#hang-up").click(function(){
 })
 $("#starCheck").click(function(){
 	var score=$("#words").text().substring(3,4);
-	var videoCode=$("#roomName").value();
+	console.log("score==="+score);
+	var videoCode=$("#roomName").val();
 	$.post("<c:url value='/Advisory/setsatisfy.controller'/>",{"videoCode":videoCode,"satisfy":score},function(result){
 			if(result=="success"){
 				alert("感謝您的支持，歡迎多加使用");
+			}
 		})
 	$("#starUse").modal("hide");
 })

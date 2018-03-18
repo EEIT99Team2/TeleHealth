@@ -214,7 +214,7 @@ public class AdvisoryController {
 			if(videoCode != null && videoCode.trim().length()>0) {
 				if(satisfy != null && satisfy.trim().length()>0) {
 					try {
-						staisfyValue = Integer.getInteger(satisfy);
+						staisfyValue = Integer.parseInt(satisfy);
 						if(staisfyValue < 1) {
 							staisfyValue = 5;
 						}
