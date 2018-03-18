@@ -8,7 +8,7 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>牽伴遠距健康諮詢平台</title>
+<title>文章</title>
 <style type="text/css">
 .contenttype{
 background-color: #CCEEFF;

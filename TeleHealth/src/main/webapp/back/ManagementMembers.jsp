@@ -40,7 +40,7 @@ $(document).ready(function() {
 			    "ajax": '/TeleHealth/checkMembers.controller',
 			    "columns": [
 			        { "data": "account" ,"width": "120px"},
-			        { "data": "memName" ,"width": "80px"},
+			        { "data": "memName" ,"width": "100px"},
 			        { "data": "registerTime" ,"width": "150px"},
 			        { "data": "gender" ,"width": "80px"},
 			        { "data": "phone" ,"width": "120px"},
