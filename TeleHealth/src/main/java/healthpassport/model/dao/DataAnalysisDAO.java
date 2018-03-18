@@ -81,7 +81,6 @@ public class DataAnalysisDAO {
 			query.setParameter(3,"正常值");
 			query.addEntity(DataAnalysisBean.class);
 			DataAnalysisBean data = (DataAnalysisBean) query.uniqueResult();
-			System.out.println(data);
 			return data;
 		}
 	
