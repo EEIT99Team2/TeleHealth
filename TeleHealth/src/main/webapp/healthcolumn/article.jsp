@@ -37,10 +37,10 @@ c:
       <div class="row justify-content-md-center">       
         <div class="col-lg-10" id='body'>            
      </div>
-     <div class="col-lg-10" id='QAcontent'>                         
+     <div class="col-lg-10" id='QAcontent'> 
      </div>   
      <c:if test="${not empty LoginOK}">           
-      <div class="col-lg-10" id='foot'>            
+      <div class="col-lg-10" id='foot'>  
       <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"></h5>
       	<div class="form-group">
       		<form id="Msg" action="/TeleHealth/healthcolumn/insQA.controller" method="post" >

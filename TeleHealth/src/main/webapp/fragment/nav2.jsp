@@ -63,15 +63,14 @@
 				<li class="nav-item"><div class="row showIcon"><a class="nav-link" id="advisoryIcon"
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value='/pay/pay.jsp'/>">會員專區</a></li>
+					href="<c:url value='/Members/ModifyData.jsp'/>">會員專區</a></li>
 			</ul>
 		<div class="text-center">
-				<img style="width:40px;height:40px;" src="/TeleHealth/getImage.controller" >
+				<img style="width:40px;height:40px;" src="<c:url value='/getImage.controller'/>" >
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
 				<input type="hidden" value="${LoginOK.account}" id="account" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
-					<input type="submit" class="btn btn-sm btn-outline-secondary" 
-					id="myBtn1" value="登出" />
+					<button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fas fa-sign-out-alt"></i> 登出</button>
 				</form>
 		</div>
 			</c:when>
@@ -101,8 +100,7 @@
 				</span>
 				<input type="hidden" value="${empLoginOK.empId}" id="empId" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
-					<input type="submit" class="btn btn-sm btn-outline-secondary" 
-					id="myBtn1" value="登出" />
+					<button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fas fa-sign-out-alt"></i> 登出</button>
 				</form>
 		</div>
 			</c:when>
@@ -118,8 +116,8 @@
 					href="<c:url value="/QueryDrugs/Drugs.jsp"/>">藥品查詢</a></li>
 			</ul>			
 			<div class="text-center">
-				<button type="button" class="btn btn-primary btn-rounded" 
-					data-toggle="modal" id="myBtn">登入</button>
+				<button type="button" class="btn btn-outline-primary btn-rounded" 
+					data-toggle="modal" id="myBtn"><i class="fas fa-sign-in-alt"></i> 登入</button>
 			</div>
 			</c:otherwise>
 			</c:choose>

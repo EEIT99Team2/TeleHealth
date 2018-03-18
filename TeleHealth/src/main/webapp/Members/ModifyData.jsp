@@ -29,9 +29,7 @@
 	}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<title>修改密碼</title>
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
@@ -183,7 +181,7 @@
 											<div id="msg"></div>
 											<div style="width: 300px; height: 200px; border: 0.5px black solid">
 												<img id="xx"
-													src="<c:url value='/getImage.controller?account=${LoginOK.account}' />"
+													src="<c:url value='/getImage.controller' />"
 													style="max-width: 300px; max-height: 900px;" />
 											</div>
 									</tr>

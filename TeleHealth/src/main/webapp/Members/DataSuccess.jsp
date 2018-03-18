@@ -26,7 +26,7 @@
 <jsp:include page="/fragment/footer.jsp" />
 
 <Script Language="JavaScript">
-setTimeout("location.href='../home.jsp'",3000);
+setTimeout("location.href='<c:url value='/home.jsp'/>'",3000);
 </Script> 
 </body>
 </html>

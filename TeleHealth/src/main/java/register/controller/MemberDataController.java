@@ -159,11 +159,12 @@ public class MemberDataController {
 				member.setMedicalHistory(medicalHistory);
 				member.setMedicine(medicine);
 				member.setCellphone(cellphone);
-				member.setPhone(phone);
-				member.setPhoto(photo);
-				member.setFileName(fileName);
+				member.setPhone(phone);				
+				if(fileName!=null && fileName.trim().length()!=0) {					
+					member.setFileName(fileName);
+					member.setPhoto(photo);
+				}
 				member.setModifiyTime(new Timestamp(System.currentTimeMillis()));
-
 				member = registerService.Update(member);
 			}
 			if (member != null) {
