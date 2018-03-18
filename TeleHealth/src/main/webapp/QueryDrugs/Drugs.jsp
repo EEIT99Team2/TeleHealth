@@ -61,7 +61,7 @@
 		   				</div>
 		   				<div class="form-group has-success has-feedback row">
 					    	<label class="col-2 control-label" for="englishName">藥品英文名稱:</label>
-					    	<div class="col-2 control-label">
+					    	<div class="col-10">
 					    		<input type="text" class="form-control" id="englishName" name="englishName">
 					        	<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 					      	</div>
@@ -291,6 +291,7 @@
 		        
 			        "bProcessing": true,//顯示處理中的圖樣
 			        "oLanguage": {
+			        	"sProcessing": "資料查詢中，請稍候...",
 			            "sLengthMenu": " _MENU_ 筆/頁",
 			            "sZeroRecords": "找不到符合的資料。",
 			            "sInfo": "共 _MAX_ 筆",
@@ -303,7 +304,6 @@
 			            }
 			        }
 		      	});
-				
 			});
 
 			$('body').on("click", "td>img", function() {
