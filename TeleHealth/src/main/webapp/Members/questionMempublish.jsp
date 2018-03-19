@@ -8,7 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>牽伴遠距健康諮詢平台</title>
-<link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 </head>
@@ -22,30 +21,29 @@
 
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="BOD" data-toggle="tab" role="tab" value="修改資料"
-			onclick="location.href='ModifyData.jsp'" /></li>
+			onclick="location.href='<c:url value='/Members/ModifyData.jsp'/>'" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="修改密碼"
-			onclick="location.href='ChangePwd.jsp'" /></li>
+			onclick="location.href='<c:url value='/Members/ChangePwd.jsp'/>'" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>		
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
-			onclick="location.href='Point.jsp'" /></li>
+			onclick="location.href='<c:url value='/Members/Point.jsp'/>'" /></li>
 			
-		<li class="nav-item"><input type="button" class="nav-link active"
-		id="FOO" data-toggle="tab" role="tab" value="儲值點數"
-		onclick="location.href='<c:url value='/pay/pay.jsp'/>'" /></li>
+			<li class="nav-item"><input type="button" class="nav-link active"
+			id="FOO" data-toggle="tab" role="tab" value="儲值點數"
+			onclick="location.href='<c:url value='/pay/pay.jsp'/>'" /></li>
 						
 		<li class="nav-item"><input type="button" class="nav-link active"
 		id="FOO" data-toggle="tab" role="tab" value="我的留言"
-		onclick="location.href='questionMempublish.jsp'" /></li>
+		onclick="location.href='<c:url value='questionMempublish.jsp'/>'" /></li>
 		
 	</ul>
 <br>	
 <div class="container">
-<div class="row col-12">     	
-	      <div class="col-2"></div>
-	      <div class="card col-8">
+<div class="row">     	
+	      <div class="card col-12">
 			<div class="card-header"><span>${LoginOK.memName}</span><input type="hidden" id="memId" value="${LoginOK.memberId}">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->

@@ -6,10 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>健康護照</title>
-<!-- Custom styles for this template -->
-<link rel="stylesheet" type="text/css"
-	href="<c:url value="/css/index.css"/>" />
-
 <style type="text/css">
 .insertBtn {
 	width: 16px;
