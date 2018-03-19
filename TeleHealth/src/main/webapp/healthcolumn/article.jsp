@@ -154,6 +154,7 @@ $(document).ready(function() {
        	}); 	
     	 $('#QAcontent').append(doc);               
      })
+     ///會員po問問題
      function insert(){
     	var content= CKEDITOR.instances.textt.getData()    	
     	if(content==null|| content.length==0){
@@ -165,7 +166,8 @@ $(document).ready(function() {
 	    var ary1 = url.split('?');	   
 	    var ary2 = ary1[1].split('=');
 	    var aryid=ary2[1].split('&');	    		       
-		var title = aryid[0];		    
+		var title = aryid[0];
+		var title = decodeURIComponent(aryid[0]);		    
 	    var atype=ary2[2];	    
 	    var MemId=$("#MemId").val();	    
 	    var content= CKEDITOR.instances.textt.getData();
@@ -211,7 +213,8 @@ $(document).ready(function() {
 				}
             });
    }
-    }  
+    } 
+    // ///員工po問問題 
     function insertemp(){
     	var content= CKEDITOR.instances.textt.getData()    	
     	if(content==null|| content.length==0){
@@ -223,7 +226,8 @@ $(document).ready(function() {
 	    var ary1 = url.split('?');	   
 	    var ary2 = ary1[1].split('=');
 	    var aryid=ary2[1].split('&');	    		       
-		var title = aryid[0];		    
+		var title = decodeURIComponent(aryid[0]);
+		console.log(title);		    
 	    var atype=ary2[2];	    
 	    var MemId=$("#empId").val();	    
 	    var content= CKEDITOR.instances.textt.getData();
