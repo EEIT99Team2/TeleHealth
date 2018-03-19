@@ -1,28 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+	#myTable thead {
+		font-size: 18px;
+	}
+	#myTable tbody {
+		font-size: 16px;
+	}
+</style>
       <!-- Records -->
           <div class="card mb-3">
             <div class="card-header">
-              <i class="fa fa-bar-chart"></i> 交易紀錄</div>
+              <i class="fa fa-table"></i> 交易紀錄</div>
             <div class="card-body">
               <div id="container" style="min-width: 310px; margin: 0 auto">
                 <table id="myTable" class="table">
                 	<thead>
                 		<tr>
-                			<th>MerchantTradeNo</th>
-                			<th>MerchantTradeDate</th>
-                			<th>TotalAmount</th>
-                			<th>TradeDesc</th>
-                			<th>ItemName</th>
-                			<th>memberId</th>
+                			<th>消費編號</th>
+                			<th>購買時間</th>
+                			<th>金額</th>
+                			<th>折扣</th>
+                			<th>名稱</th>
+                			<th>會員編號</th>
                 		</tr>
                 	</thead>
                 	<tbody id="myBody"></tbody>
                 </table>
               </div>
             </div>
-<!--             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
           </div>
     </div>
     

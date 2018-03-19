@@ -4,16 +4,14 @@
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/data.js"></script>
   <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-  
           <!-- Bar Chart Card-->
           <div class="card mb-3">
             <div class="card-header">
-              <i class="fa fa-bar-chart"></i> 每月收入概況圖</div>
+              <i class="fa fa-chart-bar"></i> 每月收入概況圖</div>
             <div class="card-body">
               <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto">
               </div>
             </div>
-<!--             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
           </div>
     
 <script>
@@ -37,14 +35,26 @@ $(document).ready(function() {
 	    },
 	
 	    xAxis: {
-	        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+	        categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+		    labels: {
+	            style: {
+	                fontSize:'16px'
+	            }
+	        }
 	    },
 	
 	    yAxis: {
 	        title: {
-	            text: 'Amount'
+	            text: '金額',
+	            style: {
+		            fontSize:'14px'
+		        }
+	        },
+		    labels: {
+	            style: {
+	                fontSize:'14px'
+	            }
 	        }
-	
 	    },
 	
 	    series: [{
@@ -64,7 +74,6 @@ function requestData() {
         async: true,
         dataType: "json",
         success: function(point) {
-            console.log(point)
             var series = chart.series[0].setData(point);
 
             // call it again after one second
