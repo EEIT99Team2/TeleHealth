@@ -38,7 +38,7 @@
 			<!-- Main Content -->
 			<div class="container">
 				<div class="row">
-					<table class="col-lg-4 col-md-10 mx-auto" id="title">
+					<table class="col-lg-6 col-md-10 mx-auto" id="title">
 					<thead>
 					<tr>
 					<th></th>
@@ -50,8 +50,10 @@
 						</tbody>
 					</table>
 				</div>				
-			<span id='table_page' class='col-lg-2 col-md-10 mx-auto'></span>
-					
+				<div class="container">
+					<div class="row">
+						<span id='table_page' class='col-lg-2 col-md-10 mx-auto'></span>
+					</div>						
 				</div>
 			</div>
 		</div>
@@ -62,7 +64,7 @@
 	<script type="text/javascript">
 		$(document).ready(
 		function() {
-			$.getJSON('/TeleHealth/healthcolumn/hotcontent.controller',{}, function(data) {
+			$.getJSON("<c:url value='/healthcolumn/hotcontent.controller'/>",{}, function(data) {
 			var doc = $(document.createDocumentFragment());
 						$('#tbody').empty();
 			$.each(data, function(i, data) {
@@ -83,7 +85,7 @@
 	    function() {	   	
 		var value = $(this).prop("id");
 		if (value != "VID"){
-		$.getJSON('/TeleHealth/healthcolumn/healthcolumn.controller',{advisoryCode : value},function(data) {
+		$.getJSON("<c:url value='/healthcolumn/healthcolumn.controller'/>",{advisoryCode : value},function(data) {
 		var doc = $(document.createDocumentFragment());
 		$('#tbody').empty();
 		$.each(data,function(i,data) {
@@ -100,7 +102,7 @@
 		    $("#title").tablepage($("#table_page"),5);			
 			});
 		}		 
-	    else {$.getJSON('/TeleHealth/healthcolumn/healthcolumn.controller',{advisoryCode : value},function(data) {
+	    else {$.getJSON("<c:url value='/healthcolumn/healthcolumn.controller'/>",{advisoryCode : value},function(data) {
 		    var doc = $(document.createDocumentFragment());
 		    $('#tbody').empty();
 			$.each(data,function(i,data) {
@@ -112,7 +114,7 @@
 			var vid = $('<video width="300" height="200" controls><source src="http://localhost:8090/TeleHealth/video/'
 			        	+ decodeURIComponent(data.fileName)	+ '" type="video/mp4"></video>')
 	       	var cell3 = $("<p></p>").html(data.content.substring(0,100));
-			var row = $('<tr class="post-preview"></tr>').append([article,cell2,cell3,vid ]);
+			var row = $('<tr class="post-preview"></tr>').append([article,cell2,vid,cell3]);
 			doc.append(row);
 			});
 			$('#tbody').append(doc);
@@ -123,16 +125,10 @@
 		 });
 		 //點擊數
 		$('#title').on('click', '.heltitle', function() {
-			var title = ($(this).attr('name'));			
-			$.post('/TeleHealth/healthcolumn/countarticle.controller', {title : title}, function(data) {
+			var title = ($(this).attr('name'));		
+			$.post("<c:url value='/healthcolumn/countarticle.controller'/>", {title : title}, function(data) {
 			});
-		})
-// 		$('#table_page').on('click','#page th',function(){
-// 			$('th').click(function(){
-// 				alert("ans");
-// 				})			
-// 		$('html,body').animate({scrollTop: $("body").offset().top}, 0);
-// 		})	
+		})	
 	</script>
 	<jsp:include page="/fragment/footer.jsp" />
 </body>

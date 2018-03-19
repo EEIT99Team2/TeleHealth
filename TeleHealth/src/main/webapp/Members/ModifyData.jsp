@@ -56,7 +56,7 @@
 						
 		<li class="nav-item"><input type="button" class="nav-link active"
 		id="FOO" data-toggle="tab" role="tab" value="我的留言"
-		onclick="location.href='questionMempublish.jsp'" /></li>
+		onclick="location.href='<c:url value='questionMempublish.jsp'/>'" /></li>
 		
 	</ul>
 	<div class="tab-content" id="myTabContent">

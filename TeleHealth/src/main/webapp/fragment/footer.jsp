@@ -98,6 +98,13 @@ if($("#memberId").val() != "" && $("#memberId").val() != null && $("#memberId").
 	        send();
 	        $('#inputMsg').val(" ");
 	    });
+
+	    $('#inputMsg').bind("keyup", function(e) {
+		    if(e.keyCode == 13) {
+		    	send();
+		        $('#inputMsg').val(" ");
+			}
+		})
 	    
 	    function send(){
 	        if (websocket != null) {
@@ -124,4 +131,4 @@ if($("#memberId").val() != "" && $("#memberId").val() != null && $("#memberId").
 <script	src="<c:url value="/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 
 <!--     google 我不是機器人 -->
-<!-- 	<script src='https://www.google.com/recaptcha/api.js'></script> -->
+<script src='https://www.google.com/recaptcha/api.js'></script>

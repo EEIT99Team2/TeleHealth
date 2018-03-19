@@ -305,7 +305,7 @@ $(document).ready(function() {
       slotLabelFormat:'hh:mm',
       defaultTimedEventDuration:"00:15",
       minTime:"08:00",
-      maxTime:"12:00",
+      maxTime:"21:00",
       contentHeight:"auto",
       navLinks: true, // can click day/week names to navigate views
       editable: false,

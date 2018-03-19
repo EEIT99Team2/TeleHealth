@@ -45,8 +45,7 @@ video {
 <body>
 	<jsp:include page="/fragment/nav2.jsp" />
 
-	<input type="hidden" id="roomName"
-		value="${sessionScope.advisory.videoCode}" />
+	<input type="hidden" id="roomName" value="${sessionScope.advisory.videoCode}" />
 	<input type="hidden" id="memberId" value="${sessionScope.advisory.memberId}" />
 	<input type="hidden" id="gender" value="${sessionScope.talkMember.gender}" />
 	<input type="hidden" id="birth" value="${sessionScope.talkMember.birth}" />

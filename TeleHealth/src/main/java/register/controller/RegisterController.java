@@ -229,32 +229,32 @@ public class RegisterController {
 			errorMsg.put("errorAccount", "此帳號已存在，請換新帳號");
 		} else {
 			pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(pwd));
-			MemberBean bb = new MemberBean();
-			bb.setAccount(account);
-			bb.setMemName(memName);
-			bb.setPhone(phone);
-			bb.setCellphone(cellphone);
-			bb.setGender(gender);
-			bb.setBirth(b);
-			bb.setMemHeight(Double.parseDouble(memHeight));
-			bb.setMemWeight(Double.parseDouble(memWeight));
-			bb.setBloodType(bloodType);
-			bb.setAddress(address);
-			bb.setPwd(pwd);
-			bb.setMedicine(medicine);
-			bb.setMedicalHistory(medicalHistory);
-			bb.setPhoto(photo);
-			bb.setFileName(fileName);
-			bb.setRegisterTime(new Timestamp(System.currentTimeMillis()));
-			bb.setPoint(0);
-			String A = "N";
-			bb.setStatus(A);
+			MemberBean member = new MemberBean();
+			member.setAccount(account);
+			member.setMemName(memName);
+			member.setPhone(phone);
+			member.setCellphone(cellphone);
+			member.setGender(gender);
+			member.setBirth(b);
+			member.setMemHeight(Double.parseDouble(memHeight));
+			member.setMemWeight(Double.parseDouble(memWeight));
+			member.setBloodType(bloodType);
+			member.setAddress(address);
+			member.setPwd(pwd);
+			member.setMedicine(medicine);
+			member.setMedicalHistory(medicalHistory);
+			member.setPhoto(photo);
+			member.setFileName(fileName);
+			member.setRegisterTime(new Timestamp(System.currentTimeMillis()));
+			member.setPoint(5);
+			String status = "N";
+			member.setStatus(status);
 
-			MemberBean n = registerService.insert(bb);
+			MemberBean result = registerService.insert(member);
 
 			// 注冊成功後,發送帳戶激活鏈接
-			SendActiveEmailThread.GoMail(n.getAccount(), n.getMemberId());
-			if (n != null) {
+			SendActiveEmailThread.GoMail(result.getAccount(), result.getMemberId());
+			if (result != null) {
 				return "register.success";
 			}
 		}
