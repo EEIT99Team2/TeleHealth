@@ -85,7 +85,7 @@ if($("#memberId").val() != "" && $("#memberId").val() != null && $("#memberId").
 			console.log("websocket連接成功!")
         };
         websocket.onmessage = function (event) {
-            $("#msg").html($("#msg").html() + "<br/>" + event.data);
+            $("#msg").html($("#msg").html() + event.data);
             $("#msg").animate({scrollTop: $("#msg").offset().top}, 2000);
         };
         websocket.onerror = function (event) {

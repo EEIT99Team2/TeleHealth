@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -111,7 +112,7 @@
 		    var cell1 = $("<h2 class='post-title' ></h2>").text(data.title);
 		    article.append(cell1);
 		    var cell2 = $("<p class='post-meta'></p>").text(data.createDate);
-			var vid = $('<video width="300" height="200" controls><source src="http://localhost:8090/TeleHealth/video/'
+			var vid = $('<video width="300" height="200" controls><source src="https://tzeing.asuscomm.com/TeleHealth/video/'
 			        	+ decodeURIComponent(data.fileName)	+ '" type="video/mp4"></video>')
 	       	var cell3 = $("<p></p>").html(data.content.substring(0,100));
 			var row = $('<tr class="post-preview"></tr>').append([article,cell2,vid,cell3]);

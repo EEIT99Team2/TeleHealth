@@ -41,7 +41,7 @@
 <div class="row col-12">     	
 	      <div class="col-2"></div>
 	      <div class="card col-8">
-			<div class="card-header"><span>${LoginOK.memName}</span><input type="hidden" id="memId" value="${LoginOK.memberId}">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
+			<div class="card-header"><span>${LoginOK.memName}</span><input type="hidden" id="memId" value="${LoginOK.memberId}">您提出過的問題<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
 				   <table id="productTable" class="table table-bordered">
