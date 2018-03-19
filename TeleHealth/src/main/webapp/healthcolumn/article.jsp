@@ -115,7 +115,7 @@ $(document).ready(function() {
 	            var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
 	            var cell2= $("<p class='lead'></p>").text("by  "+data[1]);
 	            var cell3=$("<p></p>").text(data[3]);
-	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="https://localhost:8443/TeleHealth/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
+	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="http://tzeing.asuscomm.com/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
 	            var cell4= $("<p class='lead'></p>").html(data[2]);                          
 	            var row = $(' <div class="col-lg-10" id="data"></div>').append([cell1,cell0,cell2,cell3,video,cell0,cell4]);
 	             $('#body').append(row);
@@ -155,6 +155,7 @@ $(document).ready(function() {
        	}); 	
     	 $('#QAcontent').append(doc);               
      })
+     ///會員po問問題
      function insert(){
     	var content= CKEDITOR.instances.textt.getData()    	
     	if(content==null|| content.length==0){
@@ -166,7 +167,8 @@ $(document).ready(function() {
 	    var ary1 = url.split('?');	   
 	    var ary2 = ary1[1].split('=');
 	    var aryid=ary2[1].split('&');	    		       
-		var title = aryid[0];		    
+		var title = aryid[0];
+		var title = decodeURIComponent(aryid[0]);		    
 	    var atype=ary2[2];	    
 	    var MemId=$("#MemId").val();	    
 	    var content= CKEDITOR.instances.textt.getData();
@@ -212,7 +214,8 @@ $(document).ready(function() {
 				}
             });
    }
-    }  
+    } 
+    // ///員工po問問題 
     function insertemp(){
     	var content= CKEDITOR.instances.textt.getData()    	
     	if(content==null|| content.length==0){
@@ -224,7 +227,8 @@ $(document).ready(function() {
 	    var ary1 = url.split('?');	   
 	    var ary2 = ary1[1].split('=');
 	    var aryid=ary2[1].split('&');	    		       
-		var title = aryid[0];		    
+		var title = decodeURIComponent(aryid[0]);
+		console.log(title);		    
 	    var atype=ary2[2];	    
 	    var MemId=$("#empId").val();	    
 	    var content= CKEDITOR.instances.textt.getData();
