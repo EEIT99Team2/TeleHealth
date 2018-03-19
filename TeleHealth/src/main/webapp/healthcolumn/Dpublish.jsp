@@ -75,7 +75,7 @@ width:50em;
     </div>
   </div>
 </div>
-<script src="../js/jquery-tablepage-1.0.js"></script>
+<script src="<c:url value='/js/jquery-tablepage-1.0.js'/>"></script>
 	<script>
 	 var empIdlogin=$('#empId').val();
 		$(document).ready(function() {			
@@ -103,7 +103,7 @@ width:50em;
 			   })
 			   //讀取醫生發表
 			   function loadProduct(empId){
-			    $.getJSON('/TeleHealth/healthcolumn/publishcontent.controller',{empId:empId},function(datas){
+			    $.getJSON("<c:url value='/healthcolumn/publishcontent.controller'/>",{empId:empId},function(datas){
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
@@ -131,7 +131,7 @@ width:50em;
 				   var check=confirm("你確定要刪除此筆資料?");				   
 	 			   var id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  
 	 			   if(check==true){
-	 				  $.post('/TeleHealth/healthcolumn/deletehealthcolumn.controller',{columnId:id},function(data){
+	 				  $.post("<c:url value='/healthcolumn/deletehealthcolumn.controller'/>",{columnId:id},function(data){
 						   alert("您已刪除所選的文章");
 		 				   loadProduct(empIdlogin);
 		 			   })		 			   
@@ -165,8 +165,8 @@ width:50em;
 					if(contenttext==null|| contenttext.length==0){
 			    		document.getElementById("reanswer").innerHTML=' ';    		
 			    		document.getElementById("reanswererror").innerHTML='內容不能空白';		
-			    	}else{ 					
-					$.getJSON("/TeleHealth/healthcolumn/updatehealthcolumn.controller", {name:name,heltitle:heltitle,file1:file1,contenttext:contenttext}, function(datas){
+			    	}else{ 				
+					$.getJSON("<c:url value='/healthcolumn/updatehealthcolumn.controller'/>", {name:name,heltitle:heltitle,file1:file1,contenttext:contenttext}, function(datas){
 						if(datas="ok"){
 							$("#reanswer").text("修改成功!!");
 						}else if(datas="erroemovie"){
