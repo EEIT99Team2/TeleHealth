@@ -171,4 +171,8 @@ public class ProductService {
 		String data = new Gson().toJson(datas);
 		return data;
 	}
+	
+	public ProductBean selectByTradeNo(String tradeNo) {
+		return productDao.selectTradeNo(tradeNo);
+	}
 }

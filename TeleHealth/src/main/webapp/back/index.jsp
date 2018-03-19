@@ -26,6 +26,20 @@
   .rightNavWord{display:inline;margin-right:20px;}
   .columnUse{font-size:19px;font-family:CJKtc_Bold;}
   tspan {font-size:20px;font-family:CJKtc_Bold;}
+  .th1{
+  width:200px}
+  .th2{
+  width:100px}
+  .th3{
+  width:500px}
+  .th4{
+  width: 450px
+  }
+  .th5{
+  width:450px
+  }
+  .th6{
+  width:100px}
   </style>
 </head>
 

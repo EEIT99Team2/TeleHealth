@@ -273,8 +273,8 @@ $(document).ready(function() {
 				$("#erroeMsg").text("po文失敗");
 				}
             });
-   }
-    
+    	}
+    }
       
     </script>        
 

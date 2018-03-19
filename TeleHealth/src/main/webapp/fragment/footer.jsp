@@ -24,7 +24,7 @@
 							<i class="fas fa-angle-down" style="margin-bottom: 8px"></i>
 						</button>
 					</div>
-					<div class="well myBox text-left" id="msg" style="background: navajowhite; height: 70%"></div>
+					<div class="well myBox text-left" id="msgBox" style="background: navajowhite; height: 70%"></div>
 					<div class="row"
 						style="margin-left: 1px; background: navajowhite; width: 100%">
 						<textarea 
@@ -85,8 +85,8 @@ if($("#memberId").val() != "" && $("#memberId").val() != null && $("#memberId").
 			console.log("websocket連接成功!")
         };
         websocket.onmessage = function (event) {
-            $("#msg").html($("#msg").html() + event.data);
-            $("#msg").animate({scrollTop: $("#msg").offset().top}, 2000);
+            $("#msgBox").html($("#msgBox").html() + "<div>"+event.data+"</div>");
+            $("#msgBox").animate({scrollTop: $("#msgBox").offset().top}, 2000);
         };
         websocket.onerror = function (event) {
         };
@@ -111,12 +111,11 @@ if($("#memberId").val() != "" && $("#memberId").val() != null && $("#memberId").
 	            var message = $('#inputMsg').val();
 	            var sendMsg = $('<div></div>').text(message);
 	            sendMsg.addClass("text-right");
-	            $("#msg").append(sendMsg);
-	            $("#msg").animate({scrollTop: $("#msg").offset().top}, 2000);
+	            $("#msgBox").append(sendMsg);
+	            $("#msgBox").animate({scrollTop: $("#msgBox").offset().top}, 2000);
 	            if ($.trim(chater) != "") {
 	            	message = chater + "|" + message;
 	            }
-	            console.log("message====" + message);
 	            websocket.send(message);
 	        } else {
 	            alert("很抱歉，目前客服人員忙線，請您稍後再聯繫!");

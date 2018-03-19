@@ -141,8 +141,8 @@ background: #7bac10;
 		    });
 		    
 		    $("body").on("keyup", "#content textarea", function(e) {
-			    if(e.keycode==13) {
-			    	var toUser =  $(this).attr("id").substring(0, $(this).attr("id").indexOf("Btn"));
+			    if(e.keyCode == 13) {
+			    	var toUser =  $(this).attr("id").substring(0, $(this).attr("id").indexOf("Text"));
 			    	var message = $(this).parent("div").find("textarea").val();
 			    	var showMsg = $(this).parent("div").parent("div").children(".myBox");
 			    	send(showMsg,toUser, message);

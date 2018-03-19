@@ -1,16 +1,19 @@
 package pay.controller;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.*;
-import javax.servlet.annotation.*;
-import javax.servlet.http.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import ecpay.payment.integration.*;
-import ecpay.payment.integration.domain.AioCheckOutOneTime;
 import pay.model.ProductBean;
 import pay.model.ProductService;
+import register.model.dao.MemberDAOJdbc;
 
 @WebServlet("/result.do")
 public class ResultServlet extends HttpServlet {
@@ -18,9 +21,12 @@ public class ResultServlet extends HttpServlet {
 	
 	private ProductService productService = null;
 
+	private MemberDAOJdbc memberDAO = null;
+	
 	@Override
 	public void init() throws ServletException {
 		productService = new ProductService();
+		memberDAO = new MemberDAOJdbc();
 	}
 	
 	@Override
@@ -53,7 +59,13 @@ public class ResultServlet extends HttpServlet {
 				bean.setRtnCode(RtnCode);
 				bean.setTradeNo(TradeNo);
 				bean.setPaymentDate(PaymentDate);
-				ProductBean result = productService.update(bean);
+				productService.update(bean);
+				ProductBean product = productService.selectByTradeNo(bean.getTradeNo());
+				String item = product.getItemName();
+				String pointString = item.substring(0, item.indexOf("點"));
+				Integer point = Integer.parseInt(pointString);
+				String memberId = product.getMemberId();
+				memberDAO.updatePoint(point, memberId);
 			} else {
 				System.out.println("false");
 			}

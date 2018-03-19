@@ -13,7 +13,6 @@
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script src="../forCkeditor/ckeditor/ckeditor.js"></script>
 <script src="../forCkeditor/ckfinder/ckfinder.js"></script>
-<link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <style type="text/css">

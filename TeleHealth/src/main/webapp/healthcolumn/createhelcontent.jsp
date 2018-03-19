@@ -10,7 +10,6 @@
 <title>新增文章</title>
 <script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js'/>"></script>
 <script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js'/>"></script>
-<link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
 <style type="text/css">
 .createtext {
 	margin: 0px auto;

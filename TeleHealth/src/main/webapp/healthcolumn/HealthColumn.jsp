@@ -74,7 +74,7 @@
 			var cell1 = $("<h2 class='post-title'></h2>").text(data.title);
 			article.append(cell1);
 			var cell2 = $("<p class='post-meta'></p>").text(data.createDate);
-			var cell3 = $("<p class='contentdescrip'></p>")	.html(data.content.substring(0,	200));
+			var cell3 = $("<p class='contentdescrip'></p>")	.html(data.content.substring(0,	250)+"...");
 			var row = $('<tr class="post-preview"></tr>').append([ article, cell2, cell3 ]);
 			doc.append(row);
 		});
@@ -95,7 +95,7 @@
 			var cell1 = $("<h2 class='post-title' ></h2>").text(data.title);
 						article.append(cell1);
 			var cell2 = $("<p class='post-meta'></p>").text(data.createDate);
-		    var cell3 = $("<p></p>").html(data.content.substring(0,200));
+		    var cell3 = $("<p></p>").html(data.content.substring(0,300)+"...");
 			var row = $('<tr class="post-preview"></tr>').append([article,cell2,cell3 ]);
 			doc.append(row);
 			});
@@ -114,7 +114,7 @@
 		    var cell2 = $("<p class='post-meta'></p>").text(data.createDate);
 			var vid = $('<video width="300" height="200" controls><source src="https://tzeing.asuscomm.com/TeleHealth/video/'
 			        	+ decodeURIComponent(data.fileName)	+ '" type="video/mp4"></video>')
-	       	var cell3 = $("<p></p>").html(data.content.substring(0,100));
+	       	var cell3 = $("<p></p>").html(data.content.substring(0,300)+"...");
 			var row = $('<tr class="post-preview"></tr>').append([article,cell2,vid,cell3]);
 			doc.append(row);
 			});
