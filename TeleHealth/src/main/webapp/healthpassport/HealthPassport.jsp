@@ -28,7 +28,7 @@
 				<h3>BMI</h3>
 			</div>
 			<div class="col-4 text-right">
-				<button class="btn btn-outline-info" id="insertBMI"
+				<button class="btn btn-outline-secondary" id="insertBMI"
 					data-toggle="modal" data-target="#mybmi">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
@@ -142,7 +142,7 @@
 				<h3>血壓</h3>
 			</div>
 			<div class="col-4 text-right">
-				<button id="insertBloodPressureRecords" data-toggle="modal"
+				<button class="btn btn-outline-secondary" id="insertBloodPressureRecords" data-toggle="modal"
 					data-target="#myModalBloodPressure">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
@@ -260,7 +260,7 @@
 				<h3>血糖</h3>
 			</div>
 			<div class="col-4 text-right">
-				<button id="insertBloodSugar" data-toggle="modal"
+				<button class="btn btn-outline-secondary" id="insertBloodSugar" data-toggle="modal"
 					data-target="#myModalBloodSugar">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
@@ -275,7 +275,7 @@
 					<!-- Modal content-->
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title">血糖</h4>
+							<h4 class="modal-title">飯前血糖</h4>
 						</div>
 						<div class="modal-body">
 							<label for="insert_bloodsugar" class="col-2">血糖</label> <input
@@ -317,7 +317,7 @@
 				<hr />
 				<div class="row">
 					<div class="col-12 text-center">
-						<span id="bsResult">這是查詢結果!!</span>
+						<span id="bsResult"></span>
 					</div>
 				</div>
 
@@ -617,7 +617,7 @@ $('#insertBloodSugar').click(function(){
 		 	      $('#showbsTime').empty();
                 	$('#showBloodSugar').prepend(data.bloodSugar);	    	      
 	    	       	$('#showbsTime').prepend(data.createTime);
-	    	       	$('#bsResult').prepend('<h4><small>'+'BloodSugar --> '+data.bloodSugar+'\|'+data.result+'</small></h4>');
+	    	       	$('#bsResult').prepend('<h4><small>'+'血糖結果 --> '+data.bloodSugar+'\|'+data.result+'</small></h4>');
 	    	       	$('#insert_bloodsugar').val("");				
 					$('#bloodsugarMsg').empty(); 
 	            	bstableANDview();//呼叫bs紀錄

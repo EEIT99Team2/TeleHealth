@@ -165,23 +165,23 @@ public class AnalysisController {
 		Integer ageint = Integer.parseInt(age);
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
-			DataAnalysisBean Diastole = DataAnalysisService.selectGroupId("BloodPressureDiastole", gender, ageint);//標準數值
-			DataAnalysisBean Systole = DataAnalysisService.selectGroupId("BloodPressureSystole", gender, ageint);
-			dataOne.put("diastolecheckmax", String.valueOf(Diastole.getMaxvalue()));
-			dataOne.put("diastolecheckmin",String.valueOf(Diastole.getMinvalue()));
-			dataOne.put("systolecheckmin",String.valueOf(Systole.getMinvalue()));
-			dataOne.put("systolecheckmax",String.valueOf(Systole.getMaxvalue()));
-			String systole = result.get(i).getMaxBloodPressure().toString();
-			String diastole = result.get(i).getMinBloodPressure().toString();
-			String heartBeat = result.get(i).getHeartBeat().toString();
-			String bpResult = result.get(i).getResult();
-			String createTime = sdf.format(result.get(i).getCreateTime());
-			dataOne.put("systole", systole);
-			dataOne.put("diastole", diastole);
-			dataOne.put("heartBeat", heartBeat);
-			dataOne.put("bpResult", bpResult);
-			dataOne.put("createTime", createTime);
-			datafinal.add(dataOne);
+				DataAnalysisBean Diastole = DataAnalysisService.selectGroupId("BloodPressureDiastole", gender, ageint);//標準數值
+				DataAnalysisBean Systole = DataAnalysisService.selectGroupId("BloodPressureSystole", gender, ageint);
+				dataOne.put("diastolecheckmax", String.valueOf(Diastole.getMaxvalue()));
+				dataOne.put("diastolecheckmin",String.valueOf(Diastole.getMinvalue()));
+				dataOne.put("systolecheckmin",String.valueOf(Systole.getMinvalue()));
+				dataOne.put("systolecheckmax",String.valueOf(Systole.getMaxvalue()));
+				String systole = result.get(i).getMaxBloodPressure().toString();
+				String diastole = result.get(i).getMinBloodPressure().toString();
+				String heartBeat = result.get(i).getHeartBeat().toString();
+				String bpResult = result.get(i).getResult();
+				String createTime = sdf.format(result.get(i).getCreateTime());
+				dataOne.put("systole", systole);
+				dataOne.put("diastole", diastole);
+				dataOne.put("heartBeat", heartBeat);
+				dataOne.put("bpResult", bpResult);
+				dataOne.put("createTime", createTime);
+				datafinal.add(dataOne);
 		}
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);

@@ -30,7 +30,7 @@ public class HealthColumnDAO  {
 		}
 	//選專欄文章	
 	public List<HealthColumnBean> selectbycode(String advisoryCode) {	
-		NativeQuery query=this.getSession().createNativeQuery("select * from healthColumn where advisoryCode=?");
+		NativeQuery query=this.getSession().createNativeQuery("select * from healthColumn where advisoryCode=? order by createDate desc");
 		query.setParameter(1, advisoryCode);
 		query.addEntity(HealthColumnBean.class);
 		List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();		

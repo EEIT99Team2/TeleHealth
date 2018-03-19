@@ -43,7 +43,7 @@ c:
       <div class="col-lg-10" id='foot'>  
       <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"></h5>
       	<div class="form-group">
-      		<form id="Msg" action="/TeleHealth/healthcolumn/insQA.controller" method="post" >
+      		<form id="Msg" >
       		<input type="hidden" id="advisorycode" name="advisorycode" >
       		<input type="hidden" id="title" name="title" >
       		<input type="hidden" id="MemId"name="MemId" value="${LoginOK.memberId}">
@@ -57,7 +57,7 @@ c:
           <div class="col-lg-10" id='foot'>  
       <h5 class="card-header">留言:</h5><h5 size="-1" color="#FF0000" id="errorMsg"></h5>
       	<div class="form-group">
-      		<form id="Msg" action="/TeleHealth/healthcolumn/insQAdoctor.controller" method="post" >
+      		<form id="Msg"  >
       		<input type="hidden" id="advisorycode" name="advisorycode" >
       		<input type="hidden" id="title" name="title" >
       		<input type="hidden" id="empId"name="empId" value="${empLoginOK.empId}">
@@ -75,8 +75,8 @@ c:
 <script type="text/javascript">
 $(document).ready(function() {     
 	 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
-         {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
-         ];
+         {name:'paragraph',groups:['align']},{name:'styles'},
+         {name:'colors'},];
 		var url = location.href;
 	    var ary1 = url.split('?');	   
 	    var ary2 = ary1[1].split('=');
@@ -99,7 +99,7 @@ $(document).ready(function() {
 	var ary3=ary2[1].split('&');			       
 	var id = ary3[0];	   
     var titledecode= decodeURIComponent(id);   	  
-    $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller', {title:titledecode}, function (data){		
+    $.getJSON("<c:url value='/healthcolumn/titlecontent.controller'/>", {title:titledecode}, function (data){		
 		 $.each(data, function (i, data) {			
 			if(data[5]!="VID"){  
         	var cell0=$("<hr>")      	     	          
@@ -122,7 +122,7 @@ $(document).ready(function() {
 			}	
          });        
  	});   
-    $.getJSON('/TeleHealth/healthcolumn/QAcontent.controller', {title:titledecode}, function (data){    
+    $.getJSON("<c:url value='/healthcolumn/QAcontent.controller'/>", {title:titledecode}, function (data){    
         console.log(data);           
     	var doc=$(document.createDocumentFragment());   	
     	var div=$('<div class="col-lg-10" ></div>');
@@ -170,7 +170,7 @@ $(document).ready(function() {
 	    var atype=ary2[2];	    
 	    var MemId=$("#MemId").val();	    
 	    var content= CKEDITOR.instances.textt.getData();
-        $.getJSON("/TeleHealth/healthcolumn/insQA.controller",{advisorycode:atype,title:title,MemId:MemId,textmem:content},function(datas){
+        $.getJSON("<c:url value='/healthcolumn/insQA.controller'/>",{advisorycode:atype,title:title,MemId:MemId,textmem:content},function(datas){
 			if(datas=="ok"){
 				$("#QAcontent").empty();
 			 $.getJSON('/TeleHealth/healthcolumn/QAcontent.controller', {title:titledecode}, function (data){               
@@ -229,7 +229,7 @@ $(document).ready(function() {
 	    var MemId=$("#empId").val();	    
 	    var content= CKEDITOR.instances.textt.getData();
 	    console.log(content);
-        $.getJSON("/TeleHealth/healthcolumn/insQAdoctor.controller",{advisorycode:atype,title:title,empId:empId,textemp:content},function(datas){
+        $.getJSON("<c:url value='/healthcolumn/insQAdoctor.controller'/>",{advisorycode:atype,title:title,empId:empId,textemp:content},function(datas){
 			if(datas=="ok"){
 				$("#QAcontent").empty();
 			 $.getJSON('/TeleHealth/healthcolumn/QAcontent.controller', {title:titledecode}, function (data){               
