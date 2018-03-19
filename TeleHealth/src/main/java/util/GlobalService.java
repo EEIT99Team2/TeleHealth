@@ -104,20 +104,6 @@ public class GlobalService {
 		String s = "123";
 		encStr = encryptString(s);
 		String t = getMD5Endocing(encStr);
-		// decStr = decryptString(KEY, encStr);
-		System.out.println("原字串:" + s);
-		System.out.println("加密後:" + t);
-
-		// c7f3a235792b037b6aa77aced86ac6ae
-		// c7f3a235792b037b6aa77aced86ac6ae
-		// System.out.println(getMD5Endocing(file));
-
-		// file = new File("d:\\apache-tomcat-6.0.18.exe");
-		// fb827381b1eca44bf32273db548157d3
-		// System.out.println(getMD5Endocing(file));
-
-		// e3bef82f712da7110aaeae5a64ebdb20
-		// e3bef82f712da7110aaeae5a64ebdb20
 	}
 
 	// 本方法調整fileName的長度小於或等於maxLength。
@@ -151,7 +137,6 @@ public class GlobalService {
 	// 此方法可檢視上傳資料的每個欄位與每個檔案，
 	public static void exploreParts(Collection<Part> parts, HttpServletRequest req) {
 		try {
-			System.out.println("=============================");
 			for (Part part : parts) {
 				String name = part.getName();
 				String contentType = part.getContentType();
@@ -164,16 +149,13 @@ public class GlobalService {
 					// 將上傳的檔案寫入到location屬性所指定的資料夾
 					if (photo != null && photo.trim().length() > 0) {
 						part.write(photo);
-						System.out.println(part.getClass().getName());
 					}
 				} else { // 表示該part為一般的欄位
 					// 將上傳的欄位資料寫入到location屬性所指定的資料夾，檔名為"part_"+ name
 					part.write("part_" + name);
 					value = req.getParameter(name);
 				}
-				System.out.printf("%-50s %-15s %8d  %-20s \n", name, contentType, size, value);
 			}
-			System.out.println("=============================");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
