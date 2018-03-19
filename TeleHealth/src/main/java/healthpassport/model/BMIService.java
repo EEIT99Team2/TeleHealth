@@ -20,37 +20,29 @@ public class BMIService {
 	public BMIBean insert(BMIBean bean,String gender,Integer age) {
 		bean.getMemberid();
 		Double bmi = bean.getBmi();
-		DataAnalysisBean lowData = null;
-		DataAnalysisBean upData = null;
-		if (gender.equals("M")) {
-			if (age < 18) {
-				lowData = dataAnalysisDao.bmiLow17(gender, age);
-			} else {
-				upData = dataAnalysisDao.bmiUp18(gender, age, bmi);
+		String bmiresult = null;
+		if(age<18) {
+			DataAnalysisBean lowData = dataAnalysisDao.bmiLow17(gender, age);
+			Double lowminval = lowData.getMinvalue();
+			Double lowmaxval = lowData.getMaxvalue();
+			bmiresult = lowData.getResult();
+			if (bmi<lowminval) {
+				bmiresult = "低於正常範圍";
+			}else if(bmi>lowmaxval){
+				bmiresult = "高於正常範圍";
 			}
-		} else {
-			if (age < 18) {
-				lowData = dataAnalysisDao.bmiLow17(gender, age);
-			} else {
-				upData = dataAnalysisDao.bmiUp18(gender, age, bmi);
+		}else if(age>=18) {
+			if(bmi>110) {
+				bmiresult = "病態肥胖";
+			}else {
+				DataAnalysisBean upData = dataAnalysisDao.bmiUp18(gender, age, bmi);
+				bmiresult = upData.getResult();				
 			}
-		}
-		String lowBmiResult = null;
-		String upBmiResult = null;
-		if (lowData != null) {
-			lowBmiResult = lowData.getResult();
-		}
-		if (upData != null) {
-			upBmiResult = upData.getResult();
 		}
 		bean.getHeight();
 		bean.getWeight();
 		bean.getBmi();
-		if (lowBmiResult != null) {
-			bean.setResult(lowBmiResult);
-		} else if (upBmiResult != null) {
-			bean.setResult(upBmiResult);
-		}
+		bean.setResult(bmiresult);
 		bean.setCreateTime(new java.util.Date());
 		BMIBean result = bmiDao.insert(bean);
 		return result;

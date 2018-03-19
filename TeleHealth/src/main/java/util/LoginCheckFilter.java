@@ -23,6 +23,7 @@ import register.model.MemberBean;
 		urlPatterns = { "/*" }, 
 		initParams = { 
 				@WebInitParam(name = "mustLogin1", value = "/AdvisoryMoment/*"),
+				@WebInitParam(name = "mustLogin1", value = "/Advisory/*"),
 				@WebInitParam(name = "mustLogin2", value = "/healthpassport/*"),
 				@WebInitParam(name = "mustLogin3", value = "/back/*"),
 				@WebInitParam(name = "mustLogin4", value = "/pay/*"),

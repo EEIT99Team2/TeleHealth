@@ -1,5 +1,8 @@
 package util.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 
@@ -46,6 +49,16 @@ public class GetImageController {
 			} else if (emp != null && emp.getPhoto() != null) {
 				blob = emp.getPhoto();
 				media = util.SystemUtils.BlobToByte(blob);
+			} else {
+				FileInputStream in = null;
+				try {
+					File file = new File("e:/專題/doctor1.jpg");
+					in = new FileInputStream(file);
+					blob = util.SystemUtils.fileToBlob(in, file.length());
+					media = util.SystemUtils.BlobToByte(blob);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -86,6 +99,16 @@ public class GetImageController {
 			} else if (emp != null && emp.getPhoto() != null) {
 				blob = emp.getPhoto();
 				media = util.SystemUtils.BlobToByte(blob);
+			} else {
+				FileInputStream in = null;
+				try {
+					File file = new File("e:/專題/doctor1.jpg");
+					in = new FileInputStream(file);
+					blob = util.SystemUtils.fileToBlob(in, file.length());
+					media = util.SystemUtils.BlobToByte(blob);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

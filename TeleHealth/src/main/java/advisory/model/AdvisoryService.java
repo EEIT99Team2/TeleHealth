@@ -68,7 +68,6 @@ public class AdvisoryService {
 			}
 		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON=" + data);
 		return data;
 	};
 	
@@ -115,7 +114,6 @@ public class AdvisoryService {
 			}
 		}
 		String data = new Gson().toJson(datafinal);
-		System.out.println("JSON=" + data);
 		return data;
 	};
 		
@@ -146,6 +144,13 @@ public class AdvisoryService {
 		bean.setVideoCode(videoCode);
 		bean.setDescrip(descrip);
 		bean.setStatus("Y");
+		return advisoryDao.update(bean);
+	}
+	
+	public AdvisoryBean updateSatisfy(String videoCode, Integer satisfy) {
+		AdvisoryBean bean = new AdvisoryBean();
+		bean.setVideoCode(videoCode);
+		bean.setSatisfy(satisfy);
 		return advisoryDao.update(bean);
 	}
 }

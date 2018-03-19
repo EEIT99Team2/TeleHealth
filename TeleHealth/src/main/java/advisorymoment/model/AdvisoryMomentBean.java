@@ -66,12 +66,5 @@ public class AdvisoryMomentBean implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	@Override
-	public String toString() {
-		return "AdvisoryMomentBean [id=" + id + ", calendar=" + calendar + ", reserveStatus=" + reserveStatus
-				+ ", advisoryCode=" + advisoryCode + ", empId=" + empId + ", videoCode=" + videoCode + ", status="
-				+ status + "]";
-	}
 	
-		
 }

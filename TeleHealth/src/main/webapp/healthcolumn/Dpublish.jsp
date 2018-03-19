@@ -7,12 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>牽伴遠距健康諮詢平台</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
+<title>已發佈的文章</title>
 <link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
-<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-<link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 <style type="text/css">
 #updatestyle{
 width:50em;
@@ -54,7 +50,7 @@ width:50em;
      </div>	
 </div>
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="form" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" id="updatestyle" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="updatestyle" role="document">
     <div class="modal-content" >
       <div class="modal-header">
         <h5 class="modal-title" id="UnReserveItemTitle"></h5>
@@ -79,7 +75,7 @@ width:50em;
     </div>
   </div>
 </div>
-<script src="../js/jquery-tablepage-1.0.js"></script>
+<script src="<c:url value='/js/jquery-tablepage-1.0.js'/>"></script>
 	<script>
 	 var empIdlogin=$('#empId').val();
 		$(document).ready(function() {			
@@ -89,7 +85,7 @@ width:50em;
 			 var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
 		          {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},{ name: 'insert', groups: [ 'Image' ] },
 		          ];				
-			 CKEDITOR.replace('contenttext',{width:450, height:500,toolbarGroups:tg});		
+			 CKEDITOR.replace('contenttext',{width:700, height:500,toolbarGroups:tg});		
  			 loadProduct(empIdlogin);
 			  $('#productTable>tbody').on('click','tr>td>button:nth-child(1)',function(){
 					$(this).parents('tr').remove();
@@ -107,7 +103,7 @@ width:50em;
 			   })
 			   //讀取醫生發表
 			   function loadProduct(empId){
-			    $.getJSON('/TeleHealth/healthcolumn/publishcontent.controller',{empId:empId},function(datas){
+			    $.getJSON("<c:url value='/healthcolumn/publishcontent.controller'/>",{empId:empId},function(datas){
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
@@ -135,7 +131,7 @@ width:50em;
 				   var check=confirm("你確定要刪除此筆資料?");				   
 	 			   var id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  
 	 			   if(check==true){
-	 				  $.post('/TeleHealth/healthcolumn/deletehealthcolumn.controller',{columnId:id},function(data){
+	 				  $.post("<c:url value='/healthcolumn/deletehealthcolumn.controller'/>",{columnId:id},function(data){
 						   alert("您已刪除所選的文章");
 		 				   loadProduct(empIdlogin);
 		 			   })		 			   
@@ -147,6 +143,7 @@ width:50em;
 			    
 			    //修改文章
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
+	 			  $("#reanswer").text(""); 
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var id = $(this).parents('tr').find('td:nth-child(2)').text();
 	 		   $.getJSON('/TeleHealth/healthcolumn/titlecontent.controller',{title:id},function(datas){
@@ -168,8 +165,8 @@ width:50em;
 					if(contenttext==null|| contenttext.length==0){
 			    		document.getElementById("reanswer").innerHTML=' ';    		
 			    		document.getElementById("reanswererror").innerHTML='內容不能空白';		
-			    	}else{ 					
-					$.getJSON("/TeleHealth/healthcolumn/updatehealthcolumn.controller", {name:name,heltitle:heltitle,file1:file1,contenttext:contenttext}, function(datas){
+			    	}else{ 				
+					$.getJSON("<c:url value='/healthcolumn/updatehealthcolumn.controller'/>", {name:name,heltitle:heltitle,file1:file1,contenttext:contenttext}, function(datas){
 						if(datas="ok"){
 							$("#reanswer").text("修改成功!!");
 						}else if(datas="erroemovie"){

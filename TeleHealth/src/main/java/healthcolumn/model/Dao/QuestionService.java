@@ -40,7 +40,14 @@ public class QuestionService {
 		}
 		return false;
 	}
-
+	//員工新增回應
+	public boolean insertQAemp(QuestionBean bean) {
+		QuestionBean Insertlist = QuestionDAO.insertQAemp(bean);
+		if (Insertlist != null) {
+			return true;
+		}
+		return false;
+	}
 	// 刪除員工文章
 	public boolean deleteEmp(int Id, String empId) {
 		boolean deleetecon = QuestionDAO.deletEmp(Id, empId);

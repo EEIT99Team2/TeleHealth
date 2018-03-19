@@ -7,7 +7,7 @@
 <style>
 .point1 { 
 color:red; 
-background-color:#AAFFEE;
+background-color:#FFDDAA;
 width:600px;
 height:600px;
 border:3px #cccccc dashed;
@@ -31,15 +31,21 @@ margin:0px auto;
 			onclick="location.href='ModifyData.jsp'" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="修改密碼"
-			onclick="location.href='ChangePwd.jsp'" /></li>			
-			<li class="nav-item"><input type="button" class="nav-link active"
+			onclick="location.href='ChangePwd.jsp'" /></li>
+		<li class="nav-item"><input type="button" class="nav-link active"
 			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>		
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
 			onclick="location.href='Point.jsp'" /></li>
+			
+			<li class="nav-item"><input type="button" class="nav-link active"
+			id="FOO" data-toggle="tab" role="tab" value="儲值點數"
+			onclick="location.href='<c:url value='/pay/pay.jsp'/>'" /></li>
+						
 		<li class="nav-item"><input type="button" class="nav-link active"
-			id="FOO" data-toggle="tab" role="tab" value="我的留言"
-			onclick="location.href='questionMempublish.jsp'" /></li>
+		id="FOO" data-toggle="tab" role="tab" value="我的留言"
+		onclick="location.href='<c:url value='questionMempublish.jsp'/>'" /></li>
+		
 	</ul>
 	<div class="tab-content" id="myTabContent">
 		<div class="tab-pane fade show active" id="home" role="tabpanel"

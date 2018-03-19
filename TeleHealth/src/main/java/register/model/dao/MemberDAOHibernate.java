@@ -1,7 +1,5 @@
 package register.model.dao;
 
-import java.sql.Blob;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pay.model.ProductBean;
 import register.model.MemberBean;
 
 @Repository
@@ -30,30 +27,29 @@ public class MemberDAOHibernate {
 		List<MemberBean> list = this.getSession().createQuery(hql).setParameter(0, account).getResultList();
 		return list;
 	}
-	
-	 String memid = "SELECT * FROM product WHERE memberId=? AND RtnCode=1";
-		public List<Object[]> selectMemberId(String memberid) {
-			NativeQuery query = this.getSession().createNativeQuery(memid);
-			query.setParameter(1,memberid);
-			List<Object[]> data = (List<Object[]>) query.list();
-			return data;	
-		}
-		
-		 String memid1 = "SELECT * FROM members";
-			public List<Object[]> selectFromMember(String memberid) {
-				NativeQuery query = this.getSession().createNativeQuery(memid1);
-				List<Object[]> data = (List<Object[]>) query.list();
-				return data;	
-			}
-	
-	
-	
-	
+
+	String memid = "SELECT * FROM product WHERE memberId=? AND RtnCode=1";
+
+	public List<Object[]> selectMemberId(String memberid) {
+		NativeQuery query = this.getSession().createNativeQuery(memid);
+		query.setParameter(1, memberid);
+		List<Object[]> data = (List<Object[]>) query.list();
+		return data;
+	}
+
+	String memid1 = "SELECT * FROM members";
+
+	public List<Object[]> selectFromMember(String memberid) {
+		NativeQuery query = this.getSession().createNativeQuery(memid1);
+		List<Object[]> data = (List<Object[]>) query.list();
+		return data;
+	}
+
 	public MemberBean selectById(String memberId) {
 		MemberBean member = this.getSession().get(MemberBean.class, memberId);
 		return member;
 	}
-	
+
 	public List<MemberBean> selectAll() {
 		return this.getSession().createQuery("from MemberBean", MemberBean.class).list();
 	}
@@ -70,42 +66,38 @@ public class MemberDAOHibernate {
 	public MemberBean update(MemberBean bean) {
 		if (bean != null) {
 			MemberBean updateMember = this.getSession().get(MemberBean.class, bean.getMemberId());
-			System.out.println("DAO取出的資料庫會員舊密碼=" + updateMember.getPwd());
-			if(updateMember != null) { 
-				if(bean.getMemName() != null && bean.getMemName().trim().length() > 0) {
+			if (updateMember != null) {
+				if (bean.getMemName() != null && bean.getMemName().trim().length() > 0) {
 					updateMember.setMemName(bean.getMemName());
 				}
-				if(bean.getPwd() != null && bean.getPwd().trim().length() > 0) {
-					System.out.println("Update Password="+bean.getPwd().toString());
-					System.out.println("OLD Password="+ updateMember.getPwd());
+				if (bean.getPwd() != null && bean.getPwd().trim().length() > 0) {
 					updateMember.setPwd(bean.getPwd());
-					System.out.println("NEW Password="+ updateMember.getPwd());
 				}
-				if(bean.getMemHeight() != null && bean.getMemHeight()>0) {
-					updateMember.setMemHeight(bean.getMemHeight());			
+				if (bean.getMemHeight() != null && bean.getMemHeight() > 0) {
+					updateMember.setMemHeight(bean.getMemHeight());
 				}
-				if(bean.getMemWeight() !=null && bean.getMemWeight()>0) {
-					updateMember.setMemWeight(bean.getMemWeight());					
+				if (bean.getMemWeight() != null && bean.getMemWeight() > 0) {
+					updateMember.setMemWeight(bean.getMemWeight());
 				}
-				if(bean.getBloodType() !=null && bean.getBloodType().trim().length()>0) {
-					updateMember.setBloodType(bean.getBloodType());					
+				if (bean.getBloodType() != null && bean.getBloodType().trim().length() > 0) {
+					updateMember.setBloodType(bean.getBloodType());
 				}
-				if(bean.getAddress()!=null && bean.getAddress().trim().length()>0) {
-					updateMember.setAddress(bean.getAddress());					
+				if (bean.getAddress() != null && bean.getAddress().trim().length() > 0) {
+					updateMember.setAddress(bean.getAddress());
 				}
-				if(bean.getMedicalHistory()!=null && bean.getMedicalHistory().trim().length()>0) {
-					updateMember.setMedicalHistory(bean.getMedicalHistory());					
+				if (bean.getMedicalHistory() != null && bean.getMedicalHistory().trim().length() > 0) {
+					updateMember.setMedicalHistory(bean.getMedicalHistory());
 				}
-				if(bean.getMedicine()!=null && bean.getMedicine().trim().length()>0) {
-					updateMember.setMedicine(bean.getMedicine());					
+				if (bean.getMedicine() != null && bean.getMedicine().trim().length() > 0) {
+					updateMember.setMedicine(bean.getMedicine());
 				}
-				if(bean.getCellphone()!=null && bean.getCellphone().trim().length()>0) {
-					updateMember.setCellphone(bean.getCellphone());					
+				if (bean.getCellphone() != null && bean.getCellphone().trim().length() > 0) {
+					updateMember.setCellphone(bean.getCellphone());
 				}
-				if(bean.getPhone()!=null && bean.getPhone().trim().length()>0) {
-					updateMember.setPhone(bean.getPhone());					
+				if (bean.getPhone() != null && bean.getPhone().trim().length() > 0) {
+					updateMember.setPhone(bean.getPhone());
 				}
-				if(bean.getStatus() != null && bean.getStatus().trim().length() > 0) {
+				if (bean.getStatus() != null && bean.getStatus().trim().length() > 0) {
 					updateMember.setStatus(bean.getStatus());
 				}
 				if (bean.getPhoto() != null && bean.getFileName() != null) {
@@ -113,7 +105,6 @@ public class MemberDAOHibernate {
 					updateMember.setPhoto(bean.getPhoto());
 				}
 				updateMember.setModifiyTime(new Timestamp(System.currentTimeMillis()));
-				
 				return updateMember;
 			}
 		}
@@ -129,17 +120,18 @@ public class MemberDAOHibernate {
 		return false;
 	}
 
-//	public boolean UdPwd(String NewPwd, String changeAccount) {
-//		NativeQuery query = this.getSession().createNativeQuery("update members set pwd=? where account=? ");
-//		query.setParameter(1, NewPwd);
-//		query.setParameter(2, changeAccount);
-//		int result = query.executeUpdate();
-//		if (result == 1) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
+	// public boolean UdPwd(String NewPwd, String changeAccount) {
+	// NativeQuery query = this.getSession().createNativeQuery("update members set
+	// pwd=? where account=? ");
+	// query.setParameter(1, NewPwd);
+	// query.setParameter(2, changeAccount);
+	// int result = query.executeUpdate();
+	// if (result == 1) {
+	// return true;
+	// } else {
+	// return false;
+	// }
+	// }
 
 	public boolean UpdateMemberData(String memName, String memHeight, String memWeight, String bloodType,
 			String medicine, String medicalHistory, String phone, String cellphone, String address,
@@ -157,27 +149,29 @@ public class MemberDAOHibernate {
 		}
 	}
 
-//	public boolean update(String smemName, String phone, String cellphone, java.util.Date birth, double memHeight,
-//			double memWeight, String bloodType, String address, String pwd, String medicine, Blob photo,
-//			String fileName, String medicalHistory, String account) {
-//		MemberBean result = this.getSession().get(MemberBean.class, account);
-//		if (result != null) {
-//			result.setMemName(memName);
-//			result.setPhone(phone);
-//			result.setCellphone(cellphone);
-//			result.setBirth(birth);
-//			result.setMemHeight(memHeight);
-//			result.setMemWeight(memWeight);
-//			result.setBloodType(bloodType);
-//			result.setAddress(address);
-//			result.setPwd(pwd);
-//			result.setMedicine(medicine);
-//			result.setPhoto(photo);
-//			result.setFileName(fileName);
-//			result.setMedicalHistory(medicalHistory);
-//			return true;
-//		}
-//		return false;
-//	}
+	// public boolean update(String smemName, String phone, String cellphone,
+	// java.util.Date birth, double memHeight,
+	// double memWeight, String bloodType, String address, String pwd, String
+	// medicine, Blob photo,
+	// String fileName, String medicalHistory, String account) {
+	// MemberBean result = this.getSession().get(MemberBean.class, account);
+	// if (result != null) {
+	// result.setMemName(memName);
+	// result.setPhone(phone);
+	// result.setCellphone(cellphone);
+	// result.setBirth(birth);
+	// result.setMemHeight(memHeight);
+	// result.setMemWeight(memWeight);
+	// result.setBloodType(bloodType);
+	// result.setAddress(address);
+	// result.setPwd(pwd);
+	// result.setMedicine(medicine);
+	// result.setPhoto(photo);
+	// result.setFileName(fileName);
+	// result.setMedicalHistory(medicalHistory);
+	// return true;
+	// }
+	// return false;
+	// }
 
 }

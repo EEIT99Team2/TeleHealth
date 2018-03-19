@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>牽伴遠距健康諮詢平台</title>
+<title>新增文章</title>
 <script src="<c:url value='/forCkeditor/ckeditor/ckeditor.js'/>"></script>
 <script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js'/>"></script>
 <link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
@@ -127,16 +127,13 @@
 					$('#erroeMsg').text("請選影音專區喔!!");
 					$("#batchUploadBtn").attr('disabled', false);
 				}else{				
-				var FileController = "/TeleHealth/healthcolumn/inshealthcolumn.controller"; // 接收上传文件的后台地址 
-				// FormData 对象
-				var form = new FormData();
-				// form.append("author", "hooyes"); // 可以增加表单数据
+				var FileController = "/TeleHealth/healthcolumn/inshealthcolumn.controller"; // 接收上傳文件 
+				var form = new FormData();			
 				form.append("file1", fileObj);
 				form.append("title", title);
 				form.append("name", name);
 				form.append("type", type);
-				form.append("content", content); // 文件对象
-				// XMLHttpRequest 对象
+				form.append("content", content); 				
 				var xhr = new XMLHttpRequest();
 				xhr.open("post", FileController, true);
 				xhr.onload = function() {

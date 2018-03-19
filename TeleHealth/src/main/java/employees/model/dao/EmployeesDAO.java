@@ -20,7 +20,6 @@ public class EmployeesDAO {
 	private SessionFactory sessionFactory;
 
 	public Session getSession() {
-		System.out.println("session=" + sessionFactory);
 		return sessionFactory.getCurrentSession();
 	}
 

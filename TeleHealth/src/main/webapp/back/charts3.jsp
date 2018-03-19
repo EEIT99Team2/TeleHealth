@@ -10,7 +10,7 @@
 	}
 </style>
       <!-- Records -->
-          <div class="card mb-3">
+          <div class="card mb-3 container columnUse">
             <div class="card-header">
               <i class="fa fa-table"></i> 交易紀錄</div>
             <div class="card-body">
@@ -18,12 +18,12 @@
                 <table id="myTable" class="table">
                 	<thead>
                 		<tr>
-                			<th>消費編號</th>
-                			<th>購買時間</th>
-                			<th>金額</th>
-                			<th>折扣</th>
-                			<th>名稱</th>
-                			<th>會員編號</th>
+                			<th>編號</th>
+                			<th>交易日期</th>
+                			<th>總金額</th>
+                			<th>交易描述</th>
+                			<th>點數</th>
+                			<th>會員ID</th>
                 		</tr>
                 	</thead>
                 	<tbody id="myBody"></tbody>
@@ -31,7 +31,6 @@
               </div>
             </div>
           </div>
-    </div>
     
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
 <script>

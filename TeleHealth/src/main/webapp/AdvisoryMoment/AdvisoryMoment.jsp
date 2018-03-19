@@ -41,7 +41,7 @@
 <select id="year"><option>請選擇</option></select><span class="selectWord">年</span>
 <select id="month"><option>請選擇</option></select><span class="selectWord">月</span>
 <select id="date"><option>請選擇</option></select><span class="selectWord">日</span>
-<button type="button" id="fastSearch" class="btn btn-secondary">查詢</button>
+<button type="button" id="fastSearch" class="btn btn-success">查詢</button>
 </div>
 <div class="col-2 selectTime">
 <span class="selectWord">時段:</span><select id="chooseTime">
@@ -123,7 +123,6 @@
     </div>
   </div>
 </div>
-<div id="calendar"></div>
 
 <!-- 取消預約查詢視窗 -->
 <div class="modal fade" id="cancelReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -165,6 +164,27 @@
     </div>
   </div>
 </div>
+
+<!-- 點數不足視窗 -->
+<div class="modal fade" id="noPointItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="noPointTitle">取消預約結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="noPoint">加值去<i class="fas fa-money-bill-alt"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" value="${LoginOK.point}" id="memberPoint" />
 <div id="calendar"></div>
 </div>
 <!-- Footer -->
@@ -180,6 +200,7 @@
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
 	var UserId=$("#memberId").val();
+	var point=$("#memberPoint").val();
 	var mom = moment();
 	//預約用
 	var reserveData;
@@ -263,7 +284,7 @@ $(document).ready(function() {
       defaultTimedEventDuration:"00:15",
       displayEventTime: true,
       minTime:"08:00",
-      maxTime:"12:00",
+      maxTime:"21:00",
       contentHeight:"auto",
       navLinks: true, // can click day/week names to navigate views
       editable: false,
@@ -291,16 +312,14 @@ $(document).ready(function() {
 					  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>");
 			  	$("#reserveDataDetail .modal-body").append(docFrag);
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId};
-				console.log("events="+reserveData);
 			  }else if(events.backgroundColor=="#00db00"){
 				  reservedData={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId,"VideoCode":VideoCode};
 				  $('#checkResult').modal('show');
 				  docFrag.append("<h3>諮詢項目:"+reserveItem+"</h3>"
 						  	+"<h3>諮詢人員:"+reserveEmp+"</h3>"
-// 				  			+"<h3>視訊代碼:"+"<span>"+"</span>"+"</h3>"
 				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
 				  	$("#checkResult .modal-body").append(docFrag);
-				  }  
+				  } 
 	  },
 	  eventMouseover:function( event, jsEvent, view ) {
 				$(this).addClass('zoom')
@@ -315,12 +334,16 @@ $(document).ready(function() {
 		var choosemonth = "-"+$("#month :selected").val();
 		var choosedate = "-"+$("#date :selected").val();
 		var checkDate =moment(chooseyear+choosemonth+choosedate,"YYYY-MM-DD");
-		console.log(chooseyear+choosemonth+choosedate);
 		$("#calendar").fullCalendar('gotoDate',checkDate);
 		})
 	$("#reserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());
-		console.log("reserveData checking=="+reserveData);
+		if(point <5){
+			$('#reserveDataDetail').modal('hide');
+			 $('#noPointItem').modal('show');
+			  docFrag.append("<h3>您的剩餘點數不足，請加值後再進行預約喔</h3>");
+			  	$("#noPointItem .modal-body").append(docFrag);
+			}else{
 			$.post("<c:url value='/Advisory/reserveCheck.controller'/>",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
 				"reserveEmp":reserveData.reserveEmp,"empId":reserveData.empId,"UserId":reserveData.UserId,"MomentId":reserveData.MomentId},function(result){			
 				var splitCode1=result.indexOf(",");
@@ -332,6 +355,7 @@ $(document).ready(function() {
 				  			+"<h3>時間:"+"<span>"+result.substr(splitCode2+2)+"</span>"+"</h3>");
 				  	$("#reserveResult .modal-body").append(docFrag);
 				})
+				}
 		})  
 	$("#reserveDone").click(function(){
 		window.location.reload();
@@ -340,7 +364,6 @@ $(document).ready(function() {
 		window.location.reload();
 		})
 	$("#checkResultDone").click(function(){
-		console.log("reserveData beforeReload=="+reserveData);
 		$("#checkResult").modal('hide');
 		})
 	$("#cancelReserve").click(function(){
@@ -350,7 +373,7 @@ $(document).ready(function() {
 		  docFrag.append("<h3>確定要取消預約?</h3>");
 		  	$("#cancelReserveItem .modal-body").append(docFrag);
 		})
-
+	
 	$("#cancelReserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());		
 		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode,"UserId":reservedData.UserId},function(result){
@@ -363,6 +386,10 @@ $(document).ready(function() {
 			$("#cancelCheckItem").modal('show');
 	  	$("#cancelCheckItem .modal-body").append(docFrag);
 			})
+		})
+
+	$("#noPoint").click(function(){
+		window.location.href="/TeleHealth/pay/pay.jsp";
 		})
 });
 </script>

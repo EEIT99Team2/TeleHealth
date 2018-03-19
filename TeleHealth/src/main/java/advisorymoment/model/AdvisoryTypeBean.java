@@ -11,11 +11,7 @@ public class AdvisoryTypeBean {
 	private String advisoryCode;
 	private String advisoryName;
 	private String codeType;
-	@Override
-	public String toString() {
-		return "AdvisoryTypeBean [advisoryCode=" + advisoryCode + ", advisoryName=" + advisoryName + ", codeType="
-				+ codeType + "]";
-	}
+
 	public String getAdvisoryCode() {
 		return advisoryCode;
 	}

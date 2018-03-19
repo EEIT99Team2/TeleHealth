@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import querydrugs.model.DrugBean;
 
 @Repository
-public class DrugsDAOHibernate implements DrugsDAO {
+public class DrugsDAOHibernate {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -19,19 +19,15 @@ public class DrugsDAOHibernate implements DrugsDAO {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	@Override
 	public List<DrugBean> selectAll() {
 		return this.getSession().createQuery(
 				"from DrugBean", DrugBean.class).list();
 	}
 	
-	@Override
 	public DrugBean selectById(String licenseNum) {
-		System.out.println("linceseNum=" + licenseNum);
 		return this.getSession().get(DrugBean.class, licenseNum);
 	}
 	
-	@Override
 	public List<DrugBean> selectByCondition(String licenseNum, String chineseName, String englishName,
 			String manuName, String symptom,String marks, String color, String shape, String formulation) {
 		String sql = "SELECT b.* FROM druglist b "
@@ -59,7 +55,6 @@ public class DrugsDAOHibernate implements DrugsDAO {
 		return list;
 	}
 	
-	@Override
 	public DrugBean insert(DrugBean bean) {
 		if(bean!=null) {
 			DrugBean temp =
@@ -72,7 +67,6 @@ public class DrugsDAOHibernate implements DrugsDAO {
 		return null;
 	}
 	
-	@Override
 	public DrugBean update(DrugBean bean) {
 		DrugBean result = this.getSession().get(DrugBean.class, bean.getLicenseNum());
 		if(result != null) {
@@ -99,7 +93,6 @@ public class DrugsDAOHibernate implements DrugsDAO {
 		return result;
 	}
 	
-	@Override
 	public boolean delete(String licenseNum) {
 		DrugBean result = this.getSession().get(DrugBean.class, licenseNum);
 		if(result!= null) {

@@ -218,7 +218,7 @@ $(document).ready(function() {
 	$.LoadingOverlaySetup({
 	    color : "rgba(255,255,255, 1)",
 	});
-	$.LoadingOverlay("show");
+// 	$.LoadingOverlay("show");
 	setTimeout(function(){
 	    $.LoadingOverlay("hide");
 	}, 2500);
@@ -305,7 +305,7 @@ $(document).ready(function() {
       slotLabelFormat:'hh:mm',
       defaultTimedEventDuration:"00:15",
       minTime:"08:00",
-      maxTime:"12:00",
+      maxTime:"21:00",
       contentHeight:"auto",
       navLinks: true, // can click day/week names to navigate views
       editable: false,
@@ -336,7 +336,6 @@ $(document).ready(function() {
 					  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>");
 			  	$("#UnReserveItem .modal-body").append(docFrag);
 			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"MomentId":MomentId};
-				console.log("events="+reserveData);
 			  }else if(events.backgroundColor=="#d26900" && takeoff == "noexist" || reResult=="N"){
 				reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"MomentId":MomentId};
 				  $('#reservedItem').modal('show');
@@ -375,7 +374,6 @@ $(document).ready(function() {
 		var choosemonth = "-"+$("#month :selected").val();
 		var choosedate = "-"+$("#date :selected").val();
 		var checkDate =moment(chooseyear+choosemonth+choosedate,"YYYY-MM-DD");
-		console.log(chooseyear+choosemonth+choosedate);
 		$("#calendar").fullCalendar('gotoDate',checkDate);
 		})
 		
@@ -447,7 +445,6 @@ $("#ReTakeOff").click(function takeoff(){
 		});
 		$("#addNew").click(function(){
 			$.post("<c:url value='/AdvisoryMomemt/empAddMoment.controller'/>",{"empId":EmpId,"account":account,"start":addNewTime.start},function(result){
-				console.log(result);
 				var docFrag = $(document.createDocumentFragment());
 				var addResult = $('#addResultItem .modal-body');
 				addResult.empty();

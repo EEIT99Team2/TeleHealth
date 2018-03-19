@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>牽伴遠距健康諮詢平台</title>
+<title>我的留言</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -87,7 +87,7 @@
     </div>
   </div>
 </div>	
-	<script src="../js/jquery-tablepage-1.0.js"></script>
+	<script src="<c:url value='/js/jquery-tablepage-1.0.js'/>"></script>
 	<script>
 	  var memIdlogin=$('#memId').val();
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
@@ -119,7 +119,7 @@
 				   var Memname=$('#title').text();
 	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  		  
 	 			   if(check==true){
-	 				  $.get('/TeleHealth/healthcolumn/deleteQAMem.controller',{Id:Id,memberId:Memname},function(data){
+	 				  $.get("<c:url value='/healthcolumn/deleteQAMem.controller'/>",{Id:Id,memberId:Memname},function(data){
 		 				   alert("您已刪除所po的文");
 		 				  loadmember(memIdlogin);
 		 			   })		 			   
@@ -133,7 +133,7 @@
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  
-	 			 $.getJSON('/TeleHealth/healthcolumn/QAupdateId.controller',{Id:Id},function(datas){						
+	 			 $.getJSON("<c:url value='/healthcolumn/QAupdateId.controller'/>",{Id:Id},function(datas){						
 		 				$.each(datas,function(i,QA){	 				
 	 					 CKEDITOR.instances.contenttext.setData(QA[5]);
 	 					 $('#questionId').val(QA[0]);	 								 
@@ -144,8 +144,8 @@
 		
 		})
 		 //讀取會員發表	
-			   function loadmember(memId){		    			
-				   $.getJSON('/TeleHealth/healthcolumn/QAMempublish.controller',{memId:memId},function(datas){
+			   function loadmember(memId){		   			
+				   $.getJSON( "<c:url value='/healthcolumn/QAMempublish.controller'/>",{memId:memId},function(datas){
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
@@ -173,8 +173,8 @@
 		if(contenttext==null|| contenttext.length==0){
     		document.getElementById("reanswer").innerHTML=' ';    		
     		document.getElementById("reanswererror").innerHTML='內容不能空白';		
-    	}else{ 						
-		$.getJSON("/TeleHealth/healthcolumn/updatememQA.controller", {questionId:questionId,contenttext:contenttext}, function(datas){
+    	}else{ 		 				
+		$.getJSON("<c:url value='/healthcolumn/updatememQA.controller'/>", {questionId:questionId,contenttext:contenttext}, function(datas){
 			if(datas="ok"){
 				document.getElementById("reanswer").innerHTML=' ';   
 				$("#reanswer").text("修改成功!!");

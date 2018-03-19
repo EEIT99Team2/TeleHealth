@@ -81,12 +81,5 @@ public class AdvisoryBean {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	@Override
-	public String toString() {
-		return "AdvisoryBean [videoCode=" + videoCode + ", memberId=" + memberId + ", empId=" + empId + ", descrip="
-				+ descrip + ", advisoryTime=" + advisoryTime + ", viedoRecord=" + Arrays.toString(viedoRecord)
-				+ ", satisfy=" + satisfy + ", createTime=" + createTime + ", modifyTime=" + modifyTime + ", status="
-				+ status + "]";
-	}
-	
+
 }

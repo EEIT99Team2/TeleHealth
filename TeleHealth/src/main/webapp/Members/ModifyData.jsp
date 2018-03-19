@@ -5,11 +5,6 @@
 <html>
 <head>
 <style type="text/css">
-	tr{
-	
-	}
-       
-
 </style>
 
 <script>
@@ -34,9 +29,7 @@
 	}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<title>修改密碼</title>
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
@@ -51,16 +44,19 @@
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="修改密碼"
 			onclick="location.href='ChangePwd.jsp'" /></li>
-			
 		<li class="nav-item"><input type="button" class="nav-link active"
-			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>
-		
+			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>		
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
 			onclick="location.href='Point.jsp'" /></li>
+			
+			<li class="nav-item"><input type="button" class="nav-link active"
+			id="FOO" data-toggle="tab" role="tab" value="儲值點數"
+			onclick="location.href='<c:url value='/pay/pay.jsp'/>'" /></li>
+						
 		<li class="nav-item"><input type="button" class="nav-link active"
 		id="FOO" data-toggle="tab" role="tab" value="我的留言"
-		onclick="location.href='questionMempublish.jsp'" /></li>
+		onclick="location.href='<c:url value='questionMempublish.jsp'/>'" /></li>
 		
 	</ul>
 	<div class="tab-content" id="myTabContent">
@@ -185,7 +181,7 @@
 											<div id="msg"></div>
 											<div style="width: 300px; height: 200px; border: 0.5px black solid">
 												<img id="xx"
-													src="<c:url value='/getImage.controller?account=${LoginOK.account}' />"
+													src="<c:url value='/getImage.controller' />"
 													style="max-width: 300px; max-height: 900px;" />
 											</div>
 									</tr>

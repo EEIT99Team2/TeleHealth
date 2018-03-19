@@ -50,11 +50,5 @@ public class ExpendRecordBean {
 	public void setAdvisoryMomentId(String advisoryMomentId) {
 		this.advisoryMomentId = advisoryMomentId;
 	}
-	@Override
-	public String toString() {
-		return "ExpendRecordBean [memberId=" + memberId + ", record=" + record + ", modifytime=" + modifytime
-				+ ", advisoryMomentId=" + advisoryMomentId + "]";
-	}
-	
-	
+
 }

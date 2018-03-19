@@ -22,9 +22,10 @@ import advisory.model.AdvisoryService;
 import advisorymoment.model.AdvisoryMomentBean;
 import advisorymoment.model.AdvisoryMomentService;
 import employees.model.EmployeesService;
-import employees.model.dao.EmployeesDAO;
 import expendRecord.model.ExpendRecordBean;
 import expendRecord.model.ExpendRecordService;
+import register.model.LoginService;
+import register.model.MemberBean;
 
 @Controller
 public class AdvisoryController {
@@ -34,6 +35,8 @@ public class AdvisoryController {
 	private AdvisoryMomentService advisoryMomentService;
 	@Autowired
 	private EmployeesService employeesService;
+	@Autowired
+	private LoginService loginService;	
 	@Autowired
 	private ExpendRecordService expendRecordService;
 	//會員預約成功，新增預約記錄
@@ -172,9 +175,24 @@ public class AdvisoryController {
 		}
 		AdvisoryBean checkBean = advisoryService.select(videoCode);
 		if(checkBean!=null && checkBean.getStatus().equals("N")) {
+			MemberBean talkMember = loginService.selectById(checkBean.getMemberId());
+			if(session.getAttribute("reserveItem")!=null) {
+				session.removeAttribute("reserveItem");
+			}
+			if(session.getAttribute("videoCode")!=null) {
+				session.removeAttribute("videoCode");
+			}
+			if(session.getAttribute("advisory")!=null) {
+				session.removeAttribute("advisory");
+			}
+			if(session.getAttribute("talkMember") != null) {
+				session.removeAttribute("talkMember");
+			}
 			session.setAttribute("reserveItem", reserveItemIn);
 			session.setAttribute("videoCode", videoCodeIn);
 			session.setAttribute("advisory", checkBean);
+			session.setAttribute("talkMember", talkMember);
+			
 			if(session.getAttribute("empLoginOK") != null) {
 				return "empadvisory.success";
 			} else {
@@ -188,4 +206,26 @@ public class AdvisoryController {
 			return "advisory.error";
 		}
 	}
+	
+	//開始進行視訊
+		@RequestMapping(path= {"/Advisory/setsatisfy.controller"}, method = {RequestMethod.GET,RequestMethod.POST})
+		public @ResponseBody String setSatisfy(String videoCode, String satisfy, Model model, HttpSession session) {
+			Integer satisfyValue = null;
+			if(videoCode != null && videoCode.trim().length()>0) {
+				if(satisfy != null && satisfy.trim().length()>0) {
+					try {
+						satisfyValue = Integer.parseInt(satisfy);
+					} catch(Exception e) {
+						System.out.println("評分非數字");
+					}
+					if(satisfyValue < 1) {
+						satisfyValue = 5;
+					}
+					if(advisoryService.updateSatisfy(videoCode, satisfyValue) != null) {
+						return "success";
+					}
+				}
+			}
+			return "error";
+		}
 }

@@ -34,14 +34,12 @@ public class EmployeesService {
 	//驗證員工
 	public EmployeesBean checkAccountEmp(String account,String MD5pwd) {
 		EmployeesBean result = employeesDAO.selectByAccount(account);
-		System.out.println(account+" " +MD5pwd);
 		if (result != null) {			
 			if(MD5pwd!=null && MD5pwd.length()!=0) {			
 				String temp = MD5pwd; //使用者輸入
 				EmployeesBean Emp = result;
 				String password = Emp.getPwd();				
 				if(temp.equals(password)) {
-					System.out.println(result);
 					return Emp;
 				}else {					
 					return null;
