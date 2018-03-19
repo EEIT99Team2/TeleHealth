@@ -32,6 +32,7 @@
 
 #content {
 	font-family: CJKtc_Bold;
+	opacity:1;
 }
 
 /* Scrollbar styles */
