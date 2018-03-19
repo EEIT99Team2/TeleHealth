@@ -517,21 +517,31 @@ $('#insertBloodSugar').click(function(){
 	             });
 			});
 //血壓
-			var systole;
-			var diastole;
-			var heartBeat;
+			var systole = 0;
+			var diastole = 0;
+			var heartBeat = 0;
 			var re = /^[0-9]+$/;
 			var a =0;
 			var b =0;
 			var c =0;
 			$('#insert_systole').blur(function() {
+				 diastole = $.trim($('#insert_diastole').val());
 				 systole = $.trim($('#insert_systole').val());
+				 var diastolechk=parseInt(diastole);
+				 var systolechk= parseInt(systole);
 				if(isNaN(systole) || systole.length == 0 || !re.test(systole) || systole>250) {
-					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確血壓!</span>";
+					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					a=1;
-				} else{
+				}else{
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 					a=0;
+				}
+				if(systolechk>diastolechk){
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					a=0;
+					if(a==0 || b==0 || c==0){
+						$('#insertBP').prop("disabled", false);
+					}
 				}
 				if(a==1 ||b==1 ||c==1){
 					$('#insertBP').prop("disabled", true);
@@ -541,10 +551,20 @@ $('#insertBloodSugar').click(function(){
 			});
 			$('#insert_diastole').blur(function() {
 				 diastole = $.trim($('#insert_diastole').val());
+				 systole = $.trim($('#insert_systole').val());
+				 var diastolechk=parseInt(diastole);
+				 var systolechk= parseInt(systole);
 				if(isNaN(diastole) || diastole.length == 0 || !re.test(diastole) || diastole>200) {
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					b=1;
-				} else {
+				}else{
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					b=0;
+				}
+				if(diastolechk>systolechk){
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
+					b=1;
+				}else{
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 					b=0;
 				}
@@ -572,6 +592,9 @@ $('#insertBloodSugar').click(function(){
 			$('#insertBP').click(function(){
 				if(systole==null || diastole==null || heartBeat==null){
 					alert("三個欄位都要輸入")
+					$('#insertBP').prop("disabled", true);
+				}else if(diastole<systole){
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
 					$('#insertBP').prop("disabled", true);
 				}else{
 				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'memberid':memberid,'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat,gender:gender,age:age}, function(data){
