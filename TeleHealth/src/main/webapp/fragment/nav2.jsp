@@ -107,6 +107,8 @@
 			<c:otherwise>			
 			<ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					href="<c:url value="/register/register.jsp"/>">註冊</a></li>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="<c:url value="/healthcolumn/HealthColumn.jsp"/>">健康專欄</a></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
 					href="#introduction">簡介</a></li>
