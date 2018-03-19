@@ -31,6 +31,7 @@
   #loading{background-color:white}
   .selectTime{margin-top:40px;}
   .selectWord {padding:0px 5px;}
+  .addSuccess{font-size:2em}
 </style>
 </head>
 <body>
@@ -363,7 +364,7 @@ $(document).ready(function() {
 		  var add15m = moment(startDate).add(15,"m");
 		  var end = moment(add15m).format("HH:mm");
 		  addNewTime={"start":start};
-		  docFrag.append("<span>您選擇的時段為<br/>"+start+"~"+end+"</span><br/><span>確定要在此時段新增諮詢?</span>");
+		  docFrag.append("<h3>您選擇的時段為:</h3><h5>"+start+"~"+end+"</h5><br/><h3>確定要在此時段新增諮詢?</h3>");
 		  addNew.append(docFrag);
 		  $('#addNewItem').modal('show');		      
 		    }			  
@@ -449,7 +450,7 @@ $("#ReTakeOff").click(function takeoff(){
 				var addResult = $('#addResultItem .modal-body');
 				addResult.empty();
 				if(result=="success"){
-					docFrag.append("<span>新增成功</span><img src='<c:url value="/images/yes.png"/>'/>");
+					docFrag.append("<span class='addSuccess'>新增成功</span><img src='<c:url value="/images/yes.png"/>'/>");
 					}else{
 					docFrag.append("<h3>新增班表失敗，請重新輸入或洽詢管理員</h3>");
 						}

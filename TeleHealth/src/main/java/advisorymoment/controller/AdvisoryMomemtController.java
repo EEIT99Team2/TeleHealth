@@ -70,6 +70,7 @@ public class AdvisoryMomemtController {
 			ExpendRecordBean bean =new ExpendRecordBean();
 			bean.setMemberId(UserId);
 			bean.setAdvisoryMomentId(MomentId);
+			bean.setRecord(0);
 			expendRecord=expendRecordService.update(bean);
 		}
 		if(DeleteResult && Refund && expendRecord) {
