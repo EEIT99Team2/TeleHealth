@@ -6,10 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>健康護照</title>
-<!-- Custom styles for this template -->
-<link rel="stylesheet" type="text/css"
-	href="<c:url value="/css/index.css"/>" />
-
 <style type="text/css">
 .insertBtn {
 	width: 16px;
@@ -32,7 +28,7 @@
 				<h3>BMI</h3>
 			</div>
 			<div class="col-4 text-right">
-				<button class="btn btn-outline-info" id="insertBMI"
+				<button class="btn btn-outline-secondary" id="insertBMI"
 					data-toggle="modal" data-target="#mybmi">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
@@ -146,7 +142,7 @@
 				<h3>血壓</h3>
 			</div>
 			<div class="col-4 text-right">
-				<button id="insertBloodPressureRecords" data-toggle="modal"
+				<button class="btn btn-outline-secondary" id="insertBloodPressureRecords" data-toggle="modal"
 					data-target="#myModalBloodPressure">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
@@ -264,7 +260,7 @@
 				<h3>血糖</h3>
 			</div>
 			<div class="col-4 text-right">
-				<button id="insertBloodSugar" data-toggle="modal"
+				<button class="btn btn-outline-secondary" id="insertBloodSugar" data-toggle="modal"
 					data-target="#myModalBloodSugar">
 					<img class="insertBtn" src="<c:url value='/images/modify.jpg' />">
 				</button>
@@ -279,7 +275,7 @@
 					<!-- Modal content-->
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title">血糖</h4>
+							<h4 class="modal-title">飯前血糖</h4>
 						</div>
 						<div class="modal-body">
 							<label for="insert_bloodsugar" class="col-2">血糖</label> <input
@@ -321,7 +317,7 @@
 				<hr />
 				<div class="row">
 					<div class="col-12 text-center">
-						<span id="bsResult">這是查詢結果!!</span>
+						<span id="bsResult"></span>
 					</div>
 				</div>
 
@@ -490,7 +486,7 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確身高!</span>";
 					$('#insert').prop("disabled", true);
 				} else {
-					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 				}
 			});
 			$('#insert_weight').blur(function() {
@@ -499,7 +495,7 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確體重!</span>";
 					$('#insert').prop("disabled", true);
 					} else {
-					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 				}
 			});
 			$('#insert').click(function(){
@@ -521,21 +517,31 @@ $('#insertBloodSugar').click(function(){
 	             });
 			});
 //血壓
-			var systole;
-			var diastole;
-			var heartBeat;
+			var systole = 0;
+			var diastole = 0;
+			var heartBeat = 0;
 			var re = /^[0-9]+$/;
 			var a =0;
 			var b =0;
 			var c =0;
 			$('#insert_systole').blur(function() {
+				 diastole = $.trim($('#insert_diastole').val());
 				 systole = $.trim($('#insert_systole').val());
+				 var diastolechk=parseInt(diastole);
+				 var systolechk= parseInt(systole);
 				if(isNaN(systole) || systole.length == 0 || !re.test(systole) || systole>250) {
-					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確血壓!</span>";
+					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					a=1;
-				} else{
-					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+				}else{
+					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					a=0;
+				}
+				if(systolechk>diastolechk){
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
+					a=0;
+					if(a==0 || b==0 || c==0){
+						$('#insertBP').prop("disabled", false);
+					}
 				}
 				if(a==1 ||b==1 ||c==1){
 					$('#insertBP').prop("disabled", true);
@@ -545,11 +551,21 @@ $('#insertBloodSugar').click(function(){
 			});
 			$('#insert_diastole').blur(function() {
 				 diastole = $.trim($('#insert_diastole').val());
+				 systole = $.trim($('#insert_systole').val());
+				 var diastolechk=parseInt(diastole);
+				 var systolechk= parseInt(systole);
 				if(isNaN(diastole) || diastole.length == 0 || !re.test(diastole) || diastole>200) {
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					b=1;
-				} else {
-					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+				}else{
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
+					b=0;
+				}
+				if(diastolechk>systolechk){
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
+					b=1;
+				}else{
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					b=0;
 				}
 				if(a==1 ||b==1 ||c==1){
@@ -564,7 +580,7 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					c=1;
 				} else {
-					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					c=0;
 				}
 				if(a==1 ||b==1 ||c==1){
@@ -576,6 +592,9 @@ $('#insertBloodSugar').click(function(){
 			$('#insertBP').click(function(){
 				if(systole==null || diastole==null || heartBeat==null){
 					alert("三個欄位都要輸入")
+					$('#insertBP').prop("disabled", true);
+				}else if(diastole<systole){
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
 					$('#insertBP').prop("disabled", true);
 				}else{
 				 $.get("<c:url value='/healthpassport/queryBloodPressure.controller' />",{'memberid':memberid,'systoleData':systole,'diastoleData':diastole,'heartBeatData': heartBeat,gender:gender,age:age}, function(data){
@@ -606,10 +625,10 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					$('#insertBS').prop("disabled", true);
 				}else if(bloodsugar>200 && bloodsugar<300){
-					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' /><span>請盡快就醫!</span>";
+					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' /><span>請盡快就醫!</span>";
 					$('#insertBS').prop("disabled", false);
 				}else if(bloodsugar<=200){
-					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					$('#insertBS').prop("disabled", false);
 				}
 			});
@@ -621,7 +640,7 @@ $('#insertBloodSugar').click(function(){
 		 	      $('#showbsTime').empty();
                 	$('#showBloodSugar').prepend(data.bloodSugar);	    	      
 	    	       	$('#showbsTime').prepend(data.createTime);
-	    	       	$('#bsResult').prepend('<h4><small>'+'BloodSugar --> '+data.bloodSugar+'\|'+data.result+'</small></h4>');
+	    	       	$('#bsResult').prepend('<h4><small>'+'血糖結果 --> '+data.bloodSugar+'\|'+data.result+'</small></h4>');
 	    	       	$('#insert_bloodsugar').val("");				
 					$('#bloodsugarMsg').empty(); 
 	            	bstableANDview();//呼叫bs紀錄

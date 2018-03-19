@@ -27,7 +27,7 @@ import register.model.MemberBean;
 				@WebInitParam(name = "mustLogin2", value = "/healthpassport/*"),
 				@WebInitParam(name = "mustLogin3", value = "/back/*"),
 				@WebInitParam(name = "mustLogin4", value = "/pay/*"),
-//				@WebInitParam(name = "mustLogin5", value = "/Members/*")
+				@WebInitParam(name = "mustLogin5", value = "/Members/*")
 		})
 public class LoginCheckFilter implements Filter {
 	Collection<String> url = new ArrayList<String>();
@@ -63,7 +63,7 @@ public class LoginCheckFilter implements Filter {
 					HttpSession session = req.getSession();
 				    // 記住原本的"requestURI"，稍後如果登入成功，系統可以自動轉入
 					// 原本要執行的程式。
-					session.setAttribute("checkLoginRequestURI", requestURI);
+//					session.setAttribute("checkLoginRequestURI", requestURI);
 					if ( ! isRequestedSessionIdValid ) {
 						session.setAttribute("timeOut", "使用逾時，請重新登入");
 					}

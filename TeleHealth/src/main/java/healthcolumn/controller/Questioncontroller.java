@@ -120,8 +120,9 @@ public class Questioncontroller {
 			bean.setCreateTime(new Date());
 			bean.setQAtype("Q");
 			bean.setQuetitle(title);
-			boolean delete = QuestionService.insertQA(bean);			
-			if(delete) {
+			System.out.println(bean);
+			boolean createcont = QuestionService.insertQA(bean);			
+			if(createcont) {
 				Gson gson = new Gson();
 				String dataLoad = gson.toJson("ok");
 				return dataLoad ;

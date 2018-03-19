@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	<main role="main" class="container mt-2">
+	pageEncoding="UTF-8"%>	
 	<div class="row">
 	<div class="col-1"></div>
 		<div class="card columnUse col-10" style="margin-top:80px;">
@@ -29,8 +28,7 @@
 			</div>
 		</div>
 		<div class="col-1"></div>
-	</div>
-	</main>
+	</div>	
 	<script src="../js/jquery-tablepage-1.0.js"></script>
 	<script>
 	$(document).ready(function() {
@@ -62,6 +60,7 @@
 						cell1.append(ID);
 						var celldata=$("<p></p>").text(mem[1]);
 			    		var article=$("<td></td>")
+			    		article.css("width","400px");
 			    		article.append(celldata);			    		          	     	          
 			    		var cell4=$('<td></td>').html(mem[3]);
 			    		var cell3=$('<td></td>').text(mem[4]);	
@@ -123,6 +122,7 @@
 						cell1.append(ID);
 						var celldata=$("<p></p>").text(Mem[1]);
 			    		var article=$("<td></td>")
+			    		article.css("width","400px");
 			    		article.append(celldata);			    		          	     	          
 			    		var cell4=$('<td></td>').html(Mem[3]);
 			    		var cell3=$('<td></td>').text(Mem[4]);	

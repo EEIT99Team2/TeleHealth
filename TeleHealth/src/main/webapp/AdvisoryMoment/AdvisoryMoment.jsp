@@ -184,6 +184,27 @@
     </div>
   </div>
 </div>
+
+<!-- 預約已過視窗 -->
+<div class="modal fade" id="passReserveItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="passReserveTitle">預約結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 跳出視窗的內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <input type="hidden" value="${LoginOK.point}" id="memberPoint" />
 <div id="calendar"></div>
 </div>
@@ -338,12 +359,20 @@ $(document).ready(function() {
 		})
 	$("#reserveCheck").click(function(){
 		var docFrag = $(document.createDocumentFragment());
+		var now = moment(new Date()).format("YYYY-MM-DD HH:mm");
+		var Time = moment(reserveData.startTime).format("YYYY-MM-DD HH:mm");
+		var ms = moment(Time).diff(now);
 		if(point <5){
 			$('#reserveDataDetail').modal('hide');
 			 $('#noPointItem').modal('show');
 			  docFrag.append("<h3>您的剩餘點數不足，請加值後再進行預約喔</h3>");
 			  	$("#noPointItem .modal-body").append(docFrag);
-			}else{
+			}else if(ms<0){
+				$('#reserveDataDetail').modal('hide');
+				 $('#passReserveItem').modal('show');
+				  docFrag.append("<h3>此時段已過預約時間</h3>");
+				  	$("#passReserveItem .modal-body").append(docFrag);
+			} else{
 			$.post("<c:url value='/Advisory/reserveCheck.controller'/>",{"advisoryTime":reserveData.startTime,"reserveItem":reserveData.reserveItem,
 				"reserveEmp":reserveData.reserveEmp,"empId":reserveData.empId,"UserId":reserveData.UserId,"MomentId":reserveData.MomentId},function(result){			
 				var splitCode1=result.indexOf(",");
@@ -379,9 +408,9 @@ $(document).ready(function() {
 		$.post("<c:url value='/AdvisoryMomemt/memberCancelRes.controller'/>",{"MomentId":reservedData.MomentId,"VideoCode":reservedData.VideoCode,"UserId":reservedData.UserId},function(result){
 			$("#cancelReserveItem").modal('hide');
 			if(result == "success"){
-			docFrag.append("<h3>"+result+"<img src='<c:url value="/images/yes.png"/> '/>"+"</h3>");
+			docFrag.append("<h3>取消預約成功<img src='<c:url value="/images/yes.png"/> '/>"+"</h3>");
 				}else{
-			docFrag.append("<h3>"+result+"<img src='<c:url value="/images/error.png"/> '/>"+"</h3>");
+			docFrag.append("<h3>取消預約失敗<img src='<c:url value="/images/error.png"/> '/>"+"</h3>");
 					}
 			$("#cancelCheckItem").modal('show');
 	  	$("#cancelCheckItem .modal-body").append(docFrag);

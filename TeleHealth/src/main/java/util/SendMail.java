@@ -53,7 +53,6 @@ public class SendMail {
 				Transport.send(message);
 				flag = true;
 			}
-			System.out.println("寄送email結束.");
 			return flag;
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

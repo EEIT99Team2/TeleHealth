@@ -2,6 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
+@font-face {
+    font-family: CJKtc_Bold;
+    src: url(/TeleHealth/css/fonts/NotoSansMonoCJKtc_Bold.otf);
+}
+
 .div_right_bottom {
 	background: navajowhite;
 	width:300px;
@@ -23,6 +28,10 @@
 	margin-left: 3px;
 	float:right;
 	padding-bottom: 5px;
+}
+
+#content {
+	font-family: CJKtc_Bold;
 }
 
 /* Scrollbar styles */
@@ -55,7 +64,7 @@ box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 background: #7bac10;
 }
 </style>
-<div id="content">
+<div id="content" style="opacity:1;">
 
 </div>
 <script type="text/javascript">
@@ -128,6 +137,16 @@ background: #7bac10;
 		    	var showMsg = $(this).parent("div").parent("div").children(".myBox");
 		    	send(showMsg,toUser, message);
 		        $(this).parent("div").find("textarea").val(" ");
+		    });
+		    
+		    $("body").on("keyup", "#content textarea", function(e) {
+			    if(e.keycode==13) {
+			    	var toUser =  $(this).attr("id").substring(0, $(this).attr("id").indexOf("Btn"));
+			    	var message = $(this).parent("div").find("textarea").val();
+			    	var showMsg = $(this).parent("div").parent("div").children(".myBox");
+			    	send(showMsg,toUser, message);
+			        $(this).parent("div").find("textarea").val(" ");
+				}
 		    });
 
 		    $("body").on("click", "#content textarea", function() {

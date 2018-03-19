@@ -104,6 +104,9 @@ public class AnalysisController {
 		HashMap<String, String> dataOne = new HashMap<String, String>();
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		if(result==null){
+			return null;			
+		}
 		Double getheight = result.getHeight();
 		Double getweight = result.getWeight();
 		Double heightChangeInt = new Double(getheight);
@@ -162,23 +165,23 @@ public class AnalysisController {
 		Integer ageint = Integer.parseInt(age);
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
-			DataAnalysisBean Diastole = DataAnalysisService.selectGroupId("BloodPressureDiastole", gender, ageint);//標準數值
-			DataAnalysisBean Systole = DataAnalysisService.selectGroupId("BloodPressureSystole", gender, ageint);
-			dataOne.put("diastolecheckmax", String.valueOf(Diastole.getMaxvalue()));
-			dataOne.put("diastolecheckmin",String.valueOf(Diastole.getMinvalue()));
-			dataOne.put("systolecheckmin",String.valueOf(Systole.getMinvalue()));
-			dataOne.put("systolecheckmax",String.valueOf(Systole.getMaxvalue()));
-			String systole = result.get(i).getMaxBloodPressure().toString();
-			String diastole = result.get(i).getMinBloodPressure().toString();
-			String heartBeat = result.get(i).getHeartBeat().toString();
-			String bpResult = result.get(i).getResult();
-			String createTime = sdf.format(result.get(i).getCreateTime());
-			dataOne.put("systole", systole);
-			dataOne.put("diastole", diastole);
-			dataOne.put("heartBeat", heartBeat);
-			dataOne.put("bpResult", bpResult);
-			dataOne.put("createTime", createTime);
-			datafinal.add(dataOne);
+				DataAnalysisBean Diastole = DataAnalysisService.selectGroupId("BloodPressureDiastole", gender, ageint);//標準數值
+				DataAnalysisBean Systole = DataAnalysisService.selectGroupId("BloodPressureSystole", gender, ageint);
+				dataOne.put("diastolecheckmax", String.valueOf(Diastole.getMaxvalue()));
+				dataOne.put("diastolecheckmin",String.valueOf(Diastole.getMinvalue()));
+				dataOne.put("systolecheckmin",String.valueOf(Systole.getMinvalue()));
+				dataOne.put("systolecheckmax",String.valueOf(Systole.getMaxvalue()));
+				String systole = result.get(i).getMaxBloodPressure().toString();
+				String diastole = result.get(i).getMinBloodPressure().toString();
+				String heartBeat = result.get(i).getHeartBeat().toString();
+				String bpResult = result.get(i).getResult();
+				String createTime = sdf.format(result.get(i).getCreateTime());
+				dataOne.put("systole", systole);
+				dataOne.put("diastole", diastole);
+				dataOne.put("heartBeat", heartBeat);
+				dataOne.put("bpResult", bpResult);
+				dataOne.put("createTime", createTime);
+				datafinal.add(dataOne);
 		}
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		datas.put("data", datafinal);
@@ -197,6 +200,9 @@ public class AnalysisController {
 		HashMap<String, String> dataOne = new HashMap<String, String>();
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		if(result==null){
+			return null;			
+		}
 		String getmaxbp = result.getMaxBloodPressure().toString();
 		String getminbp = result.getMinBloodPressure().toString();
 		String gethb = result.getHeartBeat().toString();
@@ -220,7 +226,10 @@ public class AnalysisController {
 					String gender,String age,Model model) {
 		// clinet端值
 		try {
-			Integer bSugar = Integer.parseInt(bloodsugar);
+			if(bloodsugar==null || bloodsugar.trim().length()==0) {
+				return null;
+			}
+			Integer bSugar = Integer.parseInt(bloodsugar);			
 			Integer Age =Integer.parseInt(age);
 			BloodSugarBean bean = new BloodSugarBean();
 			bean.setMemberId(memberid);
@@ -269,9 +278,19 @@ public class AnalysisController {
 		HashMap<String, String> dataOne = new HashMap<String, String>();
 		HashMap<String, LinkedList<HashMap<String, String>>> datas = new HashMap<String, LinkedList<HashMap<String, String>>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String getbs = result.getBloodSugar().toString();
-		String getbsresult = result.getResult();
-		String time = sdf.format(result.getCreateTime());
+		String getbs=null;
+		String getbsresult = null;
+		String time = null;
+		if(result==null) {
+			getbs = "";
+			getbsresult ="";
+			time ="";
+		}else {
+			getbs = result.getBloodSugar().toString();
+			getbsresult = result.getResult();
+			time = sdf.format(result.getCreateTime());
+		}
+		
 		dataOne.put("getbs", getbs);
 		dataOne.put("getbsresult", getbsresult);
 		dataOne.put("t", time);

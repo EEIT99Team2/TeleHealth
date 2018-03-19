@@ -50,6 +50,7 @@ public class QuestionDAO {
 				QuestionBean temp =this.getSession().get(QuestionBean.class, bean.getId());
 				if(temp==null) {
 					this.getSession().save(bean);
+					System.out.println(bean);
 					return bean;
 				}
 			}
