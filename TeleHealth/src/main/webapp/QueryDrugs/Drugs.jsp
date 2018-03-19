@@ -37,6 +37,7 @@
 	#emptyForm input {
 		width:300px;
 	}
+	.fontLine{text-decoration:underline;}
 </style>
 
 </head>
@@ -283,6 +284,7 @@
 			        "columns": [
 			            { "data": "licenseNum",
 			            	"orderable": false,
+			            	"sClass":"fontLine",
 			            	"render": function(data,type,row,meta) {
 				            	  return data = '<p>' + data +'</p>';
 						}},

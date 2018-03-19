@@ -23,13 +23,21 @@ public class BMIService {
 		String bmiresult = null;
 		if(age<18) {
 			DataAnalysisBean lowData = dataAnalysisDao.bmiLow17(gender, age);
-			Double lowminval = lowData.getMinvalue();
-			Double lowmaxval = lowData.getMaxvalue();
+			Double lowminval = lowData.getMinvalue();//15
+			Double lowmaxval = lowData.getMaxvalue();//21
 			bmiresult = lowData.getResult();
 			if (bmi<lowminval) {
-				bmiresult = "低於正常範圍";
-			}else if(bmi>lowmaxval){
-				bmiresult = "高於正常範圍";
+				bmiresult = "體重過輕";
+			}else if(bmi>=(lowminval+7) && bmi<=(lowmaxval+7)){
+				bmiresult = "過重";
+			}else if(bmi>=(lowminval+17) && bmi<=(lowmaxval+17)) {
+				bmiresult = "輕度肥胖";
+			}else if(bmi>=(lowminval+21) && bmi<=(lowmaxval+21)) {
+				bmiresult = "中度肥胖";
+			}else if(bmi>=(lowminval+28) && bmi<=(lowmaxval+28)) {
+				bmiresult = "重度肥胖";
+			}else if(bmi>=50){
+				bmiresult = "病態肥胖";
 			}
 		}else if(age>=18) {
 			if(bmi>110) {

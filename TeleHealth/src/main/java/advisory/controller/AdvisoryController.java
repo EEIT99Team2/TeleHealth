@@ -87,12 +87,23 @@ public class AdvisoryController {
 			//會員給錢			
 			advisoryService.updateMemPoint(UserId);
 			//新增會員消費紀錄
+			ExpendRecordBean expendResult = expendRecordService.selectOne(UserId,MomentId);
 			ExpendRecordBean bean =new ExpendRecordBean();
-			bean.setMemberId(UserId);
-			bean.setModifytime(new Date());
-			bean.setRecord(5);
-			bean.setAdvisoryMomentId(MomentId);
-			expendRecordService.insert(bean);
+			if(expendResult!=null && expendResult.getId()!=null){
+				//已預約過此班表
+				bean =new ExpendRecordBean();
+				bean.setMemberId(UserId);
+				bean.setAdvisoryMomentId(MomentId);
+				bean.setRecord(5);
+				expendRecordService.update(bean);
+			}else {				
+				bean =new ExpendRecordBean();
+				bean.setMemberId(UserId);
+				bean.setModifytime(new Date());
+				bean.setRecord(5);
+				bean.setAdvisoryMomentId(MomentId);			
+				expendRecordService.insert(bean);
+			}
 			//增加員工預約點擊數
 			employeesService.addResCount(empId);		
 		}
