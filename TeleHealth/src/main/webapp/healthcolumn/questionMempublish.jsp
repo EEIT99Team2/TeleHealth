@@ -135,6 +135,8 @@ width:150px}
 			    
 			    //修改文章灌入ck	    
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
+	 			  document.getElementById("reanswer").innerHTML=' ';					 
+		 		  document.getElementById("reanswererror").innerHTML=' ';   
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  
 	 			 $.getJSON("<c:url value='/healthcolumn/QAupdateId.controller'/>",{Id:Id},function(datas){						
@@ -180,11 +182,13 @@ width:150px}
     	}else{ 		 				
 		$.getJSON("<c:url value='/healthcolumn/updatememQA.controller'/>", {questionId:questionId,contenttext:contenttext}, function(datas){
 			if(datas="ok"){
-				document.getElementById("reanswer").innerHTML=' ';   
+				document.getElementById("reanswer").innerHTML=' ';					 
+	 			document.getElementById("reanswererror").innerHTML=' ';     
 				$("#reanswer").text("修改成功!!");
 				loadmember(memIdlogin);				
 			}else{
-				document.getElementById("reanswer").innerHTML=' ';   
+				document.getElementById("reanswer").innerHTML=' ';					 
+	 			document.getElementById("reanswererror").innerHTML=' ';     
 				$("#reanswer").text("修改失敗!!");}
 			})
     	}

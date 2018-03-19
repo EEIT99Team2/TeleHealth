@@ -89,9 +89,9 @@ public class Questioncontroller {
 		@RequestMapping(path = {
 		"/healthcolumn/deleteQAEmp.controller" }, produces = "text/html;charset=UTF-8", method = {
 				RequestMethod.GET, RequestMethod.POST })
-		public @ResponseBody String deleteEmp(String Id,String MemId,Model model) {
+		public @ResponseBody String deleteEmp(String Id,String EmpId,Model model) {
 			int columnIdemp=Integer.parseInt(Id);
-			boolean delete = QuestionService.deleteEmp(columnIdemp, MemId);
+			boolean delete = QuestionService.deleteEmp(columnIdemp, EmpId);
 			Map<String, String> contenterrors = new HashMap<>();
 			model.addAttribute("contenterrors", contenterrors);
 			Map<String, String> contentOK = new HashMap<String, String>();
