@@ -47,7 +47,7 @@ public class ExpendRecordDAO {
 		ExpendRecordBean data =this.selectOne(bean.getMemberId(),bean.getAdvisoryMomentId());
 		if(data!=null && data.getMemberId()!=null) {			
 			data.setMemberId(bean.getMemberId());
-			data.setRecord(0);
+			data.setRecord(bean.getRecord());
 			data.setModifytime(new Date());
 			data.setAdvisoryMomentId(bean.getAdvisoryMomentId());
 			return true;
