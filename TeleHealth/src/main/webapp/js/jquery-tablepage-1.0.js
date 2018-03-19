@@ -33,11 +33,11 @@ E-Mail：hpw925@hotmail.com
 			{
 				if (dNowIndex == dPageIndex)
 				{
-					sPageStr += "<td valign='top'><table style='font-size:20px;width:30px;height:30px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sSelColor + ";background-color:" + sSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
+					sPageStr += "<td valign='top'><table id='page' style='font-size:20px;width:30px;height:30px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sSelColor + ";background-color:" + sSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
 				}
 				else
 				{
-					sPageStr += "<td valign='top'><table style='font-size:20px;width:30px;height:30px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sNoSelColor + ";background-color:" + sNoSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
+					sPageStr += "<td valign='top'><table id='page' style='font-size:20px;width:30px;height:30px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sNoSelColor + ";background-color:" + sNoSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
 				}
 			}
 			
@@ -70,10 +70,11 @@ E-Mail：hpw925@hotmail.com
 				$(this).click( function () {
 				
 					dNowIndex = $(this).find("tr").text();
-					
+					$('html, body').scrollTop(0);
 					if (dNowIndex > 0)
 					{
 						change_page_content();
+						$('html, body').scrollTop(0);
 					}
 				});
 			});

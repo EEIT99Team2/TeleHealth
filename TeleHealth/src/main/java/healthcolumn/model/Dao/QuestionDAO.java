@@ -21,7 +21,7 @@ public class QuestionDAO {
 	//選擇文章所有回應的文
 	public List<QuestionBean>  selectresponse(String title) {
 		NativeQuery query=this.getSession().createNativeQuery
-				("select DISTINCT emp.empName,mem.memName,emp.account as empaccount,mem.account as memaccount,que.Content,que.createTime,que.modifyTime,que.QAtype,que.Id"+
+				("select DISTINCT emp.empName,mem.memName,emp.account as empaccount,mem.account as memaccount,que.Content,que.createTime,que.modifyTime,que.QAtype,que.Id,emp.account"+
 						" from question que join healthColumn hel on hel.title=que.quetitle left outer  join employees emp"+
 						 " on que.empId=emp.empId left outer join members mem on que.memberId=mem.memberId where hel.title=?");
 		query.setParameter(1, title);
@@ -54,8 +54,17 @@ public class QuestionDAO {
 				}
 			}
 			return null;
+		}		
+		public QuestionBean insertQAemp(QuestionBean bean) {
+			if(bean!=null) {
+				QuestionBean temp =this.getSession().get(QuestionBean.class, bean.getId());
+				if(temp==null) {
+					this.getSession().save(bean);
+					return bean;
+				}
+			}
+			return null;
 		}
-
 		//修改會員po文		
 			public boolean updateQA(int Id,String Content) {
 			NativeQuery query=this.getSession().createNativeQuery

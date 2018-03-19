@@ -176,13 +176,23 @@ public class AdvisoryController {
 		AdvisoryBean checkBean = advisoryService.select(videoCode);
 		if(checkBean!=null && checkBean.getStatus().equals("N")) {
 			MemberBean talkMember = loginService.selectById(checkBean.getMemberId());
-			session.setAttribute("reserveItem", reserveItemIn);
-			session.setAttribute("videoCode", videoCodeIn);
-			session.setAttribute("advisory", checkBean);
+			if(session.getAttribute("reserveItem")!=null) {
+				session.removeAttribute("reserveItem");
+			}
+			if(session.getAttribute("videoCode")!=null) {
+				session.removeAttribute("videoCode");
+			}
+			if(session.getAttribute("advisory")!=null) {
+				session.removeAttribute("advisory");
+			}
 			if(session.getAttribute("talkMember") != null) {
 				session.removeAttribute("talkMember");
 			}
+			session.setAttribute("reserveItem", reserveItemIn);
+			session.setAttribute("videoCode", videoCodeIn);
+			session.setAttribute("advisory", checkBean);
 			session.setAttribute("talkMember", talkMember);
+			
 			if(session.getAttribute("empLoginOK") != null) {
 				return "empadvisory.success";
 			} else {
@@ -196,4 +206,26 @@ public class AdvisoryController {
 			return "advisory.error";
 		}
 	}
+	
+	//開始進行視訊
+		@RequestMapping(path= {"/Advisory/setsatisfy.controller"}, method = {RequestMethod.GET,RequestMethod.POST})
+		public @ResponseBody String setSatisfy(String videoCode, String satisfy, Model model, HttpSession session) {
+			Integer satisfyValue = null;
+			if(videoCode != null && videoCode.trim().length()>0) {
+				if(satisfy != null && satisfy.trim().length()>0) {
+					try {
+						satisfyValue = Integer.parseInt(satisfy);
+					} catch(Exception e) {
+						System.out.println("評分非數字");
+					}
+					if(satisfyValue < 1) {
+						satisfyValue = 5;
+					}
+					if(advisoryService.updateSatisfy(videoCode, satisfyValue) != null) {
+						return "success";
+					}
+				}
+			}
+			return "error";
+		}
 }

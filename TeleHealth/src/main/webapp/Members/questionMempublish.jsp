@@ -25,15 +25,21 @@
 			onclick="location.href='ModifyData.jsp'" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="修改密碼"
-			onclick="location.href='ChangePwd.jsp'" /></li>			
-			<li class="nav-item"><input type="button" class="nav-link active"
+			onclick="location.href='ChangePwd.jsp'" /></li>
+		<li class="nav-item"><input type="button" class="nav-link active"
 			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>		
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
 			onclick="location.href='Point.jsp'" /></li>
+			
 		<li class="nav-item"><input type="button" class="nav-link active"
-			id="FOO" data-toggle="tab" role="tab" value="我的留言"
-			onclick="location.href='questionMempublish.jsp'" /></li>
+		id="FOO" data-toggle="tab" role="tab" value="儲值點數"
+		onclick="location.href='<c:url value='/pay/pay.jsp'/>'" /></li>
+						
+		<li class="nav-item"><input type="button" class="nav-link active"
+		id="FOO" data-toggle="tab" role="tab" value="我的留言"
+		onclick="location.href='questionMempublish.jsp'" /></li>
+		
 	</ul>
 <br>	
 <div class="container">

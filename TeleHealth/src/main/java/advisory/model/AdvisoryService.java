@@ -146,4 +146,11 @@ public class AdvisoryService {
 		bean.setStatus("Y");
 		return advisoryDao.update(bean);
 	}
+	
+	public AdvisoryBean updateSatisfy(String videoCode, Integer satisfy) {
+		AdvisoryBean bean = new AdvisoryBean();
+		bean.setVideoCode(videoCode);
+		bean.setSatisfy(satisfy);
+		return advisoryDao.update(bean);
+	}
 }

@@ -45,8 +45,7 @@ video {
 <body>
 	<jsp:include page="/fragment/nav2.jsp" />
 
-	<input type="hidden" id="roomName"
-		value="${sessionScope.advisory.videoCode}" />
+	<input type="hidden" id="roomName" value="${sessionScope.advisory.videoCode}" />
 	<input type="hidden" id="memberId" value="${sessionScope.advisory.memberId}" />
 	<input type="hidden" id="gender" value="${sessionScope.talkMember.gender}" />
 	<input type="hidden" id="birth" value="${sessionScope.talkMember.birth}" />
@@ -257,7 +256,7 @@ video {
 				if(datas=="insert.success"){
 					alert("諮詢概要新增成功，結束視訊!")
 					$('#showResultMsg').text("新增成功!");
-					window.location.href = "/TeleHefalth/AdvisoryMoment/AdvisoryRecordEmp.jsp";
+					window.location.href = "/TeleHealth/AdvisoryMoment/AdvisoryRecordEmp.jsp";
 				} else{
 					$('#showResultMsg').text("新增失敗，請重新確認!");
 				}

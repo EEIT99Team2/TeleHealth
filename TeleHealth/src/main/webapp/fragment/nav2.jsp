@@ -28,9 +28,10 @@
 	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
 	rel='stylesheet' type='text/css'>
 <!-- 	google 我不是機器人 -->
-<!-- <link -->
-<!-- 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' -->
-<!-- 	rel='stylesheet' type='text/css'> -->
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css'>
 <!-- Custom styles for this template -->
 <link href="<c:url value="/css/agency.css" />" rel="stylesheet">
 
@@ -62,15 +63,14 @@
 				<li class="nav-item"><div class="row showIcon"><a class="nav-link" id="advisoryIcon"
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecord.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value='/pay/pay.jsp'/>">會員專區</a></li>
+					href="<c:url value='/Members/ModifyData.jsp'/>">會員專區</a></li>
 			</ul>
 		<div class="text-center">
-				<img style="width:40px;height:40px;" src="/TeleHealth/getImage.controller" >
+				<img style="width:65px;height:65px;border-radius:20px;" src="<c:url value='/getImage.controller'/>" >
 				<input type="hidden" value="${LoginOK.memberId}" id="memberId" />
 				<input type="hidden" value="${LoginOK.account}" id="account" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
-					<input type="submit" class="btn btn-sm btn-outline-secondary" 
-					id="myBtn1" value="登出" />
+					<button type="submit" class="btn btn-outline-secondary"><i class="fas fa-sign-out-alt"></i> 登出</button>
 				</form>
 		</div>
 			</c:when>
@@ -95,13 +95,11 @@
 					href="<c:url value='/AdvisoryMoment/AdvisoryRecordEmp.jsp' />">健康諮詢</a><span class="text-center" id="advisoryNum"></span></div></li>				
 			</ul>
 		<div class="text-center">
-				<span>
-					<c:out value="${empLoginOK.empName},你好!!" />
-				</span>
+				<img style="width:65px;height:65px;border-radius:20px;" src="<c:url value='/getImage.controller'/>" >
 				<input type="hidden" value="${empLoginOK.empId}" id="empId" />
+				<input type="hidden" value="${empLoginOK.empName}" id="empName" />
 				<form style="display: inline-block" action="<c:url value='/logout.controller' />" method="get">
-					<input type="submit" class="btn btn-sm btn-outline-secondary" 
-					id="myBtn1" value="登出" />
+					<button type="submit" class="btn btn-outline-secondary"><i class="fas fa-sign-out-alt"></i> 登出</button>
 				</form>
 		</div>
 			</c:when>
@@ -117,8 +115,8 @@
 					href="<c:url value="/QueryDrugs/Drugs.jsp"/>">藥品查詢</a></li>
 			</ul>			
 			<div class="text-center">
-				<button type="button" class="btn btn-primary btn-rounded" 
-					data-toggle="modal" id="myBtn">登入</button>
+				<button type="button" class="btn btn-outline-primary btn-rounded" 
+					data-toggle="modal" id="myBtn"><i class="fas fa-sign-in-alt"></i> 登入</button>
 			</div>
 			</c:otherwise>
 			</c:choose>
@@ -147,7 +145,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="pwd">
-                                    <span class="fa fa-eye"></span> 密碼</label>
+                                    <span class="fa fa-eye"></span> 密碼</label>                  
                                 <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password" value="${sessionScope.password}">
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPwd}</font>
