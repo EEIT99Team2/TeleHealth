@@ -27,9 +27,17 @@ public class BMIService {
 			Double lowmaxval = lowData.getMaxvalue();
 			bmiresult = lowData.getResult();
 			if (bmi<lowminval) {
-				bmiresult = "低於正常範圍";
-			}else if(bmi>lowmaxval){
-				bmiresult = "高於正常範圍";
+				bmiresult = "體重過輕";
+			}else if(bmi>lowmaxval || bmi<(lowmaxval+3)){
+				bmiresult = "過重";
+			}else if(bmi>(lowmaxval+4) || bmi>(lowmaxval+6)) {
+				bmiresult = "輕度肥胖";
+			}else if(bmi>(lowmaxval+7) || bmi>(lowmaxval+9)) {
+				bmiresult = "中度肥胖";
+			}else if(bmi>(lowmaxval+10) || bmi>(lowmaxval+13)) {
+				bmiresult = "重度肥胖";
+			}else if(bmi>35){
+				bmiresult = "病態肥胖";
 			}
 		}else if(age>=18) {
 			if(bmi>110) {
