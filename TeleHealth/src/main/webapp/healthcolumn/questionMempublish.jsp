@@ -9,9 +9,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>我的留言</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
+<style type="text/css">
+.th3{
+width:500px}
+.th4{
+width:150px}
+</style>
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
@@ -38,10 +43,9 @@
 	</ul>
 <br>	
 <div class="container">
-<div class="row col-12">     	
-	      <div class="col-2"></div>
-	      <div class="card col-8">
-			<div class="card-header"><span>${LoginOK.memName}</span><input type="hidden" id="memId" value="${LoginOK.memberId}">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
+<div class="row col-12">	  
+	      <div class="card col-12">
+			<div class="card-header"><span>${LoginOK.memName}</span><input type="hidden" id="memId" value="${LoginOK.memberId}">您提出過的問題<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
 				   <table id="productTable" class="table table-bordered">
@@ -50,8 +54,8 @@
                           	 <th>編號</th>
                              <th>內容</th>                             
                              <th>日期</th>
-                             <th>留言內容</th>                             
-                             <th>管理</th>
+                             <th class="th3">留言內容</th>                             
+                             <th class="th4">管理</th>
                           </tr>
                        </thead>
                        <tbody>                       
@@ -89,7 +93,7 @@
 </div>	
 	<script src="<c:url value='/js/jquery-tablepage-1.0.js'/>"></script>
 	<script>
-	  var memIdlogin=$('#memId').val();
+	  var memIdlogin=$('#memId').val();	  
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
@@ -116,10 +120,10 @@
 			     //刪除會員發表
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
 				   var check=confirm("你確定要刪除此筆資料?");
-				   var Memname=$('#title').text();
+				   var memIdlogin=$('#memId').val();
 	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  		  
 	 			   if(check==true){
-	 				  $.get("<c:url value='/healthcolumn/deleteQAMem.controller'/>",{Id:Id,memberId:Memname},function(data){
+	 				  $.get("<c:url value='/healthcolumn/deleteQAMem.controller'/>",{Id:Id,memberId:memIdlogin},function(data){
 		 				   alert("您已刪除所po的文");
 		 				  loadmember(memIdlogin);
 		 			   })		 			   

@@ -23,7 +23,7 @@ public class QuestionDAO {
 		NativeQuery query=this.getSession().createNativeQuery
 				("select DISTINCT emp.empName,mem.memName,emp.account as empaccount,mem.account as memaccount,que.Content,que.createTime,que.modifyTime,que.QAtype,que.Id,emp.account"+
 						" from question que join healthColumn hel on hel.title=que.quetitle left outer  join employees emp"+
-						 " on que.empId=emp.empId left outer join members mem on que.memberId=mem.memberId where hel.title=?");
+						 " on que.empId=emp.empId left outer join members mem on que.memberId=mem.memberId where hel.title=? order by que.createTime");
 		query.setParameter(1, title);
 		List<QuestionBean> data=(List<QuestionBean>)query.list();
 		return data;		

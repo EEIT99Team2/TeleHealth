@@ -46,7 +46,6 @@ public class AdvisoryController {
 		SimpleDateFormat sdfForReserve = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		SimpleDateFormat sdfForCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date reserveDate=sdfForReserve.parse(advisoryTime);
-		java.util.Date createTime=new Date();
 		String sendTime ="";
 		char[] codeData=new char[5];
 		int codeSelect;
@@ -73,7 +72,7 @@ public class AdvisoryController {
 			advisorybean.setMemberId(UserId);
 			advisorybean.setEmpId(empId);
 			advisorybean.setAdvisoryTime(reserveDate);
-			advisorybean.setCreateTime(createTime);
+			advisorybean.setCreateTime(new Date());
 			advisorybean.setStatus("N");
 			advisoryService.insert(advisorybean);
 			//修改班表預約狀態(table:AdvisoryMoment)
@@ -83,7 +82,7 @@ public class AdvisoryController {
 			advisoryMomentBean.setVideoCode(videoCode);
 			advisoryMomentService.updateByReserve(advisoryMomentBean);
 			result="您的預約成功";			
-			sendTime = sdfForCreate.format(createTime);
+			sendTime = sdfForCreate.format(new Date());
 			//會員給錢			
 			advisoryService.updateMemPoint(UserId);
 			//新增會員消費紀錄

@@ -94,6 +94,7 @@ public class LoginController {
 					return "login.success";
 				}
 			}
+			errorMsg.put("errorPwd", "帳號或密碼不正確");
 			return "login.error";
 		} else {
 			if (username == null || username.trim().length() == 0) {
