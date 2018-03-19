@@ -137,7 +137,7 @@ public class ProductDAO {
 		return result;
 	}
 	
-	private static final String INSERT = "INSERT INTO product VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT = "INSERT INTO product VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	public ProductBean insert(ProductBean bean) {
 		ProductBean result = null;
 		if (bean != null) {
@@ -151,6 +151,7 @@ public class ProductDAO {
 				pstmt.setInt(6, bean.getRtnCode());
 				pstmt.setString(7, bean.getTradeNo());
 				pstmt.setString(8, bean.getPaymentDate());
+				pstmt.setString(9, bean.getMemberId());
 				int i = pstmt.executeUpdate();
 				if (i == 1) {
 					result = bean;
