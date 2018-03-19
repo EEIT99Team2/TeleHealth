@@ -34,7 +34,9 @@
 	img, p {
 		cursor : pointer
 	}
-
+	#emptyForm input {
+		width:300px;
+	}
 </style>
 
 </head>
@@ -296,7 +298,7 @@
 					    }}
 			        ],
 			        "autoWidth": false,
-			        "bProcessing": true,//顯示處理中的圖樣
+			        "bProcessing": true,
 			        "oLanguage": {
 			        	"sProcessing": "資料查詢中，請稍候...",
 			            "sLengthMenu": " _MENU_ 筆/頁",
@@ -323,29 +325,116 @@
 
 			$('body').on("click", "td>p", function() {
 				$("#emptyForm").empty();
+				$("#emptyBody").empty();
 				var licenseNumId = $(this).text();
 				var decodelicenseNumId=decodeURIComponent(licenseNumId);				
 				$.getJSON('/TeleHealth/querydrug.controller', {licenseNum:decodelicenseNumId} , function(data) {
 					var cell1 = $('<div class="form-group"><label class="col-form-label" for="licenseNum1">核准字號：</lable><input class="form-control" id="licenseNum1" type="text" readonly="readonly" value="' + data.licenseNum + '" /></div>');
 					var cell2 = $('<div class="form-group"><label class="col-form-label" for="chineseName1">中文名稱：</lable><input class="form-control" id="chineseName1" type="text" readonly="readonly" value="' + data.chineseName + '" /></div>');
-					var cell3 = $('<div class="form-group"><label class="col-form-label" for="englishName1">英文名稱：</lable><input class="form-control" id="englishName1" type="text" readonly="readonly" value="' + data.englishName + '" /></div>');
-					var cell4 = $('<div class="form-group"><label class="col-form-label" for="issueDate1">申請日期：</lable><input class="form-control" id="issueDate1" type="text" readonly="readonly" value="' + data.issueDate + '" /></div>');
-					var cell5 = $('<div class="form-group"><label class="col-form-label" for="effectiveDate1">有效日期：</lable><input class="form-control" id="effectiveDate1" type="text" readonly="readonly" value="' + data.effectiveDate + '" /></div>');
-					var cell6 = $('<div class="form-group"><label class="col-form-label" for="clearanceNum1">送審文件：</lable><input class="form-control" id="clearanceNum1" type="text" readonly="readonly" value="' + data.clearanceNum + '" /></div>');
-					var cell7 = $('<div class="form-group"><label class="col-form-label" for="symptom1">適應症：</lable><textarea class="form-control" rows="3" readonly="readonly" cols="60">' + data.symptom + '</textarea>');
-					var cell8 = $('<div class="form-group"><label class="col-form-label" for="formulation1">劑型：</lable><input class="form-control" id="formulation1" type="text" readonly="readonly" value="' + data.formulation + '" /></div>');
-					var cell9 = $('<div class="form-group"><label class="col-form-label" for="packs1">包裝：</lable><input class="form-control" id="packs1" type="text" readonly="readonly" value="' + data.packs + '" /></div>');
-					var cell10 = $('<div class="form-group"><label class="col-form-label" for="category1">類型：</lable><input class="form-control" id="category1" type="text" readonly="readonly" value="' + data.category + '" /></div>');
-					var cell11 = $('<div class="form-group"><label class="col-form-label" for="regulatoryLevel1">管制級別：</lable><input class="form-control" id="regulatoryLevel1" type="text"  readonly="readonly" value="' + data.regulatoryLevel + '" /></div>');
-					var cell12 = $('<div class="form-group"><label class="col-form-label" for="ingredients1">成份概述：</lable><textarea class="form-control" readonly="readonly" rows="3" cols="60">' + data.ingredients + '</textarea>');
-					var cell13 = $('<div class="form-group"><label class="col-form-label" for="applicatorName1">申請商：</lable><input class="form-control" id="applicatorName1" type="text"  readonly="readonly" value="' + data.applicatorName + '" /></div>');
-					var cell14 = $('<div class="form-group"><label class="col-form-label" for="manuName">製造商：</lable><input class="form-control" id="manuName" type="text"  readonly="readonly" value="' + data.manuName + '" /></div>');
-					var cell15 = $('<div class="form-group"><label class="col-form-label" for="country1">國別：</lable><input class="form-control" id="country1" type="text" readonly="readonly" value="' + data.country + '" /></div>');
-					var cell16 = $('<div class="form-group"><label class="col-form-label" for="usage1">用法用量：</lable><textarea class="form-control" id="usage1" readonly="readonly"  rows="3" cols="60">' + data.usage + '</textarea></div>');
-					var cell17 = $('<div class="form-group"><label class="col-form-label" for="shape1">形狀：</lable><input class="form-control" id="shape1" type="text"  readonly="readonly" value="' + data.shape + '" /></div>');
-					var cell18 = $('<div class="form-group"><label class="col-form-label" for="color1">顏色：</lable><input class="form-control" id="color1" type="text" readonly="readonly" value="' + data.color + '" /></div>');
-					var cell19 = $('<div class="form-group"><label class="col-form-label" for="marks1">有無刻痕：</lable><input class="form-control" id="marks1" type="text"  readonly="readonly" value="' + data.marks + '" /></div>');
-					var cell20 = $('<div class="form-group"><img style="width:200px; height:200px;" src="/TeleHealth/QueryDrugs/drugsimages/' + data.licenseNum +'.jpg"></div>');
+					var cell3;
+					if(data.englishName=="" || data.englishName==null) {
+						cell3=$('<div class="form-group"><label class="col-form-label" for="englishName1">英文名稱：</lable><input class="form-control" id="englishName1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell3=$('<div class="form-group"><label class="col-form-label" for="englishName1">英文名稱：</lable><input class="form-control" id="englishName1" type="text" readonly="readonly" value="' + data.englishName + '" /></div>');
+					}
+					var cell4;
+					if(data.issueDate=="" || data.issueDate==null) {
+						cell4=$('<div class="form-group"><label class="col-form-label" for="issueDate1">申請日期：</lable><input class="form-control" id="issueDate1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell4=$('<div class="form-group"><label class="col-form-label" for="issueDate1">申請日期：</lable><input class="form-control" id="issueDate1" type="text" readonly="readonly" value="' + data.issueDate + '" /></div>');
+					}
+					var cell5;
+					if(data.effectiveDate=="" || data.effectiveDate==null) {
+						cell5=$('<div class="form-group"><label class="col-form-label" for="effectiveDate1">有效日期：</lable><input class="form-control" id="effectiveDate1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell5=$('<div class="form-group"><label class="col-form-label" for="effectiveDate1">有效日期：</lable><input class="form-control" id="effectiveDate1" type="text" readonly="readonly" value="' + data.effectiveDate + '" /></div>');
+					}
+					var cell6;
+					if(data.clearanceNum=="" || data.clearanceNum==null) {
+						cell6=$('<div class="form-group"><label class="col-form-label" for="clearanceNum1">送審文件：</lable><input class="form-control" id="clearanceNum1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell6=$('<div class="form-group"><label class="col-form-label" for="clearanceNum1">送審文件：</lable><input class="form-control" id="clearanceNum1" type="text" readonly="readonly" value="' + data.clearanceNum + '" /></div>');
+					}
+					var cell7;
+					if(data.symptom=="" || data.symptom==null) {
+						cell7=$('<div class="form-group"><label class="col-form-label" for="symptom1">適應症：</lable><textarea class="form-control" readonly="readonly" rows="3" cols="60">食藥署未提供資料</textarea>');
+					} else {
+						cell7=$('<div class="form-group"><label class="col-form-label" for="symptom1">適應症：</lable><textarea class="form-control" readonly="readonly" rows="3" cols="60">' + data.symptom + '</textarea>');
+					}
+					var cell8;
+					if(data.formulation=="" || data.formulation==null) {
+						cell8=$('<div class="form-group"><label class="col-form-label" for="formulation1">劑型：</lable><input class="form-control" id="formulation1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell8=$('<div class="form-group"><label class="col-form-label" for="formulation1">劑型：</lable><input class="form-control" id="formulation1" type="text" readonly="readonly" value="' + data.formulation + '" /></div>');
+					}
+					var cell9;
+					if(data.packs=="" || data.packs==null) {
+						cell9=$('<div class="form-group"><label class="col-form-label" for="packs1">包裝：</lable><input class="form-control" id="packs1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell9=$('<div class="form-group"><label class="col-form-label" for="packs1">包裝：</lable><input class="form-control" id="packs1" type="text" readonly="readonly" value="' + data.packs + '" /></div>');
+					}
+					var cell10;
+					if(data.category=="" || data.category==null) {
+						cell10=$('<div class="form-group"><label class="col-form-label" for="category1">藥品類別：</lable><input class="form-control" id="category1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell10=$('<div class="form-group"><label class="col-form-label" for="category1">藥品類別：</lable><input class="form-control" id="category1" type="text" readonly="readonly" value="' + data.category + '" /></div>');
+					}
+					var cell11;
+					if(data.regulatoryLevel=="" || data.regulatoryLevel==null) {
+						cell11=$('<div class="form-group"><label class="col-form-label" for="regulatoryLevel1">管制等級：</lable><input class="form-control" id="regulatoryLevel1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell11=$('<div class="form-group"><label class="col-form-label" for="regulatoryLevel1">管制等級：</lable><input class="form-control" id="regulatoryLevel1" type="text" readonly="readonly" value="' + data.regulatoryLevel + '" /></div>');
+					}
+					var cell12;
+					if(data.ingredients=="" || data.ingredients==null) {
+						cell12=$('<div class="form-group"><label class="col-form-label" for="ingredients1">成份概述：</lable><textarea class="form-control" readonly="readonly" rows="3" cols="60">' + data.ingredients + '</textarea>');
+					} else {
+						cell12=$('<div class="form-group"><label class="col-form-label" for="ingredients1">成份概述：</lable><textarea class="form-control" readonly="readonly" rows="3" cols="60">食藥署未提供資料</textarea>');
+					}
+					var cell13;
+					if(data.applicatorName=="" || data.applicatorName==null) {
+						cell13=$('<div class="form-group"><label class="col-form-label" for="applicatorName1">申請商：</lable><input class="form-control" id="applicatorName1" type="text"  readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell13=$('<div class="form-group"><label class="col-form-label" for="applicatorName1">申請商：</lable><input class="form-control" id="applicatorName1" type="text"  readonly="readonly" value="' + data.applicatorName + '" /></div>');
+					}
+					var cell14;
+					if(data.manuName=="" || data.manuName==null) {
+						cell14 = $('<div class="form-group"><label class="col-form-label" for="manuName">製造商：</lable><input class="form-control" id="manuName" type="text"  readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell14 = $('<div class="form-group"><label class="col-form-label" for="manuName">製造商：</lable><input class="form-control" id="manuName" type="text"  readonly="readonly" value="' + data.manuName + '" /></div>');
+					}
+					var cell15;
+					if(data.country=="" || data.country==null) {
+						cell15 = $('<div class="form-group"><label class="col-form-label" for="country1">國別：</lable><input class="form-control" id="country1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell15 = $('<div class="form-group"><label class="col-form-label" for="country1">國別：</lable><input class="form-control" id="country1" type="text" readonly="readonly" value="' + data.country + '" /></div>');
+					}
+					var cell16;
+					if( data.usage=="" || data.usage==null) {
+						cell16 = $('<div class="form-group"><label class="col-form-label" for="usage1">用法用量：</lable><textarea class="form-control" id="usage1" readonly="readonly"  rows="3" cols="60">食藥署未提供資料</textarea></div>');
+					} else {
+						cell16 = $('<div class="form-group"><label class="col-form-label" for="usage1">用法用量：</lable><textarea class="form-control" id="usage1" readonly="readonly"  rows="3" cols="60">' + data.usage + '</textarea></div>');	
+					}
+					var cell17;
+					if(data.shape=="" || data.shape==null) {
+						cell17 = $('<div class="form-group"><label class="col-form-label" for="shape1">形狀：</lable><input class="form-control" id="shape1" type="text"  readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell17 = $('<div class="form-group"><label class="col-form-label" for="shape1">形狀：</lable><input class="form-control" id="shape1" type="text"  readonly="readonly" value="' + data.shape + '" /></div>');
+					}
+					var cell18;
+					if(data.color==""||data.color==null) {
+						cell18 = $('<div class="form-group"><label class="col-form-label" for="color1">顏色：</lable><input class="form-control" id="color1" type="text" readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell18 = $('<div class="form-group"><label class="col-form-label" for="color1">顏色：</lable><input class="form-control" id="color1" type="text" readonly="readonly" value="' + data.color + '" /></div>');
+					}
+					
+					var cell19;
+					if(data.marks==""||data.marks==null) {
+						cell19 = $('<div class="form-group"><label class="col-form-label" for="marks1">有無刻痕：</lable><input class="form-control" id="marks1" type="text"  readonly="readonly" value="食藥署未提供資料" /></div>');
+					} else {
+						cell19 = $('<div class="form-group"><label class="col-form-label" for="marks1">有無刻痕：</lable><input class="form-control" id="marks1" type="text"  readonly="readonly" value="' + data.marks + '" /></div>');
+					}
+					var cell20 = $('<div class="form-group"><img style="width:200px; height:200px;" src="/TeleHealth/QueryDrugs/drugsimages/' + data.licenseNum +'.jpg"></div>');				
 					$("#emptyBody").append(cell20);
 					$("#emptyForm").append(cell1);
 					$("#emptyForm").append(cell2);

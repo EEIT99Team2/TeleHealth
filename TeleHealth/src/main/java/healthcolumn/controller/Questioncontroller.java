@@ -130,6 +130,32 @@ public class Questioncontroller {
 				String dataLoad = gson.toJson("wrong");
 				return dataLoad ;
 			}		
+		}		
+		@RequestMapping(path = {"/healthcolumn/insQAdoctor.controller" }, produces = "text/html;charset=UTF-8", method = {
+				RequestMethod.GET, RequestMethod.POST })
+		public @ResponseBody String insertresponseemp(
+				String empId,
+				String textemp,
+				String advisorycode,
+				String title,
+				Model model) {				
+			QuestionBean bean=new QuestionBean();
+			bean.setAdvisorycode(advisorycode);
+			bean.setEmpId(empId);
+			bean.setContent(textemp);
+			bean.setCreateTime(new Date());
+			bean.setQAtype("A");
+			bean.setQuetitle(title);
+			boolean delete = QuestionService.insertQAemp(bean);			
+			if(delete) {
+				Gson gson = new Gson();
+				String dataLoad = gson.toJson("ok");
+				return dataLoad ;
+			}else {
+				Gson gson = new Gson();
+				String dataLoad = gson.toJson("wrong");
+				return dataLoad ;
+			}		
 		}
 		//選修改文章
 		@RequestMapping(path = {"/healthcolumn/QAupdateId.controller" }, produces = "text/html;charset=UTF-8", method = {
