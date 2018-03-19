@@ -41,7 +41,7 @@ public class SendActiveEmailThread {
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(account));
 			message.setSubject("TeleHealth遠端照護系統-會員開通");
 			message.setText("親愛的會員您好，\n歡迎您使用健康諮詢平台的服務！\n\n請在 24 小時之內，點選以下網址完成 Email 認證，以啟用您的帳號:：\n"
-					+ "https://localhost:8443/TeleHealth/openup.controller?openup=" + memberId+"\n\n請保留此封電子郵件，以便往後查詢\n若您有任何使用上的問題，請至會員中心說明網站查詢：https://localhost:8443/TeleHealth/Members/Members02.jsp \n 時間:"+(new Date()).toString());
+					+ "https://localhost:8443/TeleHealth/openup.controller?openup=" + memberId+"\n\n請保留此封電子郵件，以便往後查詢\n若您有任何使用上的問題，請至會員中心說明網站查詢：https://localhost:8443/TeleHealth/ \n 時間:"+(new Date()).toString());
 			// message.setText("时间: "+(new Date()).toString());
 
 			Transport transport = session.getTransport("smtp");

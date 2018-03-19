@@ -249,6 +249,8 @@ public class RegisterController {
 			member.setPoint(5);
 			String status = "N";
 			member.setStatus(status);
+			Integer a =5;
+			member.setPoint(a);
 
 			MemberBean result = registerService.insert(member);
 
