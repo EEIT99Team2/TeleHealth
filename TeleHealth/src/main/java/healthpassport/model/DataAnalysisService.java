@@ -21,23 +21,6 @@ public class DataAnalysisService {
 	Double minvalue = null;
 	Double maxvalue = null;
 	public DataAnalysisBean selectGroupId(String groupid,String gender,Integer age) {
-	if(age<15) {
-		if(groupid.equals("BloodPressureDiastole")) {
-			DataAnalysisBean dataAnalysis = dataanalysisDao.selectGroupId(groupid, gender, 15);
-			minvalue = dataAnalysis.getMinvalue()-29;
-			maxvalue = dataAnalysis.getMaxvalue()-16;
-			dataAnalysis.setMinvalue(minvalue);
-			dataAnalysis.setMaxvalue(maxvalue);
-			return dataAnalysis;
-		}else if(groupid.equals("BloodPressureSystole")) {
-			DataAnalysisBean dataAnalysis = dataanalysisDao.selectGroupId(groupid, gender, 15);
-			minvalue = dataAnalysis.getMinvalue()-33;
-			maxvalue = dataAnalysis.getMaxvalue()-26;
-			dataAnalysis.setMinvalue(minvalue);
-			dataAnalysis.setMaxvalue(maxvalue);
-			return dataAnalysis;
-		}		
-	}
 	DataAnalysisBean dataAnalysis = dataanalysisDao.selectGroupId(groupid, gender, age);
 	return dataAnalysis;
 }

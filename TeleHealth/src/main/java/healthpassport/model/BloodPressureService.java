@@ -31,62 +31,39 @@ public class BloodPressureService {
 		DataAnalysisBean Diastole = null;
 		DataAnalysisBean Systole = null;
 		DataAnalysisBean HeartBeat = null;
-		String DiastoleResult=null;//舒張壓結果
-		String SystoleResult=null;//收縮壓結果
+		String DiastoleResult = null;// 舒張壓結果
+		String SystoleResult = null;// 收縮壓結果
 		String HeartBeatResult = null;
-		if (age < 15) {
-			if(cminBP<30) {
-				DiastoleResult="低於正常值";
-			}else if(cminBP>59){
-				DiastoleResult="高於正常值";
-			}else {
-				DiastoleResult="正常";
-			}
-			if(cmaxBP<70) {
-				SystoleResult="低於正常值";
-			}else if(cmaxBP>100) {
-				SystoleResult="高於正常值";
-			}else {
-				SystoleResult="正常";
-			}
-			if (HB < 50) {
-				HeartBeatResult = "太慢";
-			} else if (HB > 110) {
-				HeartBeatResult = "超快";
-			} else {
-				HeartBeatResult ="正常標準值";
-			}
-		} else if (age >= 15) {
-			Diastole = dataAnalysisDao.selectGroupId(minBloodPressure, gender, age);
-			Systole = dataAnalysisDao.selectGroupId(maxBloodPressure, gender, age);
-			HeartBeat = dataAnalysisDao.Up18HBandBS(Heartbeat, gender, age, HB);
-			Double minSystole = Systole.getMinvalue();
-			Double maxSystole = Systole.getMaxvalue();
-			// 收縮壓
-			SystoleResult = Systole.getResult();
-			if (cmaxBP < minSystole) {
-				SystoleResult = "偏低";
-			} else if (cmaxBP > maxSystole) {
-				SystoleResult = "偏高";
-			}
-			// 舒張壓
-			Double minDiastole = Diastole.getMinvalue();
-			Double maxDiastole = Diastole.getMaxvalue();
-			DiastoleResult = Diastole.getResult();
-			if (cminBP < minDiastole) {
-				DiastoleResult = "偏低";
-			} else if (cminBP > maxDiastole) {
-				DiastoleResult = "偏高";
-			}
-			// 心跳值
-			if (HB < 50) {
-				HeartBeatResult = "太慢";
-			} else if (HB > 110) {
-				HeartBeatResult = "超快";
-			} else {
-				HeartBeatResult = HeartBeat.getResult();
-			}
+		Diastole = dataAnalysisDao.selectGroupId(minBloodPressure, gender, age);
+		Systole = dataAnalysisDao.selectGroupId(maxBloodPressure, gender, age);
+		HeartBeat = dataAnalysisDao.Up18HBandBS(Heartbeat, gender, age, HB);
+		Double minSystole = Systole.getMinvalue();
+		Double maxSystole = Systole.getMaxvalue();
+		// 收縮壓
+		SystoleResult = Systole.getResult();
+		if (cmaxBP < minSystole) {
+			SystoleResult = "偏低";
+		} else if (cmaxBP > maxSystole) {
+			SystoleResult = "偏高";
 		}
+		// 舒張壓
+		Double minDiastole = Diastole.getMinvalue();
+		Double maxDiastole = Diastole.getMaxvalue();
+		DiastoleResult = Diastole.getResult();
+		if (cminBP < minDiastole) {
+			DiastoleResult = "偏低";
+		} else if (cminBP > maxDiastole) {
+			DiastoleResult = "偏高";
+		}
+		// 心跳值
+		if (HB < 50) {
+			HeartBeatResult = "太慢";
+		} else if (HB > 110) {
+			HeartBeatResult = "超快";
+		} else {
+			HeartBeatResult = HeartBeat.getResult();
+		}
+
 		bean.getMinBloodPressure();
 		bean.getMaxBloodPressure();
 		bean.getHeartBeat();
