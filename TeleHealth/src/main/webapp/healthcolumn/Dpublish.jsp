@@ -104,6 +104,7 @@ width:50em;
 			   //讀取醫生發表
 			   function loadProduct(empId){
 			    $.getJSON('/TeleHealth/healthcolumn/publishcontent.controller',{empId:empId},function(datas){
+						console.log(datas);
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
