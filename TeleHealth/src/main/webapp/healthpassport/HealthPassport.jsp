@@ -526,13 +526,23 @@ $('#insertBloodSugar').click(function(){
 			var b =0;
 			var c =0;
 			$('#insert_systole').blur(function() {
+				 diastole = $.trim($('#insert_diastole').val());
 				 systole = $.trim($('#insert_systole').val());
+				 var diastolechk=parseInt(diastole);
+				 var systolechk= parseInt(systole);
 				if(isNaN(systole) || systole.length == 0 || !re.test(systole) || systole>250) {
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					a=1;
 				}else{
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
 					a=0;
+				}
+				if(systolechk>diastolechk){
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					a=0;
+					if(a==0 || b==0 || c==0){
+						$('#insertBP').prop("disabled", false);
+					}
 				}
 				if(a==1 ||b==1 ||c==1){
 					$('#insertBP').prop("disabled", true);
@@ -553,7 +563,6 @@ $('#insertBloodSugar').click(function(){
 					b=0;
 				}
 				if(diastolechk>systolechk){
-					console.log(diastole+" c9  "+systole)
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
 					b=1;
 				}else{
