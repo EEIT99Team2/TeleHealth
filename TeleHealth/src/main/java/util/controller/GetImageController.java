@@ -2,7 +2,6 @@ package util.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -22,7 +21,6 @@ import employees.model.EmployeesBean;
 import employees.model.EmployeesService;
 import register.model.LoginService;
 import register.model.MemberBean;
-import util.SystemUtils;
 
 //本Controller用於將網頁顯示資料庫的圖片用src路徑
 @Controller
@@ -38,7 +36,6 @@ public class GetImageController {
 		EmployeesBean emp = null;
 		if (session.getAttribute("LoginOK") != null) {
 			member = (MemberBean) session.getAttribute("LoginOK");
-			System.out.println("fileName=="+member.getAccount());
 		} else if(session.getAttribute("empLoginOK") != null) {
 			emp = (EmployeesBean) session.getAttribute("empLoginOK");
 		}
