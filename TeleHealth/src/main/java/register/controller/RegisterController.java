@@ -247,8 +247,7 @@ public class RegisterController {
 			member.setFileName(fileName);
 			member.setRegisterTime(new Timestamp(System.currentTimeMillis()));
 			member.setPoint(5);
-			String status = "N";
-			member.setStatus(status);
+			member.setStatus("N");
 
 			MemberBean result = registerService.insert(member);
 

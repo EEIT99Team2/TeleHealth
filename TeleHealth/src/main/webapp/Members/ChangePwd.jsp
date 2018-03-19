@@ -11,22 +11,21 @@
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
 
-<main>
 	<ul
 		class="nav nav-tabs justify-content-center w3-padding-large w3-card "
 		id="myTab" role="tablist">
 
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="BOD" data-toggle="tab" role="tab" value="修改資料"
-			onclick="location.href='ModifyData.jsp'" /></li>
+			onclick="location.href='<c:url value='/Members/ModifyData.jsp'/>'" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="修改密碼"
-			onclick="location.href='ChangePwd.jsp'" /></li>
+			onclick="location.href='<c:url value='/Members/ChangePwd.jsp'/>'" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>		
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
-			onclick="location.href='Point.jsp'" /></li>
+			onclick="location.href='<c:url value='/Members/Point.jsp'/>'" /></li>
 			
 			<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值點數"
