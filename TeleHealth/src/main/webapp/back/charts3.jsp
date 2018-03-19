@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+	#myTable thead {
+		font-size: 18px;
+	}
+	#myTable tbody {
+		font-size: 16px;
+	}
+</style>
       <!-- Records -->
           <div class="card mb-3 container columnUse">
             <div class="card-header">
-              <i class="fa fa-bar-chart"></i> 交易紀錄</div>
+              <i class="fa fa-table"></i> 交易紀錄</div>
             <div class="card-body">
               <div id="container" style="min-width: 310px; margin: 0 auto">
                 <table id="myTable" class="table">
@@ -22,7 +30,6 @@
                 </table>
               </div>
             </div>
-<!--             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
           </div>
     
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>

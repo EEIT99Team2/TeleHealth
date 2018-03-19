@@ -94,7 +94,7 @@
   </nav>
   <input type="hidden" value="${empLoginOK.empId}" id="empId" />
     <div id="memberManger" class="content-wrapper" style="display:block"><jsp:include page="/back/ManagementMembers.jsp" /></div>
-    <div id="msgManger" class="content-wrapper" style="background-color:#fff4c1;display:none"><jsp:include page="/back/CustomService.jsp" /></div>
+    <div id="msgManger" class="content-wrapper" style="background-image:url('../images/serviceback1.jpg');background-size:cover;opacity:0.4;display:none"><jsp:include page="/back/CustomService.jsp" /></div>
     <div id="columnManger" class="content-wrapper" style="display:none"><jsp:include page="/back/totalpublish.jsp" /></div>
     <div id="takeoffManger" class="content-wrapper" style="display:none"><jsp:include page="/back/takeoffSystem.jsp" /></div>
     <div id="financialManger" class="content-wrapper" style="display:none"><jsp:include page="/back/charts2.jsp" /></div>

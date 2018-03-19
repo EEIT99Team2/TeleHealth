@@ -40,7 +40,6 @@ public class PwdGmail {
 			message.setSubject("TeleHealth遠端照護系統-忘記密碼");
 			message.setText("親愛的會員您好，" + "\n" + "您的新密碼為:" + pwd + "\n" + "\n" + "TeleHealth遠端照護系統全體同仁關心您" + "\n" + "時間:"
 					+ (new Date()).toString());
-			// message.setText("时间: "+(new Date()).toString());
 
 			Transport transport = session.getTransport("smtp");
 			transport.connect(host, port, username, password);
@@ -48,7 +47,6 @@ public class PwdGmail {
 				Transport.send(message);
 				a = "2";
 			}
-			System.out.println("寄送email結束.");
 			return a;
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
