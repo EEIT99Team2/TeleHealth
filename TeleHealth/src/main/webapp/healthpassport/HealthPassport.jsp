@@ -486,7 +486,7 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確身高!</span>";
 					$('#insert').prop("disabled", true);
 				} else {
-					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("heiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 				}
 			});
 			$('#insert_weight').blur(function() {
@@ -495,7 +495,7 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確體重!</span>";
 					$('#insert').prop("disabled", true);
 					} else {
-					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 				}
 			});
 			$('#insert').click(function(){
@@ -533,11 +533,11 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					a=1;
 				}else{
-					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("systoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					a=0;
 				}
 				if(systolechk>diastolechk){
-					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					a=0;
 					if(a==0 || b==0 || c==0){
 						$('#insertBP').prop("disabled", false);
@@ -558,14 +558,14 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					b=1;
 				}else{
-					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					b=0;
 				}
 				if(diastolechk>systolechk){
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
 					b=1;
 				}else{
-					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					b=0;
 				}
 				if(a==1 ||b==1 ||c==1){
@@ -580,7 +580,7 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					c=1;
 				} else {
-					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					c=0;
 				}
 				if(a==1 ||b==1 ||c==1){
@@ -625,10 +625,10 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					$('#insertBS').prop("disabled", true);
 				}else if(bloodsugar>200 && bloodsugar<300){
-					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' /><span>請盡快就醫!</span>";
+					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' /><span>請盡快就醫!</span>";
 					$('#insertBS').prop("disabled", false);
 				}else if(bloodsugar<=200){
-					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/check.jpg' />' />";
+					document.getElementById("bloodsugarMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					$('#insertBS').prop("disabled", false);
 				}
 			});
