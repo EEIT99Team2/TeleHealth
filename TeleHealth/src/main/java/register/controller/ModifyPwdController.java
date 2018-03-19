@@ -53,6 +53,9 @@ public class ModifyPwdController {
 		if (Newpwd == null || Newpwd.trim().length() == 0) {
 			errorMsg.put("errorNewpwd", "新的會員密碼欄位不能空白");
 		} else {
+			if(Newpwd.equals(oldpwd)) {
+				errorMsg.put("errorNewpwd", "不能與舊密碼相同");
+			}else {
 			if (Newpwd.matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$")) {
 				if (pwdCheck.equals(Newpwd)) {
 					Boolean flag = loginService.UpdatePasword(member, Newpwd);
@@ -67,6 +70,7 @@ public class ModifyPwdController {
 			} else {
 				errorMsg.put("errorNewpwd", "新的會員密碼欄位格式錯誤");
 			}
+		}
 		}
 
 		if (errorMsg != null && !errorMsg.isEmpty()) {
