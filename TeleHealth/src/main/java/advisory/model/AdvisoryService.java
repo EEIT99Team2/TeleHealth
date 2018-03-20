@@ -1,5 +1,6 @@
 package advisory.model;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -144,9 +145,11 @@ public class AdvisoryService {
 		bean.setVideoCode(videoCode);
 		bean.setDescrip(descrip);
 		bean.setStatus("Y");
+		bean.setModifyTime(new Date());
 		return advisoryDao.update(bean);
 	}
 	
+	//會員視訊評分
 	public AdvisoryBean updateSatisfy(String videoCode, Integer satisfy) {
 		AdvisoryBean bean = new AdvisoryBean();
 		bean.setVideoCode(videoCode);

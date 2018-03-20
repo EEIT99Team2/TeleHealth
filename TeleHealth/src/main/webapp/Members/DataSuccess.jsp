@@ -5,7 +5,7 @@
 <html>	
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>修改會員資料</title>
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />

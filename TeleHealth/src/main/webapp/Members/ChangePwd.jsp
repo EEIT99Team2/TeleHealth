@@ -6,8 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Insert title here</title>
-</head>
+
+<title>修改密碼</title>
+</head> 
 <body>
 	<jsp:include page="/fragment/nav2.jsp" />
 

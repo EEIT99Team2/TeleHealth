@@ -109,13 +109,12 @@ $(document).ready(function() {
             var cell4= $("<p class='lead'></p>").html(data[2]);                          
             var row = $(' <div class="col-lg-10" id="data"></div>').append([cell1,cell0,cell2,cell3,cell0,cell4]);
              $('#body').append(row);
-			}else
-			{
+			} else {
 				var cell0=$("<hr>")      	     	          
 	            var cell1= $("<h1 class='mt-4'></h1>").text(data[0]);
 	            var cell2= $("<p class='lead'></p>").text("by  "+data[1]);
 	            var cell3=$("<p></p>").text(data[3]);
-	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="http://tzeing.asuscomm.com/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
+	            var video=$( '<video controls crossorigin="anonymous" width="600" height="500" controls><source src="https://tzeing.asuscomm.com/TeleHealth/video/'+decodeURIComponent(data[4])+'" type="video/mp4"></video>')
 	            var cell4= $("<p class='lead'></p>").html(data[2]);                          
 	            var row = $(' <div class="col-lg-10" id="data"></div>').append([cell1,cell0,cell2,cell3,video,cell0,cell4]);
 	             $('#body').append(row);
@@ -274,7 +273,7 @@ $(document).ready(function() {
 				$("#erroeMsg").text("po文失敗");
 				}
             });
-   }
+    	}
     }
       
     </script>        

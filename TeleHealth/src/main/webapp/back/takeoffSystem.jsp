@@ -191,9 +191,9 @@ $("body").on("click","#CheckList tr",function(){
 			+"<br/><span style='font-size:1.3em'>請假事項:  "+apType+"</span>"
 			+"<br/><span style='font-size:1.3em'>請假時段:  "+calendar+"</span>"
 			+"<br/><span style='font-size:1.3em'>申請時間:  "+apTime+"</span>"		
-			+"<br/><span>申請說明: </span><p>"+apReason+"</p>"		
+			+"<br/><span style='font-size:1.3em'>申請說明: </span><p  style='font-size:18px'>"+apReason+"</p>"		
 			+"<br/><span style='font-size:1.3em'>核准結果:  "+reResult+"</span>"
-			+"<br/><span>備註: </span><p>"+reReason+"</p>");		
+			+"<br/><span  style='font-size:1.3em'>備註: </span><p  style='font-size:18px'>"+reReason+"</p>");		
 	$("#resultItem .modal-body").append(docFrag);
 	$("#resultItem").modal("show");
 });
@@ -210,7 +210,7 @@ $("#responseCheck").click(function(){
 		$(".txtWaring").remove();
 		$("#responseCheck").attr("data-dismiss","modal");
 	$.post("<c:url value='/AdvisoryMoment/approveTakeoff.controller'/>",{"takeoffId":DataPackage.takeoffId,"empId":DataPackage.empId,"empName":DataPackage.empName,"MomentId":DataPackage.MomentId,"calendar":DataPackage.calendar,"videoCode":DataPackage.videoCode,"apResult":apResult,"reason":note},function(result){
-		docFrag.append("<h4>"+result+"</h4>");
+		docFrag.append("<h3 class='allFontStyle'>"+result+"</h3>");
 		$("#resultItem .modal-body").append(docFrag);
 		})
 	$("#resultItem").modal("show");

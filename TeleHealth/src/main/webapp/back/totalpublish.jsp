@@ -12,12 +12,12 @@
 					<table id="productTable" class="table table-bordered">
 						<thead>
 							<tr>
-								<th>會員名稱</th>
-								<th>文章編號</th>
-								<th>文章標題:</th>
-								<th>日期</th>
-								<th>留言內容</th>
-								<th>管理</th>
+								<th class="th1">會員名稱</th>
+								<th class="th2">編號</th>
+								<th class="th3">文章標題:</th>
+								<th class="th4">日期</th>
+								<th class="th5">留言內容</th>
+								<th class="th6">管理</th>
 							</tr>
 						</thead>
 						<tbody>

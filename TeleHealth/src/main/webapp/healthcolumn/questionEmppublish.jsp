@@ -9,11 +9,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>我的留言</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link href="../fullCalendar/w3.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-<script src="../forCkeditor/ckeditor/ckeditor.js"></script>
-<script src="../forCkeditor/ckfinder/ckfinder.js"></script>
-<link rel="stylesheet" href="../forCkeditor/ckeditor/contents.css">
 <link rel="stylesheet" type="text/css" href="/TeleHealth/css/fonts/fontstyle.css" />
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <style type="text/css">
@@ -21,10 +16,11 @@
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
+<script src="../forCkeditor/ckeditor/ckeditor.js"></script>
+<script src="../forCkeditor/ckfinder/ckfinder.js"></script>
 <div class="container">
-<div class="row col-12">     	
-	      <div class="col-2"></div>
-	      <div class="card col-8">
+<div class="row col-12">
+	      <div class="card col-12">
 			<div class="card-header"><span>${empLoginOK.empName}</span><input type="hidden" id="empId" value="${empLoginOK.empId}">您發佈過的文章<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body">
 				<!-- 每頁不同的內容從這裡開始 -->
@@ -73,7 +69,7 @@
 </div>	
 	<script src="<c:url value='/js/jquery-tablepage-1.0.js'/>"></script>
 	<script>
-	var empIdlogin=$('#empId').val();	  
+	var empIdlogin=$('#empId').val();		
 	  var tg=[ {name:'basicstyles',groups:['basicstyles','cleanup']},
           {name:'paragraph',groups:['align']},{name:'styles'},{name:'colors'},
           ];
@@ -100,22 +96,24 @@
 			  
 			     //刪除員工發表
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
-				   var check=confirm("你確定要刪除此筆資料?");
-				   var Empname=$('#title').val();
-	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();
+				   var empIdlogin=$('#empId').val();		
+				   var check=confirm("你確定要刪除此筆資料?");				   
+	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();	 			   
 	 			   if(check==true){
-	 				  $.get("<c:url value='/healthcolumn/deleteQAEmp.controller'/>",{Id:Id,EmpId:Empname},function(data){
+	 				  $.get("<c:url value='/healthcolumn/deleteQAEmp.controller'/>",{Id:Id,EmpId:empIdlogin},function(data){
 		 				   alert("您已刪除所po的文");
-		 				  loadmember(empIdlogin);
+		 				  loademp(empIdlogin);
 		 			   })		 			   
 	 			   }else{
-	 				  loadmember(empIdlogin);
+	 				  loademp(empIdlogin);
 		 		 }
 	 			 
 			  })
 			    
 			    //修改CK
 	 		   $('#productTable>tbody').on('click','tr button:nth-child(2)',function(){
+	 			  document.getElementById("reanswer").innerHTML=' ';
+	 			  document.getElementById("reanswererror").innerHTML=' '; 	
 	 			  $('#UnReserveItem').modal('show');	
 	 			  var Id = $(this).parents('tr').find('td:nth-child(1)').text();
 	 			  $.getJSON("<c:url value='/healthcolumn/QAupdateId.controller'/>",{Id:Id},function(datas){
@@ -131,6 +129,7 @@
 		 //讀取員工發表
 			   function loademp(empId){
 				   $.getJSON("<c:url value='/healthcolumn/QAEmpublish.controller'/>",{empId:empId},function(datas){
+					   console.log(datas)
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
@@ -153,7 +152,8 @@
 			      		
 			} 
 		
-		function postdata(){		
+		function postdata(){
+				
 			var questionId=$("#questionId").val();			
 			var contenttext=CKEDITOR.instances.contenttext.getData();
 			if(contenttext==null|| contenttext.length==0){
@@ -162,11 +162,13 @@
 	    	}else{ 						
 			$.getJSON("<c:url value='/healthcolumn/updatememQA.controller'/>", {questionId:questionId,contenttext:contenttext}, function(datas){
 				if(datas="ok"){
-					document.getElementById("reanswer").innerHTML=' ';   
+					document.getElementById("reanswer").innerHTML=' ';					 
+		 			document.getElementById("reanswererror").innerHTML=' '; 	  
 					$("#reanswer").text("修改成功!!");
-					loadmember(memIdlogin);				
+					loademp(empIdlogin);				
 				}else{
-					document.getElementById("reanswer").innerHTML=' ';   
+					document.getElementById("reanswer").innerHTML=' ';					 
+		 			document.getElementById("reanswererror").innerHTML=' ';   
 					$("#reanswer").text("修改失敗!!");}
 				})
 	    	}
