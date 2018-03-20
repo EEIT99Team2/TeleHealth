@@ -140,11 +140,7 @@ public class Questioncontroller {
 				String advisorycode,
 				String title,
 				Model model) {				
-			QuestionBean bean=new QuestionBean();
-			System.out.println("advisorycode=" + advisorycode);
-			System.out.println("empId=" + empId);
-			System.out.println("textemp=" + textemp);
-			System.out.println("title=" + title);
+			QuestionBean bean=new QuestionBean();		
 			bean.setAdvisorycode(advisorycode);
 			bean.setEmpId(empId);
 			bean.setContent(textemp);
