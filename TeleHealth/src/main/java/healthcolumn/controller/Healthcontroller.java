@@ -130,8 +130,9 @@ public class Healthcontroller {
 						out.write(readByte, 0, len);
 					}					
 				}
+				bean.setFileName(fileName);	
 			}
-			bean.setFileName(fileName);	
+			
 			bean.setEmpId(name);
 			boolean ok = healthService.insert(bean);
 

@@ -1,38 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style type="text/css">
-</style>
 
-<script>
-	function aa() {
-		var file = document.getElementById('ff').files[0];
-		//console.dir(file);
-		if (file) {
-			var msg = [];
-			msg.push('檔名：' + file.name, '大小：' + file.size, '檔案類型：' + file.type);
-			document.getElementById('msg').innerHTML = msg.join("<"+"br"+">");
-
-			//讀取檔案
-			var fileReader = new FileReader();
-			fileReader.onload = function(event) {//讀取完後執行的動作
-				//console.dir(event);
-				document.getElementById('xx').src = event.target.result;
-			};
-			fileReader.readAsDataURL(file);//讀取檔案內容,以DataURL格式回傳結果
-
-			//fileReader.readAsText(file, 'UTF-8');
-		}
-	}
-</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改密碼</title>
 </head>
 <body>
-<jsp:include page="/fragment/nav2.jsp" />
+	<jsp:include page="/fragment/nav2.jsp" />
 	<ul
 		class="nav nav-tabs justify-content-center w3-padding-large w3-card "
 		id="myTab" role="tablist">
@@ -44,19 +21,19 @@
 			id="FOO" data-toggle="tab" role="tab" value="修改密碼"
 			onclick="location.href='<c:url value='/Members/ChangePwd.jsp'/>'" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
-			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>		
+			id="checkPoint" data-toggle="tab" role="tab" value="點數查詢" /></li>
 		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值紀錄"
 			onclick="location.href='<c:url value='/Members/Point.jsp'/>'" /></li>
-			
-			<li class="nav-item"><input type="button" class="nav-link active"
+
+		<li class="nav-item"><input type="button" class="nav-link active"
 			id="FOO" data-toggle="tab" role="tab" value="儲值點數"
 			onclick="location.href='<c:url value='/pay/pay.jsp'/>'" /></li>
-						
+
 		<li class="nav-item"><input type="button" class="nav-link active"
-		id="FOO" data-toggle="tab" role="tab" value="我的留言"
-		onclick="location.href='<c:url value='questionMempublish.jsp'/>'" /></li>
-		
+			id="FOO" data-toggle="tab" role="tab" value="我的留言"
+			onclick="location.href='<c:url value='/Members/questionMempublish.jsp'/>'" /></li>
+
 	</ul>
 	<div class="tab-content" id="myTabContent">
 		<div class="tab-pane fade show active" id="home" role="tabpanel"
@@ -84,141 +61,171 @@
 	</main>
 	<form method="post" enctype="multipart/form-data"
 		action="<c:url value="/Members02.controller" />">
-<div class="container">
-		<div style="text-align:center;"><h3 class="title">修改會員資料</h3></div>
-					
-		<table id="Table1" border="0" cellspacing="0" cellpadding="4"
-						width="500" align="center">
-						<tr>
-							<td>
-								<p>
-									<span class="notice" style="color:red;">標有＊為必須填寫資料</span>
-								</p>
-								<table id="Table7" class="Collapse" border="0"   width="100%" style="border-collapse:separate; border-spacing:0px 10px;" >
-									<tr>
-										<td class="TableHeading" width="100">＊姓&nbsp;&nbsp;&nbsp;名
-										</td>
-										<td class="TableData"><input type="text" name="memName" id="memName"
-											value="${LoginOK.memName}" style="width: 320px;"required> <font
-											color="red" size="-1">${MsgMap.errormemName}</font>
-												<span id="checkMemName" display="inline-block"></span>	
-									</tr>
-							
-									<tr>
-										<td class="TableHeading" width="100">＊身&nbsp;&nbsp;&nbsp;高
-										</td>
-										<td class="TableData"><input type="text" name="memHeight" id="memHeight"
-											value="${LoginOK.memHeight}" style="width: 120px;"required> <font
-											color="red" size="-1">${MsgMap.errorMemHeight}</font>
-											<span id="checkMemHeight" display="inline-block"></span>
-									</tr>
-									<tr>
-										<td class="TableHeading" width="100">＊體&nbsp;&nbsp;&nbsp;重
-										</td>
-										<td class="TableData"><input type="text" name="memWeight" id="memWeight"
-											value="${LoginOK.memWeight}" style="width: 120px;"required> <font
-											color="red" size="-1">${MsgMap.errorMemWeight}</font>
-												<span id="checkMemWeight" display="inline-block"></span>
-									</tr>
-									<tr>
-										<td class="TableHeading" width="100">＊血&nbsp;&nbsp;&nbsp;型</td>
-										<td class="TableData"><select name="bloodType"
-											id="bloodType" style="width: 120px; height: 20px;">
-												<option value="">請選擇血型</option>
-												<option value="A">A型</option>
-												<option value="B">B型</option>
-												<option value="AB">AB型</option>
-												<option value="O">O型</option>
-										</select><font color="red" size="-1">${MsgMap.errorBloodType}</font> <input
-											type="hidden" id="hiddenBlood" value="${LoginOK.bloodType}">
-											<span id="checkBloodType" display="inline-block"></span>
-									</tr>
-									
-									<tr>
-										<td class="TableHeading" width="100">＊藥物過敏</td>
-										<td class="TableData"><input type="text" name="medicine" id="medicine"
-											value="${LoginOK.medicine}" style="width: 320px;"required> <font
-											color="red" size="-1">${MsgMap.errorMedicine}</font>
-											<span id="checkMedicine" display="inline-block"></span>
-									</tr>
-									
-									<tr>
-										<td class="TableHeading" width="100">＊過去病史</td>
-										<td class="TableData"><input type="text"
-											name="medicalHistory" id="medicalHistory" value="${LoginOK.medicalHistory}"
-											style="width: 320px;"required> <font color="red" size="-1">${MsgMap.errorMedicalHistory}</font>
+		<div class="container">
+			<div style="text-align: center;">
+				<h3 class="title">修改會員資料</h3>
+			</div>
+
+			<table id="Table1" border="0" cellspacing="0" cellpadding="4"
+				width="500" align="center">
+				<tr>
+					<td>
+						<p>
+							<span class="notice" style="color: red;">標有＊為必須填寫資料</span>
+						</p>
+						<table id="Table7" class="Collapse" border="0" width="100%"
+							style="border-collapse: separate; border-spacing: 0px 10px;">
+							<tr>
+								<td class="TableHeading" width="100">＊姓&nbsp;&nbsp;&nbsp;名
+								</td>
+								<td class="TableData"><input type="text" name="memName"
+									id="memName" value="${LoginOK.memName}" style="width: 320px;"
+									required> <font color="red" size="-1">${MsgMap.errormemName}</font>
+									<span id="checkMemName" display="inline-block"></span>
+							</tr>
+
+							<tr>
+								<td class="TableHeading" width="100">＊身&nbsp;&nbsp;&nbsp;高
+								</td>
+								<td class="TableData"><input type="text" name="memHeight"
+									id="memHeight" value="${LoginOK.memHeight}"
+									style="width: 120px;" required> <font color="red"
+									size="-1">${MsgMap.errorMemHeight}</font> <span
+									id="checkMemHeight" display="inline-block"></span>
+							</tr>
+							<tr>
+								<td class="TableHeading" width="100">＊體&nbsp;&nbsp;&nbsp;重
+								</td>
+								<td class="TableData"><input type="text" name="memWeight"
+									id="memWeight" value="${LoginOK.memWeight}"
+									style="width: 120px;" required> <font color="red"
+									size="-1">${MsgMap.errorMemWeight}</font> <span
+									id="checkMemWeight" display="inline-block"></span>
+							</tr>
+							<tr>
+								<td class="TableHeading" width="100">＊血&nbsp;&nbsp;&nbsp;型</td>
+								<td class="TableData"><select name="bloodType"
+									id="bloodType" style="width: 120px; height: 20px;">
+										<option value="">請選擇血型</option>
+										<option value="A">A型</option>
+										<option value="B">B型</option>
+										<option value="AB">AB型</option>
+										<option value="O">O型</option>
+								</select><font color="red" size="-1">${MsgMap.errorBloodType}</font> <input
+									type="hidden" id="hiddenBlood" value="${LoginOK.bloodType}">
+									<span id="checkBloodType" display="inline-block"></span>
+							</tr>
+
+							<tr>
+								<td class="TableHeading" width="100">＊藥物過敏</td>
+								<td class="TableData"><input type="text" name="medicine"
+									id="medicine" value="${LoginOK.medicine}" style="width: 320px;"
+									required> <font color="red" size="-1">${MsgMap.errorMedicine}</font>
+									<span id="checkMedicine" display="inline-block"></span>
+							</tr>
+
+							<tr>
+								<td class="TableHeading" width="100">＊過去病史</td>
+								<td class="TableData"><input type="text"
+									name="medicalHistory" id="medicalHistory"
+									value="${LoginOK.medicalHistory}" style="width: 320px;"
+									required> <font color="red" size="-1">${MsgMap.errorMedicalHistory}</font>
 									<span id="checkMedicalHistory" display="inline-block"></span>
-									</tr>
-									<tr>
-										<td class="TableHeading" width="100">＊電&nbsp;&nbsp;&nbsp;話</td>
-										<td class="TableData"><input type="text" name="phone" id="phone"
-											value="${LoginOK.phone}" style="width: 320px;"required> <font
-											color="red" size="-1">${MsgMap.errorPhone}</font>
-											<span id="checkPhone" display="inline-block"></span>
-									</tr>
-									<tr>
-										<td class="TableHeading" width="100">＊行動電話</td>
-										<td class="TableData"><input type="text" name="cellphone" id="cellphone"
-											value="${LoginOK.cellphone}" style="width: 320px;"required> <font
-											color="red" size="-1">${MsgMap.errorCellphone}</font>
-											<span id="checkCellphone" display="inline-block"></span>
-									</tr>
-									 
-									<tr>
-										<td class="TableHeading" width="100">＊居住地</td>
-										<td class="TableData"><input type="text" name="address" id="address"
-											value="${LoginOK.address}" style="width: 320px;"required> <font
-											color="red" size="-1">${MsgMap.errorAddr}</font>
-												<span id="checkAddress" display="inline-block"></span>
-									</tr>
-									<tr>
-										<td class="TableHeading" width="100">&nbsp;&nbsp;&nbsp;&nbsp;照&nbsp;&nbsp;&nbsp;片
-										</td>
-										<td class="TableData"><input type="file" id="ff"
-											onchange="aa()" name="fileout" />
+							</tr>
+							<tr>
+								<td class="TableHeading" width="100">＊電&nbsp;&nbsp;&nbsp;話</td>
+								<td class="TableData"><input type="text" name="phone"
+									id="phone" value="${LoginOK.phone}" style="width: 320px;"
+									required> <font color="red" size="-1">${MsgMap.errorPhone}</font>
+									<span id="checkPhone" display="inline-block"></span>
+							</tr>
+							<tr>
+								<td class="TableHeading" width="100">＊行動電話</td>
+								<td class="TableData"><input type="text" name="cellphone"
+									id="cellphone" value="${LoginOK.cellphone}"
+									style="width: 320px;" required> <font color="red"
+									size="-1">${MsgMap.errorCellphone}</font> <span
+									id="checkCellphone" display="inline-block"></span>
+							</tr>
 
-											<div id="msg"></div>
-											<div style="width: 300px; height: 200px; border: 0.5px black solid">
-												<img id="xx"
-													src="<c:url value='/getImage.controller' />"
-													style="max-width: 300px; max-height: 900px;" />
-											</div>
-									</tr>
-								</table>
-							</table>
-							
-							<div class="row"><p> </p></div>
-								<div style="text-align:center;">
-								<input class="btn btn-primary" type="submit"name="submitBtn" id="submitBtn" value="送出">
-							</div>
-							
-						</div>
-					</form>	
-					
-					
+							<tr>
+								<td class="TableHeading" width="100">＊居住地</td>
+								<td class="TableData"><input type="text" name="address"
+									id="address" value="${LoginOK.address}" style="width: 320px;"
+									required> <font color="red" size="-1">${MsgMap.errorAddr}</font>
+									<span id="checkAddress" display="inline-block"></span>
+							</tr>
+							<tr>
+								<td class="TableHeading" width="100">&nbsp;&nbsp;&nbsp;&nbsp;照&nbsp;&nbsp;&nbsp;片
+								</td>
+								<td class="TableData"><input type="file" id="ff"
+									onchange="aa()" name="fileout" />
+
+									<div id="msg"></div>
+									<div
+										style="width: 300px; height: 200px; border: 0.5px black solid">
+										<img id="xx" src="<c:url value='/getImage.controller' />"
+											style="max-width: 300px; max-height: 200px;" />
+									</div>
+							</tr>
+						</table>
+			</table>
+
+			<div class="row">
+				<p></p>
+			</div>
+			<div style="text-align: center;">
+				<input class="btn btn-primary" type="submit" name="submitBtn"
+					id="submitBtn" value="送出">
+			</div>
+
+		</div>
+	</form>
+
+
 	<!-- 查詢餘額視窗 -->
-<div class="modal fade" id="myPointItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="myPointTitle">餘額查詢</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- 跳出視窗的內容 -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="myPoint">我知道了</button>
-      </div>
-    </div>
-  </div>
-</div>
-	
-<jsp:include page="/fragment/footer.jsp" />
+	<div class="modal fade" id="myPointItem" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myPointTitle">餘額查詢</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- 跳出視窗的內容 -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						id="myPoint">我知道了</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script>
+	<jsp:include page="/fragment/footer.jsp" />
+
+	<script>
+
+function aa() {
+	var file = document.getElementById('ff').files[0];
+	if (file) {
+		var msg = [];
+		msg.push('檔名：' + file.name, '大小：' + file.size, '檔案類型：' + file.type);
+		document.getElementById('msg').innerHTML = msg.join("<"+"br"+">");
+
+		//讀取檔案
+		var fileReader = new FileReader();
+		fileReader.onload = function(event) {//讀取完後執行的動作
+			document.getElementById('xx').src = event.target.result;
+		};
+		fileReader.readAsDataURL(file);//讀取檔案內容,以DataURL格式回傳結果
+	}
+}
+
 $(document).ready(function() {
 	var memberId = $('#memberId').val();
 		window.onload = function() {

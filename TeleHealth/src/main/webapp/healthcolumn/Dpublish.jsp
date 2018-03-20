@@ -8,7 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>已發佈的文章</title>
-<link rel="stylesheet" href="<c:url value='/forCkeditor/ckeditor/contents.css'/>">
 <style type="text/css">
 #updatestyle{
 width:50em;
@@ -22,8 +21,7 @@ width:50em;
 <script src="<c:url value='/forCkeditor/ckfinder/ckfinder.js'/>"></script>
 <div class="container">
 <div class="row col-12">     	
-	      <div class="col-2"></div>
-	      <div class="card col-8">
+	      <div class="card col-12">
 			<input type="hidden" id="empId" value="${empLoginOK.empId}"><div class="card-header">發佈過的文章列表<span>${contenterrors.contenterror}${contentOK.contentok}</span>
 				<div class="card-body ">
 				<!-- 每頁不同的內容從這裡開始 -->
@@ -46,7 +44,6 @@ width:50em;
 		    </div>
 		      <span id='table_page'></span>		
 		 </div>
-		 <div class="col-2"></div>
      </div>	
 </div>
 <div class="modal fade" id="UnReserveItem" tabindex="-1" role="form" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -103,7 +100,9 @@ width:50em;
 			   })
 			   //讀取醫生發表
 			   function loadProduct(empId){
-			    $.getJSON("<c:url value='/healthcolumn/publishcontent.controller'/>",{empId:empId},function(datas){
+
+			    $.getJSON('/TeleHealth/healthcolumn/publishcontent.controller',{empId:empId},function(datas){
+						console.log(datas);	
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
 	 			        tb.empty();
@@ -111,7 +110,7 @@ width:50em;
 				    	var cell1=$('<td></td>')
 				    	var ID=$('<input type="hidden" id="columnId" name="columnId"/>').text(product.columnId);		    		
 						cell1.append(ID);
-						var calla=$("<a href='article.jsp?title="+product.title+"'"+"target='_blank'></a>").text(product.title);
+						var calla=$("<a href='article.jsp?title="+product.title+"&advisoryCode="+product.advisoryCode+"'"+"target='_blank'></a>").text(product.title);
 			    		var article=$("<td></td>") 
 			    		article.append(calla);       	     	          
 			    		var cell4=$('<td></td>').text(product.clickCount);
@@ -160,13 +159,14 @@ width:50em;
 		function postdata(){		
 					var name=$("#title").val();
 					var heltitle=$("#heltitle").val();
+					var title = decodeURIComponent(heltitle);
 					var file1=$("#video").val();
 					var contenttext=CKEDITOR.instances.contenttext.getData();
 					if(contenttext==null|| contenttext.length==0){
 			    		document.getElementById("reanswer").innerHTML=' ';    		
 			    		document.getElementById("reanswererror").innerHTML='內容不能空白';		
 			    	}else{ 				
-					$.getJSON("<c:url value='/healthcolumn/updatehealthcolumn.controller'/>", {name:name,heltitle:heltitle,file1:file1,contenttext:contenttext}, function(datas){
+					$.post("<c:url value='/healthcolumn/updatehealthcolumn.controller'/>", {name:name,heltitle:heltitle,file1:file1,contenttext:contenttext}, function(datas){
 						if(datas="ok"){
 							$("#reanswer").text("修改成功!!");
 						}else if(datas="erroemovie"){
@@ -176,8 +176,8 @@ width:50em;
 					
 					})					
 					}
-		}	
+		}
 	</script>
 	
 </body>
-</html>
+</html>	

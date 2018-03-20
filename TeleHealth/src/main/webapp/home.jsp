@@ -166,9 +166,10 @@ height:250px}
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$.getJSON('/TeleHealth/healthcolumn/hotcontentimg.controller',{}, function(data) {
+		$.getJSON('/TeleHealth/healthcolumn/hotcontentimg.controller',{}, function(data) {	
 				$('.carousel-inner').empty();
 				$.each(data, function(i, data) {
+					if(data.content)
 					var img = data.content;
 					var imgsrc = img.split(" ");
 					var imgurl = imgsrc[2].split("=");					

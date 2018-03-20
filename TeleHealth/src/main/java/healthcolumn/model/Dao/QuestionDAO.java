@@ -23,7 +23,7 @@ public class QuestionDAO {
 		NativeQuery query=this.getSession().createNativeQuery
 				("select DISTINCT emp.empName,mem.memName,emp.account as empaccount,mem.account as memaccount,que.Content,que.createTime,que.modifyTime,que.QAtype,que.Id,emp.account"+
 						" from question que join healthColumn hel on hel.title=que.quetitle left outer  join employees emp"+
-						 " on que.empId=emp.empId left outer join members mem on que.memberId=mem.memberId where hel.title=?");
+						 " on que.empId=emp.empId left outer join members mem on que.memberId=mem.memberId where hel.title=? order by que.createTime");
 		query.setParameter(1, title);
 		List<QuestionBean> data=(List<QuestionBean>)query.list();
 		return data;		
@@ -50,6 +50,7 @@ public class QuestionDAO {
 				QuestionBean temp =this.getSession().get(QuestionBean.class, bean.getId());
 				if(temp==null) {
 					this.getSession().save(bean);
+					System.out.println(bean);
 					return bean;
 				}
 			}
@@ -83,7 +84,7 @@ public class QuestionDAO {
 		
 		
 			
-		//刪除員工文章
+		//刪除會員文章
 		public boolean deleteMem(int Id,String memberId) {
 			NativeQuery query=this.getSession().createNativeQuery
 					("delete from question where Id=? and memberId=?");			 
@@ -95,11 +96,14 @@ public class QuestionDAO {
 			}
 			return false;
 		}
-		//刪除會員文章
-		public boolean deletEmp(int id,String EmpId) {
-			QuestionBean result = this.getSession().get(QuestionBean.class, EmpId);
-			if(result!=null) {
-				this.getSession().delete(result);
+		//刪除員工文章
+		public boolean deletEmp(int Id,String EmpId) {
+			NativeQuery query = this.getSession().createNativeQuery
+					("delete from question where Id=? and empId=?");	
+			query.setParameter(1,Id);
+			query.setParameter(2, EmpId);
+			int result = query.executeUpdate();
+			if(result!=0) {				
 				return true;
 			}
 			return false;
@@ -122,7 +126,7 @@ public class QuestionDAO {
 		public List<Object[]> QAMemonepublish(String memname)
 		{
 			NativeQuery query=this.getSession().createNativeQuery
-			        ("select mem.memName,que.quetitle,que.advisoryCode,que.Content,que.createTime from question que join members mem on que.memberId=mem.memberId where mem.memName=?");
+			        ("select mem.memName,que.quetitle,que.advisoryCode,que.Content,que.createTime,que.Id from question que join members mem on que.memberId=mem.memberId where mem.memName=?");
 			query.setParameter(1,memname);	
 			List<Object[]> data=(List<Object[]>)query.list();			
 			return data;			

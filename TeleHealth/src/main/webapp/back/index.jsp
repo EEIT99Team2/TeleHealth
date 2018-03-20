@@ -26,6 +26,20 @@
   .rightNavWord{display:inline;margin-right:20px;}
   .columnUse{font-size:19px;font-family:CJKtc_Bold;}
   tspan {font-size:20px;font-family:CJKtc_Bold;}
+  .th1{
+  width:200px}
+  .th2{
+  width:100px}
+  .th3{
+  width:500px}
+  .th4{
+  width: 450px
+  }
+  .th5{
+  width:450px
+  }
+  .th6{
+  width:100px}
   </style>
 </head>
 
@@ -94,7 +108,7 @@
   </nav>
   <input type="hidden" value="${empLoginOK.empId}" id="empId" />
     <div id="memberManger" class="content-wrapper" style="display:block"><jsp:include page="/back/ManagementMembers.jsp" /></div>
-    <div id="msgManger" class="content-wrapper" style="background-image:url('../images/serviceback1.jpg');background-size:cover;display:none"><jsp:include page="/back/CustomService.jsp" /></div>
+    <div id="msgManger" class="content-wrapper" style="background-image:url('../images/serviceback1.jpg');background-size:cover;display:none"> <jsp:include page="/back/CustomService.jsp" /></div>
     <div id="columnManger" class="content-wrapper" style="display:none"><jsp:include page="/back/totalpublish.jsp" /></div>
     <div id="takeoffManger" class="content-wrapper" style="display:none"><jsp:include page="/back/takeoffSystem.jsp" /></div>
     <div id="financialManger" class="content-wrapper" style="display:none"><jsp:include page="/back/charts2.jsp" /></div>

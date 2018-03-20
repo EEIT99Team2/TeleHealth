@@ -89,9 +89,9 @@ public class Questioncontroller {
 		@RequestMapping(path = {
 		"/healthcolumn/deleteQAEmp.controller" }, produces = "text/html;charset=UTF-8", method = {
 				RequestMethod.GET, RequestMethod.POST })
-		public @ResponseBody String deleteEmp(String Id,String MemId,Model model) {
+		public @ResponseBody String deleteEmp(String Id,String EmpId,Model model) {
 			int columnIdemp=Integer.parseInt(Id);
-			boolean delete = QuestionService.deleteEmp(columnIdemp, MemId);
+			boolean delete = QuestionService.deleteEmp(columnIdemp, EmpId);
 			Map<String, String> contenterrors = new HashMap<>();
 			model.addAttribute("contenterrors", contenterrors);
 			Map<String, String> contentOK = new HashMap<String, String>();
@@ -120,8 +120,9 @@ public class Questioncontroller {
 			bean.setCreateTime(new Date());
 			bean.setQAtype("Q");
 			bean.setQuetitle(title);
-			boolean delete = QuestionService.insertQA(bean);			
-			if(delete) {
+			System.out.println(bean);
+			boolean createcont = QuestionService.insertQA(bean);			
+			if(createcont) {
 				Gson gson = new Gson();
 				String dataLoad = gson.toJson("ok");
 				return dataLoad ;
@@ -139,7 +140,7 @@ public class Questioncontroller {
 				String advisorycode,
 				String title,
 				Model model) {				
-			QuestionBean bean=new QuestionBean();
+			QuestionBean bean=new QuestionBean();		
 			bean.setAdvisorycode(advisorycode);
 			bean.setEmpId(empId);
 			bean.setContent(textemp);

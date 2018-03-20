@@ -17,7 +17,7 @@ margin:0px auto;
 </style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>查詢點數</title>
 </head>
 <body>
 <jsp:include page="/fragment/nav2.jsp" />
@@ -44,7 +44,7 @@ margin:0px auto;
 						
 		<li class="nav-item"><input type="button" class="nav-link active"
 		id="FOO" data-toggle="tab" role="tab" value="我的留言"
-		onclick="location.href='<c:url value='questionMempublish.jsp'/>'" /></li>
+		onclick="location.href='<c:url value='/Members/questionMempublish.jsp'/>'" /></li>
 		
 	</ul>
 	<div class="tab-content" id="myTabContent">
