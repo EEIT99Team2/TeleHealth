@@ -119,10 +119,10 @@
 			     //刪除會員發表
 			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
 				   var check=confirm("你確定要刪除此筆資料?");
-				   var Memname=$('#title').text();
+				   var memIdlogin=$('#memId').val();
 	 			   var Id = $(this).parents('tr').find('td:nth-child(1)').text();	 			  		  
 	 			   if(check==true){
-	 				  $.get('/TeleHealth/healthcolumn/deleteQAMem.controller',{Id:Id,memberId:Memname},function(data){
+	 				  $.get('/TeleHealth/healthcolumn/deleteQAMem.controller',{Id:Id,memberId:memIdlogin},function(data){
 		 				   alert("您已刪除所po的文");
 		 				  loadmember(memIdlogin);
 		 			   })		 			   
