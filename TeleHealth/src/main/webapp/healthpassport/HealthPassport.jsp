@@ -554,17 +554,21 @@ $('#insertBloodSugar').click(function(){
 				 systole = $.trim($('#insert_systole').val());
 				 var diastolechk=parseInt(diastole);
 				 var systolechk= parseInt(systole);
-				if(isNaN(diastole) || diastole.length == 0 || !re.test(diastole) || diastole>200) {
+				if(isNaN(diastole) || diastole.length == 0||diastole=="" || !re.test(diastole) || diastole>200) {
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					b=1;
 				}else{
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					b=0;
 				}
-				if(diastolechk>systolechk){
+				if(diastolechk>systolechk ){
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
 					b=1;
-				}else{
+				}else if( diastole.length == 0 || diastole==""){
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
+					b=1;
+				}
+				else{					
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					b=0;
 				}
