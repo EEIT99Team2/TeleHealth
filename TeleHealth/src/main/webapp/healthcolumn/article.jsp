@@ -84,6 +84,7 @@ $(document).ready(function() {
 		var title = aryid[0];		
 		var titleok=$('#title').val(title);    
 	    var atype=ary2[2];
+	    console.log(ary2);
 	    var adok=$('#advisorycode').val(atype); 		
 		CKEDITOR.replace('textt',
 				 {width:800, height:100,toolbarGroups:tg})
