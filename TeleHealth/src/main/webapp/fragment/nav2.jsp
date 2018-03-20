@@ -83,7 +83,8 @@
 						<button class="btn btn-Info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">維護專欄</button>
 						<div class="dropdown-menu" aria-labelledby="dropdwonMenuButton">
 							<a class="dropdown-item" href="<c:url value="/healthcolumn/createhelcontent.jsp" />">新增專欄文章</a>
-							<a class="dropdown-item" href="<c:url value="/healthcolumn/Dpublish.jsp" />">已發佈文章</a>				
+							<a class="dropdown-item" href="<c:url value="/healthcolumn/Dpublish.jsp" />">已發佈文章</a>	
+							<a class="dropdown-item" href="<c:url value="/healthcolumn/questionEmppublish.jsp" />">已回答問題</a>				
 						</div>
 					</div>
 				</li>

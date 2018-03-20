@@ -52,7 +52,7 @@ public class GetImageController {
 			} else {
 				FileInputStream in = null;
 				try {
-					File file = new File("e:/專題/doctor1.jpg");
+					File file = new File("/share/CACHEDEV2_DATA/.qpkg/Tomcat8/tomcat8/webapps/TeleHealth/images/default.jpg");
 					in = new FileInputStream(file);
 					blob = util.SystemUtils.fileToBlob(in, file.length());
 					media = util.SystemUtils.BlobToByte(blob);

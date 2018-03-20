@@ -23,11 +23,11 @@ import register.model.MemberBean;
 		urlPatterns = { "/*" }, 
 		initParams = { 
 				@WebInitParam(name = "mustLogin1", value = "/AdvisoryMoment/*"),
-				@WebInitParam(name = "mustLogin1", value = "/Advisory/*"),
-				@WebInitParam(name = "mustLogin2", value = "/healthpassport/*"),
-				@WebInitParam(name = "mustLogin3", value = "/back/*"),
-				@WebInitParam(name = "mustLogin4", value = "/pay/*"),
-				@WebInitParam(name = "mustLogin5", value = "/Members/*")
+				@WebInitParam(name = "mustLogin2", value = "/Advisory/*"),
+				@WebInitParam(name = "mustLogin3", value = "/healthpassport/*"),
+				@WebInitParam(name = "mustLogin4", value = "/back/*"),
+				@WebInitParam(name = "mustLogin5", value = "/pay/*"),
+				@WebInitParam(name = "mustLogin6", value = "/Members/*")
 		})
 public class LoginCheckFilter implements Filter {
 	Collection<String> url = new ArrayList<String>();
