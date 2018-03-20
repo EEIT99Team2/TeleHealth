@@ -143,13 +143,31 @@
 					<form method="post" action="<c:url value="/login.controller"/>">
                             <div class="form-group">
                                 <label for="username"><span class="fa fa-user"></span> 帳號</label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" value="${sessionScope.user}">
+                                <c:choose>
+	                                <c:when test="${not empty sessionScope.user}">
+		                                <input type="text" class="form-control" name="username" id="username" placeholder="Enter email"                          	
+		                                	value="${sessionScope.user}">
+	                                </c:when>
+	                                <c:otherwise>
+	                               	 	<input type="text" class="form-control" name="username" id="username" placeholder="Enter email"                          	
+		                                	value="${param.username}">
+	                                </c:otherwise>
+                                </c:choose>
                                 <font color="red" size="-1">${MsgMap.errorUserName}</font>                              
                             </div>
                             <div class="form-group">
                                 <label for="pwd">
                                     <span class="fa fa-eye"></span> 密碼</label>                  
-                                <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password" value="${sessionScope.password}">
+                                 <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password" 
+                                	<c:choose>
+                                		<c:when test="${not empty sessionScope.user}">
+                                			value="${sessionScope.password}"
+                                		</c:when>
+                                		<c:otherwise>
+                                			value="${param.pwd}"
+                                		</c:otherwise>
+                                	</c:choose>
+                                 >
                             </div>
                             <font color="red" size="-1">${MsgMap.errorPwd}</font>
                             
@@ -164,7 +182,8 @@
                             </div>
                             
 <!--                             google 我不是機器人 -->
-                          	<div class='g-recaptcha' data-sitekey='6LezzksUAAAAAAllmloZ5Z29laYoc1KZ4GTsW7ry'></div>
+              <div class="g-recaptcha" data-sitekey="6LesrU0UAAAAAD06q9IQIUGjwUtxNRCZeWbGBRdS"></div>
+                         <font color="red" size="-1">${MsgMap.errorRecaptcha}</font> 
                           	<input type="hidden" id="errorMsg" value="${MsgMap}">
                             <button type="submit" class="btn btn-success btn-block">登入</button>
                             <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">取消</button>

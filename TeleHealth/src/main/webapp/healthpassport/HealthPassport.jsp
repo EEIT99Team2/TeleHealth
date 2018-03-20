@@ -373,10 +373,12 @@
 	<script type="text/javascript">
 	var memberid=$('#memberId').val();
 	var gender=$("#gender").val();
-	var dateyear=$("#realage").val();
+	var dateyear=$("#realage").val().substring(0,4);
 	var today = new Date();
 	var birthDate = new Date(dateyear);
-	var age = today.getFullYear() - birthDate.getFullYear();
+	var valueNow = today.getFullYear();
+	var valueBir = birthDate.getFullYear();
+	var age = valueNow - valueBir;
 	var m = today.getMonth() - birthDate.getMonth();
 	if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
 	    age--;
@@ -498,7 +500,7 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 				}
 			});
-			$('#insert').click(function(){
+			$('#insert').click(function() {
 				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'memberid':memberid,'height':height*100,'weight':weight, 'bmi': BMI,gender:gender,age:age}, function(data){
 	                	$('#showHeight').empty();
 			 	       	$('#showWeight').empty();

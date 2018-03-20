@@ -139,7 +139,7 @@ $(document).ready(function() {
           		 var row2=$("<div class='media-body contenttype' ></div>").append([cellauthor,celldate,cellcontent]);
           		doc.append(row2);          		        		         		       		      		
             	 }else{
-                var cellauthor= $("<h5 class='mt-0'></h5>").text("牽絆:"+data[0]);      	 
+                var cellauthor= $("<h5 class='mt-0'></h5>").text("牽伴:"+data[0]);      	 
             	var empimg=$("<img src='/TeleHealth/getimagebyid.controller?id="+data[9] +"' class='imgsize'/>")
             	cellauthor.prepend(empimg);             	      	
             	var cellcontent=$("<p></p>").html(data[4]);	         		
@@ -189,7 +189,7 @@ $(document).ready(function() {
 			          		 var row2=$("<div class='media-body contenttype' ></div>").append([cellauthor,celldate,cellcontent]);
 			          		doc.append(row2);          		        		         		       		      		
 			            	 }else{
-			            	var cellauthor= $("<h6 class='mt-0'></h6>").text("牽絆:"+data[0]);
+			            	var cellauthor= $("<h6 class='mt-0'></h6>").text("牽伴:"+data[0]);
 			            	var cellcontent=$("<p></p>").html(data[2]);	         		
 			            	if (data[4]==null){
 			       			 var celldate=$("<h6></h6>").text(data[3]);
@@ -250,7 +250,7 @@ $(document).ready(function() {
 			          		 var row2=$("<div class='media-body contenttype' ></div>").append([cellauthor,celldate,cellcontent]);
 			          		doc.append(row2);          		        		         		       		      		
 			            	 }else{
-			            	var cellauthor= $("<h6 class='mt-0'></h6>").text("牽絆:"+data[0]);
+			            	var cellauthor= $("<h6 class='mt-0'></h6>").text("牽伴:"+data[0]);
 			            	var cellcontent=$("<p></p>").html(data[2]);	         		
 			            	if (data[4]==null){
 			       			 var celldate=$("<h6></h6>").text(data[3]);
