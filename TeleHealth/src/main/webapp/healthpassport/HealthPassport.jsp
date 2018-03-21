@@ -566,7 +566,7 @@ $('#insertBloodSugar').click(function(){
 				if(diastolechk>systolechk ){
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
 					b=1;
-				}else if( diastole.length == 0 || diastole==""){
+				}else if( diastole.length == 0 || diastole==""||isNaN(diastole)||diastole>200){
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					b=1;
 				}
@@ -581,7 +581,7 @@ $('#insertBloodSugar').click(function(){
 				}
 			});
 			$('#insert_heartBeat').blur(function() {
-				 heartBeat = $.trim($('#insert_heartBeat').val());
+				heartBeat = $.trim($('#insert_heartBeat').val());
 				if(isNaN(heartBeat) || heartBeat.length == 0 || !re.test(heartBeat) || heartBeat>250) {
 					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					c=1;
@@ -596,10 +596,12 @@ $('#insertBloodSugar').click(function(){
 				}
 			});
 			$('#insertBP').click(function(){
+				 var diastolechk=parseInt(diastole);
+				 var systolechk= parseInt(systole);				
 				if(systole==null || diastole==null || heartBeat==null){
 					alert("三個欄位都要輸入")
 					$('#insertBP').prop("disabled", true);
-				}else if(diastole<systole){
+				}else if(diastolechk>systolechk){
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
 					$('#insertBP').prop("disabled", true);
 				}else{
