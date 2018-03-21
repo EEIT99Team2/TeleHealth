@@ -57,10 +57,10 @@ public class TakeoffController {
 			//核准且已有預約
 			if(apResult.equals("Y") && !videoCode.equals("null")) {
 				String account = takeoffService.selectMemAcc(videoCode);
-				//刪除預約記錄(無預約則回傳false)
-				advisoryMomentService.deleteMemReserve(videoCode, MomentId);
 				//修改此項班表狀態
 				advisoryMomentService.updateMoment(MomentId);
+				//刪除預約記錄(無預約則回傳false)
+				advisoryMomentService.deleteMemReserve(videoCode);
 				//新增申請人請假次數
 				employeesDAO.addTakeoffCount(empId);
 				//寄信								
@@ -73,6 +73,12 @@ public class TakeoffController {
 				advisoryMomentService.updateMoment(MomentId);
 				//新增申請人請假次數
 				employeesDAO.addTakeoffCount(empId);
+			}else if(apResult.equals("N")) {
+				//刪除假單
+				String id = takeoffService.select(MomentId).getId().toString();
+				if(id!=null && id.trim().length()!=0 ) {					
+					takeoffService.delete(id);
+				}
 			}
 			finalResult="已回覆申請人";
 		}		

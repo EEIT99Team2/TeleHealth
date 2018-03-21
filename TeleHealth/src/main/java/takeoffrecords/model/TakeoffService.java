@@ -138,9 +138,7 @@ public class TakeoffService {
 		}
 		return result;
 	}
-	public boolean delete(int id) {
-		boolean result = false;
-
-		return result;
+	public boolean delete(String id) {	
+		return takeoffDao.delete(id);
 	}
 }

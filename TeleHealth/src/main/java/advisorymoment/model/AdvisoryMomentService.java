@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 
 import advisorymoment.model.dao.AdvisoryMomentDAO;
+import register.model.MemberBean;
+import register.model.RegisterService;
 import takeoffrecords.model.TakeoffBean;
 import takeoffrecords.model.TakeoffService;
 @Service
@@ -25,6 +27,9 @@ public class AdvisoryMomentService {
 	@Autowired
 	private TakeoffService takeoffService;
 	
+	@Autowired
+	private RegisterService registerService;
+	
 	//會員查詢預約諮詢的index
 	public String memberSelectAll(String UserId) {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
@@ -32,6 +37,12 @@ public class AdvisoryMomentService {
 		List<Object[]> result = this.selectAll();
 		// 已預約時段
 		List<Object[]> reserved = this.selectByMemSelf(UserId);
+		//查詢會員點數
+		MemberBean memBean= registerService.selectById(UserId);
+		String point= "0";
+		if(memBean.getPoint()!=null) {			
+			point= memBean.getPoint().toString();
+		}
 		String reservedId;
 		String VideoCode;
 		for (int i = 0; i < result.size(); i++) {
@@ -57,6 +68,7 @@ public class AdvisoryMomentService {
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
 			dataOne.put("className", "eventItem");
+			dataOne.put("point", point);
 			if (status.equals("E")) {
 				dataOne.put("backgroundColor", "#0080ff");
 				// 已有預約諮詢
@@ -90,6 +102,12 @@ public class AdvisoryMomentService {
 		List<Object[]> reserved = this.selectByMemSelf(UserId);
 		String reservedId;
 		String VideoCode;
+		//查詢會員點數
+			MemberBean memBean= registerService.selectById(UserId);
+			String point= "0";
+			if(memBean.getPoint()!=null) {			
+				point= memBean.getPoint().toString();
+			}
 		for (int i = 0; i < result.size(); i++) {
 			String MomentStatus = result.get(i)[7].toString();
 			//判斷班表狀態是否存在
@@ -113,6 +131,7 @@ public class AdvisoryMomentService {
 			dataOne.put("end", endtime);
 			dataOne.put("MomentId", MomentId);
 			dataOne.put("className", "eventItem");
+			dataOne.put("point", point);
 			if (status.equals("E")) {
 				dataOne.put("backgroundColor", "#0080ff");
 				// 已有預約諮詢
@@ -178,8 +197,9 @@ public class AdvisoryMomentService {
 			}
 			//此項班表是否為有申請假單				
 			takeoffRecord = takeoffService.select(MomentId);							
-			if(takeoffRecord!=null && takeoffRecord.getId()!=null) {
+			if(takeoffRecord!=null && takeoffRecord.getId()!=null && takeoffRecord.getEmpId().equals(EmpId)) {
 				takeoff="exist";
+				System.out.println(takeoffRecord.getApprovedResult());
 				if(takeoffRecord.getApprovedResult()!=null) {
 					reResult =takeoffRecord.getApprovedResult().toString();
 					reReason = takeoffRecord.getRejectReason().toString();
@@ -271,7 +291,7 @@ public class AdvisoryMomentService {
 			}
 			//此項班表是否為有申請假單				
 			takeoffRecord = takeoffService.select(MomentId);							
-			if(takeoffRecord!=null && takeoffRecord.getId()!=null) {
+			if(takeoffRecord!=null && takeoffRecord.getId()!=null && takeoffRecord.getEmpId().equals(EmpId)) {
 				takeoff="exist";
 				if(takeoffRecord.getApprovedResult()!=null) {
 					reResult =takeoffRecord.getApprovedResult().toString();
@@ -410,16 +430,12 @@ public class AdvisoryMomentService {
 	
 	
 	//刪除會員預約紀錄(table:Advisory)
-		public boolean deleteMemReserve(String VideoCode,String MomentId) {			
-			boolean DeleteResult =false;
+		public boolean deleteMemReserve(String VideoCode) {			
 			boolean FinalResult =false;
 			if (VideoCode != null && VideoCode.trim().length()!=0) {
 				List<Object[]> selectAD = this.selectByMemVCode(VideoCode);
 				if(selectAD!=null && selectAD.size()!=0) {				
-					DeleteResult =advisoryMomentDAO.deleteMemReserve(VideoCode);
-					if(DeleteResult) {
-						FinalResult=this.updateByResCancel(MomentId);
-					}
+						FinalResult = advisoryMomentDAO.deleteMemReserve(VideoCode);
 				}
 			}
 			return FinalResult;

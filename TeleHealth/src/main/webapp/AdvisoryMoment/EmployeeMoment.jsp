@@ -330,7 +330,7 @@ $(document).ready(function() {
 		  var takeoff=events.takeoff;
 		  var MomentStatus=events.MomentStatus;
 		  var reResult=events.reResult;
-		  if(events.backgroundColor=="#0080ff" && takeoff == "noexist" || reResult=="N"){
+		  if(events.backgroundColor=="#0080ff" && takeoff == "noexist" || reResult == "N"){
 			  $('#UnReserveItem').modal('show');
 			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
 			  			+"<h3>諮詢項目:</h3><h5>"+reserveItem+"</h5>"
@@ -343,7 +343,7 @@ $(document).ready(function() {
 				  docFrag.append("<h3>視訊代碼:"+events.selfResCode+"</h3>"
 				  			+"<h3>諮詢時間:"+"<span>"+moment(events.start).format("YYYY-MM-DD HH:mm")+"</span>"+"</h3>");
 				  	$("#reservedItem .modal-body").append(docFrag);
-				}else if(events.backgroundColor=="#0080ff" && takeoff == "exist" && reResult=="null"|| events.backgroundColor=="#d26900" && takeoff == "exist"  && reResult=="null"){					
+				}else if(events.backgroundColor=="#0080ff" && takeoff == "exist" && reResult == "null"|| events.backgroundColor=="#d26900" && takeoff == "exist"  && reResult=="null"){					
 						docFrag.append("<h3>"+"請假申請審核中"+"</h3>");
 						$("#takeoffedItem .modal-body").append(docFrag);
 						$('#takeoffedItem').modal('show');								

@@ -62,8 +62,12 @@ public class AdvisoryMomemtController {
 		boolean DeleteResult=false;
 		boolean Refund=false;
 		boolean expendRecord=false;
+		boolean updateResult=false;
 		if(MomentId!=null && MomentId.trim().length()!=0 && VideoCode!=null && VideoCode.trim().length()!=0) {
-			DeleteResult = advisoryMomentService.deleteMemReserve(VideoCode, MomentId);
+			//修改班表為未預約
+			updateResult = advisoryMomentService.updateByResCancel(MomentId);
+			//刪除諮詢記錄
+			DeleteResult = advisoryMomentService.deleteMemReserve(VideoCode);
 			//還錢
 			Refund =advisoryMomentService.updateMemPoint(UserId);
 			//更新消費紀錄
@@ -73,8 +77,10 @@ public class AdvisoryMomemtController {
 			bean.setRecord(0);
 			expendRecord=expendRecordService.update(bean);
 		}
-		if(DeleteResult && Refund && expendRecord) {
+		if(updateResult && DeleteResult && Refund && expendRecord) {
 			ReturnResult="success";
+		}else{
+			ReturnResult="fail";
 		}
 		return ReturnResult;
 	}

@@ -97,7 +97,7 @@ public class TakeoffDAO {
 			return result;
 		}
 	
-	public boolean delete(int id) {
+	public boolean delete(String id) {
 		TakeoffBean result = this.getSession().get(TakeoffBean.class, id);
 		if(result!=null) {
 			this.getSession().delete(result);

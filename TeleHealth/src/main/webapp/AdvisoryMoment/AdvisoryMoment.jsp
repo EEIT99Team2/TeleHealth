@@ -205,7 +205,6 @@
   </div>
 </div>
 
-<input type="hidden" value="${LoginOK.point}" id="memberPoint" />
 <div id="calendar"></div>
 </div>
 <!-- Footer -->
@@ -221,7 +220,6 @@
 $(document).ready(function() {
 	var initialLocaleCode = 'zh';
 	var UserId=$("#memberId").val();
-	var point=$("#memberPoint").val();
 	var mom = moment();
 	//預約用
 	var reserveData;
@@ -326,15 +324,16 @@ $(document).ready(function() {
 		  var reserveEmp=events.title.substr(emptyChar+2);
 		  var MomentId=events.MomentId;
 		  var VideoCode=events.VideoCode;
+		  var memPoint=events.point;
 		  if(events.backgroundColor=="#0080ff"){
 			  $('#reserveDataDetail').modal('show');
 			  docFrag.append("<h3>諮詢時段:</h3><h5>"+startTime+"\n~\n"+endTime+"</h5>"
 			  			+"<h3>諮詢項目:</h3><h5>"+reserveItem+"</h5>"
 					  	+"<h3>諮詢人員:</h3><h5>"+reserveEmp+"</h5>");
 			  	$("#reserveDataDetail .modal-body").append(docFrag);
-			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId};
+			  	reserveData ={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId,"memPoint":memPoint};
 			  }else if(events.backgroundColor=="#00db00"){
-				  reservedData={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId,"VideoCode":VideoCode};
+				  reservedData={"startTime":sendBackTime,"reserveItem":reserveItem,"reserveEmp":reserveEmp,"empId":empId,"UserId":UserId,"MomentId":MomentId,"VideoCode":VideoCode,"memPoint":memPoint};
 				  $('#checkResult').modal('show');
 				  docFrag.append("<h3>諮詢項目:"+reserveItem+"</h3>"
 						  	+"<h3>諮詢人員:"+reserveEmp+"</h3>"
@@ -362,7 +361,8 @@ $(document).ready(function() {
 		var now = moment(new Date()).format("YYYY-MM-DD HH:mm");
 		var Time = moment(reserveData.startTime).format("YYYY-MM-DD HH:mm");
 		var ms = moment(Time).diff(now);
-		if(point <5){
+		var checkPoint=reserveData.memPoint;
+		if(checkPoint <5){
 			$('#reserveDataDetail').modal('hide');
 			 $('#noPointItem').modal('show');
 			  docFrag.append("<h3>您的剩餘點數不足，請加值後再進行預約喔</h3>");

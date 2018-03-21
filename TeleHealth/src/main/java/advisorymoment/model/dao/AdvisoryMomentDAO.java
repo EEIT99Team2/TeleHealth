@@ -69,7 +69,7 @@ public class AdvisoryMomentDAO {
 				"on am.empId=emp.empId\r\n" + 
 				"join advisoryType adt\r\n" + 
 				"on am.advisoryCode=adt.advisoryCode\r\n" + 
-				"JOIN careers car\r\n" + 
+				"JOIN careers car\r\n" +
 				"ON car.careerid=emp.career\r\n" + 
 				"WHERE memberId=?";
 		NativeQuery query= this.getSession().createNativeQuery(hql);
@@ -165,6 +165,8 @@ public class AdvisoryMomentDAO {
 		boolean result = false;
 		AdvisoryMomentBean data = this.selectById(MomentId);
 		if(data!=null) {
+			data.setVideoCode(null);
+			data.setReserveStatus("E");
 			data.setStatus("N");
 			result = true;
 		}
