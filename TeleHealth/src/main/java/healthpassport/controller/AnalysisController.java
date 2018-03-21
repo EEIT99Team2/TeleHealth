@@ -162,7 +162,12 @@ public class AnalysisController {
 		LinkedList<HashMap<String, String>> datafinal = new LinkedList<HashMap<String, String>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<BloodPressureBean> result = bloodPressureService.selectMemberid(memberid);
-		Integer ageint = Integer.parseInt(age);
+		Integer ageint = 0;
+		try {			
+			ageint = Integer.parseInt(age);
+		} catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
 		for (int i = 0; i < result.size(); i++) {
 			HashMap<String, String> dataOne = new HashMap<String, String>();
 				DataAnalysisBean Diastole = DataAnalysisService.selectGroupId("BloodPressureDiastole", gender, ageint);//標準數值

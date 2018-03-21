@@ -4,11 +4,10 @@
 	<div class="col-1"></div>
 		<div class="card columnUse col-10" style="margin-top:80px;">
 			<div class="card-header">
-				所有會員發布文章 <input type="text" id="titlememname" placeholder="會員名稱"><input
-					type="button" class="btn btn-primary" value="搜尋" id="search" onclick="search()"><font
-					id="erroeMsg" color="red" size="-1">${searcherrors.error}</font>
-				<div class="card-body">
-					<!-- 每頁不同的內容從這裡開始 -->
+				所有會員發布文章 <input type="text" id="titlememname" placeholder="會員名稱">
+				<input type="button" class="btn btn-primary" value="搜尋" id="search" onclick="search()">
+				<input type="button" class="btn btn-primary" value="搜尋全部" id="search" onclick="loadall()"><font id="erroeMsg" color="red" size="-1">${searcherrors.error}</font>
+				<div class="card-body">					
 					<table id="productTable" class="table table-bordered">
 						<thead>
 							<tr>
@@ -46,9 +45,31 @@
 					$('#count').val(value3);
 					$('#date').val(value4);
 					
-			   })
-			   //讀取所有會員發表
+			   })			  
+			     //刪除會員發表
+			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
+				   var check=confirm("你確定要刪除此筆資料?");
+				   var title = $(this).parents('tr').find('td:nth-child(2)').text();				   					  
+	 			   var Id = $(this).parents('tr').find('td:nth-child(4)').text();	 			  			  
+	 			   if(check==true){
+	 				  $.getJSON('/TeleHealth/healthcolumn/deleteQAmemonepublish.controller',{Id:title},function(data){
+						if(data=="OK"){
+		 				  alert("您已刪除所po的文");
+		 				  loadall();
+						}else{
+							alert("刪除失敗!!");
+							loadall();
+							}
+			 			   })		 			   
+	 			   }else{
+	 				  loadall();
+		 		 }	 			 
+			  })	    
+	
+		})
+		 //讀取所有會員發表
 			   function loadall(){
+		   			$('#titlememname').val("");
 				   $.getJSON('/TeleHealth/healthcolumn/allmempublish.controller',{ },function(datas){					 
 						var doc=$(document.createDocumentFragment());			    		
 			    		var tb = $('#productTable>tbody');
@@ -73,29 +94,9 @@
 			    }) 
 			      		
 			} 
-			     //刪除會員發表
-			   $('#productTable>tbody').on('click','tr button:nth-child(1)',function(){
-				   var check=confirm("你確定要刪除此筆資料?");
-				   var title = $(this).parents('tr').find('td:nth-child(2)').text();				   					  
-	 			   var Id = $(this).parents('tr').find('td:nth-child(4)').text();	 			  			  
-	 			   if(check==true){
-	 				  $.getJSON('/TeleHealth/healthcolumn/deleteQAmemonepublish.controller',{Id:title},function(data){
-						if(data=="OK"){
-		 				  alert("您已刪除所po的文");
-		 				  loadall();
-						}else{
-							alert("刪除失敗!!");
-							loadall();
-							}
-			 			   })		 			   
-	 			   }else{
-	 				  loadall();
-		 		 }	 			 
-			  })	    
-	
-		})
 	function search(){
-		 var memname=$("#titlememname").val().trim();		 
+		 var memname=$("#titlememname").val().trim();
+		 console.log(memname);		 
 		 if(memname==null || memname == undefined || memname ==""){
 				$("#erroeMsg").text("不能搜尋空白");
 				$('#productTable>tbody').empty();	  
@@ -105,9 +106,9 @@
 				 }
 		}
 	
-	  function loadmember(memname){
+	  function loadmember(memname){		  
 		  		$('#productTable>tbody').empty();	  
-				   $.getJSON('/TeleHealth/healthcolumn/QAMemonepublish.controller',{memname:memname},function(datas){
+				   $.getJSON('/TeleHealth/healthcolumn/QAMemonepublish.controller',{memname:memname},function(datas){					   
 						if(datas=="wrong"){
 							$("#erroeMsg").text("查無此人!!");
 						}else{
@@ -117,7 +118,7 @@
 	 			        tb.empty();
 			    	$.each(datas,function(i,Mem){				    	    		
 				    	var cell1=$('<td></td>')
-				    	var titleID=$('<td id="titleId"></td>').text(mem[5]);
+				    	var titleID=$('<td id="titleId"></td>').text(Mem[5]);
 				    	var ID=$('<p> id="columnId" name="columnId"</p>').text(Mem[0]);			    		
 						cell1.append(ID);
 						var celldata=$("<p></p>").text(Mem[1]);
@@ -131,7 +132,8 @@
 			    		doc.append(row);			    		
 			    	})					
 			    	  tb.append(doc);
-							}
+			    	$("#productTable").tablepage($("#table_page"), 5); 
+					}
 			    }) 			      		
 			} 	
 		

@@ -22,7 +22,7 @@ public class HealthColumnDAO  {
 
 	//選醫生發表過文章	
 	public List<HealthColumnBean> select(String empId) {
-		Query<HealthColumnBean> query=this.getSession().createNativeQuery("select * from healthColumn where empId=?",HealthColumnBean.class);
+		Query<HealthColumnBean> query=this.getSession().createNativeQuery("select * from healthColumn where empId=? order by createDate desc",HealthColumnBean.class);
 		query.setParameter(1,empId);
 		List<HealthColumnBean> data=(List<HealthColumnBean>)query.list();
 		return data;
@@ -72,16 +72,23 @@ public class HealthColumnDAO  {
 	}
 	//修改
 	public boolean  update(String title, String content,String fileName) {
-		NativeQuery query=this.getSession().createNativeQuery("update healthColumn set content=?, createDate=?, fileName=? where title=? ");
-		query.setParameter(4, title);
-		query.setParameter(1, content);
-		query.setParameter(2, new Date());
-		if (fileName!=null)
+		String hqlThreeColumn = "update healthColumn set content=?, createDate=?, fileName=? where title=? ";
+		String hqlTwoColumn = "update healthColumn set content=?, createDate=? where title=? ";
+		NativeQuery query = null;
+		if (fileName!=null && fileName!="")
 		{
+			query = this.getSession().createNativeQuery(hqlThreeColumn);
+			query.setParameter(4, title);
+			query.setParameter(1, content);
+			query.setParameter(2, new Date());
 			query.setParameter(3, fileName);
 		}else {
-			query.setParameter(3,"Null");
+			query = this.getSession().createNativeQuery(hqlTwoColumn);
+			query.setParameter(3, title);
+			query.setParameter(1, content);
+			query.setParameter(2, new Date());
 		}
+				
 		int result = query.executeUpdate();
 		if(result!=0) {
 			return true;

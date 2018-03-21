@@ -220,7 +220,7 @@ public class AdvisoryController {
 	//開始進行視訊
 		@RequestMapping(path= {"/Advisory/setsatisfy.controller"}, method = {RequestMethod.GET,RequestMethod.POST})
 		public @ResponseBody String setSatisfy(String videoCode, String satisfy, Model model, HttpSession session) {
-			Integer satisfyValue = null;
+			Integer satisfyValue = 5;
 			if(videoCode != null && videoCode.trim().length()>0) {
 				if(satisfy != null && satisfy.trim().length()>0) {
 					try {

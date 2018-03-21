@@ -373,10 +373,12 @@
 	<script type="text/javascript">
 	var memberid=$('#memberId').val();
 	var gender=$("#gender").val();
-	var dateyear=$("#realage").val();
+	var dateyear=$("#realage").val().substring(0,4);
 	var today = new Date();
 	var birthDate = new Date(dateyear);
-	var age = today.getFullYear() - birthDate.getFullYear();
+	var valueNow = today.getFullYear();
+	var valueBir = birthDate.getFullYear();
+	var age = valueNow - valueBir;
 	var m = today.getMonth() - birthDate.getMonth();
 	if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
 	    age--;
@@ -498,7 +500,7 @@ $('#insertBloodSugar').click(function(){
 					document.getElementById("weiMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 				}
 			});
-			$('#insert').click(function(){
+			$('#insert').click(function() {
 				 $.get("<c:url value='/healthpassport/querybmi.controller' />",{'memberid':memberid,'height':height*100,'weight':weight, 'bmi': BMI,gender:gender,age:age}, function(data){
 	                	$('#showHeight').empty();
 			 	       	$('#showWeight').empty();
@@ -554,17 +556,21 @@ $('#insertBloodSugar').click(function(){
 				 systole = $.trim($('#insert_systole').val());
 				 var diastolechk=parseInt(diastole);
 				 var systolechk= parseInt(systole);
-				if(isNaN(diastole) || diastole.length == 0 || !re.test(diastole) || diastole>200) {
+				if(isNaN(diastole) || diastole.length == 0||diastole=="" || !re.test(diastole) || diastole>200) {
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					b=1;
 				}else{
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					b=0;
 				}
-				if(diastolechk>systolechk){
+				if(diastolechk>systolechk ){
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
 					b=1;
-				}else{
+				}else if( diastole.length == 0 || diastole==""||isNaN(diastole)||diastole>200){
+					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
+					b=1;
+				}
+				else{					
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/yes.png' />' />";
 					b=0;
 				}
@@ -575,7 +581,7 @@ $('#insertBloodSugar').click(function(){
 				}
 			});
 			$('#insert_heartBeat').blur(function() {
-				 heartBeat = $.trim($('#insert_heartBeat').val());
+				heartBeat = $.trim($('#insert_heartBeat').val());
 				if(isNaN(heartBeat) || heartBeat.length == 0 || !re.test(heartBeat) || heartBeat>250) {
 					document.getElementById("heartBeatMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>請輸入正確數值!</span>";
 					c=1;
@@ -590,10 +596,12 @@ $('#insertBloodSugar').click(function(){
 				}
 			});
 			$('#insertBP').click(function(){
+				 var diastolechk=parseInt(diastole);
+				 var systolechk= parseInt(systole);				
 				if(systole==null || diastole==null || heartBeat==null){
 					alert("三個欄位都要輸入")
 					$('#insertBP').prop("disabled", true);
-				}else if(diastole<systole){
+				}else if(diastolechk>systolechk){
 					document.getElementById("diastoleMsg").innerHTML = "<img class='chk' src='<c:url value='/images/error.jpg' />' /><span>收縮壓應大於舒張壓</span>";
 					$('#insertBP').prop("disabled", true);
 				}else{

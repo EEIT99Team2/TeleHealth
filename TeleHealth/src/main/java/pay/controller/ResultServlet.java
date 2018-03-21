@@ -36,14 +36,13 @@ public class ResultServlet extends HttpServlet {
 	    PrintWriter out = response.getWriter();
 
 	    List<String> enErrors = new ArrayList<String>();
-	    
 		try {
 			String MerchantTradeNo = request.getParameter("MerchantTradeNo");
 			String temp1 = request.getParameter("RtnCode"); // RtnCode
 			String TradeNo = request.getParameter("TradeNo");
 			String PaymentDate = request.getParameter("PaymentDate");
-			
-			int RtnCode = 0;
+						
+			Integer RtnCode = 0;
 			if (temp1 != null && temp1.length() != 0) {
 				try {
 					RtnCode = Integer.parseInt(temp1);
@@ -53,14 +52,14 @@ public class ResultServlet extends HttpServlet {
 				}
 			}
 			
-			if (RtnCode == 1) {
+			if (RtnCode.equals(1)) {
 				ProductBean bean = new ProductBean();
 				bean.setMerchantTradeNo(MerchantTradeNo);
 				bean.setRtnCode(RtnCode);
 				bean.setTradeNo(TradeNo);
 				bean.setPaymentDate(PaymentDate);
 				productService.update(bean);
-				ProductBean product = productService.selectByTradeNo(bean.getTradeNo());
+				ProductBean product = productService.selectByTradeNo(MerchantTradeNo);
 				String item = product.getItemName();
 				String pointString = item.substring(0, item.indexOf("點"));
 				Integer point = Integer.parseInt(pointString);

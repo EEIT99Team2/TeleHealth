@@ -172,7 +172,7 @@ public class ProductService {
 		return data;
 	}
 	
-	public ProductBean selectByTradeNo(String tradeNo) {
-		return productDao.selectTradeNo(tradeNo);
+	public ProductBean selectByTradeNo(String MerchantTradeNo) {
+		return productDao.selectTradeNo(MerchantTradeNo);
 	}
 }

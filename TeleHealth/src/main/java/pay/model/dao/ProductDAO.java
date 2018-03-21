@@ -60,6 +60,7 @@ public class ProductDAO {
 				result.setRtnCode(rset.getInt(6));
 				result.setTradeNo(rset.getString(7));
 				result.setPaymentDate(rset.getString(8));
+				result.setMemberId(rset.getString(9));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -58,6 +58,7 @@ public class HealthService {
 	}
 	//更新文章
 	public boolean updatecontent(String title,String content,String fileName) {
+		
 		healthColumnDAO.update(title, content, fileName);
 		return true;
 	}

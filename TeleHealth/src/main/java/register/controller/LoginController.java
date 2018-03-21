@@ -12,11 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import employees.model.EmployeesBean;
 import employees.model.EmployeesService;
 import register.model.LoginService;
 import register.model.MemberBean;
+import util.CaptchaValid;
 import util.GlobalService;
 
 @Controller
@@ -28,12 +30,12 @@ public class LoginController {
 	private EmployeesService employeesService;
 
 	@RequestMapping(path = { "/login.controller" }, method = { RequestMethod.GET, RequestMethod.POST })
-	public String method(String username, String pwd, Model model, String remember, HttpServletResponse response,
+	public String method(String username, String pwd, Model model, String remember,@RequestParam(name="g-recaptcha-response")String sacresponse, HttpServletResponse response,
 			String login, HttpSession session) {
 		Map<String, String> errorMsg = new HashMap<>();
 		model.addAttribute("MsgMap", errorMsg);
 		boolean status = username.contains("@");
-
+		String myKey = "6LesrU0UAAAAAGNZMPYTAV8LPT1e12IyefC95moS";
 		Cookie cookieUser = null;
 		Cookie cookiePassword = null;
 		Cookie cookieRememberMe = null;
@@ -61,7 +63,6 @@ public class LoginController {
 					errorMsg.put("errorPwd", "此帳號未開通");
 					return "login.error";
 				} else if (a.equals("Y")) {
-					session.setAttribute("LoginOK", bean);
 					if (remember != null) { // rm存放瀏覽器送來之RememberMe的選項
 						cookieUser = new Cookie("user", username);
 						cookieUser.setMaxAge(30 * 60 * 60);
@@ -90,8 +91,15 @@ public class LoginController {
 					response.addCookie(cookieUser);
 					response.addCookie(cookiePassword);
 					response.addCookie(cookieRememberMe);
-
-					return "login.success";
+					
+					
+					if(CaptchaValid.isCaptchaValid(myKey, sacresponse)) {
+						session.setAttribute("LoginOK", bean);
+						return "login.success";
+					} else {
+						errorMsg.put("errorRecaptcha", "請勾選驗證機制");
+						return "login.error";
+					}
 				}
 			}
 			errorMsg.put("errorPwd", "帳號或密碼不正確");
@@ -118,7 +126,7 @@ public class LoginController {
 					errorMsg.put("errorPwd", "帳號或密碼不正確");
 					return "login.error";
 				} else if (EmpStatus.equals("E")) {
-					session.setAttribute("empLoginOK", bean);
+					
 					if (remember != null) { // rm存放瀏覽器送來之RememberMe的選項
 						cookieUser = new Cookie("user", bean.getAccount());
 						cookieUser.setMaxAge(30 * 60 * 60);
@@ -145,8 +153,12 @@ public class LoginController {
 					response.addCookie(cookieUser);
 					response.addCookie(cookiePassword);
 					response.addCookie(cookieRememberMe);
-
-					if (username.indexOf("M") > -1) {
+					if(!CaptchaValid.isCaptchaValid(myKey, sacresponse)) {
+						errorMsg.put("errorRecaptcha", "請勾選驗證機制");
+						return "login.error";
+					}
+					session.setAttribute("empLoginOK", bean);
+					if (username.indexOf("MD000") > -1) {
 						return "ManagerLogin.success";
 					} else {
 						return "login.success";
